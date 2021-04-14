@@ -1,0 +1,19 @@
+{
+  "components.Footer.author.message": "Made with love by {author}.",
+  "components.Footer.author.name": "Roshan Ranabhat",
+  "containers.LocaleToggle.de": "de",
+  "containers.LocaleToggle.en": "en",
+  "components.LoginForm.email": "Email",
+  "components.LoginForm.password": "Password",
+  "components.LoginForm.submit": "Submit",
+  "components.Header.home": "Home",
+  "components.Header.features": "Features",
+  "helpers.ValidationMessage.isNotEmpty": "",
+  "helpers.ValidationMessage.isNotString": "",
+  "helpers.ValidationMessage.isNotInt": "",
+  "helpers.ValidationMessage.isNotEmail": "",
+  "helpers.ValidationMessage.isNotSelected": "",
+  "helpers.ValidationMessage.isNotPositive": "",
+  "helpers.ValidationMessage.isNotTrue": "",
+  "helpers.ValidationMessage.isNotAddress": ""
+}
