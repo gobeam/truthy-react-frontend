@@ -7,8 +7,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import InputWrapper from 'components/InputWrapper';
-import ValidationMessageWrapper from 'components/ValidationMessageWrapper';
 import {
   changeEmailAction,
   changePasswordAction,
@@ -20,6 +18,11 @@ import {
   makeIsLoadingSelector,
   makePasswordSelector,
 } from 'containers/LoginPage/selectors';
+import { Button, Card, Form } from '@themesberg/react-bootstrap';
+import { Link } from 'react-router-dom';
+import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
+import messages from 'components/LoginForm/messages';
+import { FormattedMessage } from 'react-intl';
 
 const stateSelector = createStructuredSelector({
   email: makeEmailSelector(),
@@ -38,41 +41,53 @@ export default function LoginForm() {
 
   const { email, password, errors, isLoading } = useSelector(stateSelector);
   return (
-    <form className="flex flex-col pt-3 md:pt-8" onSubmit={submitLoginForm}>
-      <div className="flex flex-col pt-4">
-        <label htmlFor="email" className="text-md font-bold">
-          Email
-        </label>
-        <InputWrapper
-          type="email"
-          value={email}
-          onChange={onChangeEmail}
-          invalid={!!errors.email}
-          placeholder="Input your email"
-        />
-        <ValidationMessageWrapper error={errors.email} />
-      </div>
-
-      <div className="flex flex-col pt-4 mb-10">
-        <label htmlFor="password" className="text-md font-bold">
-          Password
-        </label>
-        <InputWrapper
-          type="password"
-          value={password}
-          onChange={onChangePassword}
-          invalid={!!errors.password}
-          placeholder="Password"
-        />
-        <ValidationMessageWrapper error={errors.password} />
-      </div>
-
-      <input
-        type="submit"
-        value="Log In"
-        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange active:bg-orange-700 transition duration-150 ease-in-out"
-        disabled={isLoading}
+    <Form
+      noValidate
+      validated={errors.length < 1}
+      className="mt-4"
+      onSubmit={submitLoginForm}
+    >
+      <AuthFormGroupWrapper
+        label={messages.email}
+        name="email"
+        id="email"
+        type="email"
+        value={email}
+        required={false}
+        focus={false}
+        placeholder="example@truthy.com"
+        changeHandler={onChangeEmail}
+        error={errors.email}
       />
-    </form>
+
+      <AuthFormGroupWrapper
+        label={messages.password}
+        name="password"
+        id="password"
+        type="password"
+        value={password}
+        required={false}
+        focus={false}
+        placeholder="Password"
+        changeHandler={onChangePassword}
+        error={errors.password}
+      />
+
+      <Form.Group>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <Card.Link as={Link} to="/forgot-password" className="small text-end">
+            <FormattedMessage {...messages.lostPassword} />
+          </Card.Link>
+        </div>
+      </Form.Group>
+      <Button
+        disabled={isLoading}
+        variant="primary"
+        type="submit"
+        className="w-100"
+      >
+        <FormattedMessage {...messages.submit} />
+      </Button>
+    </Form>
   );
 }

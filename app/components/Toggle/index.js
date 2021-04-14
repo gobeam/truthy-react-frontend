@@ -6,14 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Input from 'components/InputWrapper';
+import { Form } from '@themesberg/react-bootstrap';
 import ToggleOption from '../ToggleOption';
 
 function Toggle(props) {
   let content = <option>--</option>;
-
-  // If we have items, render them
   if (props.values) {
     content = props.values.map((value) => (
       <ToggleOption key={value} value={value} message={props.messages[value]} />
@@ -21,9 +18,14 @@ function Toggle(props) {
   }
 
   return (
-    <Input value={props.value} onChange={props.onToggle} type="select">
+    <Form.Control
+      as="select"
+      size="sm"
+      value={props.value}
+      onChange={props.onToggle}
+    >
       {content}
-    </Input>
+    </Form.Control>
   );
 }
 

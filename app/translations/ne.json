@@ -1,16 +1,10 @@
 {
-  "components.Footer.author.message": "प्रेमले बनाएको {author}.",
-  "components.Footer.author.name": "रोशन रानाभट",
-  "containers.LocaleToggle.de": "जर्मन",
-  "containers.LocaleToggle.en": "अंग्रेजी",
-  "containers.LocaleToggle.ne": "नेपाली",
-  "components.LoginForm.email": "ईमेल",
-  "components.LoginForm.password": "पासवर्ड",
-  "components.LoginForm.submit": "बुझाउनुहोस्",
-  "containers.LoginPage.HelmetLoginTitle": "लग - इन",
-  "components.Header.home": "मुख्य",
-  "components.Header.login": "लग - इन",
-  "components.Header.register": "रेजिस्टर",
+  "containers.LoginPage.back": "पछाडी जाउ",
+  "containers.LoginPage.register": "दर्ता गरिएको छैन?",
+  "containers.LoginPage.createAccount": "खाता सिर्जना गर्नुहोस्",
+  "containers.LoginPage.loginToTheSystem": "लग - इन",
+  "containers.LoginPage.helmetLoginTitle": "लग - इन",
+
   "helpers.ValidationMessage.isNotEmpty": "यो क्षेत्र आवश्यक छ!",
   "helpers.ValidationMessage.isNotString": "यो क्षेत्र शब्दहरू हुनुपर्दछ!",
   "helpers.ValidationMessage.isNotInt": "यो क्षेत्र मान्य संख्या होईन!",
@@ -18,5 +12,20 @@
   "helpers.ValidationMessage.isNotSelected": "यो क्षेत्र चयन गरिएको हुनुपर्दछ!",
   "helpers.ValidationMessage.isNotPositive": "यो क्षेत्र सकारात्मक संख्या हुनुपर्दछ!",
   "helpers.ValidationMessage.isNotTrue": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
-  "helpers.ValidationMessage.isNotAddress": "यो फिल्ड मान्य ईथरम ठेगाना होईन!"
+  "helpers.ValidationMessage.isNotAddress": "यो फिल्ड मान्य ईथरम ठेगाना होईन!",
+
+  "components.LoginForm.email": "ईमेल",
+  "components.LoginForm.password": "पासवर्ड",
+  "components.LoginForm.submit": "बुझाउनुहोस्",
+  "components.LoginForm.lostPassword": "पासवर्ड हराउनु भयो?",
+
+  "components.Footer.author.message": "प्रेमले बनाएको {author}.",
+  "components.Footer.author.name": "रोशन रानाभट",
+  "containers.LocaleToggle.de": "जर्मन",
+  "containers.LocaleToggle.en": "अंग्रेजी",
+  "containers.LocaleToggle.ne": "नेपाली",
+  "containers.LoginPage.HelmetLoginTitle": "लग - इन",
+  "components.Header.home": "मुख्य",
+  "components.Header.login": "लग - इन",
+  "components.Header.register": "रेजिस्टर"
 }

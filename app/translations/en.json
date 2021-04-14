@@ -1,19 +1,28 @@
 {
+  "containers.LoginPage.back": "Go Back",
+  "containers.LoginPage.register": "Not registered?",
+  "containers.LoginPage.createAccount": "Create account",
+  "containers.LoginPage.loginToTheSystem": "Log in",
+  "containers.LoginPage.helmetLoginTitle": "Login",
+
+  "helpers.ValidationMessage.isNotEmpty": "field should not be empty",
+  "helpers.ValidationMessage.isNotString": "field should be string",
+  "helpers.ValidationMessage.isNotInt": "field should be number",
+  "helpers.ValidationMessage.isNotEmail": "field should be valid email",
+  "helpers.ValidationMessage.isNotSelected": "field should be selected",
+  "helpers.ValidationMessage.isNotPositive": "field must be positive",
+  "helpers.ValidationMessage.isNotTrue": "field must be true",
+  "helpers.ValidationMessage.isNotAddress": "field is not valid ethereum address",
+
+  "components.LoginForm.email": "Email",
+  "components.LoginForm.password": "Password",
+  "components.LoginForm.submit": "Sign in",
+  "components.LoginForm.lostPassword": "Lost password?",
+
   "components.Footer.author.message": "Made with love by {author}.",
   "components.Footer.author.name": "Roshan Ranabhat",
   "containers.LocaleToggle.de": "de",
   "containers.LocaleToggle.en": "en",
-  "components.LoginForm.email": "Email",
-  "components.LoginForm.password": "Password",
-  "components.LoginForm.submit": "Submit",
   "components.Header.home": "Home",
-  "components.Header.features": "Features",
-  "helpers.ValidationMessage.isNotEmpty": "",
-  "helpers.ValidationMessage.isNotString": "",
-  "helpers.ValidationMessage.isNotInt": "",
-  "helpers.ValidationMessage.isNotEmail": "",
-  "helpers.ValidationMessage.isNotSelected": "",
-  "helpers.ValidationMessage.isNotPositive": "",
-  "helpers.ValidationMessage.isNotTrue": "",
-  "helpers.ValidationMessage.isNotAddress": ""
+  "components.Header.features": "Features"
 }

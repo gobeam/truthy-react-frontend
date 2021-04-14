@@ -9,6 +9,18 @@ import { defineMessages } from 'react-intl';
 export const scope = 'containers.LoginPage';
 
 export default defineMessages({
+  back: {
+    id: `${scope}.back`,
+    defaultMessage: 'Go Back',
+  },
+  register: {
+    id: `${scope}.register`,
+    defaultMessage: 'Not registered?',
+  },
+  createAccount: {
+    id: `${scope}.createAccount`,
+    defaultMessage: 'Create account',
+  },
   name: {
     id: `${scope}.name`,
     defaultMessage: 'Name',

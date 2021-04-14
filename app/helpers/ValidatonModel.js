@@ -1,12 +1,12 @@
 class Validator {
-  validate = (value, rules, key) => {
+  validate = (value, rules) => {
     const self = this;
     let msg = null;
     let endMessage = '';
     rules.forEach((rule) => {
       msg = self[rule](value);
       if (msg) {
-        endMessage = unCamelCase(key) + msg;
+        endMessage = msg;
       }
     });
     return endMessage;
@@ -21,7 +21,7 @@ class Validator {
     if (typeof value === 'string') {
       return '';
     }
-    return ' must be string';
+    return 'isNotString';
   };
 
   /**
@@ -33,7 +33,7 @@ class Validator {
     if (value !== '' && value !== null && typeof value !== 'undefined') {
       return '';
     }
-    return ' cannot be empty';
+    return 'isNotEmpty';
   };
 
   /**
@@ -45,7 +45,7 @@ class Validator {
     if (!Number.isNaN(value)) {
       return '';
     }
-    return ' must be integer';
+    return 'isNotInt';
   };
 
   /**
@@ -57,7 +57,7 @@ class Validator {
     if (!Number.isNaN(value)) {
       return '';
     }
-    return ' must be selected';
+    return 'isNotSelected';
   };
 
   /**
@@ -69,7 +69,7 @@ class Validator {
     if (value > 0) {
       return '';
     }
-    return ' must be positive';
+    return 'isNotPositive';
   };
 
   /** check if value is in email format
@@ -82,7 +82,7 @@ class Validator {
     if (re.test(String(value).toLowerCase())) {
       return '';
     }
-    return ' is not valid';
+    return 'isNotEmail';
   };
 
   /**
@@ -94,7 +94,7 @@ class Validator {
     if (value) {
       return '';
     }
-    return ' must be true';
+    return 'isNotTrue';
   };
 
   /**
@@ -105,7 +105,7 @@ class Validator {
   isAddress = (value) => {
     if (!/^(0x)?[0-9a-f]{40}$/i.test(value)) {
       // check if it has the basic requirements of an address
-      return ' must be valid ethereum address';
+      return 'isNotAddress!';
     }
     if (
       /^(0x)?[0-9a-f]{40}$/.test(value) ||
@@ -117,16 +117,5 @@ class Validator {
     return '';
   };
 }
-
-/**
- *
- * @param str
- * @returns {*}
- */
-const unCamelCase = (str) =>
-  str
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-    .replace(/^./, (val) => val.toUpperCase());
 
 export default Validator;

@@ -23,7 +23,11 @@ export default defineMessages({
   },
   submit: {
     id: `${scope}.submit`,
-    defaultMessage: 'Submit',
+    defaultMessage: 'Sign in',
+  },
+  lostPassword: {
+    id: `${scope}.lostPassword`,
+    defaultMessage: 'Lost password?',
   },
   inputLogin: {
     id: `${scope}.inputLogin`,

@@ -44,7 +44,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.object,
+  component: PropTypes.func,
   navItems: PropTypes.array,
 };
 
