@@ -35,7 +35,7 @@ function AuthFormGroupWrapper({
           autoFocus={focus}
           type={type}
           required={required}
-          placeholder={placeholder}
+          placeholder={intl.formatMessage(placeholder)}
         />
         <Form.Control.Feedback type="invalid">
           {error ? intl.formatMessage(validationMessages[error]) : ''}
@@ -54,7 +54,7 @@ AuthFormGroupWrapper.propTypes = {
   changeHandler: PropTypes.func,
   value: PropTypes.string,
   type: PropTypes.string,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.object,
   focus: PropTypes.bool,
   required: PropTypes.bool,
   intl: PropTypes.object,

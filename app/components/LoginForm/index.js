@@ -55,7 +55,7 @@ export default function LoginForm() {
         value={email}
         required={false}
         focus={false}
-        placeholder="example@truthy.com"
+        placeholder={messages.emailPlaceHolder}
         changeHandler={onChangeEmail}
         error={errors.email}
       />
@@ -68,7 +68,7 @@ export default function LoginForm() {
         value={password}
         required={false}
         focus={false}
-        placeholder="Password"
+        placeholder={messages.passwordPlaceHolder}
         changeHandler={onChangePassword}
         error={errors.password}
       />

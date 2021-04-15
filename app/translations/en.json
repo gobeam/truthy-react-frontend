@@ -18,6 +18,13 @@
   "components.LoginForm.password": "Password",
   "components.LoginForm.submit": "Sign in",
   "components.LoginForm.lostPassword": "Lost password?",
+  "components.LoginForm.passwordPlaceHolder": "Password",
+  "components.LoginForm.emailPlaceHolder": "user@tryuthy.com",
+
+  "containers.ForgotPassword.helmetForgotPwdTitle": "Forgot Password Page",
+  "containers.ForgotPassword.forgotPassword": "Forgot Password",
+  "containers.ForgotPassword.forgotPasswordBtn": "Send Reset Link",
+  "containers.ForgotPassword.back": "Go Back",
 
   "components.Footer.author.message": "Made with love by {author}.",
   "components.Footer.author.name": "Roshan Ranabhat",

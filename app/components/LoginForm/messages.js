@@ -13,6 +13,14 @@ export default defineMessages({
     id: `${scope}.email`,
     defaultMessage: 'Email',
   },
+  emailPlaceHolder: {
+    id: `${scope}.emailPlaceHolder`,
+    defaultMessage: 'user@tryuthy.com',
+  },
+  passwordPlaceHolder: {
+    id: `${scope}.passwordPlaceHolder`,
+    defaultMessage: 'Password',
+  },
   name: {
     id: `${scope}.name`,
     defaultMessage: 'Name',

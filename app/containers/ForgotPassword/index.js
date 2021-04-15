@@ -10,7 +10,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/ForgotPassword/saga';
 import reducer from 'containers/ForgotPassword/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
-import ValidationMessageWrapper from 'components/ValidationMessageWrapper';
 import {
   changeFieldAction,
   validateFormAction,
@@ -25,9 +24,23 @@ import {
   hideHeaderAction,
   publicRedirectLoggedAction,
 } from 'containers/App/actions';
-import InputWrapper from 'components/InputWrapper';
-import { NavLink } from 'react-router-dom';
-import logoImage from 'logo.svg';
+import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import messages from 'containers/ForgotPassword/messages';
+import loginMessage from 'components/LoginForm/messages';
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+} from '@themesberg/react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import BgImage from 'assets/img/illustrations/signin.svg';
+import LocaleToggle from 'containers/LocaleToggle';
+import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 
 const key = 'forgotPassword';
 
@@ -52,52 +65,64 @@ export default function ForgotPasswordPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-10 rounded-lg shadow-lg">
-        <div>
-          <img className="mx-auto h-12 w-auto" src={logoImage} alt="wip.team" />
-          <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-            Forget Password
-            <Helmet title="Forget Password" />
-          </h2>
-          {/* <p className="mt-2 text-center text-sm leading-5 text-gray-600"> */}
-
-          {/* /!*<NavLink to="/login" className="ml-2 font-medium text-orange-600 hover:text-orange-500 focus:outline-none focus:underline transition ease-in-out duration-150">Login</NavLink>*!/ */}
-          {/* </p> */}
-        </div>
-        <form
-          className="flex flex-col pt-3 md:pt-8"
-          onSubmit={submitForgotPasswordForm}
-        >
-          <div className="flex flex-col pt-4 mb-10">
-            <label htmlFor="password" className="text-md font-bold">
-              Email
-            </label>
-            <InputWrapper
-              type="email"
-              name="email"
-              value={email}
-              onChange={onChangeField}
-              invalid={!!errors.email}
-              placeholder="Input your email"
-            />
-            <ValidationMessageWrapper error={errors.email} />
-          </div>
-          <input
-            type="submit"
-            value="Submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange active:bg-orange-700 transition duration-150 ease-in-out"
-          />
-        </form>
-        <p className="mt-2 text-center text-sm leading-5 text-gray-600">
-          <NavLink
-            to="/login"
-            className="ml-2 font-medium text-orange-600 hover:text-orange-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+    <main>
+      <FormattedMessage {...messages.helmetForgotPwdTitle}>
+        {(title) => (
+          <Helmet>
+            <title>{title}</title>
+          </Helmet>
+        )}
+      </FormattedMessage>
+      <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
+        <Container>
+          <p className="text-center">
+            <Card.Link as={Link} to="/" className="text-gray-700">
+              <FontAwesomeIcon icon={faAngleLeft} className="me-2" />
+              <FormattedMessage {...messages.back} />
+            </Card.Link>
+          </p>
+          <Row
+            className="justify-content-center form-bg-image"
+            style={{ backgroundImage: `url(${BgImage})` }}
           >
-            Login
-          </NavLink>
-        </p>
-      </div>
-    </div>
+            <Col
+              xs={12}
+              className="d-flex align-items-center justify-content-center"
+            >
+              <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <div className="text-center text-md-center mb-4 mt-md-0">
+                  <h3 className="mb-0">
+                    <FormattedMessage {...messages.forgotPassword} />
+                  </h3>
+                </div>
+                <Form
+                  noValidate
+                  validated={errors.length < 1}
+                  className="mt-4"
+                  onSubmit={submitForgotPasswordForm}
+                >
+                  <AuthFormGroupWrapper
+                    label={loginMessage.email}
+                    name="email"
+                    id="email"
+                    type="email"
+                    value={email}
+                    required={false}
+                    focus={false}
+                    placeholder={loginMessage.emailPlaceHolder}
+                    changeHandler={onChangeField}
+                    error={errors.email}
+                  />
+                  <Button variant="primary" type="submit" className="w-100">
+                    <FormattedMessage {...messages.forgotPasswordBtn} />
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+          <LocaleToggle />
+        </Container>
+      </section>
+    </main>
   );
 }

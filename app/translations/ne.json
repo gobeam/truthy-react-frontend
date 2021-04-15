@@ -18,6 +18,13 @@
   "components.LoginForm.password": "पासवर्ड",
   "components.LoginForm.submit": "बुझाउनुहोस्",
   "components.LoginForm.lostPassword": "पासवर्ड हराउनु भयो?",
+  "components.LoginForm.passwordPlaceHolder": "पासवर्ड",
+  "components.LoginForm.emailPlaceHolder": "user@tryuthy.com",
+
+  "containers.ForgotPassword.helmetForgotPwdTitle": "पासवर्ड बिर्सिएँ पृष्ठ",
+  "containers.ForgotPassword.forgotPassword": "पासवर्ड भुल्नु भयो",
+  "containers.ForgotPassword.forgotPasswordBtn": "रिसेट लिंक पठाउनुहोस्",
+  "containers.ForgotPassword.back": "पछाडी जाउ",
 
   "components.Footer.author.message": "प्रेमले बनाएको {author}.",
   "components.Footer.author.name": "रोशन रानाभट",
