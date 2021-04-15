@@ -13,18 +13,22 @@ import {
   REGISTER_SUCCESS,
 } from 'containers/RegisterPage/constants';
 
+const emptyErrorPayload = {
+  email: '',
+  name: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+};
 export const initialState = {
   company: '',
   email: '',
   name: '',
   password: '',
-  confirm_password: '',
-  errors: {
-    email: '',
-    name: '',
-    password: '',
-    confirm_password: '',
-  },
+  confirmPassword: '',
+  username: '',
+  accept: false,
+  errors: emptyErrorPayload,
   error: '',
   isLoading: false,
 };
@@ -59,14 +63,11 @@ const loginPageReducer = produce((draft, action) => {
       draft.email = '';
       draft.name = '';
       draft.password = '';
-      draft.confirm_password = '';
+      draft.confirmPassword = '';
+      draft.username = '';
+      draft.accept = false;
       draft.error = '';
-      draft.errors = {
-        email: '',
-        name: '',
-        password: '',
-        confirm_password: '',
-      };
+      draft.errors = emptyErrorPayload;
       draft.isLoading = false;
       break;
   }

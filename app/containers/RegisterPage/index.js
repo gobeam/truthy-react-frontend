@@ -1,25 +1,28 @@
 /**
  *
- * LoginPage
+ * Register Page
  *
  */
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import { FormattedMessage } from 'react-intl';
 import reducer from 'containers/RegisterPage/reducer';
+import messages from 'containers/RegisterPage/messages';
 import saga from 'containers/RegisterPage/saga';
-// Import Components
 import RegisterForm from 'components/RegisterForm';
-// Import Actions
 import { isLoggedAction } from 'containers/RegisterPage/actions';
-import { NavLink } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { hideHeaderAction } from 'containers/App/actions';
-import logoImage from 'logo.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Card, Col, Container, Row } from '@themesberg/react-bootstrap';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import BgImage from 'assets/img/illustrations/signin.svg';
+import LocaleToggle from 'containers/LocaleToggle';
 
 const key = 'register';
 
@@ -42,26 +45,51 @@ export default function LoginPage() {
   }, [user]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-10 rounded-lg shadow-lg">
-        <div>
-          <img className="mx-auto h-12 w-auto" src={logoImage} alt="wip.team" />
-          <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-            Get started
-            <Helmet title="Register" />
-          </h2>
-          <p className="mt-2 text-center text-sm leading-5 text-gray-600">
-            Or
-            <NavLink
-              to="/login"
-              className="ml-2 font-medium text-orange-600 hover:text-orange-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-            >
-              Already have an account? Log in
-            </NavLink>
+    <main>
+      <FormattedMessage {...messages.helmetRegisterTitle}>
+        {(title) => (
+          <Helmet>
+            <title>{title}</title>
+          </Helmet>
+        )}
+      </FormattedMessage>
+      <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
+        <Container>
+          <p className="text-center">
+            <Card.Link as={Link} to="/" className="text-gray-700">
+              <FontAwesomeIcon icon={faAngleLeft} className="me-2" />
+              <FormattedMessage {...messages.back} />
+            </Card.Link>
           </p>
-        </div>
-        <RegisterForm />
-      </div>
-    </div>
+          <Row
+            className="justify-content-center form-bg-image"
+            style={{ backgroundImage: `url(${BgImage})` }}
+          >
+            <Col
+              xs={12}
+              className="d-flex align-items-center justify-content-center"
+            >
+              <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <div className="text-center text-md-center mb-4 mt-md-0">
+                  <h3 className="mb-0">
+                    <FormattedMessage {...messages.createAccount} />
+                  </h3>
+                </div>
+                <RegisterForm />
+                <div className="d-flex justify-content-center align-items-center mt-4">
+                  <span className="fw-normal">
+                    <FormattedMessage {...messages.alreadyAccount} />
+                    <Card.Link as={Link} to="/register" className="fw-bold">
+                      <FormattedMessage {...messages.loginHere} />
+                    </Card.Link>
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <LocaleToggle />
+        </Container>
+      </section>
+    </main>
   );
 }

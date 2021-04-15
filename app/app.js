@@ -28,10 +28,11 @@ import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 import configureStore from 'configure-store';
 // Import i18n messages
-import { translationMessages } from 'i18n';
+import { DEFAULT_LOCALE, translationMessages } from 'i18n';
 import { loadState, saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import reportWebVitals from 'reportWebVitals';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -79,24 +80,34 @@ if (module.hot) {
   });
 }
 
-// Chunked polyfill for browsers without Intl support
-if (!window.Intl) {
-  new Promise((resolve) => {
-    resolve(import('intl'));
-  })
-    .then(() =>
-      Promise.all([
-        import('intl/locale-data/jsonp/en.js'),
-        import('intl/locale-data/jsonp/ne-NP.js'),
-      ]),
-    )
-    .then(() => render(translationMessages))
-    .catch((err) => {
-      throw err;
-    });
-} else {
-  render(translationMessages);
+async function polyfill(locale) {
+  if (shouldPolyfill()) {
+    await import('@formatjs/intl-numberformat/polyfill');
+  }
+  if (Intl.NumberFormat.polyfilled) {
+    switch (locale) {
+      default:
+        await import('@formatjs/intl-numberformat/locale-data/en');
+        break;
+      case 'ne':
+        await import('@formatjs/intl-numberformat/locale-data/ne');
+        break;
+    }
+  }
 }
+
+// Chunked polyfill for browsers without Intl support
+const lang =
+  store.getState().language && store.getState().language.locale
+    ? store.getState().language.locale
+    : DEFAULT_LOCALE;
+polyfill(lang)
+  .then(() => {
+    render(translationMessages);
+  })
+  .catch((err) => {
+    throw err;
+  });
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line no-console

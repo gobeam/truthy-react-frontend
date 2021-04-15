@@ -10,7 +10,7 @@
   "helpers.ValidationMessage.isNotInt": "field should be number",
   "helpers.ValidationMessage.isNotEmail": "field should be valid email",
   "helpers.ValidationMessage.isNotSelected": "field should be selected",
-  "helpers.ValidationMessage.isNotPositive": "field must be positive",
+  "helpers.ValidationMessage.isNotPositive": "field must be accepted",
   "helpers.ValidationMessage.isNotTrue": "field must be true",
   "helpers.ValidationMessage.isNotAddress": "field is not valid ethereum address",
 
@@ -20,11 +20,23 @@
   "components.LoginForm.lostPassword": "Lost password?",
   "components.LoginForm.passwordPlaceHolder": "Password",
   "components.LoginForm.emailPlaceHolder": "user@tryuthy.com",
+  "components.LoginForm.confirmPassword": "Confirm Password",
 
   "containers.ForgotPassword.helmetForgotPwdTitle": "Forgot Password Page",
   "containers.ForgotPassword.forgotPassword": "Forgot Password",
   "containers.ForgotPassword.forgotPasswordBtn": "Send Reset Link",
   "containers.ForgotPassword.back": "Go Back",
+
+  "containers.RegisterPage.back": "Go Back",
+  "containers.RegisterPage.helmetRegisterTitle": "Registration - Page",
+  "containers.RegisterPage.createAccount": "Create an account",
+  "containers.RegisterPage.loginHere": "Login here",
+  "containers.RegisterPage.alreadyAccount": "Already have an account?",
+  "containers.RegisterPage.name": "Name",
+  "containers.RegisterPage.username": "Username",
+  "containers.RegisterPage.agreeTo": "I agree to the",
+  "containers.RegisterPage.agreeLinkText": "terms and conditions",
+  "containers.RegisterPage.signBtn": "Sign up",
 
   "components.Footer.author.message": "Made with love by {author}.",
   "components.Footer.author.name": "Roshan Ranabhat",

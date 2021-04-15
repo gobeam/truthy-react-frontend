@@ -10,7 +10,7 @@
   "helpers.ValidationMessage.isNotInt": "यो क्षेत्र मान्य संख्या होईन!",
   "helpers.ValidationMessage.isNotEmail": "यो क्षेत्र मान्य ईमेल होईन!",
   "helpers.ValidationMessage.isNotSelected": "यो क्षेत्र चयन गरिएको हुनुपर्दछ!",
-  "helpers.ValidationMessage.isNotPositive": "यो क्षेत्र सकारात्मक संख्या हुनुपर्दछ!",
+  "helpers.ValidationMessage.isNotPositive": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
   "helpers.ValidationMessage.isNotTrue": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
   "helpers.ValidationMessage.isNotAddress": "यो फिल्ड मान्य ईथरम ठेगाना होईन!",
 
@@ -20,11 +20,23 @@
   "components.LoginForm.lostPassword": "पासवर्ड हराउनु भयो?",
   "components.LoginForm.passwordPlaceHolder": "पासवर्ड",
   "components.LoginForm.emailPlaceHolder": "user@tryuthy.com",
+  "components.LoginForm.confirmPassword": "पासवर्ड सुनिश्चित गर्नुहोस",
 
   "containers.ForgotPassword.helmetForgotPwdTitle": "पासवर्ड बिर्सिएँ पृष्ठ",
   "containers.ForgotPassword.forgotPassword": "पासवर्ड भुल्नु भयो",
   "containers.ForgotPassword.forgotPasswordBtn": "रिसेट लिंक पठाउनुहोस्",
   "containers.ForgotPassword.back": "पछाडी जाउ",
+
+  "containers.RegisterPage.back": "पछाडी जाउ",
+  "containers.RegisterPage.helmetRegisterTitle": "रेजिस्टर - पृष्ठ",
+  "containers.RegisterPage.createAccount": "खाता खोल्नुहोस्",
+  "containers.RegisterPage.loginHere": "यहाँ लग ईन गर्नुहोस्",
+  "containers.RegisterPage.alreadyAccount": "पहिले नै खाता छ?",
+  "containers.RegisterPage.name": "नाम",
+  "containers.RegisterPage.username": "छोटो प्रयोगकर्ता नाम",
+  "containers.RegisterPage.agreeTo": "म सहमत छु",
+  "containers.RegisterPage.agreeLinkText": "नियम र सर्तहरूमा",
+  "containers.RegisterPage.signBtn": "साइन अप",
 
   "components.Footer.author.message": "प्रेमले बनाएको {author}.",
   "components.Footer.author.name": "रोशन रानाभट",

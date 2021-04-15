@@ -35,7 +35,7 @@ export default defineMessages({
   },
   isNotPositive: {
     id: `${scope}.isNotPositive`,
-    defaultMessage: `This field is must be positive number!`,
+    defaultMessage: `This field is must be accepted!`,
   },
   isNotTrue: {
     id: `${scope}.isNotTrue`,

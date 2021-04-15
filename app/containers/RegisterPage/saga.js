@@ -13,10 +13,12 @@ import {
 } from 'containers/RegisterPage/actions';
 import { checkError } from 'helpers/Validation';
 import {
+  makeAcceptSelector,
   makeConfirmPasswordSelector,
   makeEmailSelector,
   makeNameSelector,
   makePasswordSelector,
+  makeUsernameSelector,
 } from 'containers/RegisterPage/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
@@ -31,6 +33,8 @@ export function* validateForm() {
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
   const name = yield select(makeNameSelector());
+  const username = yield select(makeUsernameSelector());
+  const accept = yield select(makeAcceptSelector());
   const model = {
     email: {
       value: email,
@@ -44,9 +48,17 @@ export function* validateForm() {
       value: password,
       validator: ['isNotEmpty'],
     },
+    username: {
+      value: username,
+      validator: ['isNotEmpty'],
+    },
     confirmPassword: {
       value: confirmPassword,
       validator: ['isNotEmpty'],
+    },
+    accept: {
+      value: accept,
+      validator: ['isTrue'],
     },
   };
 

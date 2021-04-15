@@ -26,6 +26,12 @@ const makeConfirmPasswordSelector = () =>
     (substate) => substate.confirmPassword,
   );
 
+const makeUsernameSelector = () =>
+  createSelector(selectRegisterPageDomain, (substate) => substate.username);
+
+const makeAcceptSelector = () =>
+  createSelector(selectRegisterPageDomain, (substate) => substate.accept);
+
 const makeErrorSelector = () =>
   createSelector(selectRegisterPageDomain, (substate) => substate.errors);
 
@@ -33,7 +39,9 @@ const makeIsLoadingSelector = () =>
   createSelector(selectRegisterPageDomain, (substate) => substate.isLoading);
 
 export {
+  makeAcceptSelector,
   makeEmailSelector,
+  makeUsernameSelector,
   makeConfirmPasswordSelector,
   makePasswordSelector,
   makeNameSelector,

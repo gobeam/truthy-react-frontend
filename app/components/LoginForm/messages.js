@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scope}.emailPlaceHolder`,
     defaultMessage: 'user@tryuthy.com',
   },
+  confirmPassword: {
+    id: `${scope}.confirmPassword`,
+    defaultMessage: 'Confirm Password',
+  },
   passwordPlaceHolder: {
     id: `${scope}.passwordPlaceHolder`,
     defaultMessage: 'Password',

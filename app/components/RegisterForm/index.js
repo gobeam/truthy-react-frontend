@@ -7,22 +7,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import InputWrapper from 'components/InputWrapper';
 import {
   changeFieldAction,
   onFormValidation,
 } from 'containers/RegisterPage/actions';
 import {
+  makeAcceptSelector,
   makeConfirmPasswordSelector,
   makeEmailSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
   makeNameSelector,
   makePasswordSelector,
+  makeUsernameSelector,
 } from 'containers/RegisterPage/selectors';
-import ValidationMessageWrapper from 'components/ValidationMessageWrapper';
+import messages from 'containers/RegisterPage/messages';
+import loginMessages from 'components/LoginForm/messages';
+import { Button, Card, Form, FormCheck } from '@themesberg/react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
+import validationMessages from 'helpers/messages';
 
 const stateSelector = createStructuredSelector({
+  username: makeUsernameSelector(),
+  accept: makeAcceptSelector(),
   email: makeEmailSelector(),
   name: makeNameSelector(),
   password: makePasswordSelector(),
@@ -35,6 +43,8 @@ export default function RegisterForm() {
   const dispatch = useDispatch();
 
   const {
+    username,
+    accept,
     email,
     password,
     errors,
@@ -56,73 +66,110 @@ export default function RegisterForm() {
   }, []);
 
   return (
-    <form className="flex flex-col pt-3 md:pt-8" onSubmit={submitRegisterForm}>
-      <div className="flex flex-col pt-4">
-        <label htmlFor="email" className="text-md font-bold">
-          Name
-        </label>
-        <InputWrapper
-          type="text"
-          name="name"
-          value={name}
-          onChange={onChangeField}
-          invalid={!!errors.name}
-          placeholder="Input your name"
-        />
-        <ValidationMessageWrapper error={errors.name} />
-      </div>
-
-      <div className="flex flex-col pt-4">
-        <label htmlFor="email" className="text-md font-bold">
-          Email
-        </label>
-        <InputWrapper
-          type="email"
-          name="email"
-          value={email}
-          onChange={onChangeField}
-          invalid={!!errors.email}
-          placeholder="Input your email"
-        />
-        <ValidationMessageWrapper error={errors.email} />
-      </div>
-
-      <div className="flex flex-col pt-4">
-        <label htmlFor="password" className="text-md font-bold">
-          Password
-        </label>
-        <InputWrapper
-          type="password"
-          name="password"
-          value={password}
-          onChange={onChangeField}
-          invalid={!!errors.password}
-          placeholder="Password"
-        />
-        <ValidationMessageWrapper error={errors.password} />
-      </div>
-
-      <div className="flex flex-col pt-4 mb-10">
-        <label htmlFor="password" className="text-md font-bold">
-          Confirm Password
-        </label>
-        <InputWrapper
-          type="password"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={onChangeField}
-          invalid={!!errors.confirmPassword}
-          placeholder="Password"
-        />
-        <ValidationMessageWrapper error={errors.confirmPassword} />
-      </div>
-
-      <input
-        type="submit"
-        value="Sign up"
-        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-orange-600 hover:bg-orange-500 focus:outline-none focus:border-orange-700 focus:shadow-outline-orange active:bg-orange-700 transition duration-150 ease-in-out"
-        disabled={isLoading}
+    <Form
+      noValidate
+      validated={errors.length < 1}
+      className="mt-4"
+      onSubmit={submitRegisterForm}
+    >
+      <AuthFormGroupWrapper
+        label={messages.name}
+        name="name"
+        id="name"
+        type="text"
+        value={name}
+        required={false}
+        focus={false}
+        placeholder={messages.name}
+        changeHandler={onChangeField}
+        error={errors.name}
       />
-    </form>
+
+      <AuthFormGroupWrapper
+        label={loginMessages.email}
+        name="email"
+        id="email"
+        type="email"
+        value={email}
+        required={false}
+        focus={false}
+        placeholder={loginMessages.emailPlaceHolder}
+        changeHandler={onChangeField}
+        error={errors.email}
+      />
+
+      <AuthFormGroupWrapper
+        label={messages.username}
+        name="username"
+        id="username"
+        type="text"
+        value={username}
+        required={false}
+        focus={false}
+        placeholder={messages.username}
+        changeHandler={onChangeField}
+        error={errors.username}
+      />
+
+      <AuthFormGroupWrapper
+        label={loginMessages.password}
+        name="password"
+        id="password"
+        type="password"
+        value={password}
+        required={false}
+        focus={false}
+        placeholder={loginMessages.passwordPlaceHolder}
+        changeHandler={onChangeField}
+        error={errors.password}
+      />
+
+      <AuthFormGroupWrapper
+        label={loginMessages.confirmPassword}
+        name="confirmPassword"
+        id="confirmPassword"
+        type="password"
+        value={confirmPassword}
+        required={false}
+        focus={false}
+        placeholder={loginMessages.passwordPlaceHolder}
+        changeHandler={onChangeField}
+        error={errors.confirmPassword}
+      />
+
+      <FormCheck type="checkbox" className="d-flex mb-4">
+        <FormCheck.Input
+          name="accept"
+          isInvalid={!!errors.accept}
+          value={accept}
+          onChange={onChangeField}
+          id="terms"
+          className="me-2"
+        />
+        <FormCheck.Label htmlFor="terms">
+          <FormattedMessage {...messages.agreeTo} />
+          <Card.Link>
+            <FormattedMessage {...messages.agreeLinkText} />
+          </Card.Link>
+        </FormCheck.Label>
+
+        <Form.Control.Feedback type="invalid">
+          {errors.accept ? (
+            <FormattedMessage {...validationMessages[errors.accept]} />
+          ) : (
+            ''
+          )}
+        </Form.Control.Feedback>
+      </FormCheck>
+
+      <Button
+        disabled={isLoading}
+        variant="primary"
+        type="submit"
+        className="w-100"
+      >
+        <FormattedMessage {...messages.signBtn} />
+      </Button>
+    </Form>
   );
 }
