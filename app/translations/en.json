@@ -4,6 +4,7 @@
   "containers.LoginPage.createAccount": "Create account",
   "containers.LoginPage.loginToTheSystem": "Log in",
   "containers.LoginPage.helmetLoginTitle": "Login",
+  "containers.LoginPage.errorLogin": "Invalid credentials",
 
   "helpers.ValidationMessage.isNotEmpty": "field should not be empty",
   "helpers.ValidationMessage.isNotString": "field should be string",
@@ -13,8 +14,9 @@
   "helpers.ValidationMessage.isNotPositive": "field must be accepted",
   "helpers.ValidationMessage.isNotTrue": "field must be true",
   "helpers.ValidationMessage.isNotAddress": "field is not valid ethereum address",
+  "helpers.ValidationMessage.confirmPasswordNotSimilar": "Confirm password doesn't match with password!",
 
-  "components.LoginForm.email": "Email",
+  "components.LoginForm.email": "Email/Username",
   "components.LoginForm.password": "Password",
   "components.LoginForm.submit": "Sign in",
   "components.LoginForm.lostPassword": "Lost password?",

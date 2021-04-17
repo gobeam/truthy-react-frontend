@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
+import { initialState } from 'containers/App/reducer';
 
 const selectGlobal = (state) => state.global || initialState;
 

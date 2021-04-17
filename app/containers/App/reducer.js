@@ -12,27 +12,16 @@ import {
   HIDE_HEADER,
   IS_LOGGED_ERROR,
   IS_LOGGED_SUCCESS,
-  LOAD_NOTIFICATIONS,
   LOGGED_IN,
   LOGOUT,
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
-  UPDATE_INVOLVED_COMPANIES,
 } from 'containers/App/constants';
 import { LOCATION_CHANGE } from 'connected-react-router';
 
 export const initialState = {
-  limit: 1,
-  workInterval: 60 * 60 * 1000,
-  // workInterval: localStorage.getItem('timer'),
-  hourlyMemo: '',
-  takeItEasy: '',
-  selectedCompany: '',
   hideHeader: false,
   isLoading: false,
-  unreadCount: 0,
-  userMenu: false,
-  userNotification: false,
   companies: [],
   notifications: [],
   isLogged: null,
@@ -53,12 +42,6 @@ const appPageReducer = produce((draft, action) => {
     case LOGGED_IN:
     case IS_LOGGED_SUCCESS:
       draft.isLogged = true;
-      break;
-    case UPDATE_INVOLVED_COMPANIES:
-      draft.companies = action.data;
-      break;
-    case LOAD_NOTIFICATIONS:
-      draft.notifications = action.data;
       break;
     case HIDE_HEADER:
       draft.hideHeader = action.val;

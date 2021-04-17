@@ -9,6 +9,10 @@ import { defineMessages } from 'react-intl';
 export const scope = 'helpers.ValidationMessage';
 
 export default defineMessages({
+  confirmPasswordNotSimilar: {
+    id: `${scope}.confirmPasswordNotSimilar`,
+    defaultMessage: `Confirm password doesn't match with password!`,
+  },
   isNotEmpty: {
     id: `${scope}.isNotEmpty`,
     defaultMessage: `This field is required!`,

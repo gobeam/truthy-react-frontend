@@ -2,11 +2,11 @@ export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
     if (serializedState === null) {
-      return undefined;
+      return true;
     }
     return JSON.parse(serializedState);
   } catch (e) {
-    return undefined;
+    return false;
   }
 };
 

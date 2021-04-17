@@ -1,8 +1,8 @@
 export const APP_URL = process.env.REACT_APP_URI;
 export const BASE_URL = process.env.REACT_APP_API_BASE_URI;
-const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URI}/api`;
-const AUTH_PATH = '/oauth2/token';
-const PROFILE_PATH = '/profile';
+const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URI}`;
+const AUTH_PATH = '/auth/login';
+const PROFILE_PATH = '/auth/profile';
 const LOGOUT_PATH = '/logout';
 
 export default class ApiEndpoint {
@@ -14,7 +14,7 @@ export default class ApiEndpoint {
 
   getLogoutPath = () => `${API_BASE_URL + LOGOUT_PATH}`;
 
-  getRegisterPath = () => `${API_BASE_URL}/register`;
+  getRegisterPath = () => `${API_BASE_URL}/auth/register`;
 
   makeApiPayload = (
     method,

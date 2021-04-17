@@ -11,8 +11,8 @@ const selectLoginPageDomain = (state) => state.login || initialState;
  * Other specific selectors
  */
 
-const makeEmailSelector = () =>
-  createSelector(selectLoginPageDomain, (substate) => substate.email);
+const makeUsernameSelector = () =>
+  createSelector(selectLoginPageDomain, (substate) => substate.username);
 
 const makePasswordSelector = () =>
   createSelector(selectLoginPageDomain, (substate) => substate.password);
@@ -33,7 +33,7 @@ const makeSelectLoginPage = () =>
 export default makeSelectLoginPage;
 
 export {
-  makeEmailSelector,
+  makeUsernameSelector,
   makePasswordSelector,
   makeErrorSelector,
   makeIsLoadingSelector,

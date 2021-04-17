@@ -16,6 +16,12 @@ export const publicRoutes = [
     exact: true,
   },
   {
+    path: '/login',
+    name: 'login-page',
+    component: LoginPage,
+    exact: true,
+  },
+  {
     path: '/redirect/auth',
     name: 'redirect-page',
     component: AuthRedirectPage,

@@ -38,7 +38,9 @@ function AuthFormGroupWrapper({
           placeholder={intl.formatMessage(placeholder)}
         />
         <Form.Control.Feedback type="invalid">
-          {error ? intl.formatMessage(validationMessages[error]) : ''}
+          {error && validationMessages[error]
+            ? intl.formatMessage(validationMessages[error])
+            : error}
         </Form.Control.Feedback>
       </InputGroup>
     </Form.Group>

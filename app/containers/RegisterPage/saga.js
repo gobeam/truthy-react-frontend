@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ENTER_LOGIN,
   REGISTER_PROCESS,
@@ -26,6 +27,8 @@ import { push } from 'connected-react-router';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
 import { makeIsLoggedSelector } from 'containers/App/selectors';
+import { FormattedMessage } from 'react-intl';
+import commonValidationMessages from 'helpers/messages';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -69,7 +72,11 @@ export function* validateForm() {
   if (password !== confirmPassword) {
     return yield put(
       enterValidationErrorAction({
-        confirm_password: "Confirm password didn't match with password",
+        confirmPassword: (
+          <FormattedMessage
+            {...commonValidationMessages.confirmPasswordNotSimilar}
+          />
+        ),
       }),
     );
   }
@@ -79,30 +86,21 @@ export function* validateForm() {
 export function* handleRegister() {
   const api = new ApiEndpoint();
   const email = yield select(makeEmailSelector());
+  const username = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
-  const confirmPassword = yield select(makeConfirmPasswordSelector());
   const name = yield select(makeNameSelector());
   const requestURL = api.getRegisterPath();
   const requestPayload = api.makeApiPayload('POST', null, {
+    name,
+    username,
     email,
     password,
-    name,
-    confirmPassword,
   });
 
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response.error) {
-      if (typeof response.error === 'object') {
-        return yield put(enterValidationErrorAction(response.error));
-      }
-      yield put(
-        enqueueSnackbarAction({
-          message: 'There was some error',
-          type: 'error',
-        }),
-      );
-      return yield put(registerErrorAction('There was some error'));
+      return yield put(enterValidationErrorAction(response.error));
     }
     yield put(asyncEnd());
     yield put(

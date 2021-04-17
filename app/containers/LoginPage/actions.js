@@ -11,7 +11,7 @@ import {
   ENTER_LOGIN,
   LOGIN_PROCESS,
   ASYNC_END,
-  CHANGE_EMAIL,
+  CHANGE_USERNAME,
   VALIDATE_FORM,
   LOGIN_ERROR,
 } from 'containers/LoginPage/constants';
@@ -23,10 +23,10 @@ export function changePasswordAction(password) {
   };
 }
 
-export function changeEmailAction(email) {
+export function changeUsernameAction(username) {
   return {
-    type: CHANGE_EMAIL,
-    email,
+    type: CHANGE_USERNAME,
+    username,
   };
 }
 

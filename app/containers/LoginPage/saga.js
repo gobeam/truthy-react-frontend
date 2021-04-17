@@ -1,11 +1,14 @@
+import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import AuthService from 'services/auth.service';
+import { FormattedMessage } from 'react-intl';
+import messages from 'containers/LoginPage/messages';
 import {
-  makeEmailSelector,
   makePasswordSelector,
+  makeUsernameSelector,
 } from 'containers/LoginPage/selectors';
 import {
   ENTER_LOGIN,
@@ -23,16 +26,16 @@ import {
   enterLoginAction,
   enterValidationErrorAction,
   loginErrorAction,
-} from './actions';
+} from 'containers/LoginPage/actions';
 
 export function* validateForm() {
   yield put(asyncStart());
-  const email = yield select(makeEmailSelector());
+  const email = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
   const model = {
     email: {
       value: email,
-      validator: ['isEmail', 'isNotEmpty'],
+      validator: ['isNotEmpty'],
     },
     password: {
       value: password,
@@ -50,31 +53,26 @@ export function* validateForm() {
 export function* attemptLogin() {
   const api = new ApiEndpoint();
   const auth = new AuthService();
-  const email = yield select(makeEmailSelector());
+  const email = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
   const requestURL = api.getLoginPath();
-  const payload = api.getLoginPayload(email, password);
-  const requestPayload = api.makeApiPayload('POST', null, payload);
+  const requestPayload = api.makeApiPayload('POST', null, {
+    username: email,
+    password,
+  });
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response.error) {
-      yield put(
-        enqueueSnackbarAction({
-          message: 'Invalid Credential',
-          type: 'error',
-        }),
-      );
-      return yield put(loginErrorAction('Invalid Credential'));
+      return yield put(enterValidationErrorAction(response.error));
     }
     yield put(asyncEnd());
     auth.setTokenPayload(response);
     return yield put(getProfileAction());
-    // yield put(push(SUCCESS_REDIRECT));
   } catch (error) {
-    yield put(loginErrorAction('Login error'));
+    yield put(loginErrorAction(<FormattedMessage {...messages.errorLogin} />));
     return yield put(
       enqueueSnackbarAction({
-        message: 'Invalid Credential',
+        message: <FormattedMessage {...messages.errorLogin} />,
         type: 'error',
       }),
     );

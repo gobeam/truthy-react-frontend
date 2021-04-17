@@ -13,7 +13,6 @@ import {
   isLoggedSuccessAction,
   logoutErrorAction,
   logoutSuccessAction,
-  refreshTokenErrorAction,
 } from 'containers/App/actions';
 import {
   GET_PROFILE_REQUEST,
@@ -55,7 +54,6 @@ export function* handleLogged() {
 }
 
 export function* handleProfile() {
-  yield call(checkRefreshTokenExpiry);
   const api = new ApiEndpoint();
   const auth = new AuthService();
   const token = auth.getToken();
@@ -65,13 +63,13 @@ export function* handleProfile() {
     const response = yield call(request, requestURL, payload);
     if (response.error) {
       auth.unSetTokenPayload();
-      yield put(isLoggedErrorAction());
+      return yield put(isLoggedErrorAction());
       // return yield put(push(`/?path=${window.location.pathname}`));
     }
-    response.data.image = response.data.image
+    response.image = response.image
       ? `${BASE_URL}/uploads/${response.data.image}`
       : '';
-    yield put(getProfileSuccessAction(response.data));
+    yield put(getProfileSuccessAction(response));
     yield put(isLoggedSuccessAction());
     yield put(hideHeaderAction(false));
     const common = new Common();
@@ -87,39 +85,6 @@ export function* handleProfile() {
     }
     return yield put(getProfileErrorAction('Internal Server Error'));
     // yield put(push(`/?path=${window.location.pathname}`));
-  }
-}
-
-export function* checkRefreshTokenExpiry() {
-  const auth = new AuthService();
-  const refreshToken = auth.getRefreshToken();
-  const expiryTime = auth.getExpiry();
-  // 10 seconds from now
-  const refreshThreshold = Date.now() / 1000 + 10;
-  if (refreshToken && refreshThreshold > expiryTime) {
-    yield call(handleRefreshToken);
-  }
-  return true;
-}
-
-export function* handleRefreshToken() {
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const requestURL = api.getLoginPath();
-  const refreshToken = auth.getRefreshToken();
-  const payload = api.getLoginPayload('', '', true, refreshToken);
-  const requestPayload = api.makeApiPayload('POST', null, payload);
-  try {
-    const response = yield call(request, requestURL, requestPayload);
-    if (response.error) {
-      auth.unSetTokenPayload();
-      yield put(refreshTokenErrorAction('Session out'));
-      // return yield put(push(`/?path=${window.location.pathname}`));
-    }
-    return auth.setTokenPayload(response.data);
-  } catch (error) {
-    auth.unSetTokenPayload();
-    return yield put(refreshTokenErrorAction('Internal server error'));
   }
 }
 

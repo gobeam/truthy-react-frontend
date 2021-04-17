@@ -8,12 +8,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  changeEmailAction,
+  changeUsernameAction,
   changePasswordAction,
   onFormValidation,
 } from 'containers/LoginPage/actions';
 import {
-  makeEmailSelector,
+  makeUsernameSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
   makePasswordSelector,
@@ -25,7 +25,7 @@ import messages from 'components/LoginForm/messages';
 import { FormattedMessage } from 'react-intl';
 
 const stateSelector = createStructuredSelector({
-  email: makeEmailSelector(),
+  username: makeUsernameSelector(),
   password: makePasswordSelector(),
   errors: makeErrorSelector(),
   isLoading: makeIsLoadingSelector(),
@@ -37,9 +37,10 @@ export default function LoginForm() {
     dispatch(onFormValidation()) && e.preventDefault();
   const onChangePassword = (e) =>
     dispatch(changePasswordAction(e.target.value));
-  const onChangeEmail = (e) => dispatch(changeEmailAction(e.target.value));
+  const onChangeUsername = (e) =>
+    dispatch(changeUsernameAction(e.target.value));
 
-  const { email, password, errors, isLoading } = useSelector(stateSelector);
+  const { username, password, errors, isLoading } = useSelector(stateSelector);
   return (
     <Form
       noValidate
@@ -49,15 +50,15 @@ export default function LoginForm() {
     >
       <AuthFormGroupWrapper
         label={messages.email}
-        name="email"
-        id="email"
-        type="email"
-        value={email}
+        name="username"
+        id="username"
+        type="text"
+        value={username}
         required={false}
         focus={false}
         placeholder={messages.emailPlaceHolder}
-        changeHandler={onChangeEmail}
-        error={errors.email}
+        changeHandler={onChangeUsername}
+        error={errors.username}
       />
 
       <AuthFormGroupWrapper

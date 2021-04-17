@@ -7,7 +7,7 @@ import produce from 'immer';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
-  CHANGE_EMAIL,
+  CHANGE_USERNAME,
   CHANGE_LOGIN,
   CHANGE_PASSWORD,
   ENTER_LOGIN_ERROR,
@@ -19,7 +19,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  email: '',
+  username: '',
   password: '',
   errors: {},
   isLoading: false,
@@ -32,9 +32,9 @@ const loginPageReducer = produce((draft, action) => {
       draft.password = action.password;
       draft.errors.password = '';
       break;
-    case CHANGE_EMAIL:
-      draft.email = action.email;
-      draft.errors.email = '';
+    case CHANGE_USERNAME:
+      draft.username = action.username;
+      draft.errors.username = '';
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
@@ -67,7 +67,7 @@ const loginPageReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case LOCATION_CHANGE:
-      draft.email = '';
+      draft.username = '';
       draft.password = '';
       draft.error = '';
       draft.errors = {};

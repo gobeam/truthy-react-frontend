@@ -4,6 +4,7 @@
   "containers.LoginPage.createAccount": "खाता सिर्जना गर्नुहोस्",
   "containers.LoginPage.loginToTheSystem": "लग - इन",
   "containers.LoginPage.helmetLoginTitle": "लग - इन",
+  "containers.LoginPage.errorLogin": "गलत विवरण",
 
   "helpers.ValidationMessage.isNotEmpty": "यो क्षेत्र आवश्यक छ!",
   "helpers.ValidationMessage.isNotString": "यो क्षेत्र शब्दहरू हुनुपर्दछ!",
@@ -13,8 +14,9 @@
   "helpers.ValidationMessage.isNotPositive": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
   "helpers.ValidationMessage.isNotTrue": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
   "helpers.ValidationMessage.isNotAddress": "यो फिल्ड मान्य ईथरम ठेगाना होईन!",
+  "helpers.ValidationMessage.confirmPasswordNotSimilar": "पुष्टि गर्ने पासवर्ड मूल पासवर्डसँग मेल खाँदैन!",
 
-  "components.LoginForm.email": "ईमेल",
+  "components.LoginForm.email": "ईमेल/प्रयोगकर्ता नाम",
   "components.LoginForm.password": "पासवर्ड",
   "components.LoginForm.submit": "बुझाउनुहोस्",
   "components.LoginForm.lostPassword": "पासवर्ड हराउनु भयो?",

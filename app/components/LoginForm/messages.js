@@ -11,7 +11,7 @@ export const scope = 'components.LoginForm';
 export default defineMessages({
   email: {
     id: `${scope}.email`,
-    defaultMessage: 'Email',
+    defaultMessage: 'Email/Username',
   },
   emailPlaceHolder: {
     id: `${scope}.emailPlaceHolder`,

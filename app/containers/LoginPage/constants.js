@@ -4,7 +4,7 @@
  *
  */
 export const CHANGE_PASSWORD = 'containers/LoginPage/CHANGE_PASSWORD';
-export const CHANGE_EMAIL = 'containers/LoginPage/CHANGE_EMAIL';
+export const CHANGE_USERNAME = 'containers/LoginPage/CHANGE_USERNAME';
 export const VALIDATE_FORM = 'containers/LoginPage/VALIDATE_FORM';
 export const ADD_VALIDATION_ERROR = 'containers/LoginPage/ADD_VALIDATION_ERROR';
 export const ASYNC_START = 'containers/LoginPage/ASYNC_START';

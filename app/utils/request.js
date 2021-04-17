@@ -20,11 +20,13 @@ function parseJSON(response) {
  * @return {object|undefined} Returns either the response, or throws an error
  */
 function checkStatus(response) {
-  if (response.status >= 200 && response.status < 423) {
+  if (response.status >= 200 && response.status <= 399) {
     return response;
   }
-
-  // console.log(response.json())
+  // send validation error
+  if (response.status === 422) {
+    return response;
+  }
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
