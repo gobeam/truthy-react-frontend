@@ -5,6 +5,7 @@
   "containers.LoginPage.loginToTheSystem": "लग - इन",
   "containers.LoginPage.helmetLoginTitle": "लग - इन",
   "containers.LoginPage.errorLogin": "गलत विवरण",
+  "containers.LoginPage.serverError": "कृपया केहि बेरमा पुन: प्रयास गर्नुहोस्!",
 
   "helpers.ValidationMessage.isNotEmpty": "यो क्षेत्र आवश्यक छ!",
   "helpers.ValidationMessage.isNotString": "यो क्षेत्र शब्दहरू हुनुपर्दछ!",
@@ -39,6 +40,16 @@
   "containers.RegisterPage.agreeTo": "म सहमत छु",
   "containers.RegisterPage.agreeLinkText": "नियम र सर्तहरूमा",
   "containers.RegisterPage.signBtn": "साइन अप",
+  "containers.RegisterPage.registerSuccess": "सफलतापूर्वक दर्ता गरियो, कृपया तपाईंको खाता सक्रिय गर्न तपाईंको ईमेल जाँच गर्नुहोस्!",
+
+  "common.messages.danger": "त्रुटि",
+  "common.messages.warning": "चेतावनी",
+  "common.messages.info": "जानकारी",
+  "common.messages.primary": "सन्देश",
+  "common.messages.success": "सफल",
+  "common.messages.internalError": "प्रक्रियाको क्रममा केही त्रुटि भयो, कृपया पछि पुन: प्रयास गर्नुहोस्",
+  "common.messages.forbidden": "तपाईंसँग यो कार्यको लागि पहुँच छैन, कृपया अधिक विवरणहरूको लागि प्रशासकलाई सम्पर्क गर्नुहोस्।",
+  "common.messages.unauthorized": "गलत विवरण",
 
   "components.Footer.author.message": "प्रेमले बनाएको {author}.",
   "components.Footer.author.name": "रोशन रानाभट",

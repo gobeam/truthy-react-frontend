@@ -5,6 +5,7 @@
   "containers.LoginPage.loginToTheSystem": "Log in",
   "containers.LoginPage.helmetLoginTitle": "Login",
   "containers.LoginPage.errorLogin": "Invalid credentials",
+  "containers.LoginPage.serverError": "Please try again in a moment!",
 
   "helpers.ValidationMessage.isNotEmpty": "field should not be empty",
   "helpers.ValidationMessage.isNotString": "field should be string",
@@ -39,6 +40,16 @@
   "containers.RegisterPage.agreeTo": "I agree to the",
   "containers.RegisterPage.agreeLinkText": "terms and conditions",
   "containers.RegisterPage.signBtn": "Sign up",
+  "containers.RegisterPage.registerSuccess": "Successfully registered, please check your email to activate your account!",
+
+  "common.messages.danger": "Error",
+  "common.messages.warning": "Warning",
+  "common.messages.info": "Info",
+  "common.messages.primary": "Message",
+  "common.messages.success": "Success",
+  "common.messages.internalError": "There was some error during process, please try again later",
+  "common.messages.forbidden": "You don't have access for this action, please contact admin for further details.",
+  "common.messages.unauthorized": "Invalid credentials",
 
   "components.Footer.author.message": "Made with love by {author}.",
   "components.Footer.author.name": "Roshan Ranabhat",

@@ -35,7 +35,7 @@ export default defineMessages({
   },
   serverError: {
     id: `${scope}.serverError`,
-    defaultMessage: 'Please try again in a moment',
+    defaultMessage: 'Please try again in a moment!',
   },
   emailInvalid: {
     id: `${scope}.emailInvalid`,

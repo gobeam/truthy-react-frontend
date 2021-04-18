@@ -1,7 +1,6 @@
 /*
- * LoginPage Messages
+ * Validation Messages
  *
- * This contains all the text for the LoginPage container.
  */
 
 import { defineMessages } from 'react-intl';

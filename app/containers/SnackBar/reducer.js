@@ -11,6 +11,7 @@ import {
 } from 'containers/SnackBar/constants';
 
 export const initialState = {
+  autoHide: false,
   show: false,
   message: '',
   type: '',
@@ -25,8 +26,10 @@ const appPageReducer = produce((draft, action) => {
       draft.message = action.snackbar.message;
       draft.duration = action.snackbar.duration;
       draft.type = action.snackbar.type;
+      draft.autoHide = action.snackbar.autoHide;
       break;
     case CLEAR_SNACKBAR:
+      draft.autoHide = false;
       draft.show = false;
       draft.message = '';
       draft.duration = 0;

@@ -6,6 +6,7 @@ import request from 'utils/request';
 import AuthService from 'services/auth.service';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/LoginPage/messages';
+import commonMessages from 'common/messages';
 import {
   makePasswordSelector,
   makeUsernameSelector,
@@ -25,7 +26,6 @@ import {
   asyncStart,
   enterLoginAction,
   enterValidationErrorAction,
-  loginErrorAction,
 } from 'containers/LoginPage/actions';
 
 export function* validateForm() {
@@ -69,11 +69,18 @@ export function* attemptLogin() {
     auth.setTokenPayload(response);
     return yield put(getProfileAction());
   } catch (error) {
-    yield put(loginErrorAction(<FormattedMessage {...messages.errorLogin} />));
+    yield put(asyncEnd());
+    const errLabel = error.response
+      ? error.response.statusText.toLowerCase()
+      : '';
+    const errorMessage = commonMessages[errLabel]
+      ? commonMessages[errLabel]
+      : messages.serverError;
     return yield put(
       enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.errorLogin} />,
-        type: 'error',
+        message: <FormattedMessage {...errorMessage} />,
+        type: 'danger',
+        autoHide: true,
       }),
     );
   }

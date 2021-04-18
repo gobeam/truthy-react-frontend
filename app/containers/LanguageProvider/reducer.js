@@ -5,7 +5,7 @@
  */
 import produce, { setAutoFreeze } from 'immer';
 import { DEFAULT_LOCALE } from 'i18n';
-import { CHANGE_LOCALE } from './constants';
+import { CHANGE_LOCALE } from 'containers/LanguageProvider/constants';
 
 export const initialState = {
   locale: DEFAULT_LOCALE,

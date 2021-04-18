@@ -13,6 +13,11 @@ export default defineMessages({
     id: `${scope}.back`,
     defaultMessage: 'Go Back',
   },
+  internalError: {
+    id: `${scope}.internalError`,
+    defaultMessage:
+      'There was some error during process, please try again later',
+  },
   helmetRegisterTitle: {
     id: `${scope}.helmetRegisterTitle`,
     defaultMessage: 'Registration - Page',
@@ -51,7 +56,8 @@ export default defineMessages({
   },
   registerSuccess: {
     id: `${scope}.registerSuccess`,
-    defaultMessage: 'Successfully Registered',
+    defaultMessage:
+      'Successfully registered, please check your email to activate your account!',
   },
   signBtn: {
     id: `${scope}.signBtn`,

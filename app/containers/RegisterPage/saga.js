@@ -28,7 +28,8 @@ import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
 import { makeIsLoggedSelector } from 'containers/App/selectors';
 import { FormattedMessage } from 'react-intl';
-import commonValidationMessages from 'helpers/messages';
+import messages from 'containers/RegisterPage/messages';
+import commonMessages from 'common/messages';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -72,11 +73,7 @@ export function* validateForm() {
   if (password !== confirmPassword) {
     return yield put(
       enterValidationErrorAction({
-        confirmPassword: (
-          <FormattedMessage
-            {...commonValidationMessages.confirmPasswordNotSimilar}
-          />
-        ),
+        confirmPassword: 'confirmPasswordNotSimilar',
       }),
     );
   }
@@ -105,13 +102,20 @@ export function* handleRegister() {
     yield put(asyncEnd());
     yield put(
       enqueueSnackbarAction({
-        message: 'Please check your email to activate your account!',
+        message: <FormattedMessage {...messages.registerSuccess} />,
         type: 'success',
       }),
     );
     return yield put(push('/login'));
   } catch (e) {
-    return yield put(registerErrorAction('There was some error'));
+    yield put(registerErrorAction('There was some error'));
+    return yield put(
+      enqueueSnackbarAction({
+        message: <FormattedMessage {...commonMessages.internalError} />,
+        type: 'error',
+        autoHide: true,
+      }),
+    );
   }
 }
 
@@ -121,9 +125,6 @@ export function* handleLogged() {
     yield put(push(SUCCESS_REDIRECT));
   }
   return true;
-  // const auth = new AuthService();
-  // const isTokenAvailable = auth.checkToken();
-  // if (isTokenAvailable) return yield put(push(SUCCESS_REDIRECT));
 }
 
 export default function* registerPageSaga() {

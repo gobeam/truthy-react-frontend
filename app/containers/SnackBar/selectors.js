@@ -12,8 +12,12 @@ const makeSnackBarMessageShowSelector = () =>
 const makeSnackBarMessageTypeSelector = () =>
   createSelector(selectSnackBarMessage, (substate) => substate.type);
 
+const makeSnackBarMessageAutoHideSelector = () =>
+  createSelector(selectSnackBarMessage, (substate) => substate.autoHide);
+
 export {
   makeSnackBarMessageSelector,
   makeSnackBarMessageShowSelector,
   makeSnackBarMessageTypeSelector,
+  makeSnackBarMessageAutoHideSelector,
 };

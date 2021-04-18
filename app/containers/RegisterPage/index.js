@@ -30,7 +30,7 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const dispatch = useDispatch();
   const { user } = useSelector(stateSelector);
   const isLogged = () => dispatch(isLoggedAction());
