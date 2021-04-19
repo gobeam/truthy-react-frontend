@@ -1,3 +1,4 @@
+import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   FORGOT_PASSWORD,
@@ -12,6 +13,8 @@ import {
   forgotPasswordAction,
 } from 'containers/ForgotPassword/actions';
 import { checkError } from 'helpers/Validation';
+import { FormattedMessage } from 'react-intl';
+import messages from 'containers/ForgotPassword/messages';
 
 export function* validateForm() {
   const email = yield select(makeEmailSelector());
@@ -32,21 +35,23 @@ export function* validateForm() {
 export function* handleForgotPassword() {
   const email = yield select(makeEmailSelector());
   const api = new ApiEndpoint();
-  const requestPayload = api.makeApiPayload('post', null, { email });
-  const requestURL = `${api.getBasePath()}/forgot`;
+  const requestPayload = api.makeApiPayload('put', null, { email });
+  const requestURL = `${api.getBasePath()}/auth/forgot-password`;
   try {
-    const response = yield call(request, requestURL, requestPayload);
+    yield call(request, requestURL, requestPayload);
     return yield put(
       enqueueSnackbarAction({
-        message: response.message,
+        message: <FormattedMessage {...messages.mailSent} />,
         type: 'success',
+        autoHide: true,
       }),
     );
   } catch (e) {
     return yield put(
       enqueueSnackbarAction({
-        message: 'Error during forgot password action',
-        type: 'error',
+        message: <FormattedMessage {...messages.mailSentError} />,
+        type: 'danger',
+        autoHide: true,
       }),
     );
   }

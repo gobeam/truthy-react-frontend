@@ -9,17 +9,17 @@ import { defineMessages } from 'react-intl';
 export const scope = 'containers.ForgotPassword';
 
 export default defineMessages({
-  helmetForgotPwdTitle: {
-    id: `${scope}.helmetForgotPwdTitle`,
-    defaultMessage: 'Forgot Password Page',
+  helmetResetPasswordTitle: {
+    id: `${scope}.helmetResetPasswordTitle`,
+    defaultMessage: 'Reset Password Page',
   },
-  forgotPassword: {
-    id: `${scope}.forgotPassword`,
-    defaultMessage: 'Forgot Password',
+  resetPassword: {
+    id: `${scope}.resetPassword`,
+    defaultMessage: 'Reset Password',
   },
-  forgotPasswordBtn: {
+  resetPasswordBtn: {
     id: `${scope}.forgotPasswordBtn`,
-    defaultMessage: 'Send Reset Link',
+    defaultMessage: 'ResetPassword',
   },
   back: {
     id: `${scope}.back`,

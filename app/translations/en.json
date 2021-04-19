@@ -29,6 +29,8 @@
   "containers.ForgotPassword.forgotPassword": "Forgot Password",
   "containers.ForgotPassword.forgotPasswordBtn": "Send Reset Link",
   "containers.ForgotPassword.back": "Go Back",
+  "containers.ForgotPassword.mailSent": "If your email exists in our system you will be sent a link to reset password!",
+  "containers.ForgotPassword.mailSentError": "Error during process, try again later!",
 
   "containers.RegisterPage.back": "Go Back",
   "containers.RegisterPage.helmetRegisterTitle": "Registration - Page",
@@ -41,6 +43,9 @@
   "containers.RegisterPage.agreeLinkText": "terms and conditions",
   "containers.RegisterPage.signBtn": "Sign up",
   "containers.RegisterPage.registerSuccess": "Successfully registered, please check your email to activate your account!",
+
+  "containers.VerifyAccount.activated": "Account activated successfully, please login to continue!",
+  "containers.VerifyAccount.invalidVerification": "Invalid verification link!",
 
   "common.messages.danger": "Error",
   "common.messages.warning": "Warning",

@@ -29,6 +29,8 @@
   "containers.ForgotPassword.forgotPassword": "पासवर्ड भुल्नु भयो",
   "containers.ForgotPassword.forgotPasswordBtn": "रिसेट लिंक पठाउनुहोस्",
   "containers.ForgotPassword.back": "पछाडी जाउ",
+  "containers.ForgotPassword.mailSent": "यदि तपाईंको ईमेल हाम्रो प्रणालीमा अवस्थित छ भने तपाईंलाई पासवर्ड रीसेट गर्नको लागि लिंक पठाइनेछ!",
+  "containers.ForgotPassword.mailSentError": "प्रक्रियाको क्रममा त्रुटि, पछि फेरि प्रयास गर्नुहोस्!",
 
   "containers.RegisterPage.back": "पछाडी जाउ",
   "containers.RegisterPage.helmetRegisterTitle": "रेजिस्टर - पृष्ठ",
@@ -51,8 +53,11 @@
   "common.messages.forbidden": "तपाईंसँग यो कार्यको लागि पहुँच छैन, कृपया अधिक विवरणहरूको लागि प्रशासकलाई सम्पर्क गर्नुहोस्।",
   "common.messages.unauthorized": "गलत विवरण",
 
+  "containers.VerifyAccount.activated": "खाता सफलतापूर्वक सक्रिय गरियो, कृपया जारी राख्नको लागि लगईन गर्नुहोस्!",
+  "containers.VerifyAccount.invalidVerification": "अवैध प्रमाणिकरण लिंक!",
+
   "components.Footer.author.message": "प्रेमले बनाएको {author}.",
-  "components.Footer.author.name": "रोशन रानाभट",
+  "components.Footer.author.name": "रोशन रानाभाट",
   "containers.LocaleToggle.de": "जर्मन",
   "containers.LocaleToggle.en": "अंग्रेजी",
   "containers.LocaleToggle.ne": "नेपाली",
