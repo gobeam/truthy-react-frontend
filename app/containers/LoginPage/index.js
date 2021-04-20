@@ -23,7 +23,6 @@ import BgImage from 'assets/img/illustrations/signin.svg';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/LoginPage/messages';
-import LocaleToggle from 'containers/LocaleToggle';
 
 const key = 'login';
 
@@ -88,7 +87,6 @@ export default function LoginPage() {
               </div>
             </Col>
           </Row>
-          <LocaleToggle />
         </Container>
       </section>
     </main>

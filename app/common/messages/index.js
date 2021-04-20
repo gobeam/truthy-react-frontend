@@ -35,4 +35,8 @@ export default defineMessages({
     id: `${scope}.primary`,
     defaultMessage: `Message`,
   },
+  serverError: {
+    id: `${scope}.serverError`,
+    defaultMessage: 'Please try again in a moment!',
+  },
 });

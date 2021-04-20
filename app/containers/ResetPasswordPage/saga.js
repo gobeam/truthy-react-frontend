@@ -1,3 +1,4 @@
+import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   RESET_PASSWORD,
@@ -14,10 +15,14 @@ import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
   enterValidationErrorAction,
   resetPasswordAction,
+  asyncEnd,
 } from 'containers/ResetPasswordPage/actions';
 import { checkError } from 'helpers/Validation';
 import { push } from 'connected-react-router';
 import { LOGIN_REDIRECT } from 'containers/LoginPage/constants';
+import commonMessages from 'common/messages';
+import messages from 'containers/ResetPasswordPage/messages';
+import { FormattedMessage } from 'react-intl';
 
 export function* validateForm() {
   const password = yield select(makePasswordSelector());
@@ -41,7 +46,7 @@ export function* validateForm() {
   if (password !== confirmPassword) {
     return yield put(
       enterValidationErrorAction({
-        confirmPassword: "Confirm password didn't match with password",
+        confirmPassword: 'confirmPasswordNotSimilar',
       }),
     );
   }
@@ -50,35 +55,43 @@ export function* validateForm() {
 
 export function* handleResetPassword() {
   const password = yield select(makePasswordSelector());
+  const confirmPassword = yield select(makeConfirmPasswordSelector());
   const code = yield select(makeCodeSelector());
   const api = new ApiEndpoint();
-  const requestPayload = api.makeApiPayload('PUT', null, { password });
-  const requestURL = `${api.getBasePath()}/reset/${code}`;
+  const requestPayload = api.makeApiPayload('PUT', null, {
+    password,
+    token: code,
+    confirmPassword,
+  });
+  const requestURL = `${api.getBasePath()}/auth/reset-password`;
   try {
     const response = yield call(request, requestURL, requestPayload);
-    if (response.error) {
+    if (response && response.error) {
       if (typeof response.error === 'object') {
         return yield put(enterValidationErrorAction(response.error));
       }
-      return yield put(
-        enqueueSnackbarAction({
-          message: response.error,
-          type: 'error',
-        }),
-      );
     }
     yield put(
       enqueueSnackbarAction({
-        message: 'Password reset successful',
+        message: <FormattedMessage {...messages.resetSuccess} />,
         type: 'success',
+        autoHide: true,
       }),
     );
     return yield put(push(LOGIN_REDIRECT));
-  } catch (e) {
+  } catch (error) {
+    yield put(asyncEnd());
+    const errLabel = error.response
+      ? error.response.statusText.toLowerCase()
+      : '';
+    const errorMessage = commonMessages[errLabel]
+      ? commonMessages[errLabel]
+      : commonMessages.serverError;
     return yield put(
       enqueueSnackbarAction({
-        message: 'Error resetting password',
-        type: 'error',
+        message: <FormattedMessage {...errorMessage} />,
+        type: 'danger',
+        autoHide: true,
       }),
     );
   }

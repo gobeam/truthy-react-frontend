@@ -5,7 +5,6 @@ import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import AuthService from 'services/auth.service';
 import { FormattedMessage } from 'react-intl';
-import messages from 'containers/LoginPage/messages';
 import commonMessages from 'common/messages';
 import {
   makePasswordSelector,
@@ -62,7 +61,7 @@ export function* attemptLogin() {
   });
   try {
     const response = yield call(request, requestURL, requestPayload);
-    if (response.error) {
+    if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
     yield put(asyncEnd());
@@ -75,7 +74,7 @@ export function* attemptLogin() {
       : '';
     const errorMessage = commonMessages[errLabel]
       ? commonMessages[errLabel]
-      : messages.serverError;
+      : commonMessages.serverError;
     return yield put(
       enqueueSnackbarAction({
         message: <FormattedMessage {...errorMessage} />,

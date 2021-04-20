@@ -9,7 +9,21 @@ import {
   ADD_VALIDATION_ERROR,
   CHANGE_FIELD,
   VALIDATE_FORM,
+  ASYNC_END,
+  ASYNC_START,
 } from 'containers/ResetPasswordPage/constants';
+
+export function asyncStart() {
+  return {
+    type: ASYNC_START,
+  };
+}
+
+export function asyncEnd() {
+  return {
+    type: ASYNC_END,
+  };
+}
 
 export function resetPasswordAction() {
   return {

@@ -40,7 +40,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
-import LocaleToggle from 'containers/LocaleToggle';
 import loginMessages from 'components/LoginForm/messages';
 
 const key = 'resetPassword';
@@ -142,7 +141,6 @@ export default function ResetPasswordPage() {
               </div>
             </Col>
           </Row>
-          <LocaleToggle />
         </Container>
       </section>
     </main>

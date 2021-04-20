@@ -44,8 +44,24 @@ export default defineMessages({
     id: `${scope}.isNotTrue`,
     defaultMessage: `This field must be accepted!`,
   },
-  isNotAddress: {
-    id: `${scope}.isNotAddress`,
-    defaultMessage: `This field is not valid ethereum address!`,
+  isNotLowerCase: {
+    id: `${scope}.isNotLowerCase`,
+    defaultMessage: `This field must be in lower case!`,
+  },
+  isNotUpperCase: {
+    id: `${scope}.isNotUpperCase`,
+    defaultMessage: `This field must be in upper case!`,
+  },
+  isNotStrongPassword: {
+    id: `${scope}.isNotStrongPassword`,
+    defaultMessage: `Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character and should be minimum 6 characters and maximum upto 20 characters!`,
+  },
+  'already taken': {
+    id: `${scope}.alreadyTaken`,
+    defaultMessage: `Field already taken!`,
+  },
+  'should be array of numbers': {
+    id: `${scope}.numberArrayExpected`,
+    defaultMessage: `Field should be array of numbers!`,
   },
 });

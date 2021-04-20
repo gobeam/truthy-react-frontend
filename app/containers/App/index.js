@@ -29,6 +29,8 @@ import {
   makeHideHeaderSelector,
   makeLoggedInUserSelector,
 } from 'containers/App/selectors';
+import { useLocalStorage } from 'hooks/localstorage';
+import Sidebar from 'components/SideBar';
 
 const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
@@ -44,6 +46,14 @@ export default function App() {
   useInjectSaga({ key, saga });
 
   const { user } = useSelector(stateSelector);
+  const [showSettings, setShowSettings] = useLocalStorage(
+    'settingsVisible',
+    false,
+  );
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
 
   useEffect(() => {
     queryNotification();
@@ -62,29 +72,32 @@ export default function App() {
       <Helmet titleTemplate="%s - Truthy" defaultTitle="TRUTHY">
         <meta name="description" content="Truthy CMS" />
       </Helmet>
-      <Switch>
-        {publicRoutes.map((route) => (
-          <Route
-            key={route.name}
-            path={route.path}
-            component={route.component}
-            exact={route.exact}
-          />
-        ))}
+      <Sidebar />
+      <main className="content">
+        <Switch>
+          {publicRoutes.map((route) => (
+            <Route
+              key={route.name}
+              path={route.path}
+              component={route.component}
+              exact={route.exact}
+            />
+          ))}
 
-        {privateRoutes.map((route) => (
-          <PrivateRoute
-            key={route.name}
-            path={route.path}
-            component={route.component}
-            exact={route.exact}
-          />
-        ))}
+          {privateRoutes.map((route) => (
+            <PrivateRoute
+              key={route.name}
+              path={route.path}
+              component={route.component}
+              exact={route.exact}
+            />
+          ))}
 
-        <Route path="*" component={NotFoundPage} />
-      </Switch>
-      <SnackBar />
-      <Footer />
+          <Route path="*" component={NotFoundPage} />
+        </Switch>
+        <SnackBar />
+        <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
+      </main>
     </>
   );
 }

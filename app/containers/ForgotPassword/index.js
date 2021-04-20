@@ -39,7 +39,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
-import LocaleToggle from 'containers/LocaleToggle';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 
 const key = 'forgotPassword';
@@ -120,7 +119,6 @@ export default function ForgotPasswordPage() {
               </div>
             </Col>
           </Row>
-          <LocaleToggle />
         </Container>
       </section>
     </main>

@@ -115,6 +115,8 @@ export default function RegisterForm() {
         label={loginMessages.password}
         name="password"
         id="password"
+        min="6"
+        max="20"
         type="password"
         value={password}
         required={false}
@@ -128,6 +130,8 @@ export default function RegisterForm() {
         label={loginMessages.confirmPassword}
         name="confirmPassword"
         id="confirmPassword"
+        min="6"
+        max="20"
         type="password"
         value={confirmPassword}
         required={false}

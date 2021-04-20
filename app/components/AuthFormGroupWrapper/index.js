@@ -15,9 +15,12 @@ function AuthFormGroupWrapper({
   value,
   placeholder,
   focus = true,
+  disabled = false,
   required = true,
   changeHandler = () => {},
   error,
+  min = 0,
+  max = 0,
   intl,
 }) {
   return (
@@ -28,6 +31,9 @@ function AuthFormGroupWrapper({
           <FontAwesomeIcon icon={faEnvelope} />
         </InputGroup.Text>
         <Form.Control
+          disabled={disabled}
+          min={min}
+          max={max}
           name={name}
           value={value}
           onChange={changeHandler}
@@ -48,6 +54,9 @@ function AuthFormGroupWrapper({
 }
 
 AuthFormGroupWrapper.propTypes = {
+  min: PropTypes.number,
+  max: PropTypes.number,
+  disabled: PropTypes.bool,
   label: PropTypes.object,
   name: PropTypes.string,
   id: PropTypes.string,

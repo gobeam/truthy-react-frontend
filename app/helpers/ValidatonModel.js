@@ -86,6 +86,19 @@ class Validator {
   };
 
   /**
+   * check if password is strong
+   * @param value
+   * @returns {string}
+   */
+  isStrongPassword = (value) => {
+    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/;
+    if (re.test(value)) {
+      return '';
+    }
+    return 'isNotStrongPassword';
+  };
+
+  /**
    * check if value is true
    * @param value
    * @returns {string}
@@ -95,6 +108,30 @@ class Validator {
       return '';
     }
     return 'isNotTrue';
+  };
+
+  /**
+   * check if value is in lower case
+   * @param value
+   * @returns {string}
+   */
+  isLowerCase = (value) => {
+    if (value === value.toLowerCase()) {
+      return '';
+    }
+    return 'isNotLowerCase';
+  };
+
+  /**
+   * check if value is in uppercase
+   * @param value
+   * @returns {string}
+   */
+  isUpperCase = (value) => {
+    if (value === value.toUpperCase()) {
+      return '';
+    }
+    return 'isNotUpperCase';
   };
 
   /**

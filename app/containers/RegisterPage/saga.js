@@ -42,19 +42,19 @@ export function* validateForm() {
   const model = {
     email: {
       value: email,
-      validator: ['isEmail', 'isNotEmpty'],
+      validator: ['isLowerCase', 'isEmail', 'isNotEmpty'],
     },
     name: {
       value: name,
-      validator: ['isNotEmpty'],
+      validator: ['isString', 'isNotEmpty'],
     },
     password: {
       value: password,
-      validator: ['isNotEmpty'],
+      validator: ['isStrongPassword', 'isNotEmpty'],
     },
     username: {
       value: username,
-      validator: ['isNotEmpty'],
+      validator: ['isLowerCase', 'isString', 'isNotEmpty'],
     },
     confirmPassword: {
       value: confirmPassword,
@@ -96,7 +96,7 @@ export function* handleRegister() {
 
   try {
     const response = yield call(request, requestURL, requestPayload);
-    if (response.error) {
+    if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
     yield put(asyncEnd());
@@ -107,12 +107,19 @@ export function* handleRegister() {
       }),
     );
     return yield put(push('/login'));
-  } catch (e) {
+  } catch (error) {
+    yield put(asyncEnd());
     yield put(registerErrorAction('There was some error'));
+    const errLabel = error.response
+      ? error.response.statusText.toLowerCase()
+      : '';
+    const errorMessage = commonMessages[errLabel]
+      ? commonMessages[errLabel]
+      : commonMessages.serverError;
     return yield put(
       enqueueSnackbarAction({
-        message: <FormattedMessage {...commonMessages.internalError} />,
-        type: 'error',
+        message: <FormattedMessage {...errorMessage} />,
+        type: 'danger',
         autoHide: true,
       }),
     );

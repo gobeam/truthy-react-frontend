@@ -16,6 +16,11 @@
   "helpers.ValidationMessage.isNotTrue": "यो क्षेत्र स्वीकार गर्नुपर्नेछ!",
   "helpers.ValidationMessage.isNotAddress": "यो फिल्ड मान्य ईथरम ठेगाना होईन!",
   "helpers.ValidationMessage.confirmPasswordNotSimilar": "पुष्टि गर्ने पासवर्ड मूल पासवर्डसँग मेल खाँदैन!",
+  "helpers.ValidationMessage.isNotLowerCase": "यो क्षेत्र सानो केसमा हुनुपर्दछ!",
+  "helpers.ValidationMessage.isNotStrongPassword": "पासवर्ड कम्तिमा एउटा सानो अक्षर, एक ठूलो अक्षर, एक संख्यात्मक अंक, एक विशेष वर्ण हुनु पर्छ र न्यूनतम ६ क्यारेक्टर र अधिकतम २० क्यारेक्टर सम्म हुनुपर्दछ!",
+  "helpers.ValidationMessage.isNotUpperCase": "यो क्षेत्र अपर केसमा हुनुपर्दछ!",
+  "helpers.ValidationMessage.alreadyTaken": "यो क्षेत्र पहिले नै प्रयोग भइसकियो!",
+  "helpers.ValidationMessage.numberArrayExpected": "यो क्षेत्र संख्याको एरे हुनुपर्दछ!",
 
   "components.LoginForm.email": "ईमेल/प्रयोगकर्ता नाम",
   "components.LoginForm.password": "पासवर्ड",
@@ -44,6 +49,12 @@
   "containers.RegisterPage.signBtn": "साइन अप",
   "containers.RegisterPage.registerSuccess": "सफलतापूर्वक दर्ता गरियो, कृपया तपाईंको खाता सक्रिय गर्न तपाईंको ईमेल जाँच गर्नुहोस्!",
 
+  "containers.ResetPassword.helmetResetPasswordTitle": "पासवर्ड परिवर्तन पृष्ठ",
+  "containers.ResetPassword.resetPassword": "पासवर्ड परिवर्तन",
+  "containers.ResetPassword.resetSuccess": "पासवर्ड परिवर्तन सफल!",
+  "containers.ResetPassword.resetPasswordBtn": "पासवर्ड परिवर्तन",
+  "containers.ResetPassword.back": "पछाडी जाउ",
+
   "common.messages.danger": "त्रुटि",
   "common.messages.warning": "चेतावनी",
   "common.messages.info": "जानकारी",
@@ -52,17 +63,21 @@
   "common.messages.internalError": "प्रक्रियाको क्रममा केही त्रुटि भयो, कृपया पछि पुन: प्रयास गर्नुहोस्",
   "common.messages.forbidden": "तपाईंसँग यो कार्यको लागि पहुँच छैन, कृपया अधिक विवरणहरूको लागि प्रशासकलाई सम्पर्क गर्नुहोस्।",
   "common.messages.unauthorized": "गलत विवरण",
+  "common.messages.serverError": "कृपया केहि बेरमा पुन: प्रयास गर्नुहोस्!",
 
   "containers.VerifyAccount.activated": "खाता सफलतापूर्वक सक्रिय गरियो, कृपया जारी राख्नको लागि लगईन गर्नुहोस्!",
   "containers.VerifyAccount.invalidVerification": "अवैध प्रमाणिकरण लिंक!",
 
-  "components.Footer.author.message": "प्रेमले बनाएको {author}.",
   "components.Footer.author.name": "रोशन रानाभाट",
-  "containers.LocaleToggle.de": "जर्मन",
   "containers.LocaleToggle.en": "अंग्रेजी",
   "containers.LocaleToggle.ne": "नेपाली",
   "containers.LoginPage.HelmetLoginTitle": "लग - इन",
-  "components.Header.home": "मुख्य",
-  "components.Header.login": "लग - इन",
-  "components.Header.register": "रेजिस्टर"
+  "components.Header.profile": "मेरो प्रोफाइल",
+  "components.Header.setting": "सेटिंग्स",
+  "components.Header.logout": "लग अफ्",
+
+  "components.Footer.appName": "Truthy",
+  "components.Footer.themeMadeBy": "डिजाइनर {author}",
+  "components.Footer.license.message": "यो परियोजना एमआईटी इजाजत पत्र अन्तर्गत लाइसेन्स प्राप्त छ।",
+  "components.Footer.language": "भाषा"
 }

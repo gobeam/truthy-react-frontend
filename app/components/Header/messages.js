@@ -1,35 +1,23 @@
 /*
- * HomePage Messages
+ * Header Messages
  *
- * This contains all the text for the HomePage component.
+ * This contains all the text for the Header component.
  */
 import { defineMessages } from 'react-intl';
 
 export const scope = 'components.Header';
 
 export default defineMessages({
-  home: {
-    id: `${scope}.home`,
-    defaultMessage: 'Home',
+  profile: {
+    id: `${scope}.profile`,
+    defaultMessage: 'My Profile',
   },
-  features: {
-    id: `${scope}.features`,
-    defaultMessage: 'Features',
+  setting: {
+    id: `${scope}.setting`,
+    defaultMessage: 'Settings',
   },
-  dashboard: {
-    id: `${scope}.dashboard`,
-    defaultMessage: 'Dashboard',
-  },
-  about: {
-    id: `${scope}.about`,
-    defaultMessage: 'About',
-  },
-  login: {
-    id: `${scope}.login`,
-    defaultMessage: 'Login',
-  },
-  register: {
-    id: `${scope}.register`,
-    defaultMessage: 'Register',
+  logout: {
+    id: `${scope}.logout`,
+    defaultMessage: 'Logout',
   },
 });

@@ -26,13 +26,13 @@ import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
 
 export function* handleLogout() {
   const auth = new AuthService();
-  const api = new ApiEndpoint();
-  const token = auth.getToken();
-  const refreshToken = auth.getRefreshToken();
-  const requestURL = api.getLogoutPath();
-  const payload = api.makeApiPayload('post', token, { token, refreshToken });
+  // const api = new ApiEndpoint();
+  // const token = auth.getToken();
+  // const refreshToken = auth.getRefreshToken();
+  // const requestURL = api.getLogoutPath();
+  // const payload = api.makeApiPayload('post', token, { token, refreshToken });
   try {
-    yield call(request, requestURL, payload);
+    // yield call(request, requestURL, payload);
     yield put(logoutSuccessAction());
     auth.unSetTokenPayload();
     return yield put(push(LOGIN_PATH));

@@ -12,14 +12,18 @@ export default defineMessages({
     id: `${scope}.license.message`,
     defaultMessage: 'This project is licensed under the MIT license.',
   },
-  authorMessage: {
-    id: `${scope}.author.message`,
-    defaultMessage: `
-      Made with love by {author}.
-    `,
+  appName: {
+    id: `${scope}.appName`,
+    defaultMessage: 'Truthy',
   },
-  authorNameMessage: {
-    id: `${scope}.author.name`,
-    defaultMessage: `Roshan Ranabhat`,
+  language: {
+    id: `${scope}.language`,
+    defaultMessage: 'Language',
+  },
+  themeMadeBy: {
+    id: `${scope}.themeMadeBy`,
+    defaultMessage: `
+      Theme made by {author}.
+    `,
   },
 });

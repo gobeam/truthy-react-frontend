@@ -12,7 +12,13 @@ const makePasswordSelector = () =>
 const makeConfirmPasswordSelector = () =>
   createSelector(
     selectResetPasswordPageDomain,
-    (substate) => substate.confirm_password,
+    (substate) => substate.confirmPassword,
+  );
+
+const makeIsLoadingSelector = () =>
+  createSelector(
+    selectResetPasswordPageDomain,
+    (substate) => substate.isLoading,
   );
 
 const makeErrorsSelector = () =>
@@ -22,6 +28,7 @@ const makeCodeSelector = () =>
   createSelector(selectResetPasswordPageDomain, (substate) => substate.code);
 
 export {
+  makeIsLoadingSelector,
   makeCodeSelector,
   makePasswordSelector,
   makeConfirmPasswordSelector,

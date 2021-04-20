@@ -22,7 +22,6 @@ import { Card, Col, Container, Row } from '@themesberg/react-bootstrap';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import BgImage from 'assets/img/illustrations/signin.svg';
-import LocaleToggle from 'containers/LocaleToggle';
 
 const key = 'register';
 
@@ -87,7 +86,6 @@ export default function RegisterPage() {
               </div>
             </Col>
           </Row>
-          <LocaleToggle />
         </Container>
       </section>
     </main>
