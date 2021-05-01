@@ -37,7 +37,7 @@ import {
   Row,
 } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faLock } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import loginMessages from 'components/LoginForm/messages';
@@ -115,6 +115,7 @@ export default function ResetPasswordPage() {
                     id="password"
                     type="password"
                     value={password}
+                    icon={faLock}
                     required={false}
                     focus={false}
                     placeholder={loginMessages.passwordPlaceHolder}
@@ -128,6 +129,7 @@ export default function ResetPasswordPage() {
                     id="confirmPassword"
                     type="password"
                     value={confirmPassword}
+                    icon={faLock}
                     required={false}
                     focus={false}
                     placeholder={loginMessages.passwordPlaceHolder}

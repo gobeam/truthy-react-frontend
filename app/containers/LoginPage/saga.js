@@ -52,6 +52,7 @@ export function* validateForm() {
 export function* attemptLogin() {
   const api = new ApiEndpoint();
   const auth = new AuthService();
+  yield put(asyncStart());
   const email = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
   const requestURL = api.getLoginPath();

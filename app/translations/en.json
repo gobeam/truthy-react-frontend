@@ -52,6 +52,10 @@
   "containers.VerifyAccount.activated": "Account activated successfully, please login to continue!",
   "containers.VerifyAccount.invalidVerification": "Invalid verification link!",
 
+  "containers.NotFoundPage.header": "Page not found.",
+  "containers.NotFoundPage.message": "Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.",
+  "containers.NotFoundPage.back": "Go Back Home",
+
   "common.messages.danger": "Error",
   "common.messages.warning": "Warning",
   "common.messages.info": "Info",
@@ -68,6 +72,14 @@
   "containers.ResetPassword.resetPasswordBtn": "Reset",
   "containers.ResetPassword.back": "Go Back",
 
+  "containers.RoleModule.helmetTitle": "Role",
+  "containers.RoleModule.nameLabel": "Name",
+  "containers.RoleModule.dateLabel": "Created At",
+  "containers.RoleModule.descriptionLabel": "Description",
+  "containers.RoleModule.actionLabel": "Action",
+  "containers.RoleModule.listTitle": "Roles",
+  "containers.RoleModule.createdAt": "{ts, date, ::yyyyMMdd}",
+
   "containers.LocaleToggle.en": "en",
   "containers.LocaleToggle.np": "np",
   "components.Header.profile": "My Profile",
@@ -78,5 +90,24 @@
   "components.Footer.themeMadeBy": "Theme made by {author}",
   "components.Footer.license.message": "This project is licensed under the MIT license.",
   "components.Footer.language": "Language",
-  "components.Footer.language": "Language"
+
+  "components.BreadCrumbWrapper.home": "Home",
+
+  "components.TablePagination.first": "First",
+  "components.TablePagination.previous": "Previous",
+  "components.TablePagination.next": "Next",
+  "components.TablePagination.last": "Last",
+  "components.TablePagination.showing": "Showing",
+  "components.TablePagination.out": "out of",
+  "components.TablePagination.entries": "entries",
+
+  "components.DeleteModal.title": "Delete Confirmation",
+  "components.DeleteModal.confirmationMessage": "Are you sure you want to delete?",
+  "components.DeleteModal.deleteBtn": "Delete",
+  "components.DeleteModal.cancelBtn": "Cancel",
+  "components.DeleteModal.deleteSuccess": "Data deleted successfully!",
+  "components.DeleteModal.deleteError": "Could not delete data, try again later!",
+
+  "routes.messages.rolePage": "Role",
+  "routes.messages.dashboard": "Dashboard"
 }

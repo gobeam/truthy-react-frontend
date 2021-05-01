@@ -27,6 +27,7 @@ import { Button, Card, Form, FormCheck } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import validationMessages from 'helpers/messages';
+import { faEnvelope, faLock, faFont } from '@fortawesome/free-solid-svg-icons';
 
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
@@ -78,6 +79,7 @@ export default function RegisterForm() {
         id="name"
         type="text"
         value={name}
+        icon={faFont}
         required={false}
         focus={false}
         placeholder={messages.name}
@@ -91,6 +93,7 @@ export default function RegisterForm() {
         id="email"
         type="email"
         value={email}
+        icon={faEnvelope}
         required={false}
         focus={false}
         placeholder={loginMessages.emailPlaceHolder}
@@ -104,6 +107,7 @@ export default function RegisterForm() {
         id="username"
         type="text"
         value={username}
+        icon={faFont}
         required={false}
         focus={false}
         placeholder={messages.username}
@@ -115,10 +119,11 @@ export default function RegisterForm() {
         label={loginMessages.password}
         name="password"
         id="password"
-        min="6"
-        max="20"
+        min={6}
+        max={20}
         type="password"
         value={password}
+        icon={faLock}
         required={false}
         focus={false}
         placeholder={loginMessages.passwordPlaceHolder}
@@ -130,10 +135,11 @@ export default function RegisterForm() {
         label={loginMessages.confirmPassword}
         name="confirmPassword"
         id="confirmPassword"
-        min="6"
-        max="20"
+        min={6}
+        max={20}
         type="password"
         value={confirmPassword}
+        icon={faLock}
         required={false}
         focus={false}
         placeholder={loginMessages.passwordPlaceHolder}

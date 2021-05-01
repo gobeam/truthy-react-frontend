@@ -10,9 +10,6 @@
 const enTranslationMessages = require('./translations/en.json');
 const neTranslationMessages = require('./translations/ne.json');
 
-// addLocaleData(enLocaleData);
-// addLocaleData(neLocaleData);
-
 const DEFAULT_LOCALE = 'en';
 
 // prettier-ignore

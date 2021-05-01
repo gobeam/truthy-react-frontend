@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import messages from 'components/LoginForm/messages';
 import { FormattedMessage } from 'react-intl';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
@@ -54,6 +55,7 @@ export default function LoginForm() {
         id="username"
         type="text"
         value={username}
+        icon={faEnvelope}
         required={false}
         focus={false}
         placeholder={messages.emailPlaceHolder}
@@ -67,6 +69,7 @@ export default function LoginForm() {
         id="password"
         type="password"
         value={password}
+        icon={faLock}
         required={false}
         focus={false}
         placeholder={messages.passwordPlaceHolder}

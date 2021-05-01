@@ -16,7 +16,7 @@ import {
   LOGIN_SUCCESS,
   ASYNC_END,
   ASYNC_START,
-} from './constants';
+} from 'containers/LoginPage/constants';
 
 export const initialState = {
   username: '',

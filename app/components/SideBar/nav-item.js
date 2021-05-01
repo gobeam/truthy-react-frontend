@@ -61,7 +61,7 @@ const NavItem = (props) => {
 };
 
 NavItem.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.object,
   link: PropTypes.string,
   external: PropTypes.bool,
   target: PropTypes.string,

@@ -37,7 +37,7 @@ import {
   Row,
 } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 
@@ -106,6 +106,7 @@ export default function ForgotPasswordPage() {
                     id="email"
                     type="email"
                     value={email}
+                    icon={faEnvelope}
                     required={false}
                     focus={false}
                     placeholder={loginMessage.emailPlaceHolder}

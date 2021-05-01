@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, InputGroup } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { injectIntl } from 'react-intl';
 import validationMessages from 'helpers/messages';
 
@@ -22,13 +21,14 @@ function AuthFormGroupWrapper({
   min = 0,
   max = 0,
   intl,
+  icon,
 }) {
   return (
     <Form.Group id={id} className={`mb-4 ${classname}`}>
       <Form.Label>{intl.formatMessage(label)}</Form.Label>
       <InputGroup>
         <InputGroup.Text>
-          <FontAwesomeIcon icon={faEnvelope} />
+          <FontAwesomeIcon icon={icon} />
         </InputGroup.Text>
         <Form.Control
           disabled={disabled}
@@ -69,6 +69,7 @@ AuthFormGroupWrapper.propTypes = {
   focus: PropTypes.bool,
   required: PropTypes.bool,
   intl: PropTypes.object,
+  icon: PropTypes.object,
 };
 
 export default injectIntl(AuthFormGroupWrapper);

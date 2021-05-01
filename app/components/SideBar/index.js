@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChartPie,
-  faCog,
-  faFileAlt,
-  faHandHoldingUsd,
-  faSignOutAlt,
-  faTable,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   Button,
   Dropdown,
@@ -22,7 +14,6 @@ import {
 import ReactHero from 'assets/img/technologies/react-hero-logo.svg';
 import ProfilePicture from 'assets/img/team/profile-picture-3.jpg';
 import NavItem from 'components/SideBar/nav-item';
-import CollapsableNavItem from 'components/SideBar/collapsible-nav-item';
 import { createStructuredSelector } from 'reselect';
 import {
   makeIsLoadingSelector,
@@ -30,6 +21,8 @@ import {
   makeLoggedInUserSelector,
 } from 'containers/App/selectors';
 import { useSelector } from 'react-redux';
+import { getSideBarComponentData } from 'routes';
+import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
@@ -38,11 +31,17 @@ const stateSelector = createStructuredSelector({
 });
 
 function Sidebar() {
-  const { isLogged } = useSelector(stateSelector);
+  const { isLogged, user } = useSelector(stateSelector);
   const [show, setShow] = useState(false);
+  const [sideBar, setSideBar] = useState([]);
   const showClass = show ? 'show' : '';
 
   const onCollapse = () => setShow(!show);
+
+  useEffect(() => {
+    setSideBar(getSideBarComponentData());
+  }, []);
+
   if (!isLogged) {
     return <></>;
   }
@@ -101,63 +100,20 @@ function Sidebar() {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem
-                title="Volt React"
-                link="/"
-                image={ReactHero}
-                setShow={setShow}
-              />
-
-              <NavItem
-                title="Overview"
-                link="/"
-                icon={faChartPie}
-                setShow={setShow}
-              />
-              <NavItem
-                setShow={setShow}
-                title="Transactions"
-                icon={faHandHoldingUsd}
-                link="/"
-              />
-              <NavItem
-                title="Settings"
-                icon={faCog}
-                link="/"
-                setShow={setShow}
-              />
-
-              <CollapsableNavItem
-                eventKey="tables/"
-                title="Tables"
-                icon={faTable}
-              >
-                <NavItem title="Bootstrap Table" link="/" setShow={setShow} />
-              </CollapsableNavItem>
-
-              <CollapsableNavItem
-                eventKey="examples/"
-                title="Page Examples"
-                icon={faFileAlt}
-              >
-                <NavItem title="Sign In" link="/" setShow={setShow} />
-                <NavItem title="Sign Up" link="/" setShow={setShow} />
-                <NavItem title="Forgot password" link="/" setShow={setShow} />
-                <NavItem title="Reset password" link="/" setShow={setShow} />
-                <NavItem title="Lock" link="/" setShow={setShow} />
-                <NavItem title="404 Not Found" link="/" setShow={setShow} />
-                <NavItem title="500 Server Error" link="/" setShow={setShow} />
-              </CollapsableNavItem>
-
-              <NavItem
-                setShow={setShow}
-                external
-                title="Plugins"
-                link="https://demo.themesberg.com/volt-pro-react/#/plugins/charts"
-                target="_blank"
-                badgeText="Pro"
-                icon={faChartPie}
-              />
+              {sideBar.map((component) => (
+                <React.Fragment key={component.key}>
+                  {checkPermissionForComponent(user.role, component) ? (
+                    <NavItem
+                      title={component.name}
+                      link={component.path}
+                      icon={component.icon}
+                      setShow={setShow}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </React.Fragment>
+              ))}
 
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>

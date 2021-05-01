@@ -16,6 +16,7 @@ import forgotPasswordReducer from 'containers/ForgotPassword/reducer';
 import resetPasswordReducer from 'containers/ResetPasswordPage/reducer';
 import userAccountReducer from 'containers/UserAccountPage/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import roleModuleReducer from 'containers/RoleModule/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -32,6 +33,7 @@ export default function createReducer(injectedReducers = {}) {
     resetPassword: resetPasswordReducer,
     verifyPage: verifyPageReducer,
     userAccount: userAccountReducer,
+    roleModule: roleModuleReducer,
     router: connectRouter(history),
     ...injectedReducers,
   });

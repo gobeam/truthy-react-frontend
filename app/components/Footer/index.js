@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone';
-import messages from 'components/Footer/message';
+import messages from 'components/Footer/messages';
 import { Button, Card, Col, Row } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import GitHubButton from 'react-github-btn';

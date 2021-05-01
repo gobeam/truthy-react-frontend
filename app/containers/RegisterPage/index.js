@@ -78,7 +78,7 @@ export default function RegisterPage() {
                 <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">
                     <FormattedMessage {...messages.alreadyAccount} />
-                    <Card.Link as={Link} to="/register" className="fw-bold">
+                    <Card.Link as={Link} to="/login" className="fw-bold">
                       <FormattedMessage {...messages.loginHere} />
                     </Card.Link>
                   </span>

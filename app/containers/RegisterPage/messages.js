@@ -27,7 +27,7 @@ export default defineMessages({
     defaultMessage: 'Create an account',
   },
   loginHere: {
-    id: `${scope}.createAccount`,
+    id: `${scope}.loginHere`,
     defaultMessage: 'Login here',
   },
   alreadyAccount: {

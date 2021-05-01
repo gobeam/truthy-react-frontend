@@ -68,6 +68,10 @@
   "containers.VerifyAccount.activated": "खाता सफलतापूर्वक सक्रिय गरियो, कृपया जारी राख्नको लागि लगईन गर्नुहोस्!",
   "containers.VerifyAccount.invalidVerification": "अवैध प्रमाणिकरण लिंक!",
 
+  "containers.NotFoundPage.header": "पृष्ठ फेला परेन।",
+  "containers.NotFoundPage.message": "उफ्! यस्तो देखिन्छ कि तपाईंले नराम्रो लिंकको अनुसरण गर्नुभयो। यदि तपाइँलाई लाग्छ कि यो हाम्रो समस्या हो भने कृपया हामीलाई भन्नुहोस्।",
+  "containers.NotFoundPage.back": "फिर्ता जानुहोस्",
+
   "components.Footer.author.name": "रोशन रानाभाट",
   "containers.LocaleToggle.en": "अंग्रेजी",
   "containers.LocaleToggle.ne": "नेपाली",
@@ -79,5 +83,31 @@
   "components.Footer.appName": "Truthy",
   "components.Footer.themeMadeBy": "डिजाइनर {author}",
   "components.Footer.license.message": "यो परियोजना एमआईटी इजाजत पत्र अन्तर्गत लाइसेन्स प्राप्त छ।",
-  "components.Footer.language": "भाषा"
+  "components.Footer.language": "भाषा",
+
+  "containers.RoleModule.helmetTitle": "भूमिका",
+  "containers.RoleModule.nameLabel": "नाम",
+  "containers.RoleModule.dateLabel": "सिर्जना गरिएको मिति",
+  "containers.RoleModule.descriptionLabel": "वर्णन",
+  "containers.RoleModule.actionLabel": "कार्य",
+  "containers.RoleModule.createdAt": "{ts, date, ::yyyyMMdd}",
+  "containers.RoleModule.listTitle": "भूमिकाहरू",
+
+  "components.TablePagination.first": "पहिलो",
+  "components.TablePagination.previous": "अघिल्लो",
+  "components.TablePagination.next": "अर्को",
+  "components.TablePagination.last": "अन्तिम",
+  "components.TablePagination.showing": "देखाउँदै",
+  "components.TablePagination.out": "",
+  "components.TablePagination.entries": "",
+
+  "components.DeleteModal.title": "हटाउने पुष्टि गर्नुहोस्",
+  "components.DeleteModal.confirmationMessage": "के तपाईं निश्चित रूपमा हटाउन चाहनुहुन्छ?",
+  "components.DeleteModal.deleteBtn": "हटाउनुहोस्",
+  "components.DeleteModal.cancelBtn": "रद्द गर्नुहोस्",
+  "components.DeleteModal.deleteSuccess": "डाटा सफलतापूर्वक हटाइयो!",
+  "components.DeleteModal.deleteError": "डाटा हटाउन सकेन, पछि पुन: प्रयास गर्नुहोस्!",
+
+  "routes.messages.rolePage": "भूमिका",
+  "routes.messages.dashboard": "ड्यासबोर्ड"
 }

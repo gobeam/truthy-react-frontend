@@ -62,7 +62,7 @@ export default function App() {
   useEffect(() => {
     checkIfLogged();
     window.addEventListener('storage', (e) => {
-      if (e.key === 'access_token') {
+      if (e.key === 'accessToken') {
         window.location.reload();
       }
     });

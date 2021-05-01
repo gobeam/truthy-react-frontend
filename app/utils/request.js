@@ -1,3 +1,5 @@
+import AuthService from 'services/auth.service';
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -26,6 +28,11 @@ function checkStatus(response) {
   // send validation error
   if (response.status === 422) {
     return response;
+  }
+  if (response.status === 401) {
+    const auth = new AuthService();
+    auth.unSetTokenPayload();
+    window.location.reload();
   }
   const error = new Error(response.statusText);
   error.response = response;
