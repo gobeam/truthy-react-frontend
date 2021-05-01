@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -14,28 +14,9 @@ import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
 import TablePagination from 'components/TablePagination';
 import { faEdit, faEye, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import DeleteModal from 'components/DeleteModal';
-import { createStructuredSelector } from 'reselect';
-import {
-  makeDescriptionSelector,
-  makeNameSelector,
-  makePageNumberSelector,
-  makePermissionsSelector,
-  makeRolesSelector,
-} from 'containers/RoleModule/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteItemByIdAction,
-  queryRolesAction,
-  setPageNumberAction,
-} from 'containers/RoleModule/actions';
-
-const stateSelector = createStructuredSelector({
-  roles: makeRolesSelector(),
-  pageNumber: makePageNumberSelector(),
-  name: makeNameSelector(),
-  description: makeDescriptionSelector(),
-  permissions: makePermissionsSelector(),
-});
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { deleteItemByIdAction } from 'containers/RoleModule/actions';
 
 const breadCrumbItem = [
   {
@@ -45,23 +26,20 @@ const breadCrumbItem = [
   },
 ];
 
-export default function RoleList() {
+function RoleList(props) {
+  const { roles, changePage } = props;
   const dispatch = useDispatch();
-  const setPageNumber = (pageNumber) =>
-    dispatch(setPageNumberAction(pageNumber));
-  const { roles, pageNumber } = useSelector(stateSelector);
-  const [showModal, setShowDefault] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const loadRoles = () => dispatch(queryRolesAction());
-  const handleConfirm = () => dispatch(deleteItemByIdAction(deleteId));
-  const handleClose = () => setShowDefault(false);
+  const handleConfirm = () => {
+    dispatch(deleteItemByIdAction(deleteId));
+    setShowModal(false);
+  };
+  const handleClose = () => setShowModal(false);
   const handleDeleteItem = (id) => {
-    setShowDefault(true);
+    setShowModal(true);
     setDeleteId(id);
   };
-  useEffect(() => {
-    loadRoles();
-  }, [pageNumber]);
 
   return (
     <>
@@ -150,7 +128,7 @@ export default function RoleList() {
               totalItems={roles.totalItems}
               previous={roles.previous}
               next={roles.next}
-              handlePageChange={setPageNumber}
+              handlePageChange={changePage}
             />
           ) : (
             ''
@@ -165,3 +143,10 @@ export default function RoleList() {
     </>
   );
 }
+
+RoleList.propTypes = {
+  roles: PropTypes.object.isRequired,
+  changePage: PropTypes.func.isRequired,
+};
+
+export default RoleList;

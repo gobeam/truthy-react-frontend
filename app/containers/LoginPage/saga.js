@@ -6,6 +6,7 @@ import request from 'utils/request';
 import AuthService from 'services/auth.service';
 import { FormattedMessage } from 'react-intl';
 import commonMessages from 'common/messages';
+import messages from 'containers/LoginPage/messages';
 import {
   makePasswordSelector,
   makeUsernameSelector,
@@ -67,7 +68,14 @@ export function* attemptLogin() {
     }
     yield put(asyncEnd());
     auth.setTokenPayload(response);
-    return yield put(getProfileAction());
+    yield put(getProfileAction());
+    return yield put(
+      enqueueSnackbarAction({
+        message: <FormattedMessage {...messages.loginSuccess} />,
+        type: 'success',
+        autoHide: true,
+      }),
+    );
   } catch (error) {
     yield put(asyncEnd());
     const errLabel = error.response

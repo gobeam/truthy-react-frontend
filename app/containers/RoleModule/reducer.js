@@ -65,14 +65,6 @@ const roleModuleReducer = produce((draft, action) => {
       draft.name = '';
       draft.description = '';
       draft.permissions = [];
-      draft.roles = {
-        results: [],
-        pageSize: 10,
-        currentPage: 0,
-        totalItems: 0,
-        next: 0,
-        previous: 0,
-      };
       draft.errors = emptyFormFieldError;
       draft.isLoading = false;
       break;

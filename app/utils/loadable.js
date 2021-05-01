@@ -6,7 +6,10 @@ const loadable = (importFunc, { fallback = null } = { fallback: null }) => {
   const LazyComponent = lazy(importFunc);
 
   return (props) => (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => window.location.reload()}
+    >
       <Suspense fallback={fallback}>
         <LazyComponent {...props} />
       </Suspense>

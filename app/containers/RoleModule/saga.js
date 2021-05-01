@@ -16,11 +16,11 @@ import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
-export function* handleDeleteItemById({ id }) {
+export function* handleDeleteItemById(data) {
   const api = new ApiEndpoint();
   const auth = new AuthService();
   const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/roles/${id}`;
+  const requestURL = `${api.getBasePath()}/roles/${data.id}`;
   const payload = api.makeApiPayload('DELETE', token);
   try {
     yield call(request, requestURL, payload);

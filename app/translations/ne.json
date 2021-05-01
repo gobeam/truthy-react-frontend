@@ -6,6 +6,7 @@
   "containers.LoginPage.helmetLoginTitle": "लग - इन",
   "containers.LoginPage.errorLogin": "गलत विवरण",
   "containers.LoginPage.serverError": "कृपया केहि बेरमा पुन: प्रयास गर्नुहोस्!",
+  "containers.LoginPage.loginSuccess": "सफलतापूर्वक लग इन भयो!",
 
   "helpers.ValidationMessage.isNotEmpty": "यो क्षेत्र आवश्यक छ!",
   "helpers.ValidationMessage.isNotString": "यो क्षेत्र शब्दहरू हुनुपर्दछ!",

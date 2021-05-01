@@ -6,6 +6,7 @@
   "containers.LoginPage.helmetLoginTitle": "Login",
   "containers.LoginPage.errorLogin": "Invalid credentials",
   "containers.LoginPage.serverError": "Please try again in a moment!",
+  "containers.LoginPage.loginSuccess": "Successfully logged in!",
 
   "helpers.ValidationMessage.isNotEmpty": "This field should not be empty",
   "helpers.ValidationMessage.isNotString": "This field should be string",

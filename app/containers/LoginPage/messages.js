@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.loginToTheSystem`,
     defaultMessage: 'Log in',
   },
+  loginSuccess: {
+    id: `${scope}.loginSuccess`,
+    defaultMessage: 'Successfully logged in!',
+  },
   helmetLoginTitle: {
     id: `${scope}.HelmetLoginTitle`,
     defaultMessage: 'Login',

@@ -4,7 +4,7 @@
  *
  */
 import produce, { setAutoFreeze } from 'immer';
-
+import uuid from 'react-uuid';
 import {
   SHOW_SNACK_BAR_MESSAGE,
   CLEAR_SNACKBAR,
@@ -15,6 +15,7 @@ export const initialState = {
   show: false,
   message: '',
   type: '',
+  id: '',
 };
 
 setAutoFreeze(false);
@@ -27,6 +28,7 @@ const appPageReducer = produce((draft, action) => {
       draft.duration = action.snackbar.duration;
       draft.type = action.snackbar.type;
       draft.autoHide = action.snackbar.autoHide;
+      draft.id = uuid();
       break;
     case CLEAR_SNACKBAR:
       draft.autoHide = false;
@@ -34,6 +36,7 @@ const appPageReducer = produce((draft, action) => {
       draft.message = '';
       draft.duration = 0;
       draft.type = '';
+      draft.id = '';
       break;
     default:
   }

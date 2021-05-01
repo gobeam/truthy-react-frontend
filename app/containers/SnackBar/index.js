@@ -14,6 +14,7 @@ import commonMessage from 'common/messages';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import {
+  makeIdSelector,
   makeSnackBarMessageAutoHideSelector,
   makeSnackBarMessageSelector,
   makeSnackBarMessageShowSelector,
@@ -35,6 +36,7 @@ const stateSelector = createStructuredSelector({
   show: makeSnackBarMessageShowSelector(),
   type: makeSnackBarMessageTypeSelector(),
   autoHide: makeSnackBarMessageAutoHideSelector(),
+  id: makeIdSelector(),
 });
 
 export default function SnackBar() {
@@ -54,13 +56,12 @@ export default function SnackBar() {
   };
 
   useInjectReducer({ key, reducer });
-
   useInjectSaga({ key, saga });
-
-  const { message, show, type, autoHide } = useSelector(stateSelector);
+  const { message, show, type, autoHide, id } = useSelector(stateSelector);
 
   return (
     <Toast
+      key={id}
       autohide={autoHide}
       delay={5000}
       show={show}

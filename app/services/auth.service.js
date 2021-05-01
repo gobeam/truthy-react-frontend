@@ -4,15 +4,10 @@ export default class AuthService {
     return !!token;
   };
 
-  setTokenPayload = (payload) => {
+  setTokenPayload = (payload) =>
     localStorage.setItem('accessToken', payload.accessToken);
-    return true;
-  };
 
-  unSetTokenPayload = () => {
-    localStorage.removeItem('accessToken');
-    return true;
-  };
+  unSetTokenPayload = () => localStorage.removeItem('accessToken');
 
   getToken = () => localStorage.getItem('accessToken');
 }

@@ -37,7 +37,7 @@ const stateSelector = createStructuredSelector({
   permissions: makePermissionsSelector(),
 });
 
-export default function UserModule() {
+export default function RoleModule() {
   const dispatch = useDispatch();
   const loadRoles = () => dispatch(queryRolesAction());
   const setPageNumber = (pageNumber) =>
