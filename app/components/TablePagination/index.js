@@ -6,7 +6,7 @@ import { Card, Nav, Pagination } from '@themesberg/react-bootstrap';
 import { pagination } from 'utils/pagination';
 import { FormattedMessage } from 'react-intl';
 
-function TablePagination(props) {
+const TablePagination = (props) => {
   const {
     currentPage,
     pageSize,
@@ -23,7 +23,7 @@ function TablePagination(props) {
   });
   useEffect(() => {
     setPaginationData(pagination(currentPage, totalItems, pageSize));
-  }, [currentPage, totalItems]);
+  }, [currentPage, totalItems, pageSize]);
 
   return (
     <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
@@ -84,7 +84,7 @@ function TablePagination(props) {
       </small>
     </Card.Footer>
   );
-}
+};
 
 TablePagination.propTypes = {
   currentPage: PropTypes.number.isRequired,

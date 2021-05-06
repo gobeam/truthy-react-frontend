@@ -1,22 +1,57 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { injectIntl } from 'react-intl';
+import { Button } from '@themesberg/react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 /**
  *
  * ButtonWrapper
  *
  */
 
-import styled from 'styled-components';
-import { PHONE_LANDSCAPE_VIEWPORT_WIDTH } from 'utils/rwd';
-import { Button } from 'reactstrap';
+const ButtonWrapper = (props) => {
+  const {
+    icon,
+    label,
+    intl,
+    type,
+    variant,
+    show = true,
+    classname,
+    handler,
+    disabled,
+  } = props;
+  return (
+    <>
+      {show ? (
+        <Button
+          disabled={disabled}
+          type={type}
+          variant={variant}
+          className={classname}
+          onClick={handler}
+        >
+          <FontAwesomeIcon icon={icon} className="me-2" />
+          {intl.formatMessage(label)}
+        </Button>
+      ) : (
+        ''
+      )}
+    </>
+  );
+};
 
-const ButtonWrapper = styled(Button)`
-  @media screen and (min-width: ${PHONE_LANDSCAPE_VIEWPORT_WIDTH}) {
-    width: ${(props) => (props.large ? '300px' : '272px')};
-  }
-  &:hover {
-    cursor: ${(props) => (props.disabled ? 'none' : 'pointer')};
-  }
-}
+ButtonWrapper.propTypes = {
+  icon: PropTypes.object,
+  intl: PropTypes.object,
+  handler: PropTypes.func,
+  disabled: PropTypes.bool,
+  show: PropTypes.bool,
+  type: PropTypes.string.isRequired,
+  variant: PropTypes.string.isRequired,
+  classname: PropTypes.string.isRequired,
+  label: PropTypes.object.isRequired,
+};
 
-`;
-
-export default ButtonWrapper;
+export default injectIntl(ButtonWrapper);

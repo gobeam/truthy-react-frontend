@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import messages from 'components/DeleteModal/messages';
 import { FormattedMessage } from 'react-intl';
 
-function DeleteModal({ showModal, handleClose, handleConfirm }) {
+const DeleteModal = (props) => {
+  const { showModal, handleClose, handleConfirm } = props;
   return (
     <>
       <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>
@@ -34,7 +35,7 @@ function DeleteModal({ showModal, handleClose, handleConfirm }) {
       </Modal>
     </>
   );
-}
+};
 
 DeleteModal.propTypes = {
   showModal: PropTypes.bool.isRequired,

@@ -27,7 +27,6 @@ import {
   makeNameSelector,
   makePasswordSelector,
 } from 'containers/ProfilePage/selectors';
-import ValidationMessageWrapper from 'components/ValidationMessageWrapper';
 
 const key = 'profilePage';
 
@@ -127,7 +126,7 @@ export default function ProfilePage() {
                       ''
                     )}
 
-                    <ValidationMessageWrapper error={errors.image} />
+                    {errors.image}
                   </div>
 
                   <div className="w-full md:w-full px-3 mb-6">
@@ -145,7 +144,7 @@ export default function ProfilePage() {
                       onChange={onChangeField}
                       name="email"
                     />
-                    <ValidationMessageWrapper error={errors.email} />
+                    {errors.email}
                   </div>
 
                   <div className="w-full md:w-full px-3 mb-6">
@@ -163,7 +162,7 @@ export default function ProfilePage() {
                       onChange={onChangeField}
                       name="name"
                     />
-                    <ValidationMessageWrapper error={errors.name} />
+                    {errors.name}
                   </div>
 
                   <div className="w-full md:w-full px-3 mb-6">
@@ -181,7 +180,7 @@ export default function ProfilePage() {
                       onChange={onChangeField}
                       name="dob"
                     />
-                    <ValidationMessageWrapper error={errors.dob} />
+                    {errors.dob}
                   </div>
 
                   <div className="flex justify-end">
@@ -222,7 +221,7 @@ export default function ProfilePage() {
                       onChange={onChangeField}
                       name="password"
                     />
-                    <ValidationMessageWrapper error={errors.password} />
+                    {errors.password}
                   </div>
 
                   <div className="w-full md:w-full px-3 mb-6">
@@ -240,7 +239,7 @@ export default function ProfilePage() {
                       onChange={onChangeField}
                       name="confirmPassword"
                     />
-                    <ValidationMessageWrapper error={errors.confirmPassword} />
+                    {errors.confirmPassword}
                   </div>
 
                   <div className="flex justify-end">

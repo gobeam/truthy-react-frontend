@@ -31,6 +31,11 @@
   "components.LoginForm.emailPlaceHolder": "user@tryuthy.com",
   "components.LoginForm.confirmPassword": "Confirm Password",
 
+  "components.SearchInput.searchPlaceHolder": "Search",
+
+  "components.ErrorFallback.somethingWrong": "Something went wrong:",
+  "components.ErrorFallback.tryAgain": "Try again",
+
   "containers.ForgotPassword.helmetForgotPwdTitle": "Forgot Password Page",
   "containers.ForgotPassword.forgotPassword": "Forgot Password",
   "containers.ForgotPassword.forgotPasswordBtn": "Send Reset Link",
@@ -57,6 +62,10 @@
   "containers.NotFoundPage.message": "Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.",
   "containers.NotFoundPage.back": "Go Back Home",
 
+  "containers.PermissionDeniedPage.header": "Permission Denied",
+  "containers.PermissionDeniedPage.back": "Go Back Home",
+  "containers.PermissionDeniedPage.message": "Oops! You don't have permission to visit this page.",
+
   "common.messages.danger": "Error",
   "common.messages.warning": "Warning",
   "common.messages.info": "Info",
@@ -66,6 +75,13 @@
   "common.messages.forbidden": "You don't have access for this action, please contact admin for further details.",
   "common.messages.unauthorized": "Invalid credentials",
   "common.messages.serverError": "Please try again in a moment!",
+  "common.messages.submit": "Submit",
+  "common.messages.cancel": "Cancel",
+  "common.messages.addSuccess": "Data added successfully!",
+  "common.messages.updateSuccess": "Data updated successfully!",
+  "common.messages.editLabel": "Edit",
+  "common.messages.viewLabel": "View",
+  "common.messages.removeLabel": "Remove",
 
   "containers.ResetPassword.helmetResetPasswordTitle": "Reset Password Page",
   "containers.ResetPassword.resetPassword": "Reset Password",
@@ -78,8 +94,31 @@
   "containers.RoleModule.dateLabel": "Created At",
   "containers.RoleModule.descriptionLabel": "Description",
   "containers.RoleModule.actionLabel": "Action",
-  "containers.RoleModule.listTitle": "Roles",
   "containers.RoleModule.createdAt": "{ts, date, ::yyyyMMdd}",
+  "containers.RoleModule.listTitle": "Roles",
+  "containers.RoleModule.namePlaceHolder": "Input role name",
+  "containers.RoleModule.descriptionPlaceHolder": "Input description",
+  "containers.RoleModule.editTitle": "Edit Role",
+  "containers.RoleModule.addLabel": "Add New",
+  "containers.RoleModule.permissionLabel": "Permission",
+  "containers.RoleModule.addTitle": "Add Role",
+
+  "containers.PermissionModule.helmetTitle": "Permission",
+  "containers.PermissionModule.editTitle": "Edit Permission",
+  "containers.PermissionModule.addTitle": "Add Permission",
+  "containers.PermissionModule.resourceLabel": "Resource",
+  "containers.PermissionModule.resourcePlaceHolder": "Input resource name",
+  "containers.PermissionModule.descriptionLabel": "Description",
+  "containers.PermissionModule.descriptionPlaceHolder": "Input description",
+  "containers.PermissionModule.pathLabel": "Path",
+  "containers.PermissionModule.pathPlaceHolder": "Input path name",
+  "containers.PermissionModule.methodLabel": "Method",
+  "containers.PermissionModule.methodPlaceHolder": "Input method name",
+  "containers.PermissionModule.addLabel": "Add New",
+  "containers.PermissionModule.actionLabel": "Action",
+  "containers.PermissionModule.createdAt": "{ts, date, ::yyyyMMdd}",
+  "containers.PermissionModule.listTitle": "Permissions",
+  "containers.PermissionModule.dateLabel": "Created At",
 
   "containers.LocaleToggle.en": "en",
   "containers.LocaleToggle.np": "np",
@@ -91,6 +130,10 @@
   "components.Footer.themeMadeBy": "Theme made by {author}",
   "components.Footer.license.message": "This project is licensed under the MIT license.",
   "components.Footer.language": "Language",
+  "components.Footer.copyright": "Copyright",
+  "components.Footer.settings": "Settings",
+  "components.Footer.download": "Download",
+  "components.Footer.star": "Star",
 
   "components.BreadCrumbWrapper.home": "Home",
 
@@ -110,5 +153,6 @@
   "components.DeleteModal.deleteError": "Could not delete data, try again later!",
 
   "routes.messages.rolePage": "Role",
-  "routes.messages.dashboard": "Dashboard"
+  "routes.messages.dashboard": "Dashboard",
+  "routes.messages.permissionPage": "Permission"
 }

@@ -5,24 +5,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { injectIntl } from 'react-intl';
 import validationMessages from 'helpers/messages';
 
-function AuthFormGroupWrapper({
-  label,
-  name,
-  id,
-  classname = '',
-  type,
-  value,
-  placeholder,
-  focus = true,
-  disabled = false,
-  required = true,
-  changeHandler = () => {},
-  error,
-  min = 0,
-  max = 0,
-  intl,
-  icon,
-}) {
+const AuthFormGroupWrapper = (props) => {
+  const {
+    label,
+    name,
+    id,
+    classname = '',
+    type,
+    value,
+    placeholder,
+    focus = true,
+    disabled = false,
+    required = true,
+    changeHandler = () => {},
+    error,
+    min = 0,
+    max = 0,
+    intl,
+    icon,
+  } = props;
+
   return (
     <Form.Group id={id} className={`mb-4 ${classname}`}>
       <Form.Label>{intl.formatMessage(label)}</Form.Label>
@@ -51,7 +53,7 @@ function AuthFormGroupWrapper({
       </InputGroup>
     </Form.Group>
   );
-}
+};
 
 AuthFormGroupWrapper.propTypes = {
   min: PropTypes.number,

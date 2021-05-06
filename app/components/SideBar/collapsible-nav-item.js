@@ -4,7 +4,7 @@ import { Accordion, Nav } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
-const CollapsableNavItem = (props) => {
+const CollapsibleNavItem = (props) => {
   const location = useLocation();
   const { pathname } = location;
   const { eventKey, title, icon, children = null } = props;
@@ -32,11 +32,11 @@ const CollapsableNavItem = (props) => {
   );
 };
 
-CollapsableNavItem.propTypes = {
+CollapsibleNavItem.propTypes = {
   title: PropTypes.string,
   eventKey: PropTypes.string,
   children: PropTypes.node,
   icon: PropTypes.object,
 };
 
-export default CollapsableNavItem;
+export default CollapsibleNavItem;

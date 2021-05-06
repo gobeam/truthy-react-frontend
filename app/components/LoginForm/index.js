@@ -32,7 +32,7 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
 });
 
-export default function LoginForm() {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const submitLoginForm = (e) =>
     dispatch(onFormValidation()) && e.preventDefault();
@@ -94,4 +94,5 @@ export default function LoginForm() {
       </Button>
     </Form>
   );
-}
+};
+export default LoginForm;

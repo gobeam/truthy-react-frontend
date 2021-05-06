@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs, faDownload } from '@fortawesome/free-solid-svg-icons';
 import LocaleToggle from 'containers/LocaleToggle';
 
-function Footer(props) {
+const Footer = (props) => {
   const currentYear = moment().get('year');
   const { showSettings } = props;
 
@@ -40,7 +40,7 @@ function Footer(props) {
                 data-show-count="true"
                 aria-label="Star gobeam/truthy on GitHub"
               >
-                Star
+                <FormattedMessage {...messages.star} />
               </GitHubButton>
             </div>
             <Button
@@ -49,7 +49,8 @@ function Footer(props) {
               variant="primary"
               className="mb-3 w-100"
             >
-              <FontAwesomeIcon icon={faDownload} className="me-1" /> Download
+              <FontAwesomeIcon icon={faDownload} className="me-1" />
+              <FormattedMessage {...messages.download} />
             </Button>
           </Card.Body>
         </Card>
@@ -62,7 +63,8 @@ function Footer(props) {
         >
           <Card.Body className="p-3 py-2">
             <span className="fw-bold h6">
-              <FontAwesomeIcon icon={faCogs} className="me-1 fs-7" /> Settings
+              <FontAwesomeIcon icon={faCogs} className="me-1 fs-7" />
+              <FormattedMessage {...messages.settings} />
             </span>
           </Card.Body>
         </Card>
@@ -71,7 +73,7 @@ function Footer(props) {
         <Row>
           <Col xs={12} lg={6} className="mb-4 mb-lg-0">
             <p className="mb-0 text-center text-xl-left">
-              Copyright © 2021
+              <FormattedMessage {...messages.copyright} /> © 2021
               {`${currentYear !== 2021 ? `-${currentYear}` : ''} `}
               <Card.Link
                 href="https://github.com/gobeam/truthy"
@@ -106,11 +108,11 @@ function Footer(props) {
       </footer>
     </div>
   );
-}
+};
 
 Footer.propTypes = {
   showSettings: PropTypes.bool,
-  toggleSettings: PropTypes.func,
+  toggleSettings: PropTypes.func.isRequired,
 };
 
 export default Footer;

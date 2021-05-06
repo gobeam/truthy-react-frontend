@@ -86,8 +86,11 @@ export default function App() {
 
           {privateRoutes.map((route) => (
             <PrivateRoute
+              defaultPermission={route.defaultPermission}
               key={route.name}
+              resource={route.resource}
               path={route.path}
+              method={route.method}
               component={route.component}
               exact={route.exact}
             />

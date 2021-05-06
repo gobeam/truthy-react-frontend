@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Dropdown,
-  Table,
-} from '@themesberg/react-bootstrap';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Button, Card, Table } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/RoleModule/messages';
 import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
 import TablePagination from 'components/TablePagination';
-import { faEdit, faEye, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import DeleteModal from 'components/DeleteModal';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteItemByIdAction } from 'containers/RoleModule/actions';
+import {
+  changeFieldAction,
+  deleteItemByIdAction,
+} from 'containers/RoleModule/actions';
+import commonMessages from 'common/messages';
+import ButtonWrapper from 'components/ButtonWrapper';
+import { checkPermissionForComponent } from 'utils/permission';
+import SearchInput from 'components/SearchInput';
 
 const breadCrumbItem = [
   {
@@ -27,7 +28,7 @@ const breadCrumbItem = [
 ];
 
 function RoleList(props) {
-  const { roles, changePage } = props;
+  const { roles, changePage, togglePageOn, user, loadRoles, limit } = props;
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -35,6 +36,15 @@ function RoleList(props) {
     dispatch(deleteItemByIdAction(deleteId));
     setShowModal(false);
   };
+
+  const onChangeField = (e) =>
+    dispatch(changeFieldAction(e.target.name, e.target.value));
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    loadRoles();
+  };
+
   const handleClose = () => setShowModal(false);
   const handleDeleteItem = (id) => {
     setShowModal(true);
@@ -47,6 +57,22 @@ function RoleList(props) {
         title={<FormattedMessage {...messages.listTitle} />}
         breadCrumbItem={breadCrumbItem}
       />
+
+      <Button
+        variant="outline-primary"
+        className="m-1"
+        onClick={() => togglePageOn('post')}
+      >
+        <FontAwesomeIcon icon={faPlus} className="me-2" />
+        <FormattedMessage {...messages.addLabel} />
+      </Button>
+
+      <SearchInput
+        limit={limit}
+        onChangeField={onChangeField}
+        onSubmitForm={handleSubmitForm}
+      />
+
       <Card border="light" className="table-wrapper table-responsive shadow-sm">
         <Card.Body className="pt-0">
           <Table hover className="user-table align-items-center">
@@ -84,38 +110,33 @@ function RoleList(props) {
                     </span>
                   </td>
                   <td>
-                    <Dropdown as={ButtonGroup}>
-                      <Dropdown.Toggle
-                        as={Button}
-                        split
-                        variant="link"
-                        className="text-dark m-0 p-0"
-                      >
-                        <span className="icon icon-sm">
-                          <FontAwesomeIcon
-                            icon={faEllipsisH}
-                            className="icon-dark"
-                          />
-                        </span>
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>
-                          <FontAwesomeIcon icon={faEye} className="me-2" /> View
-                          Details
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <FontAwesomeIcon icon={faEdit} className="me-2" />
-                          Edit
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className="text-danger"
-                          onClick={() => handleDeleteItem(role.id)}
-                        >
-                          <FontAwesomeIcon icon={faTrashAlt} className="me-2" />
-                          Remove
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <ButtonWrapper
+                      show={checkPermissionForComponent(user.role, {
+                        resource: 'role',
+                        method: 'put',
+                        path: '/roles/:id',
+                      })}
+                      type="button"
+                      icon={faEdit}
+                      variant="primary"
+                      classname="m-1 btn-sm"
+                      handler={() => togglePageOn('put', role.id)}
+                      label={commonMessages.editLabel}
+                    />
+
+                    <ButtonWrapper
+                      show={checkPermissionForComponent(user.role, {
+                        resource: 'role',
+                        method: 'delete',
+                        path: '/roles/:id',
+                      })}
+                      type="button"
+                      icon={faTrashAlt}
+                      variant="danger"
+                      classname="m-1 btn-sm"
+                      handler={() => handleDeleteItem(role.id)}
+                      label={commonMessages.removeLabel}
+                    />
                   </td>
                 </tr>
               ))}
@@ -145,8 +166,12 @@ function RoleList(props) {
 }
 
 RoleList.propTypes = {
+  user: PropTypes.object.isRequired,
+  limit: PropTypes.number.isRequired,
   roles: PropTypes.object.isRequired,
   changePage: PropTypes.func.isRequired,
+  togglePageOn: PropTypes.func.isRequired,
+  loadRoles: PropTypes.func.isRequired,
 };
 
 export default RoleList;

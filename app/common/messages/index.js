@@ -11,6 +11,14 @@ export default defineMessages({
     id: `${scope}.success`,
     defaultMessage: `Success`,
   },
+  submit: {
+    id: `${scope}.submit`,
+    defaultMessage: `Submit`,
+  },
+  cancel: {
+    id: `${scope}.cancel`,
+    defaultMessage: `Cancel`,
+  },
   unauthorized: {
     id: `${scope}.unauthorized`,
     defaultMessage: `Invalid credentials`,
@@ -27,6 +35,18 @@ export default defineMessages({
     id: `${scope}.warning`,
     defaultMessage: `Warning`,
   },
+  editLabel: {
+    id: `${scope}.editLabel`,
+    defaultMessage: `Edit`,
+  },
+  viewLabel: {
+    id: `${scope}.viewLabel`,
+    defaultMessage: `View`,
+  },
+  removeLabel: {
+    id: `${scope}.removeLabel`,
+    defaultMessage: `Remove`,
+  },
   info: {
     id: `${scope}.info`,
     defaultMessage: `Info`,
@@ -34,6 +54,14 @@ export default defineMessages({
   primary: {
     id: `${scope}.primary`,
     defaultMessage: `Message`,
+  },
+  addSuccess: {
+    id: `${scope}.addSuccess`,
+    defaultMessage: `Data added successfully!`,
+  },
+  updateSuccess: {
+    id: `${scope}.updateSuccess`,
+    defaultMessage: `Data updated successfully!`,
   },
   serverError: {
     id: `${scope}.serverError`,

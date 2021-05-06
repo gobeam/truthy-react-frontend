@@ -11,7 +11,9 @@ import {
   ASYNC_END,
   ASYNC_START,
   CHANGE_FORM_FIELD,
+  ASSIGN_PERMISSION_LIST,
   SET_PAGE_NUMBER,
+  CLEAR_FORM,
 } from 'containers/RoleModule/constants';
 
 const emptyFormFieldError = {
@@ -22,8 +24,10 @@ const emptyFormFieldError = {
 
 export const initialState = {
   name: '',
+  keywords: '',
   description: '',
   pageNumber: 1,
+  limit: 10,
   roles: {
     results: [],
     pageSize: 10,
@@ -33,8 +37,13 @@ export const initialState = {
     previous: 0,
   },
   permissions: [],
+  permissionList: {},
   errors: emptyFormFieldError,
   isLoading: false,
+  formPage: false,
+  formMethod: null,
+  updateId: null,
+  formTitle: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,6 +52,9 @@ const roleModuleReducer = produce((draft, action) => {
     case ASSIGN_ROLES:
       draft.roles = action.roles;
       draft.isLoading = false;
+      break;
+    case ASSIGN_PERMISSION_LIST:
+      draft.permissionList = action.permissionList;
       break;
     case CHANGE_FORM_FIELD:
       draft[action.key] = action.value;
@@ -61,12 +73,18 @@ const roleModuleReducer = produce((draft, action) => {
     case ASYNC_END:
       draft.isLoading = false;
       break;
+    case CLEAR_FORM:
     case LOCATION_CHANGE:
       draft.name = '';
+      draft.keywords = '';
       draft.description = '';
       draft.permissions = [];
       draft.errors = emptyFormFieldError;
       draft.isLoading = false;
+      draft.formPage = false;
+      draft.formMethod = null;
+      draft.updateId = null;
+      draft.formTitle = null;
       break;
   }
 }, initialState);

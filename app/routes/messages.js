@@ -15,4 +15,8 @@ export default defineMessages({
     id: `${scope}.rolePage`,
     defaultMessage: `Role`,
   },
+  permissionPage: {
+    id: `${scope}.permissionPage`,
+    defaultMessage: `Permission`,
+  },
 });

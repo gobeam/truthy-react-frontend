@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 
-function BreadcrumbWrapper(props) {
+const BreadcrumbWrapper = (props) => {
   const { title, breadCrumbItem } = props;
   return (
     <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -26,7 +26,7 @@ function BreadcrumbWrapper(props) {
       </div>
     </div>
   );
-}
+};
 
 BreadcrumbWrapper.propTypes = {
   title: PropTypes.object,

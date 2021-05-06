@@ -89,7 +89,6 @@
     "hoist-non-react-statics": "^3.3.2",
     "immer": "^9.0.1",
     "ip": "^1.1.5",
-    "loadash": "^1.0.0",
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "moment-timezone": "^0.5.33",

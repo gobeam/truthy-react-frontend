@@ -23,43 +23,43 @@ import messages from 'containers/NotFoundPage/messages';
  * @return {boolean}
  */
 
-export default function NotFound() {
-  return (
-    <main>
-      <section className="vh-100 d-flex align-items-center justify-content-center">
-        <Container>
-          <Row>
-            <Col
-              xs={12}
-              className="text-center d-flex align-items-center justify-content-center"
-            >
-              <div>
-                <Card.Link as={Link} to="/">
-                  <Image src={NotFoundImage} className="img-fluid w-75" />
-                </Card.Link>
-                <h1 className="text-primary mt-5">
-                  <FormattedMessage {...messages.header} />
-                </h1>
-                <p className="lead my-4">
-                  <FormattedMessage {...messages.message} />
-                </p>
-                <Button
-                  as={Link}
-                  variant="primary"
-                  className="animate-hover"
-                  to="/"
-                >
-                  <FontAwesomeIcon
-                    icon={faChevronLeft}
-                    className="animate-left-3 me-3 ms-2"
-                  />
-                  <FormattedMessage {...messages.back} />
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </main>
-  );
-}
+const NotFound = () => (
+  <main>
+    <section className="vh-100 d-flex align-items-center justify-content-center">
+      <Container>
+        <Row>
+          <Col
+            xs={12}
+            className="text-center d-flex align-items-center justify-content-center"
+          >
+            <div>
+              <Card.Link as={Link} to="/">
+                <Image src={NotFoundImage} className="img-fluid w-75" />
+              </Card.Link>
+              <h1 className="text-primary mt-5">
+                <FormattedMessage {...messages.header} />
+              </h1>
+              <p className="lead my-4">
+                <FormattedMessage {...messages.message} />
+              </p>
+              <Button
+                as={Link}
+                variant="primary"
+                className="animate-hover"
+                to="/"
+              >
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="animate-left-3 me-3 ms-2"
+                />
+                <FormattedMessage {...messages.back} />
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </section>
+  </main>
+);
+
+export default NotFound;

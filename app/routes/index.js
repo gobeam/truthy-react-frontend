@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginPage from 'containers/LoginPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
+import HomePage from 'containers/HomePage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
 import VerifyAccountPage from 'containers/VerifyAccountPage/Loadable';
 import ForgotPassword from 'containers/ForgotPassword/Loadable';
@@ -9,19 +10,21 @@ import UserAccountPage from 'containers/UserAccountPage/Loadable';
 import AuthRedirectPage from 'containers/AuthRedirectPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
 import RoleModule from 'containers/RoleModule/Loadable';
+import PermissionModule from 'containers/PermissionModule/Loadable';
 import messages from 'routes/messages';
 import {
   faDigitalTachograph,
   faUserTag,
+  faUserLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl';
 
 export const publicRoutes = [
   {
-    key: 'login-page',
-    name: 'Login',
+    key: 'home-page',
+    name: 'Home',
     path: '/',
-    component: LoginPage,
+    component: HomePage,
     exact: true,
   },
   {
@@ -73,24 +76,38 @@ export const privateRoutes = [
   {
     key: 'dashboard-page',
     name: <FormattedMessage {...messages.dashboard} />,
-    path: '/dashboard',
     icon: faDigitalTachograph,
+    path: '/dashboard',
     method: 'get',
     resource: 'dashboard',
     component: DashboardPage,
-    includeSideBar: true,
     exact: true,
+    defaultPermission: true,
+    includeSideBar: true,
   },
   {
     key: 'role-page',
     name: <FormattedMessage {...messages.rolePage} />,
-    path: '/roles',
     icon: faUserTag,
+    path: '/roles',
     method: 'get',
     resource: 'role',
     component: RoleModule,
-    includeSideBar: true,
     exact: true,
+    defaultPermission: false,
+    includeSideBar: true,
+  },
+  {
+    key: 'permission-page',
+    name: <FormattedMessage {...messages.permissionPage} />,
+    icon: faUserLock,
+    path: '/permissions',
+    method: 'get',
+    resource: 'permission',
+    component: PermissionModule,
+    exact: true,
+    defaultPermission: false,
+    includeSideBar: true,
   },
   {
     key: 'profile-page',
@@ -100,6 +117,7 @@ export const privateRoutes = [
     resource: 'user',
     component: UserAccountPage,
     includeSideBar: false,
+    defaultPermission: false,
     exact: true,
   },
   {
@@ -110,6 +128,7 @@ export const privateRoutes = [
     resource: 'user',
     component: ProfilePage,
     includeSideBar: false,
+    defaultPermission: false,
     exact: true,
   },
 ];

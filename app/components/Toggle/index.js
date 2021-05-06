@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Form } from '@themesberg/react-bootstrap';
 import ToggleOption from '../ToggleOption';
 
-function Toggle(props) {
+const Toggle = (props) => {
   let content = <option>--</option>;
   if (props.values) {
     content = props.values.map((value) => (
@@ -27,7 +27,7 @@ function Toggle(props) {
       {content}
     </Form.Control>
   );
-}
+};
 
 Toggle.propTypes = {
   onToggle: PropTypes.func,

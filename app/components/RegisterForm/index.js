@@ -27,7 +27,7 @@ import { Button, Card, Form, FormCheck } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import validationMessages from 'helpers/messages';
-import { faEnvelope, faLock, faFont } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faFont, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
@@ -40,7 +40,7 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
 });
 
-export default function RegisterForm() {
+const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const {
@@ -182,4 +182,5 @@ export default function RegisterForm() {
       </Button>
     </Form>
   );
-}
+};
+export default RegisterForm;

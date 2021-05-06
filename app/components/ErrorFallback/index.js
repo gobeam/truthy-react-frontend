@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import messages from 'components/ErrorFallback/messages';
+import { injectIntl } from 'react-intl';
 
-function ErrorFallback({ error, resetErrorBoundary }) {
+const ErrorFallback = (props) => {
+  const { error, resetErrorBoundary, intl } = props;
   return (
     <div role="alert">
-      <p>Something went wrong:</p>
+      <p>{intl.formatMessage(messages.somethingWrong)}</p>
       <pre>{error.message}</pre>
       <button type="button" onClick={resetErrorBoundary}>
-        Try again
+        {intl.formatMessage(messages.tryAgain)}
       </button>
     </div>
   );
-}
+};
 
 ErrorFallback.propTypes = {
   error: PropTypes.object,
   resetErrorBoundary: PropTypes.func,
+  intl: PropTypes.object.isRequired,
 };
 
-export default ErrorFallback;
+export default injectIntl(ErrorFallback);

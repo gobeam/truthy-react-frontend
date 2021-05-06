@@ -11,17 +11,41 @@ export default defineMessages({
     id: `${scope}.helmetTitle`,
     defaultMessage: 'Role',
   },
+  editTitle: {
+    id: `${scope}.editTitle`,
+    defaultMessage: 'Edit Role',
+  },
+  addTitle: {
+    id: `${scope}.addTitle`,
+    defaultMessage: 'Add Role',
+  },
   nameLabel: {
     id: `${scope}.nameLabel`,
     defaultMessage: 'Name',
+  },
+  namePlaceHolder: {
+    id: `${scope}.namePlaceHolder`,
+    defaultMessage: 'Input role name',
+  },
+  descriptionPlaceHolder: {
+    id: `${scope}.descriptionPlaceHolder`,
+    defaultMessage: 'Input description',
   },
   dateLabel: {
     id: `${scope}.dateLabel`,
     defaultMessage: 'Created At',
   },
+  addLabel: {
+    id: `${scope}.addLabel`,
+    defaultMessage: 'Add New',
+  },
   descriptionLabel: {
     id: `${scope}.descriptionLabel`,
     defaultMessage: 'Description',
+  },
+  permissionLabel: {
+    id: `${scope}.permissionLabel`,
+    defaultMessage: 'Permission',
   },
   actionLabel: {
     id: `${scope}.actionLabel`,

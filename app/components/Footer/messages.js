@@ -16,6 +16,22 @@ export default defineMessages({
     id: `${scope}.appName`,
     defaultMessage: 'Truthy',
   },
+  copyright: {
+    id: `${scope}.copyright`,
+    defaultMessage: 'Copyright',
+  },
+  settings: {
+    id: `${scope}.settings`,
+    defaultMessage: 'Settings',
+  },
+  download: {
+    id: `${scope}.download`,
+    defaultMessage: 'Download',
+  },
+  star: {
+    id: `${scope}.star`,
+    defaultMessage: 'Star',
+  },
   language: {
     id: `${scope}.language`,
     defaultMessage: 'Language',

@@ -30,7 +30,7 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
 });
 
-function Sidebar() {
+const Sidebar = () => {
   const { isLogged, user } = useSelector(stateSelector);
   const [show, setShow] = useState(false);
   const [sideBar, setSideBar] = useState([]);
@@ -122,6 +122,6 @@ function Sidebar() {
       </CSSTransition>
     </>
   );
-}
+};
 
 export default Sidebar;

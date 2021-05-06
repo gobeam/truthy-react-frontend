@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -15,17 +15,43 @@ import {
 import LoadingIndicator from 'components/LoadingIndicator';
 import Header from 'components/Header/index';
 import PropTypes from 'prop-types';
+import { checkPermissionForComponent } from 'utils/permission';
+import PermissionDeniedPage from 'containers/PermissionDeniedPage';
 
 const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
   isLogged: makeIsLoggedSelector(),
 });
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isLogged } = useSelector(stateSelector);
+const PrivateRoute = ({
+  component: Component,
+  path,
+  resource,
+  method,
+  defaultPermission,
+  ...rest
+}) => {
+  const { isLogged, user } = useSelector(stateSelector);
+  const [permitted, setPermitted] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      setPermitted(
+        checkPermissionForComponent(user.role, {
+          path,
+          resource,
+          method,
+          defaultPermission,
+        }),
+      );
+    }
+  }, [user]);
 
   if (isLogged === null) {
     return <LoadingIndicator />;
+  }
+  if (!permitted) {
+    return <PermissionDeniedPage />;
   }
   return (
     <>
@@ -44,8 +70,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func,
-  navItems: PropTypes.array,
+  component: PropTypes.func.isRequired,
+  defaultPermission: PropTypes.bool,
+  path: PropTypes.string.isRequired,
+  resource: PropTypes.string.isRequired,
+  method: PropTypes.string.isRequired,
 };
 
 export default PrivateRoute;

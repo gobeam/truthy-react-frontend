@@ -27,7 +27,7 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
 });
 
-function Header() {
+const Header = () => {
   const dispatch = useDispatch();
   const { user, isLogged } = useSelector(stateSelector);
   const onLogout = () => dispatch(logoutAction());
@@ -91,6 +91,6 @@ function Header() {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Header;
