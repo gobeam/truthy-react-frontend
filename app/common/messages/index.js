@@ -11,9 +11,29 @@ export default defineMessages({
     id: `${scope}.success`,
     defaultMessage: `Success`,
   },
+  invalidRefresh: {
+    id: `${scope}.invalidRefresh`,
+    defaultMessage: `Session out`,
+  },
   submit: {
     id: `${scope}.submit`,
     defaultMessage: `Submit`,
+  },
+  complete: {
+    id: `${scope}.complete`,
+    defaultMessage: `Complete`,
+  },
+  sourceCode: {
+    id: `${scope}.sourceCode`,
+    defaultMessage: `Source Code`,
+  },
+  hideCode: {
+    id: `${scope}.hideCode`,
+    defaultMessage: `Hide Code`,
+  },
+  showCode: {
+    id: `${scope}.showCode`,
+    defaultMessage: `Show Code`,
   },
   cancel: {
     id: `${scope}.cancel`,

@@ -3,7 +3,6 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
-import AuthService from 'services/auth.service';
 import { FormattedMessage } from 'react-intl';
 import commonMessages from 'common/messages';
 import messages from 'containers/LoginPage/messages';
@@ -27,6 +26,7 @@ import {
   enterLoginAction,
   enterValidationErrorAction,
 } from 'containers/LoginPage/actions';
+import CookieService from 'services/cookie.service';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -51,13 +51,11 @@ export function* validateForm() {
 }
 
 export function* attemptLogin() {
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
   yield put(asyncStart());
   const email = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
-  const requestURL = api.getLoginPath();
-  const requestPayload = api.makeApiPayload('POST', null, {
+  const requestURL = ApiEndpoint.getLoginPath();
+  const requestPayload = ApiEndpoint.makeApiPayload('POST', {
     username: email,
     password,
   });
@@ -66,8 +64,14 @@ export function* attemptLogin() {
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
+    if (response.expiresIn) {
+      let timeObject = new Date();
+      timeObject = new Date(
+        timeObject.getTime() + 1000 * Number(response.expiresIn),
+      );
+      CookieService.setCookie('expiresIn', timeObject);
+    }
     yield put(asyncEnd());
-    auth.setTokenPayload(response);
     yield put(getProfileAction());
     return yield put(
       enqueueSnackbarAction({

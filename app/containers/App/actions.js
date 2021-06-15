@@ -5,6 +5,8 @@
  */
 
 import {
+  ASYNC_END,
+  ASYNC_START,
   CHANGE_FIELD,
   GET_PROFILE_ERROR,
   GET_PROFILE_REQUEST,
@@ -19,6 +21,7 @@ import {
   LOGOUT_SUCCESS,
   PUBLIC_REDIRECT_LOGGED,
   QUERY_NOTIFICATIONS,
+  REFRESH_TOKEN,
 } from 'containers/App/constants';
 
 /**
@@ -121,6 +124,24 @@ export function logoutAction() {
 export function logoutSuccessAction() {
   return {
     type: LOGOUT_SUCCESS,
+  };
+}
+
+export function asyncStart() {
+  return {
+    type: ASYNC_START,
+  };
+}
+
+export function asyncEnd() {
+  return {
+    type: ASYNC_END,
+  };
+}
+
+export function refreshTokenAction() {
+  return {
+    type: REFRESH_TOKEN,
   };
 }
 

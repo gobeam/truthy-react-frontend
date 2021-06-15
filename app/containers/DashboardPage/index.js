@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useInjectSaga } from 'utils/injectSaga';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -19,10 +19,6 @@ import saga from 'containers/DashboardPage/saga';
 
 export default function DashboardPage() {
   useInjectSaga({ key: 'homePage', saga });
-
-  useEffect(() => {
-    // isLogged();
-  }, []);
 
   return (
     <>

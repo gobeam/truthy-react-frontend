@@ -10,7 +10,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import reducer from 'containers/LoginPage/reducer';
 import LoginForm from 'components/LoginForm';
-import { isLoggedAction } from 'containers/LoginPage/actions';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
@@ -33,14 +32,12 @@ const stateSelector = createStructuredSelector({
 export default function LoginPage() {
   const dispatch = useDispatch();
   const { user } = useSelector(stateSelector);
-  const isLogged = () => dispatch(isLoggedAction());
   const hideHeader = () => dispatch(hideHeaderAction(true));
 
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    isLogged();
     hideHeader();
   }, [user]);
 

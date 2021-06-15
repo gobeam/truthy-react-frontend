@@ -34,9 +34,8 @@ export function* validateForm() {
 
 export function* handleForgotPassword() {
   const email = yield select(makeEmailSelector());
-  const api = new ApiEndpoint();
-  const requestPayload = api.makeApiPayload('put', null, { email });
-  const requestURL = `${api.getBasePath()}/auth/forgot-password`;
+  const requestPayload = ApiEndpoint.makeApiPayload('put', null, { email });
+  const requestURL = `${ApiEndpoint.getBasePath()}/auth/forgot-password`;
   try {
     yield call(request, requestURL, requestPayload);
     return yield put(

@@ -12,9 +12,8 @@ import React from 'react';
 
 export function* handleVerifyCode() {
   const code = yield select(makeVerifyCodeSelector());
-  const api = new ApiEndpoint();
-  const requestPayload = api.makeApiPayload('get');
-  const requestURL = `${api.getBasePath()}/auth/activate-account?token=${code}`;
+  const requestPayload = ApiEndpoint.makeApiPayload('get');
+  const requestURL = `${ApiEndpoint.getBasePath()}/auth/activate-account?token=${code}`;
   try {
     yield call(request, requestURL, requestPayload);
     yield put(

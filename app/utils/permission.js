@@ -1,5 +1,5 @@
 export function checkPermissionForComponent(roles, route) {
-  if (!roles.permission) return false;
+  if (!roles || !roles.permission) return false;
   if (route.defaultPermission) return true;
   return roles.permission.some(
     (role) =>

@@ -18,7 +18,6 @@ import {
   makePasswordSelector,
   makeProfileImageSelector,
 } from 'containers/ProfilePage/selectors';
-import AuthService from 'services/auth.service';
 import request from 'utils/request';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { getProfileAction } from 'containers/App/actions';
@@ -38,9 +37,6 @@ export function* handleProfileUpdate() {
   const name = yield select(makeNameSelector());
   const dob = yield select(makeDobSelector());
   const image = yield select(makeProfileImageSelector());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
   const formData = new FormData();
   formData.append('email', email);
   formData.append('name', name);
@@ -48,13 +44,12 @@ export function* handleProfileUpdate() {
   if (image) {
     formData.append('image', image);
   }
-  const requestPayload = api.makeApiPayload(
-    'put',
-    token,
+  const requestPayload = ApiEndpoint.makeApiPayload(
+    'PUT',
     formData,
     'multipart/form-data',
   );
-  const requestURL = `${api.getBasePath()}/profile`;
+  const requestURL = `${ApiEndpoint.getBasePath()}/profile`;
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response.error) {
@@ -81,14 +76,11 @@ export function* handleProfileUpdate() {
 export function* handlePasswordReset() {
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestPayload = api.makeApiPayload('put', token, {
+  const requestPayload = ApiEndpoint.makeApiPayload('PUT', {
     password,
     confirmPassword,
   });
-  const requestURL = `${api.getBasePath()}/reset-password`;
+  const requestURL = `${ApiEndpoint.getBasePath()}/reset-password`;
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response.error) {

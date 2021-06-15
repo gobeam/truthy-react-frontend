@@ -20,10 +20,7 @@ import {
   makeErrorsSelector,
 } from 'containers/ForgotPassword/selectors';
 import { Helmet } from 'react-helmet';
-import {
-  hideHeaderAction,
-  publicRedirectLoggedAction,
-} from 'containers/App/actions';
+import { hideHeaderAction } from 'containers/App/actions';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
@@ -52,7 +49,6 @@ export default function ForgotPasswordPage() {
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
   const hideHeader = () => dispatch(hideHeaderAction(true));
-  const redirectIfLogged = () => dispatch(publicRedirectLoggedAction());
   const submitForgotPasswordForm = (e) =>
     dispatch(validateFormAction()) && e.preventDefault();
   const onChangeField = (e) =>
@@ -60,7 +56,6 @@ export default function ForgotPasswordPage() {
   const { email, errors } = useSelector(stateSelector);
   useEffect(() => {
     hideHeader();
-    redirectIfLogged();
   }, []);
 
   return (

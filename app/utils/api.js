@@ -1,4 +1,3 @@
-export const APP_URL = process.env.REACT_APP_URI;
 export const BASE_URL = process.env.REACT_APP_API_BASE_URI;
 const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URI}`;
 const AUTH_PATH = '/auth/login';
@@ -6,27 +5,29 @@ const PROFILE_PATH = '/auth/profile';
 const LOGOUT_PATH = '/logout';
 
 export default class ApiEndpoint {
-  getBasePath = () => `${API_BASE_URL}`;
+  static getBasePath = () => `${API_BASE_URL}`;
 
-  getLoginPath = () => `${API_BASE_URL + AUTH_PATH}`;
+  static getLoginPath = () => `${API_BASE_URL + AUTH_PATH}`;
 
-  getProfilePath = () => `${API_BASE_URL + PROFILE_PATH}`;
+  static getProfilePath = () => `${API_BASE_URL + PROFILE_PATH}`;
 
-  getLogoutPath = () => `${API_BASE_URL + LOGOUT_PATH}`;
+  static getLogoutPath = () => `${API_BASE_URL + LOGOUT_PATH}`;
 
-  getRegisterPath = () => `${API_BASE_URL}/auth/register`;
+  static getRegisterPath = () => `${API_BASE_URL}/auth/register`;
 
-  makeApiPayload = (
-    method,
-    token = null,
-    payload = null,
-    contentType = null,
-  ) => {
+  static getRefreshTokenPath = () => `${API_BASE_URL}/refresh`;
+
+  /**
+   * Make API payload
+   * @param method
+   * @param payload
+   * @param contentType
+   * @returns {{headers: {}, method: *}}
+   */
+  static makeApiPayload = (method, payload = null, contentType = null) => {
     const jsonPayload = {
       method,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: {},
     };
     if (!contentType) {
       jsonPayload.headers.Accept = 'application/json';
@@ -38,7 +39,20 @@ export default class ApiEndpoint {
     return jsonPayload;
   };
 
-  getLoginPayload = (email, password, refresh = false, refreshToken = null) => {
+  /**
+   * make login request payload
+   * @param email
+   * @param password
+   * @param refresh
+   * @param refreshToken
+   * @returns {{client_secret: *, client_id: *}}
+   */
+  static getLoginPayload = (
+    email,
+    password,
+    refresh = false,
+    refreshToken = null,
+  ) => {
     const jsonPayload = {
       client_id: process.env.REACT_APP_CLIENT_ID,
       client_secret: process.env.REACT_APP_CLIENT_SECRET,

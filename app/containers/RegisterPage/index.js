@@ -13,7 +13,6 @@ import reducer from 'containers/RegisterPage/reducer';
 import messages from 'containers/RegisterPage/messages';
 import saga from 'containers/RegisterPage/saga';
 import RegisterForm from 'components/RegisterForm';
-import { isLoggedAction } from 'containers/RegisterPage/actions';
 import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { hideHeaderAction } from 'containers/App/actions';
@@ -32,14 +31,12 @@ const stateSelector = createStructuredSelector({
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const { user } = useSelector(stateSelector);
-  const isLogged = () => dispatch(isLoggedAction());
   const hideHeader = () => dispatch(hideHeaderAction(true));
 
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    isLogged();
     hideHeader();
   }, [user]);
 

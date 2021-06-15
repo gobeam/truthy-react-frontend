@@ -1,5 +1,5 @@
 export default class Common {
-  getParameterByName = (name, url) => {
+  static getParameterByName = (name, url) => {
     const defaultUri = '/dashboard';
     // eslint-disable-next-line no-param-reassign
     if (!url) url = window.location.href;
@@ -16,20 +16,4 @@ export default class Common {
     }
     return uri;
   };
-}
-
-export function getFormattedFeedDate(d) {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const then = new Date(d);
-  then.setHours(0, 0, 0, 0);
-  const day = Math.round((now - then) / 8.64e7);
-  switch (day) {
-    case 0:
-      return 'Today';
-    case 1:
-      return 'Yesterday';
-    default:
-      return `${day} days ago`;
-  }
 }

@@ -21,10 +21,7 @@ import {
   makePasswordSelector,
 } from 'containers/ResetPasswordPage/selectors';
 import { Helmet } from 'react-helmet';
-import {
-  hideHeaderAction,
-  publicRedirectLoggedAction,
-} from 'containers/App/actions';
+import { hideHeaderAction } from 'containers/App/actions';
 import { Link, useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ResetPasswordPage/messages';
@@ -53,7 +50,6 @@ const stateSelector = createStructuredSelector({
 export default function ResetPasswordPage() {
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
-  const redirectIfLogged = () => dispatch(publicRedirectLoggedAction());
   useInjectReducer({ key, reducer });
   const hideHeader = () => dispatch(hideHeaderAction(true));
   const submitResetPasswordPageForm = (e) =>
@@ -68,7 +64,6 @@ export default function ResetPasswordPage() {
   }, []);
 
   useEffect(() => {
-    redirectIfLogged();
     dispatch(changeFieldAction('code', code));
   }, [code]);
 

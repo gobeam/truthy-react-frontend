@@ -13,9 +13,9 @@ import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
+  asyncEnd,
   enterValidationErrorAction,
   resetPasswordAction,
-  asyncEnd,
 } from 'containers/ResetPasswordPage/actions';
 import { checkError } from 'helpers/Validation';
 import { push } from 'connected-react-router';
@@ -57,13 +57,12 @@ export function* handleResetPassword() {
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
   const code = yield select(makeCodeSelector());
-  const api = new ApiEndpoint();
-  const requestPayload = api.makeApiPayload('PUT', null, {
+  const requestPayload = ApiEndpoint.makeApiPayload('PUT', {
     password,
     token: code,
     confirmPassword,
   });
-  const requestURL = `${api.getBasePath()}/auth/reset-password`;
+  const requestURL = `${ApiEndpoint.getBasePath()}/auth/reset-password`;
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response && response.error) {

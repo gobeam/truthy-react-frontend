@@ -1,5 +1,3 @@
-import AuthService from 'services/auth.service';
-
 /**
  * Parses the JSON returned by a network request
  *
@@ -25,19 +23,17 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  // send validation error
-  if (response.status === 422) {
-    return response;
-  }
   if (response.status === 401) {
     const urlLastSegment = window.location.pathname.split('/').pop();
     const loginPath = 'login';
-    // if not in login page reload the page
+    // if not in login page redirect to login page
     if (urlLastSegment !== loginPath) {
-      const auth = new AuthService();
-      auth.unSetTokenPayload();
-      window.location.reload();
+      window.location.href = `/login?path=${window.location.pathname}`;
     }
+  }
+  // send validation and forbidden request response
+  if (response.status === 422 || response.status === 403) {
+    return response;
   }
   const error = new Error(response.statusText);
   error.response = response;
@@ -53,5 +49,7 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  return fetch(url, options).then(checkStatus).then(parseJSON);
+  return fetch(url, { ...options, credentials: 'include' })
+    .then(checkStatus)
+    .then(parseJSON);
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Button, Card, Table } from '@themesberg/react-bootstrap';
+import { faPlus, faSync } from '@fortawesome/free-solid-svg-icons';
+import { Card, Col, Row, Table } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/PermissionModule/messages';
 import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
@@ -13,11 +12,13 @@ import PropTypes from 'prop-types';
 import {
   changeFieldAction,
   deleteItemByIdAction,
+  syncPermissionAction,
 } from 'containers/PermissionModule/actions';
 import commonMessages from 'common/messages';
 import ButtonWrapper from 'components/ButtonWrapper';
 import { checkPermissionForComponent } from 'utils/permission';
 import SearchInput from 'components/SearchInput';
+import SyncModal from 'components/PermissionPage/SyncModal';
 
 const breadCrumbItem = [
   {
@@ -38,10 +39,16 @@ function RoleList(props) {
   } = props;
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [showSyncModal, setShowSyncModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const handleConfirm = () => {
     dispatch(deleteItemByIdAction(deleteId));
     setShowModal(false);
+  };
+
+  const handleSyncModalConfirm = () => {
+    dispatch(syncPermissionAction());
+    setShowSyncModal(false);
   };
 
   const onChangeField = (e) =>
@@ -52,6 +59,8 @@ function RoleList(props) {
     loadPermissions();
   };
 
+  const handleSyncModalClose = () => setShowSyncModal(false);
+  const handleSyncModalOpen = () => setShowSyncModal(true);
   const handleClose = () => setShowModal(false);
   const handleDeleteItem = (id) => {
     setShowModal(true);
@@ -64,15 +73,35 @@ function RoleList(props) {
         title={<FormattedMessage {...messages.listTitle} />}
         breadCrumbItem={breadCrumbItem}
       />
-
-      <Button
-        variant="outline-primary"
-        className="m-1"
-        onClick={() => togglePageOn('post')}
-      >
-        <FontAwesomeIcon icon={faPlus} className="me-2" />
-        <FormattedMessage {...messages.addLabel} />
-      </Button>
+      <Row className="justify-content-between align-items-center">
+        <Col xs={8} md={6} lg={3} xl={4}>
+          <ButtonWrapper
+            type="button"
+            icon={faPlus}
+            variant="outline-primary"
+            classname="m-1"
+            handler={() => togglePageOn('post')}
+            label={messages.addLabel}
+          />
+        </Col>
+        <Col xs={6} md={4} xl={2} className="ps-md-0 text-end">
+          <span className="icon icon-sm icon-gray">
+            <ButtonWrapper
+              show={checkPermissionForComponent(user.role, {
+                resource: 'permission',
+                method: 'post',
+                path: '/permissions/sync',
+              })}
+              type="button"
+              icon={faSync}
+              variant="outline-primary"
+              classname="m-1 btn-sm"
+              handler={handleSyncModalOpen}
+              label={messages.syncLabel}
+            />
+          </span>
+        </Col>
+      </Row>
 
       <SearchInput
         limit={limit}
@@ -106,6 +135,11 @@ function RoleList(props) {
               </tr>
             </thead>
             <tbody>
+              {permissions.results && (
+                <tr>
+                  <td colSpan={6}>No data available</td>
+                </tr>
+              )}
               {permissions.results.map((permission) => (
                 <tr key={permission.id}>
                   <td>
@@ -176,6 +210,11 @@ function RoleList(props) {
           )}
         </Card.Body>
       </Card>
+      <SyncModal
+        showModal={showSyncModal}
+        handleClose={handleSyncModalClose}
+        handleConfirm={handleSyncModalConfirm}
+      />
       <DeleteModal
         showModal={showModal}
         handleClose={handleClose}

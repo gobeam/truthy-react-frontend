@@ -59,6 +59,10 @@ export default defineMessages({
     id: `${scope}.addLabel`,
     defaultMessage: 'Add New',
   },
+  syncLabel: {
+    id: `${scope}.syncLabel`,
+    defaultMessage: 'Sync Permissions',
+  },
   actionLabel: {
     id: `${scope}.actionLabel`,
     defaultMessage: 'Action',
@@ -70,5 +74,22 @@ export default defineMessages({
   listTitle: {
     id: `${scope}.listTitle`,
     defaultMessage: 'Permissions',
+  },
+  syncConfirm: {
+    id: `${scope}.syncConfirm`,
+    defaultMessage: 'Sync Permission Confirmation',
+  },
+  syncConfirmationMessage: {
+    id: `${scope}.syncConfirmationMessage`,
+    defaultMessage:
+      'Are you sure you want to sync permission from config file?',
+  },
+  syncOk: {
+    id: `${scope}.syncOk`,
+    defaultMessage: 'Synchronise',
+  },
+  cancelBtn: {
+    id: `${scope}.cancelBtn`,
+    defaultMessage: 'Cancel',
   },
 });

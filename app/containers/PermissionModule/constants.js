@@ -13,6 +13,7 @@ export const CHANGE_FORM_FIELD =
 export const QUERY_PERMISSION = 'containers/PermissionModule/QUERY_PERMISSION';
 
 export const SET_PAGE_NUMBER = 'containers/PermissionModule/SET_PAGE_NUMBER';
+export const SYNC_PERMISSION = 'containers/PermissionModule/SYNC_PERMISSION';
 export const DELETE_ITEM_BY_ID =
   'containers/PermissionModule/DELETE_ITEM_BY_ID';
 export const VALIDATE_FORM = 'containers/PermissionModule/VALIDATE_FORM';

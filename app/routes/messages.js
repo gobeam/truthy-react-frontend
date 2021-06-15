@@ -15,6 +15,14 @@ export default defineMessages({
     id: `${scope}.rolePage`,
     defaultMessage: `Role`,
   },
+  emailTemplatePage: {
+    id: `${scope}.emailTemplatePage`,
+    defaultMessage: `Email Template`,
+  },
+  userPage: {
+    id: `${scope}.userPage`,
+    defaultMessage: `User Management`,
+  },
   permissionPage: {
     id: `${scope}.permissionPage`,
     defaultMessage: `Permission`,

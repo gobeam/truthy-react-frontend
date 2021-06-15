@@ -16,6 +16,8 @@ import {
   LOGOUT,
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
+  ASYNC_END,
+  ASYNC_START,
 } from 'containers/App/constants';
 import { LOCATION_CHANGE } from 'connected-react-router';
 
@@ -54,6 +56,12 @@ const appPageReducer = produce((draft, action) => {
       break;
     case GET_PROFILE_ERROR:
       draft.error = action.error;
+      break;
+    case ASYNC_START:
+      draft.isLoading = true;
+      break;
+    case ASYNC_END:
+      draft.isLoading = false;
       break;
     case LOGOUT:
     case LOGOUT_SUCCESS:

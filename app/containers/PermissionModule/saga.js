@@ -4,10 +4,10 @@ import {
   GET_PERMISSION_BY_ID,
   QUERY_PERMISSION,
   SUBMIT_FORM,
+  SYNC_PERMISSION,
   VALIDATE_FORM,
 } from 'containers/PermissionModule/constants';
 import ApiEndpoint from 'utils/api';
-import AuthService from 'services/auth.service';
 import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
@@ -25,12 +25,12 @@ import {
   makeDescriptionSelector,
   makeFormMethodSelector,
   makeKeywordsSelector,
+  makeLimitSelector,
   makeMethodNameSelector,
   makePageNumberSelector,
   makePathNameSelector,
   makeResourceNameSelector,
   makeUpdateIdSelector,
-  makeLimitSelector,
 } from 'containers/PermissionModule/selectors';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { FormattedMessage } from 'react-intl';
@@ -44,13 +44,10 @@ export function* handleSubmitForm() {
   const path = yield select(makePathNameSelector());
   const formMethod = yield select(makeFormMethodSelector());
   const id = yield select(makeUpdateIdSelector());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/permissions${
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions${
     formMethod === 'put' ? `/${id}` : ''
   }`;
-  const payload = api.makeApiPayload(formMethod.toUpperCase(), token, {
+  const payload = ApiEndpoint.makeApiPayload(formMethod.toUpperCase(), {
     resource,
     description,
     method,
@@ -122,11 +119,8 @@ export function* handleValidateForm() {
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/permissions/${data.id}`;
-  const payload = api.makeApiPayload('DELETE', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload('DELETE');
   try {
     yield call(request, requestURL, payload);
     yield put(queryPermissionAction());
@@ -151,9 +145,6 @@ export function* handleDeleteItemById(data) {
 }
 
 export function* handleQueryPermission() {
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
   const limit = yield select(makeLimitSelector());
@@ -168,8 +159,8 @@ export function* handleQueryPermission() {
     .map((key) => `${key}=${queryObj[key]}`)
     .join('&');
   yield put(asyncStartAction());
-  const requestURL = `${api.getBasePath()}/permissions?${queryString}`;
-  const payload = api.makeApiPayload('GET', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload('GET');
   try {
     const response = yield call(request, requestURL, payload);
     return yield put(assignPermissionAction(response));
@@ -180,12 +171,9 @@ export function* handleQueryPermission() {
 
 export function* handleGetPermissionById() {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${api.getBasePath()}/permissions/${id}`;
-  const payload = api.makeApiPayload('GET', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/${id}`;
+  const payload = ApiEndpoint.makeApiPayload('GET');
   try {
     const response = yield call(request, requestURL, payload);
     yield put(changeFieldAction('resource', response.resource));
@@ -198,7 +186,27 @@ export function* handleGetPermissionById() {
   }
 }
 
+export function* handleSyncPermission() {
+  yield put(asyncStartAction());
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/sync`;
+  const payload = ApiEndpoint.makeApiPayload('POST', {});
+  try {
+    yield call(request, requestURL, payload);
+    yield put(queryPermissionAction());
+    return yield put(
+      enqueueSnackbarAction({
+        message: <FormattedMessage {...deleteMessage.syncSuccess} />,
+        type: 'success',
+        autoHide: true,
+      }),
+    );
+  } catch (error) {
+    return yield put(asyncEndAction());
+  }
+}
+
 export default function* permissionModuleSaga() {
+  yield takeLatest(SYNC_PERMISSION, handleSyncPermission);
   yield takeLatest(QUERY_PERMISSION, handleQueryPermission);
   yield takeLatest(GET_PERMISSION_BY_ID, handleGetPermissionById);
   yield takeLatest(SUBMIT_FORM, handleSubmitForm);

@@ -15,8 +15,9 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SnackBar from 'containers/SnackBar';
 import { privateRoutes, publicRoutes } from 'routes';
 import PrivateRoute from 'containers/PrivateRoute';
+import PublicRoute from 'containers/PublicRoute';
 import {
-  isLoggedAction,
+  getProfileAction,
   queryNotificationAction,
 } from 'containers/App/actions';
 import Footer from 'components/Footer';
@@ -40,7 +41,7 @@ const stateSelector = createStructuredSelector({
 const key = 'global';
 export default function App() {
   const dispatch = useDispatch();
-  const checkIfLogged = () => dispatch(isLoggedAction());
+  const getLoggedInUserProfile = () => dispatch(getProfileAction());
   const queryNotification = () => dispatch(queryNotificationAction());
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -60,12 +61,7 @@ export default function App() {
   }, [user]);
 
   useEffect(() => {
-    checkIfLogged();
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'accessToken') {
-        window.location.reload();
-      }
-    });
+    getLoggedInUserProfile();
   }, []);
   return (
     <>
@@ -76,7 +72,7 @@ export default function App() {
       <main className="content">
         <Switch>
           {publicRoutes.map((route) => (
-            <Route
+            <PublicRoute
               key={route.name}
               path={route.path}
               component={route.component}

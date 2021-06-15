@@ -9,7 +9,6 @@ import {
   ASYNC_END,
   ASYNC_START,
   CHANGE_FIELD,
-  ENTER_LOGIN,
   REGISTER_ERROR,
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
@@ -65,11 +64,5 @@ export function registerErrorAction(error) {
   return {
     type: REGISTER_ERROR,
     error,
-  };
-}
-
-export function isLoggedAction() {
-  return {
-    type: ENTER_LOGIN,
   };
 }

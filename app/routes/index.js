@@ -7,15 +7,18 @@ import VerifyAccountPage from 'containers/VerifyAccountPage/Loadable';
 import ForgotPassword from 'containers/ForgotPassword/Loadable';
 import ResetPasswordPage from 'containers/ResetPasswordPage/Loadable';
 import UserAccountPage from 'containers/UserAccountPage/Loadable';
-import AuthRedirectPage from 'containers/AuthRedirectPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
 import RoleModule from 'containers/RoleModule/Loadable';
+import EmailTemplateModule from 'containers/EmailTemplateModule/Loadable';
+import UserModule from 'containers/UserModule/Loadable';
 import PermissionModule from 'containers/PermissionModule/Loadable';
 import messages from 'routes/messages';
 import {
   faDigitalTachograph,
   faUserTag,
+  faUsers,
   faUserLock,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl';
 
@@ -32,13 +35,6 @@ export const publicRoutes = [
     name: 'Login',
     path: '/login',
     component: LoginPage,
-    exact: true,
-  },
-  {
-    key: 'auth-redirect-page',
-    name: 'Auth Redirect',
-    path: '/redirect/auth',
-    component: AuthRedirectPage,
     exact: true,
   },
   {
@@ -86,6 +82,18 @@ export const privateRoutes = [
     includeSideBar: true,
   },
   {
+    key: 'user-page',
+    name: <FormattedMessage {...messages.userPage} />,
+    icon: faUsers,
+    path: '/users',
+    method: 'get',
+    resource: 'user',
+    component: UserModule,
+    exact: true,
+    defaultPermission: false,
+    includeSideBar: true,
+  },
+  {
     key: 'role-page',
     name: <FormattedMessage {...messages.rolePage} />,
     icon: faUserTag,
@@ -105,6 +113,18 @@ export const privateRoutes = [
     method: 'get',
     resource: 'permission',
     component: PermissionModule,
+    exact: true,
+    defaultPermission: false,
+    includeSideBar: true,
+  },
+  {
+    key: 'email-template',
+    name: <FormattedMessage {...messages.emailTemplatePage} />,
+    icon: faEnvelope,
+    path: '/email-templates',
+    method: 'get',
+    resource: 'emailTemplates',
+    component: EmailTemplateModule,
     exact: true,
     defaultPermission: false,
     includeSideBar: true,

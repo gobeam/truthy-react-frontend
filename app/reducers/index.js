@@ -18,6 +18,8 @@ import userAccountReducer from 'containers/UserAccountPage/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import roleModuleReducer from 'containers/RoleModule/reducer';
 import permissionModuleReducer from 'containers/PermissionModule/reducer';
+import userModuleReducer from 'containers/UserModule/reducer';
+import emailTemplateModuleReducer from 'containers/EmailTemplateModule/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -36,6 +38,8 @@ export default function createReducer(injectedReducers = {}) {
     userAccount: userAccountReducer,
     roleModule: roleModuleReducer,
     permissionModule: permissionModuleReducer,
+    userModule: userModuleReducer,
+    emailTemplate: emailTemplateModuleReducer,
     router: connectRouter(history),
     ...injectedReducers,
   });

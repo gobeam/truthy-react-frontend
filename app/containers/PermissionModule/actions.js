@@ -6,6 +6,7 @@
 
 import {
   ADD_VALIDATION_ERROR,
+  SYNC_PERMISSION,
   ASSIGN_PERMISSION,
   ASYNC_END,
   ASYNC_START,
@@ -35,6 +36,12 @@ export function queryPermissionAction() {
 export function asyncStartAction() {
   return {
     type: ASYNC_START,
+  };
+}
+
+export function syncPermissionAction() {
+  return {
+    type: SYNC_PERMISSION,
   };
 }
 

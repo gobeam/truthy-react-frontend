@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Button, Card, Table } from '@themesberg/react-bootstrap';
+import { Button, Card, Col, Row, Table } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/RoleModule/messages';
 import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
@@ -57,15 +57,18 @@ function RoleList(props) {
         title={<FormattedMessage {...messages.listTitle} />}
         breadCrumbItem={breadCrumbItem}
       />
-
-      <Button
-        variant="outline-primary"
-        className="m-1"
-        onClick={() => togglePageOn('post')}
-      >
-        <FontAwesomeIcon icon={faPlus} className="me-2" />
-        <FormattedMessage {...messages.addLabel} />
-      </Button>
+      <Row className="justify-content-between align-items-center">
+        <Col xs={8} md={6} lg={3} xl={4}>
+          <Button
+            variant="outline-primary"
+            className="m-1"
+            onClick={() => togglePageOn('post')}
+          >
+            <FontAwesomeIcon icon={faPlus} className="me-2" />
+            <FormattedMessage {...messages.addLabel} />
+          </Button>
+        </Col>
+      </Row>
 
       <SearchInput
         limit={limit}
@@ -93,6 +96,11 @@ function RoleList(props) {
               </tr>
             </thead>
             <tbody>
+              {roles.results && (
+                <tr>
+                  <td colSpan={6}>No data available</td>
+                </tr>
+              )}
               {roles.results.map((role) => (
                 <tr key={role.id}>
                   <td>

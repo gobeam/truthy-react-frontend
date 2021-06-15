@@ -1,4 +1,4 @@
-import { call, takeLatest, put, select } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   DELETE_ITEM_BY_ID,
   GET_ROLE_BY_ID,
@@ -8,7 +8,6 @@ import {
   VALIDATE_FORM,
 } from 'containers/RoleModule/constants';
 import ApiEndpoint from 'utils/api';
-import AuthService from 'services/auth.service';
 import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
@@ -18,11 +17,11 @@ import {
   assignRolesAction,
   asyncEndAction,
   asyncStartAction,
-  submitFormAction,
+  changeFieldAction,
+  clearFormAction,
   enterValidationErrorAction,
   queryRolesAction,
-  clearFormAction,
-  changeFieldAction,
+  submitFormAction,
 } from 'containers/RoleModule/actions';
 import {
   makeDescriptionSelector,
@@ -45,13 +44,10 @@ export function* handleSubmitForm() {
   const permissions = yield select(makePermissionsSelector());
   const method = yield select(makeFormMethodSelector());
   const id = yield select(makeUpdateIdSelector());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/roles${
+  const requestURL = `${ApiEndpoint.getBasePath()}/roles${
     method === 'put' ? `/${id}` : ''
   }`;
-  const payload = api.makeApiPayload(method.toUpperCase(), token, {
+  const payload = ApiEndpoint.makeApiPayload(method.toUpperCase(), {
     name,
     description,
     permissions,
@@ -105,11 +101,8 @@ export function* handleValidateForm() {
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/roles/${data.id}`;
-  const payload = api.makeApiPayload('DELETE', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload('DELETE');
   try {
     yield call(request, requestURL, payload);
     yield put(queryRolesAction());
@@ -135,9 +128,6 @@ export function* handleDeleteItemById(data) {
 
 export function* handleQueryRole() {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
   const pageNumber = yield select(makePageNumberSelector());
   const limit = yield select(makeLimitSelector());
   const keywords = yield select(makeKeywordsSelector());
@@ -151,8 +141,8 @@ export function* handleQueryRole() {
   const queryString = Object.keys(queryObject)
     .map((key) => `${key}=${queryObject[key]}`)
     .join('&');
-  const requestURL = `${api.getBasePath()}/roles?${queryString}`;
-  const payload = api.makeApiPayload('GET', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/roles?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload('GET');
   try {
     const response = yield call(request, requestURL, payload);
     return yield put(assignRolesAction(response));
@@ -163,11 +153,8 @@ export function* handleQueryRole() {
 
 export function* handleQueryPermission() {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
-  const requestURL = `${api.getBasePath()}/permissions?limit=300`;
-  const payload = api.makeApiPayload('GET', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/permissions?limit=300`;
+  const payload = ApiEndpoint.makeApiPayload('GET');
   try {
     const response = yield call(request, requestURL, payload);
     if (response.results) {
@@ -185,12 +172,9 @@ export function* handleQueryPermission() {
 
 export function* handleGetRoleById() {
   yield put(asyncStartAction());
-  const api = new ApiEndpoint();
-  const auth = new AuthService();
-  const token = auth.getToken();
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${api.getBasePath()}/roles/${id}`;
-  const payload = api.makeApiPayload('GET', token);
+  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${id}`;
+  const payload = ApiEndpoint.makeApiPayload('GET');
   try {
     const response = yield call(request, requestURL, payload);
     yield put(changeFieldAction('name', response.name));

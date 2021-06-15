@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ENTER_LOGIN,
   REGISTER_PROCESS,
   VALIDATE_FORM,
 } from 'containers/RegisterPage/constants';
@@ -25,8 +24,6 @@ import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import { push } from 'connected-react-router';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
-import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
-import { makeIsLoggedSelector } from 'containers/App/selectors';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/RegisterPage/messages';
 import commonMessages from 'common/messages';
@@ -81,13 +78,12 @@ export function* validateForm() {
 }
 
 export function* handleRegister() {
-  const api = new ApiEndpoint();
   const email = yield select(makeEmailSelector());
   const username = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
   const name = yield select(makeNameSelector());
-  const requestURL = api.getRegisterPath();
-  const requestPayload = api.makeApiPayload('POST', null, {
+  const requestURL = ApiEndpoint.getRegisterPath();
+  const requestPayload = ApiEndpoint.makeApiPayload('POST', {
     name,
     username,
     email,
@@ -126,16 +122,7 @@ export function* handleRegister() {
   }
 }
 
-export function* handleLogged() {
-  const isLogged = yield select(makeIsLoggedSelector());
-  if (isLogged) {
-    yield put(push(SUCCESS_REDIRECT));
-  }
-  return true;
-}
-
 export default function* registerPageSaga() {
   yield takeLatest(VALIDATE_FORM, validateForm);
   yield takeLatest(REGISTER_PROCESS, handleRegister);
-  yield takeLatest(ENTER_LOGIN, handleLogged);
 }

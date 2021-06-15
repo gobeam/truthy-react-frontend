@@ -32,4 +32,8 @@ export default defineMessages({
     id: `${scope}.deleteError`,
     defaultMessage: 'Could not delete data, try again later!',
   },
+  syncSuccess: {
+    id: `${scope}.syncSuccess`,
+    defaultMessage: 'Synchronise successful!',
+  },
 });

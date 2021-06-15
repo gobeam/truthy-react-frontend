@@ -48,11 +48,11 @@ const CheckBoxItems = (props) => {
         <Form.Check
           checked={permissionItems.includes(permission.id)}
           onChange={onChangeField}
-          id={permission.id}
-          htmlFor={permission.id}
+          id={`${permission.id}-child`}
+          htmlFor={`${permission.id}-child`}
           label={permission.description}
           value={permission.id}
-          key={permission.id}
+          key={`${permission.id}-check-item`}
         />
       ))}
     </>
@@ -92,11 +92,11 @@ const RoleForm = () => {
     if (e.target.checked) {
       selectedPermissions = _.union(selectedPermissions, permissionIds);
     } else {
-      selectedPermissions = permissionItems.filter(
+      selectedPermissions = selectedPermissions.filter(
         (permission) => !permissionIds.includes(permission),
       );
     }
-    setPermissionItems(selectedPermissions);
+    setPermissionItems([...selectedPermissions]);
     dispatch(changeFieldAction('permissions', selectedPermissions));
   };
 
@@ -104,14 +104,14 @@ const RoleForm = () => {
     const checkboxValue = Number(e.target.value);
     const selectedPermissions = permissionItems;
     const itemIndex = selectedPermissions.indexOf(checkboxValue);
-    if (e.target.checked) {
-      if (itemIndex < 0) {
-        selectedPermissions.push(checkboxValue);
-      }
-    } else {
+
+    if (e.target.checked && itemIndex < 0) {
+      selectedPermissions.push(checkboxValue);
+    }
+    if (!e.target.checked && itemIndex < 0) {
       selectedPermissions.splice(itemIndex, 1);
     }
-    setPermissionItems(selectedPermissions);
+    setPermissionItems([...selectedPermissions]);
     dispatch(changeFieldAction('permissions', selectedPermissions));
   };
 
@@ -174,17 +174,17 @@ const RoleForm = () => {
                       <FormattedMessage {...messages.permissionLabel} />
 
                       {Object.keys(permissionList).map((resource) => (
-                        <Card key={resource} className="mt-2">
+                        <Card key={`${resource}-card`} className="mt-2">
                           <Card.Body>
                             <Form.Check
-                              id={resource}
-                              htmlFor={resource}
+                              id={`${resource}-main`}
+                              htmlFor={`${resource}-main`}
                               label={resource.toUpperCase()}
                               value={resource}
                               onChange={onCheckByResource}
                             />
                             <CheckBoxItems
-                              permissionItems={permissionItems}
+                              permissionItems={permissions}
                               onChangeField={onCheckboxChange}
                               resourceKey={resource}
                               permissionList={permissionList}
