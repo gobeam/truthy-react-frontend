@@ -4,11 +4,9 @@ import { makeVerifyCodeSelector } from 'containers/VerifyAccountPage/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import messages from 'containers/VerifyAccountPage/messages';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { push } from 'connected-react-router';
 import { LOGIN_REDIRECT } from 'containers/LoginPage/constants';
-import { FormattedMessage } from 'react-intl';
-import React from 'react';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* handleVerifyCode() {
   const code = yield select(makeVerifyCodeSelector());
@@ -16,22 +14,10 @@ export function* handleVerifyCode() {
   const requestURL = `${ApiEndpoint.getBasePath()}/auth/activate-account?token=${code}`;
   try {
     yield call(request, requestURL, requestPayload);
-    yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.activated} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    yield showFormattedErrorMessage('success', messages.activated);
     return yield put(push(LOGIN_REDIRECT));
   } catch (e) {
-    yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.invalidVerification} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    yield showFormattedErrorMessage('danger', messages.invalidVerification);
     return yield put(push(LOGIN_REDIRECT));
   }
 }

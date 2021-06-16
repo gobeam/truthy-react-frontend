@@ -1,4 +1,3 @@
-import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   RESET_PASSWORD,
@@ -11,7 +10,6 @@ import {
 } from 'containers/ResetPasswordPage/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
   asyncEnd,
   asyncStart,
@@ -23,7 +21,7 @@ import { push } from 'connected-react-router';
 import { LOGIN_REDIRECT } from 'containers/LoginPage/constants';
 import commonMessages from 'common/messages';
 import messages from 'containers/ResetPasswordPage/messages';
-import { FormattedMessage } from 'react-intl';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* validateForm() {
   const password = yield select(makePasswordSelector());
@@ -73,13 +71,7 @@ export function* handleResetPassword() {
         return yield put(enterValidationErrorAction(response.error));
       }
     }
-    yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.resetSuccess} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    yield showFormattedErrorMessage('success', messages.resetSuccess);
     yield put(asyncEnd());
     return yield put(push(LOGIN_REDIRECT));
   } catch (error) {
@@ -90,13 +82,7 @@ export function* handleResetPassword() {
     const errorMessage = commonMessages[errLabel]
       ? commonMessages[errLabel]
       : commonMessages.serverError;
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...errorMessage} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', errorMessage);
   }
 }
 

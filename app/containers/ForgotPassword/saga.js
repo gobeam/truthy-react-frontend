@@ -1,4 +1,3 @@
-import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   FORGOT_PASSWORD,
@@ -7,15 +6,14 @@ import {
 import { makeEmailSelector } from 'containers/ForgotPassword/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
   changeFieldAction,
   enterValidationErrorAction,
   forgotPasswordAction,
 } from 'containers/ForgotPassword/actions';
 import { checkError } from 'helpers/Validation';
-import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* validateForm() {
   const email = yield select(makeEmailSelector());
@@ -41,22 +39,10 @@ export function* handleForgotPassword() {
   try {
     yield call(request, requestURL, requestPayload);
     yield put(changeFieldAction('isLoading', false));
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.mailSent} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('success', messages.mailSent);
   } catch (e) {
     yield put(changeFieldAction('isLoading', false));
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.mailSentError} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', messages.mailSentError);
   }
 }
 

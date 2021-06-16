@@ -25,10 +25,8 @@ import {
 } from 'containers/App/constants';
 import { makeIsLoggedSelector } from 'containers/App/selectors';
 import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
-import { FormattedMessage } from 'react-intl';
 import messages from 'common/messages';
-import React from 'react';
+import { showFormattedErrorMessage } from 'common/saga';
 
 /**
  *  query logged in user profile
@@ -90,32 +88,15 @@ export function* handleRefreshToken() {
     const response = yield call(request, requestURL, requestPayload);
     if (response.error) {
       yield put(isLoggedErrorAction());
-      yield showError('danger', messages.invalidRefresh);
+      yield showFormattedErrorMessage('danger', messages.invalidRefresh);
       return yield put(asyncEnd());
     }
     return yield put(getProfileAction());
   } catch (error) {
     yield put(isLoggedErrorAction());
     yield put(asyncEnd());
-    return yield showError('danger', messages.invalidRefresh);
+    return yield showFormattedErrorMessage('danger', messages.invalidRefresh);
   }
-}
-
-/**
- *
- * @param type
- * @param message
- * @param autoHide
- * @returns {IterableIterator<*>}
- */
-export function* showError(type, message, autoHide = true) {
-  return yield put(
-    enqueueSnackbarAction({
-      message: <FormattedMessage {...message} />,
-      type,
-      autoHide,
-    }),
-  );
 }
 
 /**

@@ -34,10 +34,8 @@ import {
   makeUpdateIdSelector,
   makeUserNameSelector,
 } from 'containers/UserModule/selectors';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
-import { FormattedMessage } from 'react-intl';
-import React from 'react';
 import { checkError } from 'helpers/Validation';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* handleSubmitForm() {
   const email = yield select(makeEmailSelector());
@@ -70,22 +68,10 @@ export function* handleSubmitForm() {
       formMethod === 'put'
         ? commonMessage.updateSuccess
         : commonMessage.addSuccess;
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...message} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...commonMessage.serverError} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
   }
 }
 
@@ -135,22 +121,13 @@ export function* handleDeleteItemById(data) {
     yield call(request, requestURL, payload);
     yield put(queryUsersAction());
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...deleteMessage.deleteSuccess} />,
-        type: 'success',
-        autoHide: true,
-      }),
+    return yield showFormattedErrorMessage(
+      'success',
+      deleteMessage.deleteSuccess,
     );
   } catch (error) {
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...deleteMessage.deleteError} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
   }
 }
 

@@ -32,10 +32,8 @@ import {
   makeResourceNameSelector,
   makeUpdateIdSelector,
 } from 'containers/PermissionModule/selectors';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
-import { FormattedMessage } from 'react-intl';
-import React from 'react';
 import { checkError } from 'helpers/Validation';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* handleSubmitForm() {
   const resource = yield select(makeResourceNameSelector());
@@ -66,22 +64,10 @@ export function* handleSubmitForm() {
       formMethod === 'put'
         ? commonMessage.updateSuccess
         : commonMessage.addSuccess;
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...message} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...commonMessage.serverError} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
   }
 }
 
@@ -125,22 +111,13 @@ export function* handleDeleteItemById(data) {
     yield call(request, requestURL, payload);
     yield put(queryPermissionAction());
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...deleteMessage.deleteSuccess} />,
-        type: 'success',
-        autoHide: true,
-      }),
+    return yield showFormattedErrorMessage(
+      'success',
+      deleteMessage.deleteSuccess,
     );
   } catch (error) {
     yield put(asyncEndAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...deleteMessage.deleteError} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
   }
 }
 
@@ -193,12 +170,9 @@ export function* handleSyncPermission() {
   try {
     yield call(request, requestURL, payload);
     yield put(queryPermissionAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...deleteMessage.syncSuccess} />,
-        type: 'success',
-        autoHide: true,
-      }),
+    return yield showFormattedErrorMessage(
+      'success',
+      deleteMessage.syncSuccess,
     );
   } catch (error) {
     return yield put(asyncEndAction());

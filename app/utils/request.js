@@ -32,7 +32,8 @@ function checkStatus(response) {
     }
   }
   // send validation and forbidden request response
-  if (response.status === 422 || response.status === 403) {
+
+  if ([429, 422, 403].includes(response.status)) {
     return response;
   }
   const error = new Error(response.statusText);

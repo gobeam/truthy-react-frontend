@@ -1,9 +1,7 @@
-import React from 'react';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
-import { FormattedMessage } from 'react-intl';
 import commonMessages from 'common/messages';
 import messages from 'containers/LoginPage/messages';
 import {
@@ -18,7 +16,6 @@ import {
 } from 'containers/LoginPage/constants';
 import { checkError } from 'helpers/Validation';
 import { getProfileAction } from 'containers/App/actions';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { makeIsLoggedSelector } from 'containers/App/selectors';
 import {
   asyncEnd,
@@ -26,6 +23,7 @@ import {
   enterLoginAction,
   enterValidationErrorAction,
 } from 'containers/LoginPage/actions';
+import { showErrorMessage, showFormattedErrorMessage } from 'common/saga';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -60,18 +58,15 @@ export function* attemptLogin() {
   });
   try {
     const response = yield call(request, requestURL, requestPayload);
+    yield put(asyncEnd());
+    if (response.statusCode === 429) {
+      return yield showErrorMessage('danger', response.message);
+    }
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
-    yield put(asyncEnd());
     yield put(getProfileAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.loginSuccess} />,
-        type: 'success',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('success', messages.loginSuccess);
   } catch (error) {
     yield put(asyncEnd());
     const errLabel = error.response
@@ -80,13 +75,7 @@ export function* attemptLogin() {
     const errorMessage = commonMessages[errLabel]
       ? commonMessages[errLabel]
       : commonMessages.serverError;
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...errorMessage} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', errorMessage);
   }
 }
 

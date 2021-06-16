@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   REGISTER_PROCESS,
   VALIDATE_FORM,
@@ -23,10 +22,9 @@ import {
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import { push } from 'connected-react-router';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
-import { FormattedMessage } from 'react-intl';
 import messages from 'containers/RegisterPage/messages';
 import commonMessages from 'common/messages';
+import { showFormattedErrorMessage } from 'common/saga';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -96,12 +94,7 @@ export function* handleRegister() {
       return yield put(enterValidationErrorAction(response.error));
     }
     yield put(asyncEnd());
-    yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...messages.registerSuccess} />,
-        type: 'success',
-      }),
-    );
+    yield showFormattedErrorMessage('success', messages.registerSuccess);
     return yield put(push('/login'));
   } catch (error) {
     yield put(asyncEnd());
@@ -112,13 +105,7 @@ export function* handleRegister() {
     const errorMessage = commonMessages[errLabel]
       ? commonMessages[errLabel]
       : commonMessages.serverError;
-    return yield put(
-      enqueueSnackbarAction({
-        message: <FormattedMessage {...errorMessage} />,
-        type: 'danger',
-        autoHide: true,
-      }),
-    );
+    return yield showFormattedErrorMessage('danger', errorMessage);
   }
 }
 
