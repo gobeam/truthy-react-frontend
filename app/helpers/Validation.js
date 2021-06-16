@@ -1,10 +1,10 @@
-import Validator from 'helpers/ValidatonModel';
+import { Validator } from 'helpers/ValidatonModel';
 
 /**
  * Check if error exists
  * @param model
  */
-const checkError = (model) => {
+export const checkError = (model) => {
   const err = {};
   Object.keys(model).forEach((key) => {
     const validator = new Validator();
@@ -21,7 +21,7 @@ const checkError = (model) => {
   return err;
 };
 
-const getParameterByName = (name, url) => {
+export const getParameterByName = (name, url) => {
   /* eslint-disable default-case, no-param-reassign */
   if (!url) url = window.location.href;
   // eslint-disable-next-line no-useless-escape
@@ -32,8 +32,3 @@ const getParameterByName = (name, url) => {
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
-
-/**
- * Default export
- */
-export { checkError, getParameterByName };

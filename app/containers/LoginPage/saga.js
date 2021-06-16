@@ -29,11 +29,11 @@ import {
 
 export function* validateForm() {
   yield put(asyncStart());
-  const email = yield select(makeUsernameSelector());
+  const username = yield select(makeUsernameSelector());
   const password = yield select(makePasswordSelector());
   const model = {
-    email: {
-      value: email,
+    username: {
+      value: username,
       validator: ['isNotEmpty'],
     },
     password: {

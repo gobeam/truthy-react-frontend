@@ -45,9 +45,8 @@ const PermissionModule = () => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const { permissions, pageNumber, user, formPage, limit } = useSelector(
-    stateSelector,
-  );
+  const { permissions, pageNumber, user, formPage, limit } =
+    useSelector(stateSelector);
   const onChangeField = (keyName, value) =>
     dispatch(changeFieldAction(keyName, value));
   const loadPermissions = () => dispatch(queryPermissionAction());

@@ -1,4 +1,4 @@
-class Validator {
+export class Validator {
   validate = (value, rules) => {
     const self = this;
     let msg = null;
@@ -77,8 +77,9 @@ class Validator {
    * @returns {string}
    */
   isEmail = (value) => {
-    // eslint-disable-next-line no-useless-escape
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      // eslint-disable-next-line no-useless-escape
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(String(value).toLowerCase())) {
       return '';
     }
@@ -91,7 +92,8 @@ class Validator {
    * @returns {string}
    */
   isStrongPassword = (value) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/;
+    const re =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/;
     if (re.test(value)) {
       return '';
     }
@@ -154,5 +156,3 @@ class Validator {
     return '';
   };
 }
-
-export default Validator;

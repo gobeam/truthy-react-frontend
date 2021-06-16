@@ -75,15 +75,8 @@ export default function ProfilePage() {
     e.preventDefault();
     dispatch(resetPasswordSubmitAction());
   };
-  const {
-    email,
-    password,
-    errors,
-    name,
-    confirmPassword,
-    dob,
-    image,
-  } = useSelector(stateSelector);
+  const { email, password, errors, name, confirmPassword, dob, image } =
+    useSelector(stateSelector);
 
   useEffect(() => {
     loadProfile();

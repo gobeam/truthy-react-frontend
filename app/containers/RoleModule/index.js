@@ -48,9 +48,8 @@ const stateSelector = createStructuredSelector({
 
 export default function RoleModule() {
   const dispatch = useDispatch();
-  const { roles, pageNumber, user, formPage, limit } = useSelector(
-    stateSelector,
-  );
+  const { roles, pageNumber, user, formPage, limit } =
+    useSelector(stateSelector);
   const onChangeField = (keyName, value) =>
     dispatch(changeFieldAction(keyName, value));
   const loadRoles = () => dispatch(queryRolesAction());
