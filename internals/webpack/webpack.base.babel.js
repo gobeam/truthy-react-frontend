@@ -6,6 +6,14 @@ const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
+const env = dotenv.config().parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 module.exports = (options) => ({
   mode: options.mode,
   entry: options.entry,
@@ -115,9 +123,7 @@ module.exports = (options) => ({
     // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
-    }),
+    new webpack.DefinePlugin(envKeys),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
