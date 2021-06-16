@@ -26,7 +26,6 @@ import {
   enterLoginAction,
   enterValidationErrorAction,
 } from 'containers/LoginPage/actions';
-import CookieService from 'services/cookie.service';
 
 export function* validateForm() {
   yield put(asyncStart());
@@ -63,13 +62,6 @@ export function* attemptLogin() {
     const response = yield call(request, requestURL, requestPayload);
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
-    }
-    if (response.expiresIn) {
-      let timeObject = new Date();
-      timeObject = new Date(
-        timeObject.getTime() + 1000 * Number(response.expiresIn),
-      );
-      CookieService.setCookie('expiresIn', timeObject);
     }
     yield put(asyncEnd());
     yield put(getProfileAction());
