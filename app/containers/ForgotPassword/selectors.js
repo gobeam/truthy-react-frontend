@@ -9,4 +9,10 @@ const makeEmailSelector = () =>
 const makeErrorsSelector = () =>
   createSelector(selectForgotPasswordPageDomain, (substate) => substate.errors);
 
-export { makeEmailSelector, makeErrorsSelector };
+const makeIsLoadingSelector = () =>
+  createSelector(
+    selectForgotPasswordPageDomain,
+    (substate) => substate.isLoading,
+  );
+
+export { makeEmailSelector, makeErrorsSelector, makeIsLoadingSelector };

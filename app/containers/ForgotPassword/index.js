@@ -18,6 +18,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   makeEmailSelector,
   makeErrorsSelector,
+  makeIsLoadingSelector,
 } from 'containers/ForgotPassword/selectors';
 import { Helmet } from 'react-helmet';
 import { hideHeaderAction } from 'containers/App/actions';
@@ -25,14 +26,8 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
 import loginMessage from 'components/LoginForm/messages';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-} from '@themesberg/react-bootstrap';
+import FormButtonWrapper from 'components/FormButtonWrapper';
+import { Card, Col, Container, Form, Row } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
@@ -43,7 +38,9 @@ const key = 'forgotPassword';
 const stateSelector = createStructuredSelector({
   email: makeEmailSelector(),
   errors: makeErrorsSelector(),
+  isLoading: makeIsLoadingSelector(),
 });
+
 export default function ForgotPasswordPage() {
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
@@ -53,7 +50,7 @@ export default function ForgotPasswordPage() {
     dispatch(validateFormAction()) && e.preventDefault();
   const onChangeField = (e) =>
     dispatch(changeFieldAction(e.target.name, e.target.value));
-  const { email, errors } = useSelector(stateSelector);
+  const { email, errors, isLoading } = useSelector(stateSelector);
   useEffect(() => {
     hideHeader();
   }, []);
@@ -108,9 +105,12 @@ export default function ForgotPasswordPage() {
                     changeHandler={onChangeField}
                     error={errors.email}
                   />
-                  <Button variant="primary" type="submit" className="w-100">
-                    <FormattedMessage {...messages.forgotPasswordBtn} />
-                  </Button>
+                  <FormButtonWrapper
+                    className="w-100"
+                    variant="primary"
+                    disabled={isLoading}
+                    label={messages.forgotPasswordBtn}
+                  />
                 </Form>
               </div>
             </Col>

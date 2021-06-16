@@ -23,11 +23,12 @@ import {
 } from 'containers/RegisterPage/selectors';
 import messages from 'containers/RegisterPage/messages';
 import loginMessages from 'components/LoginForm/messages';
-import { Button, Card, Form, FormCheck } from '@themesberg/react-bootstrap';
+import { Card, Form, FormCheck } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import validationMessages from 'helpers/messages';
 import { faEnvelope, faFont, faLock } from '@fortawesome/free-solid-svg-icons';
+import FormButtonWrapper from 'components/FormButtonWrapper';
 
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
@@ -172,14 +173,12 @@ const RegisterForm = () => {
         </Form.Control.Feedback>
       </FormCheck>
 
-      <Button
-        disabled={isLoading}
+      <FormButtonWrapper
         variant="primary"
-        type="submit"
         className="w-100"
-      >
-        <FormattedMessage {...messages.signBtn} />
-      </Button>
+        disabled={isLoading}
+        label={messages.signBtn}
+      />
     </Form>
   );
 };

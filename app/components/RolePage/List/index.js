@@ -8,16 +8,23 @@ import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
 import TablePagination from 'components/TablePagination';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import DeleteModal from 'components/DeleteModal';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   changeFieldAction,
   deleteItemByIdAction,
+  queryRolesAction,
+  setPageNumberAction,
 } from 'containers/RoleModule/actions';
 import commonMessages from 'common/messages';
 import ButtonWrapper from 'components/ButtonWrapper';
 import { checkPermissionForComponent } from 'utils/permission';
 import SearchInput from 'components/SearchInput';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeLimitSelector,
+  makeRolesSelector,
+} from 'containers/RoleModule/selectors';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
 
 const breadCrumbItem = [
   {
@@ -27,11 +34,18 @@ const breadCrumbItem = [
   },
 ];
 
-function RoleList(props) {
-  const { roles, changePage, togglePageOn, user, loadRoles, limit } = props;
+const stateSelector = createStructuredSelector({
+  roles: makeRolesSelector(),
+  user: makeLoggedInUserSelector(),
+  limit: makeLimitSelector(),
+});
+
+function RoleList() {
   const dispatch = useDispatch();
+  const { roles, user, limit } = useSelector(stateSelector);
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const loadRoles = () => dispatch(queryRolesAction());
   const handleConfirm = () => {
     dispatch(deleteItemByIdAction(deleteId));
     setShowModal(false);
@@ -43,6 +57,18 @@ function RoleList(props) {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     loadRoles();
+  };
+
+  const setPageNumber = (page) => dispatch(setPageNumberAction(page));
+
+  const togglePageOn = (method, id = null) => {
+    onChangeField('formPage', true);
+    onChangeField('formMethod', method);
+    onChangeField('updateId', id);
+    onChangeField(
+      'formTitle',
+      method === 'post' ? messages.addTitle : messages.editTitle,
+    );
   };
 
   const handleClose = () => setShowModal(false);
@@ -157,7 +183,7 @@ function RoleList(props) {
               totalItems={roles.totalItems}
               previous={roles.previous}
               next={roles.next}
-              handlePageChange={changePage}
+              handlePageChange={setPageNumber}
             />
           ) : (
             ''
@@ -172,14 +198,5 @@ function RoleList(props) {
     </>
   );
 }
-
-RoleList.propTypes = {
-  user: PropTypes.object.isRequired,
-  limit: PropTypes.number.isRequired,
-  roles: PropTypes.object.isRequired,
-  changePage: PropTypes.func.isRequired,
-  togglePageOn: PropTypes.func.isRequired,
-  loadRoles: PropTypes.func.isRequired,
-};
 
 export default RoleList;

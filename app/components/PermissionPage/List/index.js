@@ -7,11 +7,12 @@ import BreadCrumbWrapper from 'components/BreadCrumbWrapper';
 import TablePagination from 'components/TablePagination';
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import DeleteModal from 'components/DeleteModal';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   changeFieldAction,
   deleteItemByIdAction,
+  queryPermissionAction,
+  setPageNumberAction,
   syncPermissionAction,
 } from 'containers/PermissionModule/actions';
 import commonMessages from 'common/messages';
@@ -19,6 +20,13 @@ import ButtonWrapper from 'components/ButtonWrapper';
 import { checkPermissionForComponent } from 'utils/permission';
 import SearchInput from 'components/SearchInput';
 import SyncModal from 'components/PermissionPage/SyncModal';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeDescriptionSelector,
+  makeLimitSelector,
+  makePermissionsSelector,
+} from 'containers/PermissionModule/selectors';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
 
 const breadCrumbItem = [
   {
@@ -28,19 +36,31 @@ const breadCrumbItem = [
   },
 ];
 
-function RoleList(props) {
-  const {
-    permissions,
-    changePage,
-    togglePageOn,
-    user,
-    loadPermissions,
-    limit,
-  } = props;
+const stateSelector = createStructuredSelector({
+  permissions: makePermissionsSelector(),
+  description: makeDescriptionSelector(),
+  user: makeLoggedInUserSelector(),
+  limit: makeLimitSelector(),
+});
+
+function RoleList() {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showSyncModal, setShowSyncModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const { permissions, user, limit } = useSelector(stateSelector);
+
+  const loadPermissions = () => dispatch(queryPermissionAction());
+  const changePage = (page) => dispatch(setPageNumberAction(page));
+  const togglePageOn = (method, id = null) => {
+    onChangeField('formPage', true);
+    onChangeField('formMethod', method);
+    onChangeField('updateId', id);
+    onChangeField(
+      'formTitle',
+      method === 'post' ? messages.addTitle : messages.editTitle,
+    );
+  };
   const handleConfirm = () => {
     dispatch(deleteItemByIdAction(deleteId));
     setShowModal(false);
@@ -223,14 +243,5 @@ function RoleList(props) {
     </>
   );
 }
-
-RoleList.propTypes = {
-  limit: PropTypes.number.isRequired,
-  user: PropTypes.object.isRequired,
-  permissions: PropTypes.object.isRequired,
-  changePage: PropTypes.func.isRequired,
-  togglePageOn: PropTypes.func.isRequired,
-  loadPermissions: PropTypes.func.isRequired,
-};
 
 export default RoleList;

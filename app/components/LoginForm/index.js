@@ -8,22 +8,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  changeUsernameAction,
   changePasswordAction,
+  changeUsernameAction,
   onFormValidation,
 } from 'containers/LoginPage/actions';
 import {
-  makeUsernameSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
   makePasswordSelector,
+  makeUsernameSelector,
 } from 'containers/LoginPage/selectors';
-import { Button, Card, Form } from '@themesberg/react-bootstrap';
+import { Card, Form } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import messages from 'components/LoginForm/messages';
 import { FormattedMessage } from 'react-intl';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import FormButtonWrapper from 'components/FormButtonWrapper';
 
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
@@ -84,14 +85,13 @@ const LoginForm = () => {
           </Card.Link>
         </div>
       </Form.Group>
-      <Button
-        disabled={isLoading}
+
+      <FormButtonWrapper
         variant="primary"
-        type="submit"
         className="w-100"
-      >
-        <FormattedMessage {...messages.submit} />
-      </Button>
+        disabled={isLoading}
+        label={messages.submit}
+      />
     </Form>
   );
 };

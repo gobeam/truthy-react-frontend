@@ -17,26 +17,16 @@ import messages from 'containers/PermissionModule/messages';
 import PermissionList from 'components/PermissionPage/List';
 import PermissionForm from 'components/PermissionPage/Form';
 import {
-  makeDescriptionSelector,
   makeIsFormPageSelector,
   makeLimitSelector,
   makePageNumberSelector,
-  makePermissionsSelector,
 } from 'containers/PermissionModule/selectors';
-import {
-  changeFieldAction,
-  queryPermissionAction,
-  setPageNumberAction,
-} from 'containers/PermissionModule/actions';
-import { makeLoggedInUserSelector } from 'containers/App/selectors';
+import { queryPermissionAction } from 'containers/PermissionModule/actions';
 
 const key = 'permissionModule';
 
 const stateSelector = createStructuredSelector({
-  permissions: makePermissionsSelector(),
   pageNumber: makePageNumberSelector(),
-  description: makeDescriptionSelector(),
-  user: makeLoggedInUserSelector(),
   formPage: makeIsFormPageSelector(),
   limit: makeLimitSelector(),
 });
@@ -45,23 +35,8 @@ const PermissionModule = () => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const { permissions, pageNumber, user, formPage, limit } =
-    useSelector(stateSelector);
-  const onChangeField = (keyName, value) =>
-    dispatch(changeFieldAction(keyName, value));
+  const { pageNumber, formPage, limit } = useSelector(stateSelector);
   const loadPermissions = () => dispatch(queryPermissionAction());
-
-  const togglePageOn = (method, id = null) => {
-    onChangeField('formPage', true);
-    onChangeField('formMethod', method);
-    onChangeField('updateId', id);
-    onChangeField(
-      'formTitle',
-      method === 'post' ? messages.addTitle : messages.editTitle,
-    );
-  };
-
-  const setPageNumber = (page) => dispatch(setPageNumberAction(page));
 
   useEffect(() => {
     loadPermissions();
@@ -76,18 +51,7 @@ const PermissionModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      {!formPage ? (
-        <PermissionList
-          user={user}
-          limit={limit}
-          loadPermissions={loadPermissions}
-          permissions={permissions}
-          changePage={setPageNumber}
-          togglePageOn={togglePageOn}
-        />
-      ) : (
-        <PermissionForm />
-      )}
+      {!formPage ? <PermissionList /> : <PermissionForm />}
     </>
   );
 };

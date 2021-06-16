@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { injectIntl } from 'react-intl';
 import { Button, Spinner } from '@themesberg/react-bootstrap';
 import React from 'react';
@@ -6,31 +5,20 @@ import PropTypes from 'prop-types';
 
 /**
  *
- * ButtonWrapper
+ * FormButtonWrapper
  *
  */
 
-const ButtonWrapper = (props) => {
-  const {
-    icon,
-    label,
-    intl,
-    type,
-    variant,
-    show = true,
-    classname,
-    handler,
-    disabled,
-  } = props;
+const FormButtonWrapper = (props) => {
+  const { label, intl, variant, show = true, className, disabled } = props;
   return (
     <>
       {show ? (
         <Button
           disabled={disabled}
-          type={type}
+          type="submit"
           variant={variant}
-          className={classname}
-          onClick={handler}
+          className={className}
         >
           {disabled ? (
             <Spinner
@@ -43,7 +31,6 @@ const ButtonWrapper = (props) => {
           ) : (
             ''
           )}
-          {icon ? <FontAwesomeIcon icon={icon} className="me-2" /> : ''}
           {intl.formatMessage(label)}
         </Button>
       ) : (
@@ -53,16 +40,13 @@ const ButtonWrapper = (props) => {
   );
 };
 
-ButtonWrapper.propTypes = {
-  icon: PropTypes.object,
+FormButtonWrapper.propTypes = {
   intl: PropTypes.object,
-  handler: PropTypes.func,
   disabled: PropTypes.bool,
   show: PropTypes.bool,
-  type: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
-  classname: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   label: PropTypes.object.isRequired,
 };
 
-export default injectIntl(ButtonWrapper);
+export default injectIntl(FormButtonWrapper);

@@ -18,6 +18,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   makeConfirmPasswordSelector,
   makeErrorsSelector,
+  makeIsLoadingSelector,
   makePasswordSelector,
 } from 'containers/ResetPasswordPage/selectors';
 import { Helmet } from 'react-helmet';
@@ -25,24 +26,19 @@ import { hideHeaderAction } from 'containers/App/actions';
 import { Link, useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ResetPasswordPage/messages';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-} from '@themesberg/react-bootstrap';
+import { Card, Col, Container, Form, Row } from '@themesberg/react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faLock } from '@fortawesome/free-solid-svg-icons';
 import BgImage from 'assets/img/illustrations/signin.svg';
 import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
 import loginMessages from 'components/LoginForm/messages';
+import FormButtonWrapper from 'components/FormButtonWrapper';
 
 const key = 'resetPassword';
 
 const stateSelector = createStructuredSelector({
   password: makePasswordSelector(),
+  isLoading: makeIsLoadingSelector(),
   confirmPassword: makeConfirmPasswordSelector(),
   errors: makeErrorsSelector(),
 });
@@ -56,7 +52,8 @@ export default function ResetPasswordPage() {
     dispatch(validateFormAction()) && e.preventDefault();
   const onChangeField = (e) =>
     dispatch(changeFieldAction(e.target.name, e.target.value));
-  const { password, confirmPassword, errors } = useSelector(stateSelector);
+  const { password, confirmPassword, errors, isLoading } =
+    useSelector(stateSelector);
   const { code } = useParams();
 
   useEffect(() => {
@@ -131,9 +128,13 @@ export default function ResetPasswordPage() {
                     changeHandler={onChangeField}
                     error={errors.confirmPassword}
                   />
-                  <Button variant="primary" type="submit" className="w-100">
-                    <FormattedMessage {...messages.resetPasswordBtn} />
-                  </Button>
+
+                  <FormButtonWrapper
+                    variant="primary"
+                    className="w-100"
+                    disabled={isLoading}
+                    label={messages.resetPasswordBtn}
+                  />
                 </Form>
               </div>
             </Col>

@@ -9,6 +9,7 @@ import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
+  changeFieldAction,
   enterValidationErrorAction,
   forgotPasswordAction,
 } from 'containers/ForgotPassword/actions';
@@ -33,11 +34,13 @@ export function* validateForm() {
 }
 
 export function* handleForgotPassword() {
+  yield put(changeFieldAction('isLoading', true));
   const email = yield select(makeEmailSelector());
-  const requestPayload = ApiEndpoint.makeApiPayload('put', null, { email });
+  const requestPayload = ApiEndpoint.makeApiPayload('put', { email });
   const requestURL = `${ApiEndpoint.getBasePath()}/auth/forgot-password`;
   try {
     yield call(request, requestURL, requestPayload);
+    yield put(changeFieldAction('isLoading', false));
     return yield put(
       enqueueSnackbarAction({
         message: <FormattedMessage {...messages.mailSent} />,
@@ -46,6 +49,7 @@ export function* handleForgotPassword() {
       }),
     );
   } catch (e) {
+    yield put(changeFieldAction('isLoading', false));
     return yield put(
       enqueueSnackbarAction({
         message: <FormattedMessage {...messages.mailSentError} />,

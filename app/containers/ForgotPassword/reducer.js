@@ -12,6 +12,7 @@ import {
 
 export const initialState = {
   email: '',
+  isLoading: false,
   errors: {
     email: '',
   },
@@ -29,6 +30,7 @@ const forgotPasswordReducer = produce((draft, action) => {
       break;
     case LOCATION_CHANGE:
       draft.email = '';
+      draft.isLoading = false;
       draft.errors = {
         email: '',
       };

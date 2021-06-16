@@ -14,6 +14,7 @@ import request from 'utils/request';
 import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import {
   asyncEnd,
+  asyncStart,
   enterValidationErrorAction,
   resetPasswordAction,
 } from 'containers/ResetPasswordPage/actions';
@@ -54,6 +55,7 @@ export function* validateForm() {
 }
 
 export function* handleResetPassword() {
+  yield put(asyncStart());
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
   const code = yield select(makeCodeSelector());
@@ -66,6 +68,7 @@ export function* handleResetPassword() {
   try {
     const response = yield call(request, requestURL, requestPayload);
     if (response && response.error) {
+      yield put(asyncEnd());
       if (typeof response.error === 'object') {
         return yield put(enterValidationErrorAction(response.error));
       }
@@ -77,6 +80,7 @@ export function* handleResetPassword() {
         autoHide: true,
       }),
     );
+    yield put(asyncEnd());
     return yield put(push(LOGIN_REDIRECT));
   } catch (error) {
     yield put(asyncEnd());

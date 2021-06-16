@@ -25,9 +25,9 @@ function checkStatus(response) {
   }
   if (response.status === 401) {
     const urlLastSegment = window.location.pathname.split('/').pop();
-    const loginPath = 'login';
     // if not in login page redirect to login page
-    if (urlLastSegment !== loginPath) {
+    const publicLinks = ['', 'login', 'register', 'forgot-password'];
+    if (!publicLinks.includes(urlLastSegment)) {
       window.location.href = `/login?path=${window.location.pathname}`;
     }
   }
