@@ -36,10 +36,4 @@ export default defineMessages({
     id: `${scope}.language`,
     defaultMessage: 'Language',
   },
-  themeMadeBy: {
-    id: `${scope}.themeMadeBy`,
-    defaultMessage: `
-      Theme made by {author}.
-    `,
-  },
 });

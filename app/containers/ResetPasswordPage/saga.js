@@ -1,8 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import {
-  RESET_PASSWORD,
-  VALIDATE_FORM,
-} from 'containers/ResetPasswordPage/constants';
+import { RESET_PASSWORD } from 'containers/ResetPasswordPage/constants';
 import {
   makeCodeSelector,
   makeConfirmPasswordSelector,
@@ -14,66 +11,34 @@ import {
   asyncEnd,
   asyncStart,
   enterValidationErrorAction,
-  resetPasswordAction,
 } from 'containers/ResetPasswordPage/actions';
-import { checkError } from 'helpers/Validation';
-import { push } from 'connected-react-router';
-import { LOGIN_REDIRECT } from 'containers/LoginPage/constants';
 import commonMessages from 'common/messages';
 import messages from 'containers/ResetPasswordPage/messages';
-import { showFormattedErrorMessage } from 'common/saga';
-
-export function* validateForm() {
-  const password = yield select(makePasswordSelector());
-  const confirmPassword = yield select(makeConfirmPasswordSelector());
-  const model = {
-    password: {
-      value: password,
-      validator: ['isNotEmpty'],
-    },
-    confirmPassword: {
-      key: 'confirmPassword',
-      value: confirmPassword,
-      validator: ['isNotEmpty'],
-    },
-  };
-
-  const err = checkError(model);
-  if (Object.keys(err).length > 0) {
-    return yield put(enterValidationErrorAction(err));
-  }
-  if (password !== confirmPassword) {
-    return yield put(
-      enterValidationErrorAction({
-        confirmPassword: 'confirmPasswordNotSimilar',
-      }),
-    );
-  }
-  return yield put(resetPasswordAction());
-}
+import { showFormattedAlert } from 'common/saga';
+import { PUT } from 'utils/constants';
 
 export function* handleResetPassword() {
   yield put(asyncStart());
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
   const code = yield select(makeCodeSelector());
-  const requestPayload = ApiEndpoint.makeApiPayload('PUT', {
+  const requestUrl = `/auth/reset-password`;
+  const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, PUT, {
     password,
     token: code,
     confirmPassword,
   });
-  const requestURL = `${ApiEndpoint.getBasePath()}/auth/reset-password`;
   try {
-    const response = yield call(request, requestURL, requestPayload);
+    const response = yield call(request, requestPayload);
     if (response && response.error) {
       yield put(asyncEnd());
       if (typeof response.error === 'object') {
         return yield put(enterValidationErrorAction(response.error));
       }
     }
-    yield showFormattedErrorMessage('success', messages.resetSuccess);
-    yield put(asyncEnd());
-    return yield put(push(LOGIN_REDIRECT));
+    yield showFormattedAlert('success', messages.resetSuccess);
+    return yield put(asyncEnd());
+    // return yield put(push(LOGIN_REDIRECT));
   } catch (error) {
     yield put(asyncEnd());
     const errLabel = error.response
@@ -82,11 +47,10 @@ export function* handleResetPassword() {
     const errorMessage = commonMessages[errLabel]
       ? commonMessages[errLabel]
       : commonMessages.serverError;
-    return yield showFormattedErrorMessage('danger', errorMessage);
+    return yield showFormattedAlert('error', errorMessage);
   }
 }
 
 export default function* homePageSaga() {
-  yield takeLatest(VALIDATE_FORM, validateForm);
   yield takeLatest(RESET_PASSWORD, handleResetPassword);
 }

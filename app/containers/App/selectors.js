@@ -20,7 +20,15 @@ const makeHideHeaderSelector = () =>
 const makeIsLoadingSelector = () =>
   createSelector(selectGlobal, (globalState) => globalState.isLoading);
 
+const makeDeviceSelector = () =>
+  createSelector(selectGlobal, (globalState) => globalState.device);
+
+const makeCollapsedSelector = () =>
+  createSelector(selectGlobal, (globalState) => globalState.collapsed);
+
 export {
+  makeCollapsedSelector,
+  makeDeviceSelector,
   makeIsLoadingSelector,
   makeHideHeaderSelector,
   makeLoggedInUserSelector,

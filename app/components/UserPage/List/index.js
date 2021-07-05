@@ -18,7 +18,7 @@ import { checkPermissionForComponent } from 'utils/permission';
 import SearchInput from 'components/SearchInput';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeLimitSelector,
+  makeIsLoadingSelector,
   makeRolesListSelector,
   makeUsersSelector,
 } from 'containers/UserModule/selectors';
@@ -33,14 +33,14 @@ const breadCrumbItem = [
 ];
 
 const stateSelector = createStructuredSelector({
+  isLoading: makeIsLoadingSelector(),
   users: makeUsersSelector(),
   roles: makeRolesListSelector(),
   user: makeLoggedInUserSelector(),
-  limit: makeLimitSelector(),
 });
 
 function UserList() {
-  const { users, user, limit } = useSelector(stateSelector);
+  const { users, user, limit, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
 
   const loadUsers = () => dispatch(queryUsersAction());
@@ -60,10 +60,7 @@ function UserList() {
 
   const setPageNumber = (page) => dispatch(setPageNumberAction(page));
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    loadUsers();
-  };
+  const handleSubmitForm = () => loadUsers();
 
   const getStatusClass = (status) => {
     switch (status) {
@@ -72,7 +69,7 @@ function UserList() {
       case 'inactive':
         return 'warning';
       case 'blocked':
-        return 'danger';
+        return 'error';
       default:
         return 'primary';
     }
@@ -98,6 +95,7 @@ function UserList() {
       </Row>
 
       <SearchInput
+        isLoading={isLoading}
         limit={limit}
         onChangeField={onChangeField}
         onSubmitForm={handleSubmitForm}

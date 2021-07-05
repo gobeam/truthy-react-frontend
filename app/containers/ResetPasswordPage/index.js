@@ -12,7 +12,7 @@ import reducer from 'containers/ResetPasswordPage/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
   changeFieldAction,
-  validateFormAction,
+  resetPasswordAction,
 } from 'containers/ResetPasswordPage/actions';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -23,38 +23,61 @@ import {
 } from 'containers/ResetPasswordPage/selectors';
 import { Helmet } from 'react-helmet';
 import { hideHeaderAction } from 'containers/App/actions';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ResetPasswordPage/messages';
-import { Card, Col, Container, Form, Row } from '@themesberg/react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faLock } from '@fortawesome/free-solid-svg-icons';
-import BgImage from 'assets/img/illustrations/signin.svg';
-import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
-import loginMessages from 'components/LoginForm/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
+import FormInputWrapper from 'components/FormInputWrapper';
+import { Form, Progress, Typography } from 'antd';
+import { checkIfStrongPassword } from 'common/validator';
+import usePasswordStrengthCheckHook from 'common/hooks/passwordStrengthHook';
+import AlertMessage from 'containers/AlertMessage';
 
 const key = 'resetPassword';
+
+const { Title } = Typography;
 
 const stateSelector = createStructuredSelector({
   password: makePasswordSelector(),
   isLoading: makeIsLoadingSelector(),
   confirmPassword: makeConfirmPasswordSelector(),
-  errors: makeErrorsSelector(),
+  validationError: makeErrorsSelector(),
 });
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    md: { span: 24 },
+    sm: { span: 24 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    md: { span: 24 },
+    sm: { span: 24 },
+  },
+};
 
 export default function ResetPasswordPage() {
   const dispatch = useDispatch();
+
   useInjectSaga({ key, saga });
+
   useInjectReducer({ key, reducer });
+
   const hideHeader = () => dispatch(hideHeaderAction(true));
-  const submitResetPasswordPageForm = (e) =>
-    dispatch(validateFormAction()) && e.preventDefault();
+
+  const [form] = Form.useForm();
+
   const onChangeField = (e) =>
     dispatch(changeFieldAction(e.target.name, e.target.value));
-  const { password, confirmPassword, errors, isLoading } =
+
+  const { password, confirmPassword, validationError, isLoading } =
     useSelector(stateSelector);
+
   const { code } = useParams();
+
+  const [lowerCheck, upperCheck, numChecker, charCheck] =
+    usePasswordStrengthCheckHook(password);
 
   useEffect(() => {
     hideHeader();
@@ -64,8 +87,19 @@ export default function ResetPasswordPage() {
     dispatch(changeFieldAction('code', code));
   }, [code]);
 
+  const onFinish = () => dispatch(resetPasswordAction());
+
+  const checkConfirm = (rule, value, callback) => {
+    const newPassword = form.getFieldValue('password');
+    if (newPassword !== value) {
+      callback(<FormattedMessage {...messages.confirmPasswordMatchError} />);
+    } else {
+      callback();
+    }
+  };
+
   return (
-    <main>
+    <div className="content-page">
       <FormattedMessage {...messages.helmetResetPasswordTitle}>
         {(title) => (
           <Helmet>
@@ -73,74 +107,78 @@ export default function ResetPasswordPage() {
           </Helmet>
         )}
       </FormattedMessage>
-      <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
-        <Container>
-          <p className="text-center">
-            <Card.Link as={Link} to="/" className="text-gray-700">
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" />
-              <FormattedMessage {...messages.back} />
-            </Card.Link>
-          </p>
-          <Row
-            className="justify-content-center form-bg-image"
-            style={{ backgroundImage: `url(${BgImage})` }}
-          >
-            <Col
-              xs={12}
-              className="d-flex align-items-center justify-content-center"
-            >
-              <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">
-                    <FormattedMessage {...messages.resetPassword} />
-                  </h3>
-                </div>
-                <Form
-                  noValidate
-                  validated={errors.length < 1}
-                  className="mt-4"
-                  onSubmit={submitResetPasswordPageForm}
-                >
-                  <AuthFormGroupWrapper
-                    label={loginMessages.password}
-                    name="password"
-                    id="password"
-                    type="password"
-                    value={password}
-                    icon={faLock}
-                    required={false}
-                    focus={false}
-                    placeholder={loginMessages.passwordPlaceHolder}
-                    changeHandler={onChangeField}
-                    error={errors.password}
-                  />
 
-                  <AuthFormGroupWrapper
-                    label={loginMessages.confirmPassword}
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    icon={faLock}
-                    required={false}
-                    focus={false}
-                    placeholder={loginMessages.passwordPlaceHolder}
-                    changeHandler={onChangeField}
-                    error={errors.confirmPassword}
-                  />
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        scrollToFirstError
+      >
+        <Title level={2}>
+          <FormattedMessage {...messages.resetPassword} />
+        </Title>
 
-                  <FormButtonWrapper
-                    variant="primary"
-                    className="w-100"
-                    disabled={isLoading}
-                    label={messages.resetPasswordBtn}
-                  />
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </main>
+        <AlertMessage />
+
+        <FormInputWrapper
+          passwordInput
+          label={messages.passwordPlaceHolder}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              message: <FormattedMessage {...messages.passwordRequired} />,
+            },
+            {
+              validator: checkIfStrongPassword,
+            },
+          ]}
+          name="password"
+          id="password"
+          type="password"
+          value={password}
+          placeholder={messages.passwordPlaceHolder}
+          changeHandler={onChangeField}
+          error={validationError.password}
+        >
+          <Progress
+            percent={
+              ((lowerCheck + charCheck + upperCheck + numChecker) / 4) * 100
+            }
+            steps={4}
+          />
+        </FormInputWrapper>
+
+        <FormInputWrapper
+          passwordInput
+          label={messages.confirmPassword}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              message: <FormattedMessage {...messages.passwordRequired} />,
+            },
+            {
+              validator: checkConfirm,
+            },
+          ]}
+          name="confirmPassword"
+          id="confirmPassword"
+          type="confirmPassword"
+          value={confirmPassword}
+          placeholder={messages.passwordPlaceHolder}
+          changeHandler={onChangeField}
+          error={validationError.confirmPassword}
+        />
+
+        <FormButtonWrapper
+          variant="primary"
+          disabled={isLoading}
+          form={form}
+          label={messages.resetPasswordBtn}
+        />
+      </Form>
+    </div>
   );
 }

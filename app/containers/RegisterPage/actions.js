@@ -12,7 +12,6 @@ import {
   REGISTER_ERROR,
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
-  VALIDATE_FORM,
 } from 'containers/RegisterPage/constants';
 
 export function changeFieldAction(key, val) {
@@ -20,12 +19,6 @@ export function changeFieldAction(key, val) {
     type: CHANGE_FIELD,
     key,
     val,
-  };
-}
-
-export function onFormValidation() {
-  return {
-    type: VALIDATE_FORM,
   };
 }
 

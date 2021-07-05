@@ -34,7 +34,8 @@ import {
   makeUpdateIdSelector,
 } from 'containers/RoleModule/selectors';
 import { checkError } from 'helpers/Validation';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { DELETE, GET, PUT } from 'utils/constants';
 
 export function* handleSubmitForm() {
   const name = yield select(makeNameSelector());
@@ -42,16 +43,14 @@ export function* handleSubmitForm() {
   const permissions = yield select(makePermissionsSelector());
   const method = yield select(makeFormMethodSelector());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles${
-    method === 'put' ? `/${id}` : ''
-  }`;
-  const payload = ApiEndpoint.makeApiPayload(method.toUpperCase(), {
+  const requestUrl = `/roles${method === PUT ? `/${id}` : ''}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, method, {
     name,
     description,
     permissions,
   });
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     yield put(asyncEndAction());
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
@@ -60,11 +59,11 @@ export function* handleSubmitForm() {
     yield put(changeFieldAction('formPage', false));
     yield put(clearFormAction());
     const message =
-      method === 'put' ? commonMessage.updateSuccess : commonMessage.addSuccess;
-    return yield showFormattedErrorMessage('success', message);
+      method === PUT ? commonMessage.updateSuccess : commonMessage.addSuccess;
+    return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
+    return yield showFormattedAlert('error', commonMessage.serverError);
   }
 }
 
@@ -87,19 +86,16 @@ export function* handleValidateForm() {
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${data.id}`;
-  const payload = ApiEndpoint.makeApiPayload('DELETE');
+  const requestUrl = `/roles/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, DELETE);
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryRolesAction());
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.deleteSuccess,
-    );
+    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', deleteMessage.deleteError);
   }
 }
 
@@ -118,10 +114,10 @@ export function* handleQueryRole() {
   const queryString = Object.keys(queryObject)
     .map((key) => `${key}=${queryObject[key]}`)
     .join('&');
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles?${queryString}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/roles?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     return yield put(assignRolesAction(response));
   } catch (error) {
     return yield put(asyncEndAction());
@@ -130,10 +126,10 @@ export function* handleQueryRole() {
 
 export function* handleQueryPermission() {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions?limit=300`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/permissions?limit=300`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     if (response.results) {
       const groupedPermissionByResource = _.groupBy(
         response.results,
@@ -150,10 +146,10 @@ export function* handleQueryPermission() {
 export function* handleGetRoleById() {
   yield put(asyncStartAction());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${id}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/roles/${id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     yield put(changeFieldAction('name', response.name));
     yield put(changeFieldAction('description', response.description));
     const permissions = response.permission.map((permission) => permission.id);

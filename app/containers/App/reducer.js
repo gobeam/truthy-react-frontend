@@ -18,18 +18,22 @@ import {
   LOGOUT_SUCCESS,
   ASYNC_END,
   ASYNC_START,
+  TOGGLE_COLLAPSE,
+  CHANGE_DEVICE,
 } from 'containers/App/constants';
-import { LOCATION_CHANGE } from 'connected-react-router';
+
+const device = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
+  ? 'MOBILE'
+  : 'DESKTOP';
+const collapsed = device !== 'DESKTOP';
 
 export const initialState = {
-  hideHeader: false,
+  device,
+  collapsed,
   isLoading: false,
-  companies: [],
-  notifications: [],
   isLogged: null,
   errors: {},
   user: {},
-  error: '',
 };
 
 setAutoFreeze(false);
@@ -40,6 +44,12 @@ const appPageReducer = produce((draft, action) => {
       draft[action.key] = action.val;
       draft.errors[action.key] = '';
       draft.isLoading = false;
+      break;
+    case CHANGE_DEVICE:
+      draft.device = action.device;
+      break;
+    case TOGGLE_COLLAPSE:
+      draft.collapsed = action.toggle;
       break;
     case LOGGED_IN:
     case IS_LOGGED_SUCCESS:
@@ -70,14 +80,6 @@ const appPageReducer = produce((draft, action) => {
       draft.error = '';
       draft.user = {};
       draft.isLogged = false;
-      break;
-    case LOCATION_CHANGE:
-      draft.isLoading = false;
-      draft.takeItEasy = '';
-      draft.limit = 1;
-      draft.userMenu = false;
-      draft.hideHeader = false;
-      draft.userNotification = false;
       break;
     default:
   }

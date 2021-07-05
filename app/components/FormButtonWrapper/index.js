@@ -1,7 +1,7 @@
 import { injectIntl } from 'react-intl';
-import { Button, Spinner } from '@themesberg/react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button, Form } from 'antd';
 
 /**
  *
@@ -10,29 +10,36 @@ import PropTypes from 'prop-types';
  */
 
 const FormButtonWrapper = (props) => {
-  const { label, intl, variant, show = true, className, disabled } = props;
+  const {
+    label,
+    icon,
+    intl,
+    variant,
+    show = true,
+    className,
+    disabled,
+    form,
+  } = props;
   return (
     <>
       {show ? (
-        <Button
-          disabled={disabled}
-          type="submit"
-          variant={variant}
-          className={className}
-        >
-          {disabled ? (
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />
-          ) : (
-            ''
+        <Form.Item shouldUpdate>
+          {() => (
+            <Button
+              icon={icon}
+              loading={disabled}
+              type={variant}
+              htmlType="submit"
+              className={className}
+              disabled={
+                !!form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
+            >
+              {intl.formatMessage(label)}
+            </Button>
           )}
-          {intl.formatMessage(label)}
-        </Button>
+        </Form.Item>
       ) : (
         ''
       )}
@@ -41,11 +48,13 @@ const FormButtonWrapper = (props) => {
 };
 
 FormButtonWrapper.propTypes = {
+  form: PropTypes.object,
+  icon: PropTypes.object,
   intl: PropTypes.object,
   disabled: PropTypes.bool,
   show: PropTypes.bool,
   variant: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   label: PropTypes.object.isRequired,
 };
 

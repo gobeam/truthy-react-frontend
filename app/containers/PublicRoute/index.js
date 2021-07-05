@@ -5,45 +5,37 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Route, useNavigate } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import {
-  makeIsLoggedSelector,
-  makeLoggedInUserSelector,
-} from 'containers/App/selectors';
+import { makeIsLoggedSelector } from 'containers/App/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
-import PropTypes from 'prop-types';
-import { publicRedirectLoggedAction } from 'containers/App/actions';
+import Common from 'utils/common';
+import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
 
 const stateSelector = createStructuredSelector({
-  user: makeLoggedInUserSelector(),
   isLogged: makeIsLoggedSelector(),
 });
 
-const PublicRoute = ({ component: Component, ...rest }) => {
-  const dispatch = useDispatch();
-  const { isLogged, user } = useSelector(stateSelector);
-  const redirectIfLogged = () => dispatch(publicRedirectLoggedAction());
+const PublicRoute = ({ ...props }) => {
+  const navigate = useNavigate();
+  const { isLogged } = useSelector(stateSelector);
 
   useEffect(() => {
-    if (user) {
-      redirectIfLogged();
+    if (isLogged) {
+      const redirectUrl = Common.getParameterByName('path') || SUCCESS_REDIRECT;
+      navigate(redirectUrl);
     }
-  }, [user]);
+  }, [isLogged]);
 
   if (isLogged === null) {
     return <LoadingIndicator />;
   }
   return (
     <>
-      <Route {...rest} render={(props) => <Component {...props} />} />
+      <Route {...props} />
     </>
   );
-};
-
-PublicRoute.propTypes = {
-  component: PropTypes.func.isRequired,
 };
 
 export default PublicRoute;

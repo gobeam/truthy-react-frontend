@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   changePasswordAction,
   changeUsernameAction,
-  onFormValidation,
+  enterLoginAction,
 } from 'containers/LoginPage/actions';
 import {
   makeErrorSelector,
@@ -18,80 +18,109 @@ import {
   makePasswordSelector,
   makeUsernameSelector,
 } from 'containers/LoginPage/selectors';
-import { Card, Form } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
-import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
+import { Checkbox, Form, Typography } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import messages from 'components/LoginForm/messages';
 import { FormattedMessage } from 'react-intl';
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import FormInputWrapper from 'components/FormInputWrapper';
 import FormButtonWrapper from 'components/FormButtonWrapper';
+import { Link } from 'react-router-dom';
+import AlertMessage from 'containers/AlertMessage';
 
+const { Title } = Typography;
 const stateSelector = createStructuredSelector({
   username: makeUsernameSelector(),
   password: makePasswordSelector(),
-  errors: makeErrorSelector(),
+  validationError: makeErrorSelector(),
   isLoading: makeIsLoadingSelector(),
 });
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const submitLoginForm = (e) =>
-    dispatch(onFormValidation()) && e.preventDefault();
   const onChangePassword = (e) =>
     dispatch(changePasswordAction(e.target.value));
   const onChangeUsername = (e) =>
     dispatch(changeUsernameAction(e.target.value));
 
-  const { username, password, errors, isLoading } = useSelector(stateSelector);
+  const { username, password, isLoading, validationError } =
+    useSelector(stateSelector);
+  const [form] = Form.useForm();
+
+  const onFinish = () => {
+    dispatch(enterLoginAction());
+  };
+
   return (
     <Form
-      noValidate
-      validated={errors.length < 1}
-      className="mt-4"
-      onSubmit={submitLoginForm}
+      className="login-page-form"
+      form={form}
+      name="login"
+      onFinish={onFinish}
     >
-      <AuthFormGroupWrapper
-        label={messages.email}
+      <Title level={2}>
+        <FormattedMessage {...messages.inputLogin} />
+      </Title>
+
+      <AlertMessage />
+
+      <FormInputWrapper
+        // label={messages.email}
         name="username"
         id="username"
         type="text"
+        rules={[
+          {
+            required: true,
+            whitespace: true,
+            message: <FormattedMessage {...messages.emailRequired} />,
+          },
+        ]}
         value={username}
-        icon={faEnvelope}
-        required={false}
-        focus={false}
+        icon={<UserOutlined className="site-form-item-icon" />}
         placeholder={messages.emailPlaceHolder}
         changeHandler={onChangeUsername}
-        error={errors.username}
+        error={validationError.email}
       />
 
-      <AuthFormGroupWrapper
-        label={messages.password}
+      <FormInputWrapper
+        passwordInput
+        // label={messages.password}
+        rules={[
+          {
+            required: true,
+            whitespace: true,
+            message: <FormattedMessage {...messages.passwordRequired} />,
+          },
+        ]}
         name="password"
         id="password"
         type="password"
         value={password}
-        icon={faLock}
-        required={false}
-        focus={false}
+        icon={<LockOutlined className="site-form-item-icon" />}
         placeholder={messages.passwordPlaceHolder}
         changeHandler={onChangePassword}
-        error={errors.password}
+        error={validationError.password}
       />
 
-      <Form.Group>
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <Card.Link as={Link} to="/forgot-password" className="small text-end">
-            <FormattedMessage {...messages.lostPassword} />
-          </Card.Link>
-        </div>
-      </Form.Group>
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Link className="login-form-forgot" to="/forgot-password">
+          <FormattedMessage {...messages.lostPassword} />
+        </Link>
+      </Form.Item>
 
       <FormButtonWrapper
         variant="primary"
-        className="w-100"
         disabled={isLoading}
+        form={form}
         label={messages.submit}
       />
+      <Link className="login-form-forgot" to="/register">
+        <FormattedMessage {...messages.register} />
+      </Link>
     </Form>
   );
 };

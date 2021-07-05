@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
   ASSIGN_ROLES,
@@ -14,9 +13,11 @@ import {
   CHANGE_FORM_FIELD,
   CLEAR_FORM,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
 } from 'containers/UserModule/constants';
 
-const emptyFormField = {
+export const initialState = {
+  keywords: '',
   username: '',
   email: '',
   roleId: '',
@@ -24,12 +25,8 @@ const emptyFormField = {
   password: '',
   status: '',
   confirmPassword: '',
-};
-
-export const initialState = {
-  keywords: '',
-  ...emptyFormField,
   pageNumber: 1,
+  pageSize: 10,
   limit: 10,
   roles: [],
   users: {
@@ -40,7 +37,7 @@ export const initialState = {
     next: 0,
     previous: 0,
   },
-  errors: emptyFormField,
+  errors: {},
   isLoading: false,
   formPage: false,
   formMethod: null,
@@ -65,6 +62,9 @@ const userModuleReducer = produce((draft, action) => {
     case SET_PAGE_NUMBER:
       draft.pageNumber = action.pageNumber;
       break;
+    case SET_PAGE_SIZE:
+      draft.pageSize = action.pageSize;
+      break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
       draft.isLoading = false;
@@ -76,7 +76,6 @@ const userModuleReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case CLEAR_FORM:
-    case LOCATION_CHANGE:
       draft.username = '';
       draft.email = '';
       draft.name = '';
@@ -84,7 +83,7 @@ const userModuleReducer = produce((draft, action) => {
       draft.password = '';
       draft.confirmPassword = '';
       draft.keywords = '';
-      draft.errors = emptyFormField;
+      draft.errors = {};
       draft.isLoading = false;
       draft.formPage = false;
       draft.formMethod = null;

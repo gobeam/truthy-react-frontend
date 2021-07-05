@@ -11,6 +11,22 @@ export default defineMessages({
     id: `${scope}.success`,
     defaultMessage: `Success`,
   },
+  error: {
+    id: `${scope}.error`,
+    defaultMessage: `Error`,
+  },
+  warning: {
+    id: `${scope}.warning`,
+    defaultMessage: `Warning`,
+  },
+  info: {
+    id: `${scope}.info`,
+    defaultMessage: `Info`,
+  },
+  primary: {
+    id: `${scope}.primary`,
+    defaultMessage: `Message`,
+  },
   invalidRefresh: {
     id: `${scope}.invalidRefresh`,
     defaultMessage: `Session out`,
@@ -47,14 +63,6 @@ export default defineMessages({
     id: `${scope}.forbidden`,
     defaultMessage: `You don't have access for this action, please contact admin for further details.`,
   },
-  danger: {
-    id: `${scope}.danger`,
-    defaultMessage: `Error`,
-  },
-  warning: {
-    id: `${scope}.warning`,
-    defaultMessage: `Warning`,
-  },
   editLabel: {
     id: `${scope}.editLabel`,
     defaultMessage: `Edit`,
@@ -67,17 +75,13 @@ export default defineMessages({
     id: `${scope}.removeLabel`,
     defaultMessage: `Remove`,
   },
-  info: {
-    id: `${scope}.info`,
-    defaultMessage: `Info`,
-  },
-  primary: {
-    id: `${scope}.primary`,
-    defaultMessage: `Message`,
-  },
   addSuccess: {
     id: `${scope}.addSuccess`,
     defaultMessage: `Data added successfully!`,
+  },
+  pagination: {
+    id: `${scope}.pagination`,
+    defaultMessage: `showing {start} to {end} of {total}`,
   },
   updateSuccess: {
     id: `${scope}.updateSuccess`,
@@ -86,5 +90,10 @@ export default defineMessages({
   serverError: {
     id: `${scope}.serverError`,
     defaultMessage: 'Please try again in a moment!',
+  },
+  weakPassword: {
+    id: `${scope}.weakPassword`,
+    defaultMessage:
+      'Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character and should be minimum 6 characters and maximum upto 20 characters!!',
   },
 });

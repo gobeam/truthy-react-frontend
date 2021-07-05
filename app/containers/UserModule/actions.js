@@ -17,6 +17,7 @@ import {
   QUERY_ROLES,
   QUERY_USERS,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
   SUBMIT_FORM,
   VALIDATE_FORM,
 } from 'containers/UserModule/constants';
@@ -101,6 +102,13 @@ export function setPageNumberAction(pageNumber) {
   return {
     type: SET_PAGE_NUMBER,
     pageNumber,
+  };
+}
+
+export function setPageSizeAction(pageSize) {
+  return {
+    type: SET_PAGE_SIZE,
+    pageSize,
   };
 }
 

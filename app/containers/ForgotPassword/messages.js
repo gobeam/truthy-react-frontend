@@ -34,4 +34,20 @@ export default defineMessages({
     id: `${scope}.back`,
     defaultMessage: 'Go Back',
   },
+  emailRequired: {
+    id: `${scope}.emailRequired`,
+    defaultMessage: 'Please input your email!',
+  },
+  validEmailRequired: {
+    id: `${scope}.validEmailRequired`,
+    defaultMessage: 'Invalid email!',
+  },
+  email: {
+    id: `${scope}.email`,
+    defaultMessage: 'Email/Username',
+  },
+  emailPlaceHolder: {
+    id: `${scope}.emailPlaceHolder`,
+    defaultMessage: 'user@tryuthy.com',
+  },
 });

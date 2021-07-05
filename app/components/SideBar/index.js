@@ -4,15 +4,7 @@ import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  Button,
-  Dropdown,
-  Image,
-  Nav,
-  Navbar,
-} from '@themesberg/react-bootstrap';
-import ReactHero from 'assets/img/technologies/react-hero-logo.svg';
-import ProfilePicture from 'assets/img/team/profile-picture-3.jpg';
+import { Button, Dropdown, Nav, Navbar } from '@themesberg/react-bootstrap';
 import NavItem from 'components/SideBar/nav-item';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -21,7 +13,6 @@ import {
   makeLoggedInUserSelector,
 } from 'containers/App/selectors';
 import { useSelector } from 'react-redux';
-import { getSideBarComponentData } from 'routes';
 import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
@@ -39,7 +30,7 @@ const Sidebar = () => {
   const onCollapse = () => setShow(!show);
 
   useEffect(() => {
-    setSideBar(getSideBarComponentData());
+    setSideBar([]);
   }, []);
 
   if (!isLogged) {
@@ -54,9 +45,7 @@ const Sidebar = () => {
         variant="dark"
         className="navbar-theme-primary px-4 d-md-none"
       >
-        <Navbar.Brand className="me-lg-5" as={Link} to="/">
-          <Image src={ReactHero} className="navbar-brand-light" />
-        </Navbar.Brand>
+        <Navbar.Brand className="me-lg-5" as={Link} to="/"></Navbar.Brand>
         <Navbar.Toggle
           as={Button}
           aria-controls="main-navbar"
@@ -72,12 +61,7 @@ const Sidebar = () => {
           <div className="sidebar-inner px-4 pt-3">
             <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
               <div className="d-flex align-items-center">
-                <div className="user-avatar lg-avatar me-4">
-                  <Image
-                    src={ProfilePicture}
-                    className="card-img-top rounded-circle border-white"
-                  />
-                </div>
+                <div className="user-avatar lg-avatar me-4"></div>
                 <div className="d-block">
                   <h6>Hi, Jane</h6>
                   <Button

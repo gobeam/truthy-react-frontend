@@ -7,6 +7,7 @@
 import {
   ASYNC_END,
   ASYNC_START,
+  CHANGE_DEVICE,
   CHANGE_FIELD,
   GET_PROFILE_ERROR,
   GET_PROFILE_REQUEST,
@@ -19,9 +20,9 @@ import {
   LOGOUT,
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
-  PUBLIC_REDIRECT_LOGGED,
   QUERY_NOTIFICATIONS,
   REFRESH_TOKEN,
+  TOGGLE_COLLAPSE,
 } from 'containers/App/constants';
 
 /**
@@ -173,8 +174,16 @@ export function changeAppFieldAction(key, val) {
   };
 }
 
-export function publicRedirectLoggedAction() {
+export function toggleCollapseAction(toggle) {
   return {
-    type: PUBLIC_REDIRECT_LOGGED,
+    type: TOGGLE_COLLAPSE,
+    toggle,
+  };
+}
+
+export function changeDeviceAction(device) {
+  return {
+    type: CHANGE_DEVICE,
+    device,
   };
 }

@@ -12,147 +12,134 @@ import RoleModule from 'containers/RoleModule/Loadable';
 import EmailTemplateModule from 'containers/EmailTemplateModule/Loadable';
 import UserModule from 'containers/UserModule/Loadable';
 import PermissionModule from 'containers/PermissionModule/Loadable';
-import messages from 'routes/messages';
-import {
-  faDigitalTachograph,
-  faUserTag,
-  faUsers,
-  faUserLock,
-  faEnvelope,
-} from '@fortawesome/free-solid-svg-icons';
-import { FormattedMessage } from 'react-intl';
+import Layout from 'components/Layout';
+import PrivateRoute from 'containers/PrivateRoute';
+import PublicRoute from 'containers/PublicRoute';
+import { useRoutes } from 'react-router-dom';
 
-export const publicRoutes = [
+const routes = [
   {
-    key: 'home-page',
-    name: 'Home',
+    path: 'login',
+    element: <PublicRoute element={<LoginPage />} />,
+  },
+  {
+    path: 'register',
+    element: <PublicRoute element={<RegisterPage />} />,
+  },
+  {
+    path: 'forgot-password',
+    element: <PublicRoute element={<ForgotPassword />} />,
+  },
+  {
+    path: 'reset/:code',
+    element: <PublicRoute element={<ResetPasswordPage />} />,
+  },
+  {
+    path: 'verify/:code',
+    element: <PublicRoute element={<VerifyAccountPage />} />,
+  },
+  {
     path: '/',
-    component: HomePage,
-    exact: true,
+    element: <PublicRoute element={<HomePage />} />,
   },
   {
-    key: 'login-page',
-    name: 'Login',
-    path: '/login',
-    component: LoginPage,
-    exact: true,
-  },
-  {
-    key: 'register-page',
-    name: 'Register',
-    path: '/register',
-    component: RegisterPage,
-    exact: true,
-  },
-  {
-    key: 'forgot-password-page',
-    name: 'Forgot Password',
-    path: '/forgot-password',
-    component: ForgotPassword,
-    exact: true,
-  },
-  {
-    key: 'reset-code-page',
-    name: 'Reset Password',
-    path: '/reset/:code',
-    component: ResetPasswordPage,
-    exact: true,
-  },
-  {
-    key: 'verify-account-page',
-    name: 'Verify Account',
-    path: '/verify/:code',
-    includeNav: false,
-    component: VerifyAccountPage,
-    exact: true,
+    path: '',
+    element: (
+      <PrivateRoute
+        element={<Layout />}
+        method="get"
+        resource="root"
+        defaultPermission
+      />
+    ),
+    children: [
+      {
+        path: 'dashboard',
+        element: (
+          <PrivateRoute
+            element={<DashboardPage />}
+            method="get"
+            resource="dashboard"
+            defaultPermission
+          />
+        ),
+      },
+      {
+        path: 'users',
+        element: (
+          <PrivateRoute
+            element={<UserModule />}
+            path="/users"
+            method="get"
+            resource="user"
+            defaultPermission={false}
+          />
+        ),
+      },
+      {
+        path: 'roles',
+        element: (
+          <PrivateRoute
+            element={<RoleModule />}
+            path="/roles"
+            method="get"
+            resource="role"
+            defaultPermission={false}
+          />
+        ),
+      },
+      {
+        path: 'permissions',
+        element: (
+          <PrivateRoute
+            element={<PermissionModule />}
+            path="/permissions"
+            method="get"
+            resource="permission"
+            defaultPermission={false}
+          />
+        ),
+      },
+      {
+        path: 'email-templates',
+        element: (
+          <PrivateRoute
+            element={<EmailTemplateModule />}
+            path="/email-templates"
+            method="get"
+            resource="emailTemplates"
+            defaultPermission={false}
+          />
+        ),
+      },
+      {
+        path: 'user/:account',
+        element: (
+          <PrivateRoute
+            element={<UserAccountPage />}
+            path="/user/:account"
+            method="get"
+            resource="user"
+            defaultPermission={false}
+          />
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <PrivateRoute
+            element={<ProfilePage />}
+            path="/profile"
+            method="get"
+            resource="user"
+            defaultPermission={false}
+          />
+        ),
+      },
+    ],
   },
 ];
 
-export const privateRoutes = [
-  {
-    key: 'dashboard-page',
-    name: <FormattedMessage {...messages.dashboard} />,
-    icon: faDigitalTachograph,
-    path: '/dashboard',
-    method: 'get',
-    resource: 'dashboard',
-    component: DashboardPage,
-    exact: true,
-    defaultPermission: true,
-    includeSideBar: true,
-  },
-  {
-    key: 'user-page',
-    name: <FormattedMessage {...messages.userPage} />,
-    icon: faUsers,
-    path: '/users',
-    method: 'get',
-    resource: 'user',
-    component: UserModule,
-    exact: true,
-    defaultPermission: false,
-    includeSideBar: true,
-  },
-  {
-    key: 'role-page',
-    name: <FormattedMessage {...messages.rolePage} />,
-    icon: faUserTag,
-    path: '/roles',
-    method: 'get',
-    resource: 'role',
-    component: RoleModule,
-    exact: true,
-    defaultPermission: false,
-    includeSideBar: true,
-  },
-  {
-    key: 'permission-page',
-    name: <FormattedMessage {...messages.permissionPage} />,
-    icon: faUserLock,
-    path: '/permissions',
-    method: 'get',
-    resource: 'permission',
-    component: PermissionModule,
-    exact: true,
-    defaultPermission: false,
-    includeSideBar: true,
-  },
-  {
-    key: 'email-template',
-    name: <FormattedMessage {...messages.emailTemplatePage} />,
-    icon: faEnvelope,
-    path: '/email-templates',
-    method: 'get',
-    resource: 'emailTemplates',
-    component: EmailTemplateModule,
-    exact: true,
-    defaultPermission: false,
-    includeSideBar: true,
-  },
-  {
-    key: 'profile-page',
-    name: 'Profile',
-    path: '/user/:account',
-    method: 'get',
-    resource: 'user',
-    component: UserAccountPage,
-    includeSideBar: false,
-    defaultPermission: false,
-    exact: true,
-  },
-  {
-    key: 'update-profile-page',
-    name: 'Update Profile',
-    path: '/profile',
-    method: 'get',
-    resource: 'user',
-    component: ProfilePage,
-    includeSideBar: false,
-    defaultPermission: false,
-    exact: true,
-  },
-];
+const RenderRouter = () => useRoutes(routes);
 
-export function getSideBarComponentData() {
-  return privateRoutes.filter((route) => route.includeSideBar);
-}
+export default RenderRouter;

@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
   ASSIGN_TEMPLATE,
@@ -68,19 +67,6 @@ const emailTemplateModuleReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case CLEAR_FORM:
-    case LOCATION_CHANGE:
-      draft.title = '';
-      draft.body = '';
-      draft.subject = '';
-      draft.sender = '';
-      draft.keywords = '';
-      draft.errors = emptyFormFieldError;
-      draft.isLoading = false;
-      draft.formPage = false;
-      draft.formMethod = null;
-      draft.updateId = null;
-      draft.formTitle = null;
-      break;
   }
 }, initialState);
 

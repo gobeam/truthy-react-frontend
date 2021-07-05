@@ -5,12 +5,11 @@
  */
 
 import {
-  RESET_PASSWORD,
   ADD_VALIDATION_ERROR,
-  CHANGE_FIELD,
-  VALIDATE_FORM,
   ASYNC_END,
   ASYNC_START,
+  CHANGE_FIELD,
+  RESET_PASSWORD,
 } from 'containers/ResetPasswordPage/constants';
 
 export function asyncStart() {
@@ -28,12 +27,6 @@ export function asyncEnd() {
 export function resetPasswordAction() {
   return {
     type: RESET_PASSWORD,
-  };
-}
-
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
   };
 }
 

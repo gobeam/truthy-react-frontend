@@ -3,13 +3,11 @@
  */
 
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-
-import history from 'utils/history';
 import globalReducer from 'containers/App/reducer';
-import LoginPageReducer from 'containers/LoginPage/reducer';
-import RegisterPageReducer from 'containers/RegisterPage/reducer';
-import SnackBarMessageReducer from 'containers/SnackBar/reducer';
+import loginPageReducer from 'containers/LoginPage/reducer';
+import registerPageReducer from 'containers/RegisterPage/reducer';
+import alertMessageReducer from 'containers/AlertMessage/reducer';
+import snackMessageReducer from 'containers/SnackMessage/reducer';
 import profileReducer from 'containers/ProfilePage/reducer';
 import verifyPageReducer from 'containers/VerifyAccountPage/reducer';
 import forgotPasswordReducer from 'containers/ForgotPassword/reducer';
@@ -27,11 +25,12 @@ import emailTemplateModuleReducer from 'containers/EmailTemplateModule/reducer';
 export default function createReducer(injectedReducers = {}) {
   return combineReducers({
     global: globalReducer,
+    alertMessage: alertMessageReducer,
+    snackMessage: snackMessageReducer,
     language: languageProviderReducer,
-    login: LoginPageReducer,
-    register: RegisterPageReducer,
+    login: loginPageReducer,
+    register: registerPageReducer,
     profilePage: profileReducer,
-    snackMessage: SnackBarMessageReducer,
     forgotPassword: forgotPasswordReducer,
     resetPassword: resetPasswordReducer,
     verifyPage: verifyPageReducer,
@@ -40,7 +39,6 @@ export default function createReducer(injectedReducers = {}) {
     permissionModule: permissionModuleReducer,
     userModule: userModuleReducer,
     emailTemplate: emailTemplateModuleReducer,
-    router: connectRouter(history),
     ...injectedReducers,
   });
 }

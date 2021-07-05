@@ -14,33 +14,40 @@ import saga from 'containers/UserModule/saga';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/UserModule/messages';
-import UserList from 'components/UserPage/List';
-import UserForm from 'components/UserPage/Form';
+
 import {
   makeIsFormPageSelector,
-  makeLimitSelector,
+  makeIsLoadingSelector,
   makePageNumberSelector,
+  makePageSizeSelector,
 } from 'containers/UserModule/selectors';
 import {
+  changeFieldAction,
   queryRolesListAction,
   queryUsersAction,
 } from 'containers/UserModule/actions';
+import SearchInput from 'components/SearchInput';
+import UserTable from 'containers/UserModule/userTable';
 
 const key = 'userModule';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
   formPage: makeIsFormPageSelector(),
-  limit: makeLimitSelector(),
+  pageSize: makePageSizeSelector(),
+  isLoading: makeIsLoadingSelector(),
 });
 
 const UserModule = () => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const { pageNumber, formPage, limit } = useSelector(stateSelector);
+  const { pageNumber, pageSize, isLoading } = useSelector(stateSelector);
   const loadUsers = () => dispatch(queryUsersAction());
   const loadRoles = () => dispatch(queryRolesListAction());
+  const onChangeField = (keyName, value) =>
+    dispatch(changeFieldAction(keyName, value));
+  const handleSubmitForm = () => loadUsers();
 
   useEffect(() => {
     loadRoles();
@@ -48,7 +55,7 @@ const UserModule = () => {
 
   useEffect(() => {
     loadUsers();
-  }, [pageNumber, limit]);
+  }, [pageNumber, pageSize]);
 
   return (
     <>
@@ -59,7 +66,12 @@ const UserModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      {!formPage ? <UserList /> : <UserForm />}
+      <SearchInput
+        isLoading={isLoading}
+        onChangeField={onChangeField}
+        onSubmitForm={handleSubmitForm}
+      />
+      <UserTable />
     </>
   );
 };

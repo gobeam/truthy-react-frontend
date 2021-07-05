@@ -26,16 +26,17 @@ import {
   makeEmailSelector,
   makeFormMethodSelector,
   makeKeywordsSelector,
-  makeLimitSelector,
   makeNameSelector,
   makePageNumberSelector,
+  makePageSizeSelector,
   makeRoleIdSelector,
   makeStatusSelector,
   makeUpdateIdSelector,
   makeUserNameSelector,
 } from 'containers/UserModule/selectors';
 import { checkError } from 'helpers/Validation';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { DELETE, GET, PUT } from 'utils/constants';
 
 export function* handleSubmitForm() {
   const email = yield select(makeEmailSelector());
@@ -45,10 +46,8 @@ export function* handleSubmitForm() {
   const status = yield select(makeStatusSelector());
   const formMethod = yield select(makeFormMethodSelector());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users${
-    formMethod === 'put' ? `/${id}` : ''
-  }`;
-  const payload = ApiEndpoint.makeApiPayload(formMethod.toUpperCase(), {
+  const requestUrl = `/users${formMethod === PUT ? `/${id}` : ''}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, formMethod, {
     email,
     roleId,
     name,
@@ -56,7 +55,7 @@ export function* handleSubmitForm() {
     status,
   });
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     yield put(asyncEndAction());
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
@@ -65,13 +64,13 @@ export function* handleSubmitForm() {
     yield put(changeFieldAction('formPage', false));
     yield put(clearFormAction());
     const message =
-      formMethod === 'put'
+      formMethod === PUT
         ? commonMessage.updateSuccess
         : commonMessage.addSuccess;
-    return yield showFormattedErrorMessage('success', message);
+    return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
+    return yield showFormattedAlert('error', commonMessage.serverError);
   }
 }
 
@@ -115,26 +114,23 @@ export function* handleValidateForm() {
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users/${data.id}`;
-  const payload = ApiEndpoint.makeApiPayload('DELETE');
+  const requestUrl = `/users/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, DELETE);
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryUsersAction());
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.deleteSuccess,
-    );
+    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', deleteMessage.deleteError);
   }
 }
 
 export function* handleQueryUsersList() {
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
-  const limit = yield select(makeLimitSelector());
+  const limit = yield select(makePageSizeSelector());
   const queryObj = {
     page: pageNumber > 0 ? pageNumber : 1,
     limit: limit > 0 ? limit : 10,
@@ -146,10 +142,10 @@ export function* handleQueryUsersList() {
     .map((key) => `${key}=${queryObj[key]}`)
     .join('&');
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users?${queryString}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/users?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     return yield put(assignUsersAction(response));
   } catch (error) {
     return yield put(asyncEndAction());
@@ -159,10 +155,10 @@ export function* handleQueryUsersList() {
 export function* handleGetUserById() {
   yield put(asyncStartAction());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users/${id}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/users/${id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     yield put(changeFieldAction('name', response.name));
     yield put(changeFieldAction('email', response.email));
     yield put(changeFieldAction('username', response.username));
@@ -178,10 +174,10 @@ export function* handleGetUserById() {
 
 export function* handleQueryRoles() {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles?limit=300`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/roles?limit=300`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     if (response.results) {
       return yield put(assignRolesListAction(response.results));
     }

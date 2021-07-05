@@ -4,12 +4,13 @@ import request from 'utils/request';
 import { GET_USER_DETAIL } from 'containers/UserAccountPage/constants';
 import { makeUserIdSelector } from 'containers/UserAccountPage/selectors';
 import { changeFieldAction } from 'containers/UserAccountPage/actions';
+import { GET } from 'utils/constants';
 
 export function* loadUserDetail() {
   const id = yield select(makeUserIdSelector());
-  const requestPayload = ApiEndpoint.makeApiPayload('GET');
-  const requestURL = `${ApiEndpoint.getBasePath()}/stat/${id}`;
-  const response = yield call(request, requestURL, requestPayload);
+  const requestUrl = `/stat/${id}`;
+  const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, GET);
+  const response = yield call(request, requestPayload);
   // console.log(response && response.length > 0 ? response[0] : {})
   yield put(
     changeFieldAction(

@@ -19,8 +19,8 @@ import {
   makeProfileImageSelector,
 } from 'containers/ProfilePage/selectors';
 import request from 'utils/request';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { getProfileAction } from 'containers/App/actions';
+import { PUT } from 'utils/constants';
 
 export function* handleProfileLoad() {
   const user = yield select(makeLoggedInUserSelector());
@@ -44,63 +44,66 @@ export function* handleProfileUpdate() {
   if (image) {
     formData.append('image', image);
   }
+  const requestUrl = `/profile`;
   const requestPayload = ApiEndpoint.makeApiPayload(
-    'PUT',
+    requestUrl,
+    PUT,
     formData,
     'multipart/form-data',
   );
-  const requestURL = `${ApiEndpoint.getBasePath()}/profile`;
   try {
-    const response = yield call(request, requestURL, requestPayload);
+    const response = yield call(request, requestPayload);
     if (response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
-    yield put(getProfileAction());
-    return yield put(
-      enqueueSnackbarAction({
-        message: 'Profile updated successfully',
-        type: 'success',
-      }),
-    );
+    return yield put(getProfileAction());
+    // return yield put(
+    //   enqueueSnackbarAction({
+    //     message: 'Profile updated successfully',
+    //     type: 'success',
+    //   }),
+    // );
     // yield put(loadProfileAction());
   } catch (error) {
-    return yield put(
-      enqueueSnackbarAction({
-        message: 'Error updating profile',
-        type: 'error',
-      }),
-    );
+    return error;
+    // return yield put(
+    //   enqueueSnackbarAction({
+    //     message: 'Error updating profile',
+    //     type: 'error',
+    //   }),
+    // );
   }
 }
 
 export function* handlePasswordReset() {
   const password = yield select(makePasswordSelector());
   const confirmPassword = yield select(makeConfirmPasswordSelector());
-  const requestPayload = ApiEndpoint.makeApiPayload('PUT', {
+  const requestUrl = `/reset-password`;
+  const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, PUT, {
     password,
     confirmPassword,
   });
-  const requestURL = `${ApiEndpoint.getBasePath()}/reset-password`;
   try {
-    const response = yield call(request, requestURL, requestPayload);
+    const response = yield call(request, requestPayload);
     if (response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
-    yield put(
-      enqueueSnackbarAction({
-        message: 'Password changed successfully',
-        type: 'success',
-      }),
-    );
+    // yield put(
+    //   enqueueSnackbarAction({
+    //     message: 'Password changed successfully',
+    //     type: 'success',
+    //   }),
+    // );
     yield put(changeFieldAction('password', ''));
     return yield put(changeFieldAction('confirmPassword', ''));
   } catch (error) {
-    return yield put(
-      enqueueSnackbarAction({
-        message: 'Error updating password',
-        type: 'error',
-      }),
-    );
+    return false;
+    // return yield put(
+    //   enqueueSnackbarAction({
+    //     message: 'Error updating password',
+    //     type: 'error',
+    //   }),
+    // );
   }
 }
 

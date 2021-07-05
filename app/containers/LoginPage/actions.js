@@ -12,7 +12,6 @@ import {
   LOGIN_PROCESS,
   ASYNC_END,
   CHANGE_USERNAME,
-  VALIDATE_FORM,
   LOGIN_ERROR,
 } from 'containers/LoginPage/constants';
 
@@ -27,12 +26,6 @@ export function changeUsernameAction(username) {
   return {
     type: CHANGE_USERNAME,
     username,
-  };
-}
-
-export function onFormValidation() {
-  return {
-    type: VALIDATE_FORM,
   };
 }
 

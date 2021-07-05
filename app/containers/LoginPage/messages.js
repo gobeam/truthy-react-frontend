@@ -13,18 +13,6 @@ export default defineMessages({
     id: `${scope}.back`,
     defaultMessage: 'Go Back',
   },
-  register: {
-    id: `${scope}.register`,
-    defaultMessage: 'Not registered?',
-  },
-  createAccount: {
-    id: `${scope}.createAccount`,
-    defaultMessage: 'Create account',
-  },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Name',
-  },
   errorLogin: {
     id: `${scope}.errorLogin`,
     defaultMessage: 'Invalid credentials',
@@ -37,10 +25,6 @@ export default defineMessages({
     id: `${scope}.serverError`,
     defaultMessage: 'Please try again in a moment!',
   },
-  emailInvalid: {
-    id: `${scope}.emailInvalid`,
-    defaultMessage: 'Email is Invalid!',
-  },
   loginToTheSystem: {
     id: `${scope}.loginToTheSystem`,
     defaultMessage: 'Log in',
@@ -52,25 +36,5 @@ export default defineMessages({
   helmetLoginTitle: {
     id: `${scope}.HelmetLoginTitle`,
     defaultMessage: 'Login',
-  },
-  loginError: {
-    id: `${scope}.loginError`,
-    defaultMessage: 'Please enter the correct account pin',
-  },
-  passwordError: {
-    id: `${scope}.passwordError`,
-    defaultMessage: 'Please enter the correct access code',
-  },
-  loginEmpty: {
-    id: `${scope}.loginEmpty`,
-    defaultMessage: 'Please enter the account pin',
-  },
-  passwordEmpty: {
-    id: `${scope}.passwordEmpty`,
-    defaultMessage: 'Please enter the access code',
-  },
-  loginAttemptError: {
-    id: `${scope}.loginAttemptError`,
-    defaultMessage: 'Please enter the correct account pin or access code',
   },
 });

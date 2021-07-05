@@ -95,4 +95,8 @@ export default defineMessages({
     id: `${scope}.blocked`,
     defaultMessage: 'Blocked',
   },
+  select: {
+    id: `${scope}.select`,
+    defaultMessage: 'Select',
+  },
 });

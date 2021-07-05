@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
   ASSIGN_PERMISSION,
@@ -68,7 +67,6 @@ const permissionModuleReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case CLEAR_FORM:
-    case LOCATION_CHANGE:
       draft.resource = '';
       draft.description = '';
       draft.path = '';

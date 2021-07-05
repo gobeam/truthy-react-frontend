@@ -25,10 +25,6 @@ export default defineMessages({
     id: `${scope}.passwordPlaceHolder`,
     defaultMessage: 'Password',
   },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Name',
-  },
   password: {
     id: `${scope}.password`,
     defaultMessage: 'Password',
@@ -44,5 +40,21 @@ export default defineMessages({
   inputLogin: {
     id: `${scope}.inputLogin`,
     defaultMessage: 'Log in',
+  },
+  emailRequired: {
+    id: `${scope}.emailRequired`,
+    defaultMessage: 'Please input your email!',
+  },
+  validEmailRequired: {
+    id: `${scope}.validEmailRequired`,
+    defaultMessage: 'Please input your email!',
+  },
+  passwordRequired: {
+    id: `${scope}.passwordRequired`,
+    defaultMessage: 'Please input your password!',
+  },
+  register: {
+    id: `${scope}.register`,
+    defaultMessage: 'register now!',
   },
 });

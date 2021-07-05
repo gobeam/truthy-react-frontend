@@ -59,8 +59,8 @@ const makeConfirmPasswordSelector = () =>
 const makePageNumberSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.pageNumber);
 
-const makeLimitSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.limit);
+const makePageSizeSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.pageSize);
 
 const makeUsersSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.users);
@@ -69,10 +69,10 @@ const makeErrorSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.errors);
 
 export {
+  makePageSizeSelector,
   makeRoleIdSelector,
   makeStatusSelector,
   makeRolesListSelector,
-  makeLimitSelector,
   makeUserNameSelector,
   makePasswordSelector,
   makeConfirmPasswordSelector,
