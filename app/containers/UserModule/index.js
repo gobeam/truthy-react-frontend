@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -14,44 +14,66 @@ import saga from 'containers/UserModule/saga';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/UserModule/messages';
-
 import {
-  makeIsFormPageSelector,
+  makeIdSelector,
   makeIsLoadingSelector,
   makePageNumberSelector,
   makePageSizeSelector,
 } from 'containers/UserModule/selectors';
 import {
   changeFieldAction,
+  getUserByIdAction,
   queryRolesListAction,
   queryUsersAction,
 } from 'containers/UserModule/actions';
 import SearchInput from 'components/SearchInput';
 import UserTable from 'containers/UserModule/userTable';
+import CreateUserModal from 'containers/UserModule/createUserModal';
+import { POST, PUT } from 'utils/constants';
+import EditUserModal from 'containers/UserModule/editUserModal';
 
 const key = 'userModule';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
-  formPage: makeIsFormPageSelector(),
   pageSize: makePageSizeSelector(),
   isLoading: makeIsLoadingSelector(),
+  id: makeIdSelector(),
 });
 
 const UserModule = () => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const { pageNumber, pageSize, isLoading } = useSelector(stateSelector);
+  const [createUser, setCreateUser] = useState(false);
+  const [editUser, setEditUser] = useState(false);
+  const { pageNumber, pageSize, isLoading, id } = useSelector(stateSelector);
   const loadUsers = () => dispatch(queryUsersAction());
   const loadRoles = () => dispatch(queryRolesListAction());
   const onChangeField = (keyName, value) =>
     dispatch(changeFieldAction(keyName, value));
   const handleSubmitForm = () => loadUsers();
 
+  const onCreate = () => {
+    onChangeField('formMethod', POST);
+    setCreateUser(true);
+  };
+
+  const onEdit = (updateId) => {
+    onChangeField('id', updateId);
+    onChangeField('formMethod', PUT);
+    setEditUser(true);
+  };
+
   useEffect(() => {
     loadRoles();
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getUserByIdAction(id));
+    }
+  }, [id]);
 
   useEffect(() => {
     loadUsers();
@@ -71,7 +93,19 @@ const UserModule = () => {
         onChangeField={onChangeField}
         onSubmitForm={handleSubmitForm}
       />
-      <UserTable />
+      <CreateUserModal
+        visible={createUser}
+        onCancel={() => setCreateUser(false)}
+        onCreate={() => setCreateUser(false)}
+      />
+      {editUser ? (
+        <EditUserModal
+          visible={editUser}
+          onCancel={() => setEditUser(false)}
+          onCreate={() => setEditUser(false)}
+        />
+      ) : null}
+      <UserTable onCreate={onCreate} onEdit={onEdit} />
     </>
   );
 };

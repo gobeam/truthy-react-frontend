@@ -25,7 +25,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from 'components/Header/messages';
 import { changeLocaleAction } from 'containers/LanguageProvider/actions';
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
-import { useLocalStorage } from 'hooks/localstorage';
+import useCookie from 'hooks/useCookie';
 
 const { Header } = Layout;
 
@@ -42,7 +42,7 @@ const HeaderComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
-  const [currentLang, setCurrentLang] = useLocalStorage('lang', 'en');
+  const [cookie, updateCookie] = useCookie('lang', 'en');
 
   const { user, isLogged, device, collapsed, locale } =
     useSelector(stateSelector);
@@ -87,7 +87,8 @@ const HeaderComponent = () => {
 
   const selectLocale = ({ key }) => {
     dispatch(changeLocaleAction(key));
-    setCurrentLang(key);
+    // setCurrentLang(key);
+    updateCookie(key, 10);
   };
 
   return (

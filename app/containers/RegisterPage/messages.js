@@ -38,14 +38,6 @@ export default defineMessages({
     id: `${scope}.alreadyAccount`,
     defaultMessage: 'Already have an account?',
   },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Name',
-  },
-  username: {
-    id: `${scope}.username`,
-    defaultMessage: 'Username',
-  },
   agreeTo: {
     id: `${scope}.agreeTo`,
     defaultMessage: 'I agree to the',
@@ -67,46 +59,6 @@ export default defineMessages({
     id: `${scope}.signBtn`,
     defaultMessage: 'Sign up',
   },
-  email: {
-    id: `${scope}.email`,
-    defaultMessage: 'Email/Username',
-  },
-  emailPlaceHolder: {
-    id: `${scope}.emailPlaceHolder`,
-    defaultMessage: 'user@tryuthy.com',
-  },
-  confirmPassword: {
-    id: `${scope}.confirmPassword`,
-    defaultMessage: 'Confirm Password',
-  },
-  passwordPlaceHolder: {
-    id: `${scope}.passwordPlaceHolder`,
-    defaultMessage: 'Password',
-  },
-  emailRequired: {
-    id: `${scope}.emailRequired`,
-    defaultMessage: 'Please input your email!',
-  },
-  validEmailRequired: {
-    id: `${scope}.validEmailRequired`,
-    defaultMessage: 'Invalid email!',
-  },
-  passwordRequired: {
-    id: `${scope}.passwordRequired`,
-    defaultMessage: 'Please input your password!',
-  },
-  usernameRequired: {
-    id: `${scope}.usernameRequired`,
-    defaultMessage: 'Please input your username!',
-  },
-  nameRequired: {
-    id: `${scope}.nameRequired`,
-    defaultMessage: 'Please input your name!',
-  },
-  confirmPasswordRequired: {
-    id: `${scope}.confirmPasswordRequired`,
-    defaultMessage: 'Please confirm your password!',
-  },
   acceptTerm: {
     id: `${scope}.acceptTerm`,
     defaultMessage: 'Should accept terms and condition!',
@@ -118,9 +70,5 @@ export default defineMessages({
   termsAndConditions: {
     id: `${scope}.termsAndConditions`,
     defaultMessage: 'Terms and conditions',
-  },
-  confirmPasswordMatchError: {
-    id: `${scope}.confirmPasswordMatchError`,
-    defaultMessage: 'Confirm password does not match your password!',
   },
 });

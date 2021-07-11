@@ -29,8 +29,6 @@ export default class ApiEndpoint {
       withCredentials: true,
       headers: {},
     };
-    jsonPayload.headers['x-custom-lang'] =
-      window.localStorage.getItem('lang') || 'en';
     if (!contentType) {
       jsonPayload.headers.Accept = 'application/json';
       jsonPayload.headers['Content-Type'] = 'application/json';

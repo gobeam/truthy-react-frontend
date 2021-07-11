@@ -26,6 +26,7 @@ export const initialState = {
   status: '',
   confirmPassword: '',
   pageNumber: 1,
+  clearFormField: false,
   pageSize: 10,
   limit: 10,
   roles: [],
@@ -39,10 +40,8 @@ export const initialState = {
   },
   errors: {},
   isLoading: false,
-  formPage: false,
   formMethod: null,
-  updateId: null,
-  formTitle: null,
+  id: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -57,7 +56,7 @@ const userModuleReducer = produce((draft, action) => {
       break;
     case CHANGE_FORM_FIELD:
       draft[action.key] = action.value;
-      draft.errors[action.key] = '';
+      delete draft.errors[action.key];
       break;
     case SET_PAGE_NUMBER:
       draft.pageNumber = action.pageNumber;
@@ -84,11 +83,10 @@ const userModuleReducer = produce((draft, action) => {
       draft.confirmPassword = '';
       draft.keywords = '';
       draft.errors = {};
+      draft.clearFormField = false;
       draft.isLoading = false;
-      draft.formPage = false;
       draft.formMethod = null;
-      draft.updateId = null;
-      draft.formTitle = null;
+      draft.id = null;
       break;
   }
 }, initialState);

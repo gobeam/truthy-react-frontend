@@ -12,6 +12,7 @@ import {
   ASYNC_START,
   CHANGE_FORM_FIELD,
   CLEAR_FORM,
+  CLEAR_FORM_FIELD,
   DELETE_ITEM_BY_ID,
   GET_USER_BY_ID,
   QUERY_ROLES,
@@ -19,7 +20,6 @@ import {
   SET_PAGE_NUMBER,
   SET_PAGE_SIZE,
   SUBMIT_FORM,
-  VALIDATE_FORM,
 } from 'containers/UserModule/constants';
 
 export function enterValidationErrorAction(errors) {
@@ -65,15 +65,15 @@ export function getUserByIdAction() {
   };
 }
 
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
-  };
-}
-
 export function submitFormAction() {
   return {
     type: SUBMIT_FORM,
+  };
+}
+
+export function clearFormFieldAction() {
+  return {
+    type: CLEAR_FORM_FIELD,
   };
 }
 

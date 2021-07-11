@@ -10,20 +10,17 @@ import {
   changeFieldAction,
   clearFormAction,
   getUserByIdAction,
-  validateFormAction,
 } from 'containers/UserModule/actions';
 import { createStructuredSelector } from 'reselect';
 import {
   makeEmailSelector,
   makeErrorSelector,
   makeFormMethodSelector,
-  makeFormTitleSelector,
   makeIsLoadingSelector,
   makeNameSelector,
   makeRoleIdSelector,
   makeRolesListSelector,
   makeStatusSelector,
-  makeUpdateIdSelector,
   makeUserNameSelector,
 } from 'containers/UserModule/selectors';
 import { FormattedMessage } from 'react-intl';
@@ -35,13 +32,11 @@ const stateSelector = createStructuredSelector({
   name: makeNameSelector(),
   username: makeUserNameSelector(),
   email: makeEmailSelector(),
-  errors: makeErrorSelector(),
-  isLoading: makeIsLoadingSelector(),
-  formTitle: makeFormTitleSelector(),
-  formMethod: makeFormMethodSelector(),
-  updateId: makeUpdateIdSelector(),
   roleId: makeRoleIdSelector(),
   status: makeStatusSelector(),
+  errors: makeErrorSelector(),
+  isLoading: makeIsLoadingSelector(),
+  formMethod: makeFormMethodSelector(),
 });
 
 const PermissionForm = () => {
@@ -68,8 +63,7 @@ const PermissionForm = () => {
     dispatch(clearFormAction());
   };
 
-  const handleSubmitForm = (e) =>
-    dispatch(validateFormAction()) && e.preventDefault();
+  const handleSubmitForm = (e) => e.preventDefault();
 
   useEffect(() => {
     if (updateId) {

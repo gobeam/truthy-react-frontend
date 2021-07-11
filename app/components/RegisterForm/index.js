@@ -29,9 +29,10 @@ import FormInputWrapper from 'components/FormInputWrapper';
 import FormButtonWrapper from 'components/FormButtonWrapper';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { checkIfStrongPassword } from 'common/validator';
 import usePasswordStrengthCheckHook from 'common/hooks/passwordStrengthHook';
 import AlertMessage from 'containers/AlertMessage';
+import commonMessage from 'common/messages';
+import { rules } from 'common/rules';
 
 const { Title } = Typography;
 
@@ -112,7 +113,9 @@ const RegisterForm = (props) => {
   const checkConfirm = (rule, value, callback) => {
     const newPassword = form.getFieldValue('password');
     if (newPassword !== value) {
-      callback(<FormattedMessage {...messages.confirmPasswordMatchError} />);
+      callback(
+        <FormattedMessage {...commonMessage.confirmPasswordMatchError} />,
+      );
     } else {
       callback();
     }
@@ -134,44 +137,24 @@ const RegisterForm = (props) => {
 
       <FormInputWrapper
         name="email"
-        label={messages.email}
+        label={commonMessage.emailLabel}
         id="email"
         type="email"
-        rules={[
-          {
-            type: 'email',
-            message: <FormattedMessage {...messages.validEmailRequired} />,
-          },
-          {
-            required: true,
-            whitespace: true,
-            message: <FormattedMessage {...messages.emailRequired} />,
-          },
-        ]}
+        rules={rules.email}
         value={email}
-        placeholder={messages.emailPlaceHolder}
+        placeholder={commonMessage.emailPlaceHolder}
         changeHandler={onChangeField}
         error={validationError.email}
       />
 
       <FormInputWrapper
         passwordInput
-        label={messages.passwordPlaceHolder}
-        rules={[
-          {
-            required: true,
-            whitespace: true,
-            message: <FormattedMessage {...messages.passwordRequired} />,
-          },
-          {
-            validator: checkIfStrongPassword,
-          },
-        ]}
+        label={commonMessage.passwordLabel}
+        rules={rules.password}
         name="password"
         id="password"
-        type="password"
         value={password}
-        placeholder={messages.passwordPlaceHolder}
+        placeholder={commonMessage.passwordPlaceHolder}
         changeHandler={onChangeField}
         error={validationError.password}
       >
@@ -185,12 +168,14 @@ const RegisterForm = (props) => {
 
       <FormInputWrapper
         passwordInput
-        label={messages.confirmPassword}
+        label={commonMessage.confirmPasswordLabel}
         rules={[
           {
             required: true,
             whitespace: true,
-            message: <FormattedMessage {...messages.passwordRequired} />,
+            message: (
+              <FormattedMessage {...commonMessage.confirmPasswordRequired} />
+            ),
           },
           {
             validator: checkConfirm,
@@ -200,43 +185,31 @@ const RegisterForm = (props) => {
         id="confirmPassword"
         type="confirmPassword"
         value={confirmPassword}
-        placeholder={messages.passwordPlaceHolder}
+        placeholder={commonMessage.confirmPasswordLabel}
         changeHandler={onChangeField}
         error={validationError.confirmPassword}
       />
 
       <FormInputWrapper
-        label={messages.username}
+        label={commonMessage.usernameLabel}
         name="username"
         id="username"
         type="text"
-        rules={[
-          {
-            required: true,
-            whitespace: true,
-            message: <FormattedMessage {...messages.usernameRequired} />,
-          },
-        ]}
+        rules={rules.username}
         value={username}
-        placeholder={messages.username}
+        placeholder={commonMessage.usernamePlaceHolder}
         changeHandler={onChangeField}
         error={validationError.username}
       />
 
       <FormInputWrapper
-        label={messages.name}
+        label={commonMessage.nameLabel}
         name="name"
         id="name"
         type="text"
-        rules={[
-          {
-            required: true,
-            whitespace: true,
-            message: <FormattedMessage {...messages.nameRequired} />,
-          },
-        ]}
+        rules={rules.name}
         value={name}
-        placeholder={messages.name}
+        placeholder={commonMessage.namePlaceHolder}
         changeHandler={onChangeField}
         error={validationError.name}
       />

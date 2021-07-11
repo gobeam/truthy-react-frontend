@@ -28,6 +28,7 @@ import FormButtonWrapper from 'components/FormButtonWrapper';
 import { Form, Typography } from 'antd';
 import FormInputWrapper from 'components/FormInputWrapper';
 import AlertMessage from 'containers/AlertMessage';
+import commonMessage from 'common/messages';
 
 const { Title } = Typography;
 
@@ -91,22 +92,24 @@ export default function ForgotPasswordPage() {
 
         <FormInputWrapper
           name="email"
-          label={messages.email}
+          label={commonMessage.emailLabel}
           id="email"
           type="email"
           rules={[
             {
               type: 'email',
-              message: <FormattedMessage {...messages.validEmailRequired} />,
+              message: (
+                <FormattedMessage {...commonMessage.validEmailRequired} />
+              ),
             },
             {
               required: true,
               whitespace: true,
-              message: <FormattedMessage {...messages.emailRequired} />,
+              message: <FormattedMessage {...commonMessage.emailRequired} />,
             },
           ]}
           value={email}
-          placeholder={messages.emailPlaceHolder}
+          placeholder={commonMessage.emailPlaceHolder}
           changeHandler={onChangeField}
           error={validationError.email}
         />

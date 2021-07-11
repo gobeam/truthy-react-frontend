@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import messages from 'containers/UserModule/messages';
 import commonMessages from 'common/messages';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ import {
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
 import PropTypes from 'prop-types';
+import { POST, PUT } from 'utils/constants';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
@@ -25,10 +26,22 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
+const CreateRoutePermission = {
+  resource: 'user',
+  method: POST,
+  path: '/users',
+};
+const EditRoutePermission = {
+  resource: 'user',
+  method: PUT,
+  path: '/users/:id',
+};
+
 function UserTable(props) {
-  const { intl } = props;
+  const { onCreate, onEdit } = props;
   const { users, user } = useSelector(stateSelector);
   const dispatch = useDispatch();
+  const intl = useIntl();
 
   const paginationOptions = {
     showSizeChanger: true,
@@ -69,36 +82,28 @@ function UserTable(props) {
         rowKey="id"
         dataSource={users.results}
         scroll={{ x: 500 }}
-        title={() => (
-          <Button
-            type="primary"
-            onClick={() => ''}
-            disabled={
-              !checkPermissionForComponent(user.role, {
-                resource: 'user',
-                method: 'post',
-                path: '/users',
-              })
-            }
-          >
-            <FormattedMessage {...messages.addLabel} />
-          </Button>
-        )}
+        title={() =>
+          checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+            <Button type="primary" onClick={onCreate}>
+              <FormattedMessage {...messages.addLabel} />
+            </Button>
+          ) : null
+        }
       >
         <Table.Column
-          title={intl.formatMessage(messages.nameLabel)}
+          title={intl.formatMessage(commonMessages.nameLabel)}
           dataIndex="name"
           width={100}
           render={(_, { name }) => name}
         />
         <Table.Column
-          title={intl.formatMessage(messages.emailLabel)}
+          title={intl.formatMessage(commonMessages.emailLabel)}
           dataIndex="email"
           key="email"
           width={100}
         />
         <Table.Column
-          title={intl.formatMessage(messages.usernameLabel)}
+          title={intl.formatMessage(commonMessages.usernameLabel)}
           dataIndex="username"
           key="username"
           width={100}
@@ -127,22 +132,16 @@ function UserTable(props) {
         <Table.Column
           title={intl.formatMessage(messages.actionLabel)}
           width={200}
+          dataIndex="id"
+          key="action"
           align="center"
-          render={() => [
-            <Button
-              type="link"
-              key="1"
-              disabled={
-                !checkPermissionForComponent(user.role, {
-                  resource: 'user',
-                  method: 'put',
-                  path: '/users/:id',
-                })
-              }
-            >
-              <FormattedMessage {...messages.addLabel} />
-            </Button>,
-          ]}
+          render={(_, { id }) =>
+            checkPermissionForComponent(user.role, EditRoutePermission) ? (
+              <Button type="primary" onClick={() => onEdit(id)}>
+                <FormattedMessage {...commonMessages.editLabel} />
+              </Button>
+            ) : null
+          }
         />
       </Table>
     </>
@@ -150,7 +149,8 @@ function UserTable(props) {
 }
 
 UserTable.propTypes = {
-  intl: PropTypes.object,
+  onCreate: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
-export default injectIntl(UserTable);
+export default UserTable;

@@ -29,24 +29,4 @@ export default defineMessages({
     id: `${scope}.back`,
     defaultMessage: 'Go Back',
   },
-  confirmPassword: {
-    id: `${scope}.confirmPassword`,
-    defaultMessage: 'Confirm Password',
-  },
-  passwordPlaceHolder: {
-    id: `${scope}.passwordPlaceHolder`,
-    defaultMessage: 'Password',
-  },
-  passwordRequired: {
-    id: `${scope}.passwordRequired`,
-    defaultMessage: 'Please input your password!',
-  },
-  confirmPasswordRequired: {
-    id: `${scope}.confirmPasswordRequired`,
-    defaultMessage: 'Please confirm your password!',
-  },
-  confirmPasswordMatchError: {
-    id: `${scope}.confirmPasswordMatchError`,
-    defaultMessage: 'Confirm password does not match your password!',
-  },
 });

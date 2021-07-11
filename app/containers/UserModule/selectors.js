@@ -26,17 +26,11 @@ const makeRoleIdSelector = () =>
 const makeKeywordsSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.keywords);
 
-const makeIsFormPageSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.formPage);
-
 const makeFormMethodSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.formMethod);
 
-const makeUpdateIdSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.updateId);
-
-const makeFormTitleSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.formTitle);
+const makeIdSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.id);
 
 const makeUserNameSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.username);
@@ -68,7 +62,11 @@ const makeUsersSelector = () =>
 const makeErrorSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.errors);
 
+const makeClearFormFieldSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.clearFormField);
+
 export {
+  makeClearFormFieldSelector,
   makePageSizeSelector,
   makeRoleIdSelector,
   makeStatusSelector,
@@ -79,9 +77,7 @@ export {
   makeNameSelector,
   makeEmailSelector,
   makeKeywordsSelector,
-  makeUpdateIdSelector,
-  makeFormTitleSelector,
-  makeIsFormPageSelector,
+  makeIdSelector,
   makeFormMethodSelector,
   makeIsLoadingSelector,
   makeErrorSelector,

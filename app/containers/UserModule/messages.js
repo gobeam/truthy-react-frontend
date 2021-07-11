@@ -31,6 +31,14 @@ export default defineMessages({
     id: `${scope}.statusLabel`,
     defaultMessage: 'Status',
   },
+  roleRequired: {
+    id: `${scope}.roleRequired`,
+    defaultMessage: 'At least one role must be selected!',
+  },
+  statusRequired: {
+    id: `${scope}.statusRequired`,
+    defaultMessage: 'At least one status must be selected!',
+  },
   usernamePlaceHolder: {
     id: `${scope}.usernamePlaceHolder`,
     defaultMessage: 'Input username',

@@ -5,7 +5,6 @@ import {
   QUERY_ROLES,
   QUERY_USERS,
   SUBMIT_FORM,
-  VALIDATE_FORM,
 } from 'containers/UserModule/constants';
 import ApiEndpoint from 'utils/api';
 import deleteMessage from 'components/DeleteModal/messages';
@@ -17,24 +16,22 @@ import {
   asyncEndAction,
   asyncStartAction,
   changeFieldAction,
-  clearFormAction,
+  clearFormFieldAction,
   enterValidationErrorAction,
   queryUsersAction,
-  submitFormAction,
 } from 'containers/UserModule/actions';
 import {
   makeEmailSelector,
   makeFormMethodSelector,
+  makeIdSelector,
   makeKeywordsSelector,
   makeNameSelector,
   makePageNumberSelector,
   makePageSizeSelector,
   makeRoleIdSelector,
   makeStatusSelector,
-  makeUpdateIdSelector,
   makeUserNameSelector,
 } from 'containers/UserModule/selectors';
-import { checkError } from 'helpers/Validation';
 import { showFormattedAlert } from 'common/saga';
 import { DELETE, GET, PUT } from 'utils/constants';
 
@@ -45,7 +42,7 @@ export function* handleSubmitForm() {
   const username = yield select(makeUserNameSelector());
   const status = yield select(makeStatusSelector());
   const formMethod = yield select(makeFormMethodSelector());
-  const id = yield select(makeUpdateIdSelector());
+  const id = yield select(makeIdSelector());
   const requestUrl = `/users${formMethod === PUT ? `/${id}` : ''}`;
   const payload = ApiEndpoint.makeApiPayload(requestUrl, formMethod, {
     email,
@@ -55,14 +52,11 @@ export function* handleSubmitForm() {
     status,
   });
   try {
-    const response = yield call(request, payload);
-    yield put(asyncEndAction());
-    if (response && response.error) {
-      return yield put(enterValidationErrorAction(response.error));
-    }
+    yield call(request, payload);
     yield put(queryUsersAction());
     yield put(changeFieldAction('formPage', false));
-    yield put(clearFormAction());
+    yield put(clearFormFieldAction());
+    yield put(asyncEndAction());
     const message =
       formMethod === PUT
         ? commonMessage.updateSuccess
@@ -70,46 +64,11 @@ export function* handleSubmitForm() {
     return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
+    if (error.data && error.data.statusCode === 422) {
+      return yield put(enterValidationErrorAction(error.data.message));
+    }
     return yield showFormattedAlert('error', commonMessage.serverError);
   }
-}
-
-export function* handleValidateForm() {
-  yield put(asyncStartAction());
-  const email = yield select(makeEmailSelector());
-  const roleId = yield select(makeRoleIdSelector());
-  const name = yield select(makeNameSelector());
-  const username = yield select(makeUserNameSelector());
-  const status = yield select(makeStatusSelector());
-  const model = {
-    email: {
-      value: email,
-      validator: ['isEmail', 'isString', 'isNotEmpty'],
-    },
-    roleId: {
-      value: roleId,
-      key: 'role',
-      validator: ['isInt', 'isNotEmpty'],
-    },
-    name: {
-      value: name,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    username: {
-      value: username,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    status: {
-      value: status,
-      validator: ['isString', 'isNotEmpty'],
-    },
-  };
-  const err = checkError(model);
-  if (Object.keys(err).length > 0) {
-    yield put(asyncEndAction());
-    return yield put(enterValidationErrorAction(err));
-  }
-  return yield put(submitFormAction());
 }
 
 export function* handleDeleteItemById(data) {
@@ -154,7 +113,7 @@ export function* handleQueryUsersList() {
 
 export function* handleGetUserById() {
   yield put(asyncStartAction());
-  const id = yield select(makeUpdateIdSelector());
+  const id = yield select(makeIdSelector());
   const requestUrl = `/users/${id}`;
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
@@ -163,9 +122,7 @@ export function* handleGetUserById() {
     yield put(changeFieldAction('email', response.email));
     yield put(changeFieldAction('username', response.username));
     yield put(changeFieldAction('status', response.status));
-    yield put(
-      changeFieldAction('roleId', response.role ? response.role.id : ''),
-    );
+    yield put(changeFieldAction('roleId', response.role?.id || ''));
     return yield put(asyncEndAction());
   } catch (error) {
     return yield put(asyncEndAction());
@@ -192,6 +149,5 @@ export default function* permissionModuleSaga() {
   yield takeLatest(QUERY_ROLES, handleQueryRoles);
   yield takeLatest(GET_USER_BY_ID, handleGetUserById);
   yield takeLatest(SUBMIT_FORM, handleSubmitForm);
-  yield takeLatest(VALIDATE_FORM, handleValidateForm);
   yield takeLatest(DELETE_ITEM_BY_ID, handleDeleteItemById);
 }

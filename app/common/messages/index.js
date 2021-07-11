@@ -96,4 +96,69 @@ export default defineMessages({
     defaultMessage:
       'Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character and should be minimum 6 characters and maximum upto 20 characters!!',
   },
+
+  nameLabel: {
+    id: `${scope}.nameLabel`,
+    defaultMessage: 'Name',
+  },
+  namePlaceHolder: {
+    id: `${scope}.namePlaceHolder`,
+    defaultMessage: 'Input your name!',
+  },
+  usernamePlaceHolder: {
+    id: `${scope}.usernamePlaceHolder`,
+    defaultMessage: 'Input your username!',
+  },
+  usernameLabel: {
+    id: `${scope}.usernameLabel`,
+    defaultMessage: 'Username',
+  },
+  passwordLabel: {
+    id: `${scope}.passwordLabel`,
+    defaultMessage: 'Password',
+  },
+  emailLabel: {
+    id: `${scope}.emailLabel`,
+    defaultMessage: 'Email',
+  },
+  emailPlaceHolder: {
+    id: `${scope}.emailPlaceHolder`,
+    defaultMessage: 'user@tryuthy.com',
+  },
+  confirmPasswordLabel: {
+    id: `${scope}.confirmPasswordLabel`,
+    defaultMessage: 'Confirm Password',
+  },
+  passwordPlaceHolder: {
+    id: `${scope}.passwordPlaceHolder`,
+    defaultMessage: 'Password',
+  },
+  emailRequired: {
+    id: `${scope}.emailRequired`,
+    defaultMessage: 'Please input your email!',
+  },
+  validEmailRequired: {
+    id: `${scope}.validEmailRequired`,
+    defaultMessage: 'Invalid email!',
+  },
+  passwordRequired: {
+    id: `${scope}.passwordRequired`,
+    defaultMessage: 'Please input your password!',
+  },
+  usernameRequired: {
+    id: `${scope}.usernameRequired`,
+    defaultMessage: 'Please input your username!',
+  },
+  nameRequired: {
+    id: `${scope}.nameRequired`,
+    defaultMessage: 'Please input your name!',
+  },
+  confirmPasswordRequired: {
+    id: `${scope}.confirmPasswordRequired`,
+    defaultMessage: 'Please confirm your password!',
+  },
+  confirmPasswordMatchError: {
+    id: `${scope}.confirmPasswordMatchError`,
+    defaultMessage: 'Confirm password does not match your password!',
+  },
 });

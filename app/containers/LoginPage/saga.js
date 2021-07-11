@@ -42,7 +42,7 @@ export function* attemptLogin() {
     yield put(asyncEnd());
     return yield showAlert(
       'error',
-      error.response.data ? error.response.data.message : 'Internal error',
+      error.data ? error.data.message : 'Internal error',
     );
   }
 }

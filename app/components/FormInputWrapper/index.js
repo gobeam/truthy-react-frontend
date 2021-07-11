@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
 
 const FormInputWrapper = (props) => {
+  const intl = useIntl();
   const {
     label = null,
     rules = [],
     placeholder,
-    intl,
     icon,
     children = null,
     required = true,
@@ -43,7 +43,7 @@ const FormInputWrapper = (props) => {
             type={type}
             id={id}
             min={min}
-            value={value}
+            value={value || ''}
             max={max}
             name={name}
             prefix={icon}
@@ -57,7 +57,7 @@ const FormInputWrapper = (props) => {
             type={type}
             id={id}
             min={min}
-            value={value}
+            value={value || ''}
             max={max}
             name={name}
             prefix={icon}
@@ -88,8 +88,7 @@ FormInputWrapper.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.object,
   required: PropTypes.bool,
-  intl: PropTypes.object,
   icon: PropTypes.object,
 };
 
-export default injectIntl(FormInputWrapper);
+export default FormInputWrapper;

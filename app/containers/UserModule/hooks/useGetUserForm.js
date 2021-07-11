@@ -2,7 +2,18 @@ import React from 'react';
 import { Col, Form, Select } from 'antd';
 import FormWrapper from 'components/FormWrapper';
 import messages from 'containers/UserModule/messages';
-import { FormattedMessage, useIntl } from 'react-intl';
+import commonMessages from 'common/messages';
+import { FormattedMessage } from 'react-intl';
+import SelectInputWrapper from 'components/SelectInputWrapper';
+import FormInputWrapper from 'components/FormInputWrapper';
+import { rules } from 'common/rules';
+import { useDispatch } from 'react-redux';
+import { changeFieldAction } from 'containers/UserModule/actions';
+
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
+};
 
 const wrapperCol = {
   xs: 24,
@@ -14,32 +25,49 @@ const wrapperCol = {
 };
 
 const useGetUserForm = ({
-  required = false,
   responsive = false,
-  name = 'form',
-  values = {},
-  errors,
-  onChangeField,
+  formName = 'form',
+  roles = [],
+  errors = {},
+  initialValues = { name: '', username: '', email: '', roleId: '', status: '' },
+  device,
 }) => {
   const [formInstance] = Form.useForm();
-  const intl = useIntl();
+  const dispatch = useDispatch();
 
-  const WrappedForm = (
-    <FormWrapper responsive={responsive} name={name} values={values} />
+  const onChangeField = (e) =>
+    dispatch(changeFieldAction(e.target.name, e.target.value));
+
+  const onChangeStatus = (value) =>
+    dispatch(changeFieldAction('status', value));
+
+  const onChangeRole = (value) => dispatch(changeFieldAction('roleId', value));
+
+  const WrappedForm = ({ ...props }) => (
+    <FormWrapper
+      {...props}
+      // values={initialValues}
+      formInstance={formInstance}
+      layout={layout}
+      device={device}
+      responsive={responsive}
+      name={formName}
+    />
   );
 
   WrappedForm.Item = Form.Item;
 
-  const Name = () => {
+  const NameInput = () => {
     const nameInput = (
-      <FormWrapper
-        label={messages.nameLabel}
+      <FormInputWrapper
+        label={commonMessages.nameLabel}
+        value={initialValues.name}
+        rules={rules.name}
         name="name"
         id="name"
         type="text"
         required={false}
-        focus={false}
-        placeholder={messages.namePlaceHolder}
+        placeholder={commonMessages.namePlaceHolder}
         changeHandler={onChangeField}
         error={errors.name}
       />
@@ -48,16 +76,16 @@ const useGetUserForm = ({
     return responsive ? <Col {...wrapperCol}>{nameInput}</Col> : nameInput;
   };
 
-  const Email = () => {
+  const EmailInput = () => {
     const emailInput = (
-      <FormWrapper
-        label={messages.emailLabel}
+      <FormInputWrapper
+        label={commonMessages.emailLabel}
+        rules={rules.email}
         name="email"
         id="email"
         type="text"
         required={false}
-        focus={false}
-        placeholder={messages.emailPlaceHolder}
+        placeholder={commonMessages.emailPlaceHolder}
         changeHandler={onChangeField}
         error={errors.email}
       />
@@ -65,16 +93,16 @@ const useGetUserForm = ({
     return responsive ? <Col {...wrapperCol}>{emailInput}</Col> : emailInput;
   };
 
-  const Username = () => {
+  const UsernameInput = () => {
     const usernameInput = (
-      <FormWrapper
-        label={messages.usernameLabel}
+      <FormInputWrapper
+        label={commonMessages.usernameLabel}
+        rules={rules.username}
         name="username"
         id="username"
         type="text"
         required={false}
-        focus={false}
-        placeholder={messages.usernamePlaceHolder}
+        placeholder={commonMessages.usernamePlaceHolder}
         changeHandler={onChangeField}
         error={errors.username}
       />
@@ -86,45 +114,75 @@ const useGetUserForm = ({
     );
   };
 
-  const Status = () => {
-    const status = (
-      <Form.Item
+  const StatusInput = () => {
+    const statusArray = [
+      { label: messages.active, value: 'active' },
+      { label: messages.inactive, value: 'inactive' },
+      { label: messages.blocked, value: 'blocked' },
+    ];
+    const statusOptionList = statusArray.map((field) => (
+      <Select.Option key={field.value} value={field.value}>
+        <FormattedMessage {...field.label} />
+      </Select.Option>
+    ));
+    const statusInput = (
+      <SelectInputWrapper
         name="status"
-        label={intl.formatMessage(messages.statusLabel)}
+        id="status"
         rules={[
           {
-            required,
-            message: 'field is required',
+            required: true,
+            message: <FormattedMessage {...messages.statusRequired} />,
           },
         ]}
+        label={messages.statusLabel}
+        required
+        changeHandler={onChangeStatus}
+        error={errors.status}
       >
-        <Select>
-          <Select.Option key="all" value="">
-            <FormattedMessage {...messages.select} />
-          </Select.Option>
-          <Select.Option key="active" value="active">
-            <FormattedMessage {...messages.active} />
-          </Select.Option>
-          <Select.Option key="inactive" value="inactive">
-            <FormattedMessage {...messages.inactive} />
-          </Select.Option>
-          <Select.Option key="blocked" value="blocked">
-            <FormattedMessage {...messages.blocked} />
-          </Select.Option>
-        </Select>
-      </Form.Item>
+        {statusOptionList}
+      </SelectInputWrapper>
     );
 
-    return responsive ? <Col {...wrapperCol}>{status}</Col> : status;
+    return responsive ? <Col {...wrapperCol}>{statusInput}</Col> : statusInput;
+  };
+
+  const RoleInput = () => {
+    const roleOptionList = roles.map((role) => (
+      <Select.Option key={role.id} value={role.id}>
+        {role.name}
+      </Select.Option>
+    ));
+    const roleInput = (
+      <SelectInputWrapper
+        name="roleId"
+        id="roleId"
+        rules={[
+          {
+            required: true,
+            message: <FormattedMessage {...messages.roleRequired} />,
+          },
+        ]}
+        label={messages.roleLabel}
+        required
+        changeHandler={onChangeRole}
+        error={errors.roleId}
+      >
+        {roleOptionList}
+      </SelectInputWrapper>
+    );
+
+    return responsive ? <Col {...wrapperCol}>{roleInput}</Col> : roleInput;
   };
 
   return {
     form: formInstance,
     Form: WrappedForm,
-    Name,
-    Email,
-    Status,
-    Username,
+    NameInput,
+    EmailInput,
+    StatusInput,
+    UsernameInput,
+    RoleInput,
   };
 };
 

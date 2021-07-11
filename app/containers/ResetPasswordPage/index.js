@@ -26,6 +26,7 @@ import { hideHeaderAction } from 'containers/App/actions';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ResetPasswordPage/messages';
+import commonMessages from 'common/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
 import FormInputWrapper from 'components/FormInputWrapper';
 import { Form, Progress, Typography } from 'antd';
@@ -92,7 +93,9 @@ export default function ResetPasswordPage() {
   const checkConfirm = (rule, value, callback) => {
     const newPassword = form.getFieldValue('password');
     if (newPassword !== value) {
-      callback(<FormattedMessage {...messages.confirmPasswordMatchError} />);
+      callback(
+        <FormattedMessage {...commonMessages.confirmPasswordMatchError} />,
+      );
     } else {
       callback();
     }
@@ -123,12 +126,14 @@ export default function ResetPasswordPage() {
 
         <FormInputWrapper
           passwordInput
-          label={messages.passwordPlaceHolder}
+          label={commonMessages.passwordPlaceHolder}
           rules={[
             {
               required: true,
               whitespace: true,
-              message: <FormattedMessage {...messages.passwordRequired} />,
+              message: (
+                <FormattedMessage {...commonMessages.passwordRequired} />
+              ),
             },
             {
               validator: checkIfStrongPassword,
@@ -138,7 +143,7 @@ export default function ResetPasswordPage() {
           id="password"
           type="password"
           value={password}
-          placeholder={messages.passwordPlaceHolder}
+          placeholder={commonMessages.passwordPlaceHolder}
           changeHandler={onChangeField}
           error={validationError.password}
         >
@@ -152,12 +157,14 @@ export default function ResetPasswordPage() {
 
         <FormInputWrapper
           passwordInput
-          label={messages.confirmPassword}
+          label={commonMessages.confirmPasswordLabel}
           rules={[
             {
               required: true,
               whitespace: true,
-              message: <FormattedMessage {...messages.passwordRequired} />,
+              message: (
+                <FormattedMessage {...commonMessages.confirmPasswordRequired} />
+              ),
             },
             {
               validator: checkConfirm,
@@ -167,7 +174,7 @@ export default function ResetPasswordPage() {
           id="confirmPassword"
           type="confirmPassword"
           value={confirmPassword}
-          placeholder={messages.passwordPlaceHolder}
+          placeholder={commonMessages.confirmPasswordLabel}
           changeHandler={onChangeField}
           error={validationError.confirmPassword}
         />

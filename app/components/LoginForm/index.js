@@ -21,6 +21,7 @@ import {
 import { Checkbox, Form, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import messages from 'components/LoginForm/messages';
+import commonMessage from 'common/messages';
 import { FormattedMessage } from 'react-intl';
 import FormInputWrapper from 'components/FormInputWrapper';
 import FormButtonWrapper from 'components/FormButtonWrapper';
@@ -72,12 +73,12 @@ const LoginForm = () => {
           {
             required: true,
             whitespace: true,
-            message: <FormattedMessage {...messages.emailRequired} />,
+            message: <FormattedMessage {...commonMessage.emailRequired} />,
           },
         ]}
         value={username}
         icon={<UserOutlined className="site-form-item-icon" />}
-        placeholder={messages.emailPlaceHolder}
+        placeholder={commonMessage.emailPlaceHolder}
         changeHandler={onChangeUsername}
         error={validationError.email}
       />
@@ -89,7 +90,7 @@ const LoginForm = () => {
           {
             required: true,
             whitespace: true,
-            message: <FormattedMessage {...messages.passwordRequired} />,
+            message: <FormattedMessage {...commonMessage.passwordRequired} />,
           },
         ]}
         name="password"
@@ -97,7 +98,7 @@ const LoginForm = () => {
         type="password"
         value={password}
         icon={<LockOutlined className="site-form-item-icon" />}
-        placeholder={messages.passwordPlaceHolder}
+        placeholder={commonMessage.passwordPlaceHolder}
         changeHandler={onChangePassword}
         error={validationError.password}
       />
