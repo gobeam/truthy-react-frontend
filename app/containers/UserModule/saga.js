@@ -30,6 +30,7 @@ import {
 } from 'containers/UserModule/selectors';
 import { showFormattedAlert } from 'common/saga';
 import { DELETE, GET, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
   const formValues = yield select(makeFormValuesSelector());
@@ -76,20 +77,11 @@ export function* handleDeleteItemById(data) {
 }
 
 export function* handleQueryUsersList() {
+  yield put(asyncStartAction());
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
   const limit = yield select(makePageSizeSelector());
-  const queryObj = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObj.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObj)
-    .map((key) => `${key}=${queryObj[key]}`)
-    .join('&');
-  yield put(asyncStartAction());
+  const queryString = buildQueryString(keywords, pageNumber, limit);
   const requestUrl = `/users?${queryString}`;
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {

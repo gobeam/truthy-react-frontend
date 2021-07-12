@@ -6,21 +6,21 @@
 import produce from 'immer';
 import {
   ADD_VALIDATION_ERROR,
-  CHANGE_FIELD,
+  SET_FORM_VALUES,
 } from 'containers/ForgotPassword/constants';
 
 export const initialState = {
-  email: '',
+  initialValues: { email: '' },
+  formValues: {},
   isLoading: false,
-  errors: {},
+  errors: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const forgotPasswordReducer = produce((draft, action) => {
   switch (action.type) {
-    case CHANGE_FIELD:
-      draft[action.key] = action.val;
-      delete draft.errors[action.key];
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;

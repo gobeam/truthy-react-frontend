@@ -8,18 +8,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  changeFieldAction,
   enterRegisterAction,
+  setFormValuesAction,
 } from 'containers/RegisterPage/actions';
 import {
-  makeAcceptSelector,
-  makeConfirmPasswordSelector,
-  makeEmailSelector,
   makeErrorSelector,
+  makeInitialValuesSelector,
   makeIsLoadingSelector,
-  makeNameSelector,
-  makePasswordSelector,
-  makeUsernameSelector,
 } from 'containers/RegisterPage/selectors';
 import messages from 'containers/RegisterPage/messages';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -33,17 +28,13 @@ import usePasswordStrengthCheckHook from 'common/hooks/passwordStrengthHook';
 import AlertMessage from 'containers/AlertMessage';
 import commonMessage from 'common/messages';
 import { rules } from 'common/rules';
+import FormWrapper from 'components/FormWrapper';
 
 const { Title } = Typography;
 
 const stateSelector = createStructuredSelector({
-  username: makeUsernameSelector(),
-  accept: makeAcceptSelector(),
-  email: makeEmailSelector(),
-  name: makeNameSelector(),
-  password: makePasswordSelector(),
-  confirmPassword: makeConfirmPasswordSelector(),
-  validationError: makeErrorSelector(),
+  initialValues: makeInitialValuesSelector(),
+  errors: makeErrorSelector(),
   isLoading: makeIsLoadingSelector(),
 });
 
@@ -75,40 +66,17 @@ const selectLayout = {
 const RegisterForm = (props) => {
   const { intl } = props;
   const dispatch = useDispatch();
-
-  const {
-    username,
-    accept,
-    email,
-    password,
-    validationError,
-    isLoading,
-    name,
-    confirmPassword,
-  } = useSelector(stateSelector);
-
+  const { errors, isLoading, initialValues } = useSelector(stateSelector);
   const [form] = Form.useForm();
 
   const [lowerCheck, upperCheck, numChecker, charCheck] =
-    usePasswordStrengthCheckHook(password);
+    usePasswordStrengthCheckHook(form.getFieldValue('password'));
 
-  const onChangeField = (e) =>
-    dispatch(changeFieldAction(e.target.name, e.target.value));
-
-  const onAgree = (e) => {
-    dispatch(changeFieldAction(e.target.name, e.target.checked));
+  const onFinish = async () => {
+    await form.validateFields();
+    dispatch(setFormValuesAction(form.getFieldsValue()));
+    dispatch(enterRegisterAction());
   };
-
-  const onSetCompanyId = (key, value) =>
-    dispatch(changeFieldAction(key, value));
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const company = urlParams.get('company');
-    onSetCompanyId('company', company);
-  }, []);
-
-  const onFinish = () => dispatch(enterRegisterAction());
 
   const checkConfirm = (rule, value, callback) => {
     const newPassword = form.getFieldValue('password');
@@ -121,13 +89,19 @@ const RegisterForm = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (errors?.length) {
+      form.setFields(errors);
+    }
+  }, [errors]);
+
   return (
-    <Form
+    <FormWrapper
       {...formItemLayout}
-      form={form}
-      name="register"
+      values={initialValues}
+      formInstance={form}
       onFinish={onFinish}
-      scrollToFirstError
+      name="register-form"
     >
       <Title level={2}>
         <FormattedMessage {...messages.createAccount} />
@@ -141,10 +115,7 @@ const RegisterForm = (props) => {
         id="email"
         type="email"
         rules={rules.email}
-        value={email}
         placeholder={commonMessage.emailPlaceHolder}
-        changeHandler={onChangeField}
-        error={validationError.email}
       />
 
       <FormInputWrapper
@@ -153,10 +124,7 @@ const RegisterForm = (props) => {
         rules={rules.password}
         name="password"
         id="password"
-        value={password}
         placeholder={commonMessage.passwordPlaceHolder}
-        changeHandler={onChangeField}
-        error={validationError.password}
       >
         <Progress
           percent={
@@ -184,10 +152,7 @@ const RegisterForm = (props) => {
         name="confirmPassword"
         id="confirmPassword"
         type="confirmPassword"
-        value={confirmPassword}
         placeholder={commonMessage.confirmPasswordLabel}
-        changeHandler={onChangeField}
-        error={validationError.confirmPassword}
       />
 
       <FormInputWrapper
@@ -196,10 +161,7 @@ const RegisterForm = (props) => {
         id="username"
         type="text"
         rules={rules.username}
-        value={username}
         placeholder={commonMessage.usernamePlaceHolder}
-        changeHandler={onChangeField}
-        error={validationError.username}
       />
 
       <FormInputWrapper
@@ -208,10 +170,7 @@ const RegisterForm = (props) => {
         id="name"
         type="text"
         rules={rules.name}
-        value={name}
         placeholder={commonMessage.namePlaceHolder}
-        changeHandler={onChangeField}
-        error={validationError.name}
       />
 
       <FormCheckboxWrapper
@@ -226,14 +185,12 @@ const RegisterForm = (props) => {
         ]}
         name="accept"
         id="accept"
-        value={accept}
-        changeHandler={onAgree}
       >
         <FormattedMessage
           {...messages.readTerm}
           values={{
             TermsAndConditionsLink: (
-              <Link to="/terms-aggrement">
+              <Link to="/terms-agreement">
                 {intl.formatMessage(messages.termsAndConditions)}
               </Link>
             ),
@@ -247,7 +204,7 @@ const RegisterForm = (props) => {
         form={form}
         label={messages.signBtn}
       />
-    </Form>
+    </FormWrapper>
   );
 };
 

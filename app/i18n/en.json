@@ -5,11 +5,10 @@
   "containers.LoginPage.errorLogin": "Invalid credentials",
   "containers.LoginPage.serverError": "Please try again in a moment!",
   "containers.LoginPage.loginSuccess": "Successfully logged in!",
-
-  "components.LoginForm.email": "Email/Username",
-  "components.LoginForm.submit": "Sign in",
-  "components.LoginForm.lostPassword": "Lost password?",
-  "components.LoginForm.register": "register now!",
+  "containers.LoginPage.email": "Email/Username",
+  "containers.LoginPage.submit": "Sign in",
+  "containers.LoginPage.lostPassword": "Lost password?",
+  "containers.LoginPage.register": "register now!",
 
   "components.SearchInput.searchPlaceHolder": "Search",
 

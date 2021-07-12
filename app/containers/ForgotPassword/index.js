@@ -11,17 +11,16 @@ import saga from 'containers/ForgotPassword/saga';
 import reducer from 'containers/ForgotPassword/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
-  changeFieldAction,
   forgotPasswordAction,
+  setFormValuesAction,
 } from 'containers/ForgotPassword/actions';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeEmailSelector,
   makeErrorsSelector,
+  makeInitialValuesSelector,
   makeIsLoadingSelector,
 } from 'containers/ForgotPassword/selectors';
 import { Helmet } from 'react-helmet';
-import { hideHeaderAction } from 'containers/App/actions';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
@@ -29,6 +28,7 @@ import { Form, Typography } from 'antd';
 import FormInputWrapper from 'components/FormInputWrapper';
 import AlertMessage from 'containers/AlertMessage';
 import commonMessage from 'common/messages';
+import FormWrapper from 'components/FormWrapper';
 
 const { Title } = Typography;
 
@@ -48,9 +48,9 @@ const formItemLayout = {
 const key = 'forgotPassword';
 
 const stateSelector = createStructuredSelector({
-  email: makeEmailSelector(),
-  validationError: makeErrorsSelector(),
+  errors: makeErrorsSelector(),
   isLoading: makeIsLoadingSelector(),
+  initialValues: makeInitialValuesSelector(),
 });
 
 export default function ForgotPasswordPage() {
@@ -59,14 +59,17 @@ export default function ForgotPasswordPage() {
 
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
-  const hideHeader = () => dispatch(hideHeaderAction(true));
-  const onChangeField = (e) =>
-    dispatch(changeFieldAction(e.target.name, e.target.value));
-  const { email, validationError, isLoading } = useSelector(stateSelector);
-  const onFinish = () => dispatch(forgotPasswordAction());
+  const { errors, isLoading, initialValues } = useSelector(stateSelector);
+  const onFinish = async () => {
+    await form.validateFields();
+    dispatch(setFormValuesAction(form.getFieldsValue()));
+    dispatch(forgotPasswordAction());
+  };
   useEffect(() => {
-    hideHeader();
-  }, []);
+    if (errors?.length) {
+      form.setFields(errors);
+    }
+  }, [errors]);
 
   return (
     <div className="content-page">
@@ -77,12 +80,13 @@ export default function ForgotPasswordPage() {
           </Helmet>
         )}
       </FormattedMessage>
-      <Form
+
+      <FormWrapper
         {...formItemLayout}
-        form={form}
-        name="forgot-password"
+        values={initialValues}
+        formInstance={form}
         onFinish={onFinish}
-        scrollToFirstError
+        name="forgot-password-form"
       >
         <Title level={2}>
           <FormattedMessage {...messages.forgotPassword} />
@@ -108,10 +112,7 @@ export default function ForgotPasswordPage() {
               message: <FormattedMessage {...commonMessage.emailRequired} />,
             },
           ]}
-          value={email}
           placeholder={commonMessage.emailPlaceHolder}
-          changeHandler={onChangeField}
-          error={validationError.email}
         />
 
         <FormButtonWrapper
@@ -120,7 +121,7 @@ export default function ForgotPasswordPage() {
           form={form}
           label={messages.forgotPasswordBtn}
         />
-      </Form>
+      </FormWrapper>
     </div>
   );
 }

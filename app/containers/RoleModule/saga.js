@@ -36,8 +36,10 @@ import {
 import { checkError } from 'helpers/Validation';
 import { showFormattedAlert } from 'common/saga';
 import { DELETE, GET, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
+  yield put(asyncStartAction());
   const name = yield select(makeNameSelector());
   const description = yield select(makeDescriptionSelector());
   const permissions = yield select(makePermissionsSelector());
@@ -104,16 +106,7 @@ export function* handleQueryRole() {
   const pageNumber = yield select(makePageNumberSelector());
   const limit = yield select(makeLimitSelector());
   const keywords = yield select(makeKeywordsSelector());
-  const queryObject = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObject.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObject)
-    .map((key) => `${key}=${queryObject[key]}`)
-    .join('&');
+  const queryString = buildQueryString(keywords, pageNumber, limit);
   const requestUrl = `/roles?${queryString}`;
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {

@@ -37,4 +37,20 @@ export default defineMessages({
     id: `${scope}.HelmetLoginTitle`,
     defaultMessage: 'Login',
   },
+  submit: {
+    id: `${scope}.submit`,
+    defaultMessage: 'Sign in',
+  },
+  lostPassword: {
+    id: `${scope}.lostPassword`,
+    defaultMessage: 'Lost password?',
+  },
+  inputLogin: {
+    id: `${scope}.inputLogin`,
+    defaultMessage: 'Log in',
+  },
+  register: {
+    id: `${scope}.register`,
+    defaultMessage: 'register now!',
+  },
 });

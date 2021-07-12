@@ -6,15 +6,19 @@
 import produce from 'immer';
 import {
   ADD_VALIDATION_ERROR,
-  CHANGE_FIELD,
   ASYNC_END,
   ASYNC_START,
+  SET_FORM_VALUES,
+  SET_RESET_CODE,
 } from 'containers/ResetPasswordPage/constants';
 
 export const initialState = {
   code: '',
-  password: '',
-  confirmPassword: '',
+  initialValues: {
+    password: '',
+    confirmPassword: '',
+  },
+  formValues: {},
   isLoading: false,
   errors: {},
 };
@@ -22,9 +26,11 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const resetPasswordReducer = produce((draft, action) => {
   switch (action.type) {
-    case CHANGE_FIELD:
-      draft[action.key] = action.val;
-      delete draft.errors[action.key];
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
+      break;
+    case SET_RESET_CODE:
+      draft.code = action.code;
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;

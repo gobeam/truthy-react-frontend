@@ -49,7 +49,7 @@ const EditUserModal = ({ onCancel, visible }) => {
     initialValues,
   });
 
-  const onSubmit = async () => {
+  const onSubmitEditForm = async () => {
     await form.validateFields();
     dispatch(setFormValues(form.getFieldsValue()));
     dispatch(submitFormAction());
@@ -76,15 +76,14 @@ const EditUserModal = ({ onCancel, visible }) => {
     }
   }, [errors]);
 
-  useEffect(() => form.resetFields(), [initialValues]);
+  useEffect(() => visible && form.resetFields(), [initialValues]);
 
   return (
     <Modal
       title={intl.formatMessage(messages.editTitle)}
       visible={visible}
-      onOk={onSubmit}
+      onOk={onSubmitEditForm}
       onCancel={onCancelModal}
-      maskClosable={false}
     >
       <Form>
         <NameInput />

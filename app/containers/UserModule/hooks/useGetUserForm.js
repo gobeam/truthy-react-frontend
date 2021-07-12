@@ -26,7 +26,6 @@ const useGetUserForm = ({
   responsive = false,
   formName = 'form',
   roles = [],
-  errors = {},
   initialValues,
   device,
 }) => {
@@ -56,7 +55,6 @@ const useGetUserForm = ({
         type="text"
         required={false}
         placeholder={commonMessages.namePlaceHolder}
-        error={errors.name}
       />
     );
 
@@ -73,7 +71,6 @@ const useGetUserForm = ({
         type="text"
         required={false}
         placeholder={commonMessages.emailPlaceHolder}
-        error={errors.email}
       />
     );
     return responsive ? <Col {...wrapperCol}>{emailInput}</Col> : emailInput;
@@ -89,7 +86,6 @@ const useGetUserForm = ({
         type="text"
         required={false}
         placeholder={commonMessages.usernamePlaceHolder}
-        error={errors.username}
       />
     );
     return responsive ? (
@@ -122,7 +118,6 @@ const useGetUserForm = ({
         ]}
         label={messages.statusLabel}
         required
-        error={errors.status}
       >
         {statusOptionList}
       </SelectInputWrapper>
@@ -149,7 +144,6 @@ const useGetUserForm = ({
         ]}
         label={messages.roleLabel}
         required
-        error={errors.roleId}
       >
         {roleOptionList}
       </SelectInputWrapper>

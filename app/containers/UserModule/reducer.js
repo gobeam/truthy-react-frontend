@@ -18,6 +18,7 @@ import {
   SET_ID,
   SET_FORM_VALUES,
   SET_INITIAL_VALUES,
+  CLEAR_FORM_FIELD,
 } from 'containers/UserModule/constants';
 
 const EmptyField = {
@@ -64,6 +65,9 @@ const userModuleReducer = produce((draft, action) => {
     case ASSIGN_USERS:
       draft.users = action.users;
       draft.isLoading = false;
+      break;
+    case CLEAR_FORM_FIELD:
+      draft.clearFormField = true;
       break;
     case ASSIGN_ROLES:
       draft.roles = action.roles;

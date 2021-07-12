@@ -35,8 +35,10 @@ import {
 import { checkError } from 'helpers/Validation';
 import { showFormattedAlert } from 'common/saga';
 import { DELETE, GET, POST, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
+  yield put(asyncEndAction());
   const resource = yield select(makeResourceNameSelector());
   const description = yield select(makeDescriptionSelector());
   const method = yield select(makeMethodNameSelector());
@@ -52,7 +54,6 @@ export function* handleSubmitForm() {
   });
   try {
     const response = yield call(request, payload);
-    yield put(asyncEndAction());
     if (response && response.error) {
       return yield put(enterValidationErrorAction(response.error));
     }
@@ -118,20 +119,11 @@ export function* handleDeleteItemById(data) {
 }
 
 export function* handleQueryPermission() {
+  yield put(asyncStartAction());
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
   const limit = yield select(makeLimitSelector());
-  const queryObj = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObj.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObj)
-    .map((key) => `${key}=${queryObj[key]}`)
-    .join('&');
-  yield put(asyncStartAction());
+  const queryString = buildQueryString(keywords, pageNumber, limit);
   const requestUrl = `/permissions?${queryString}`;
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {

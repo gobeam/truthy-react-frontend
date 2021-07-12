@@ -11,26 +11,14 @@ const selectRegisterPageDomain = (state) => state.register || initialState;
  * Other specific selectors
  */
 
-const makeEmailSelector = () =>
-  createSelector(selectRegisterPageDomain, (substate) => substate.email);
-
-const makeNameSelector = () =>
-  createSelector(selectRegisterPageDomain, (substate) => substate.name);
-
-const makePasswordSelector = () =>
-  createSelector(selectRegisterPageDomain, (substate) => substate.password);
-
-const makeConfirmPasswordSelector = () =>
+const makeInitialValuesSelector = () =>
   createSelector(
     selectRegisterPageDomain,
-    (substate) => substate.confirmPassword,
+    (substate) => substate.initialValues,
   );
 
-const makeUsernameSelector = () =>
-  createSelector(selectRegisterPageDomain, (substate) => substate.username);
-
-const makeAcceptSelector = () =>
-  createSelector(selectRegisterPageDomain, (substate) => substate.accept);
+const makeFormValuesSelector = () =>
+  createSelector(selectRegisterPageDomain, (substate) => substate.formValues);
 
 const makeErrorSelector = () =>
   createSelector(selectRegisterPageDomain, (substate) => substate.errors);
@@ -39,12 +27,8 @@ const makeIsLoadingSelector = () =>
   createSelector(selectRegisterPageDomain, (substate) => substate.isLoading);
 
 export {
-  makeAcceptSelector,
-  makeEmailSelector,
-  makeUsernameSelector,
-  makeConfirmPasswordSelector,
-  makePasswordSelector,
-  makeNameSelector,
+  makeFormValuesSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
+  makeInitialValuesSelector,
 };

@@ -2,14 +2,13 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { RESET_PASSWORD } from 'containers/ResetPasswordPage/constants';
 import {
   makeCodeSelector,
-  makeConfirmPasswordSelector,
-  makePasswordSelector,
+  makeFormValuesSelector,
 } from 'containers/ResetPasswordPage/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import {
-  asyncEnd,
-  asyncStart,
+  asyncEndAction,
+  asyncStartAction,
   enterValidationErrorAction,
 } from 'containers/ResetPasswordPage/actions';
 import commonMessages from 'common/messages';
@@ -18,36 +17,30 @@ import { showFormattedAlert } from 'common/saga';
 import { PUT } from 'utils/constants';
 
 export function* handleResetPassword() {
-  yield put(asyncStart());
-  const password = yield select(makePasswordSelector());
-  const confirmPassword = yield select(makeConfirmPasswordSelector());
+  yield put(asyncStartAction());
+  const formValues = yield select(makeFormValuesSelector());
   const code = yield select(makeCodeSelector());
   const requestUrl = `/auth/reset-password`;
   const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, PUT, {
-    password,
+    ...formValues,
     token: code,
-    confirmPassword,
   });
   try {
     const response = yield call(request, requestPayload);
     if (response && response.error) {
-      yield put(asyncEnd());
+      yield put(asyncEndAction());
       if (typeof response.error === 'object') {
         return yield put(enterValidationErrorAction(response.error));
       }
     }
     yield showFormattedAlert('success', messages.resetSuccess);
-    return yield put(asyncEnd());
-    // return yield put(push(LOGIN_REDIRECT));
+    return yield put(asyncEndAction());
   } catch (error) {
-    yield put(asyncEnd());
-    const errLabel = error.response
-      ? error.response.statusText.toLowerCase()
-      : '';
-    const errorMessage = commonMessages[errLabel]
-      ? commonMessages[errLabel]
-      : commonMessages.serverError;
-    return yield showFormattedAlert('error', errorMessage);
+    yield put(asyncEndAction());
+    if (error.data && error.data.statusCode === 422) {
+      return yield put(enterValidationErrorAction(error.data.message));
+    }
+    return yield showFormattedAlert('error', commonMessages.serverError);
   }
 }
 

@@ -11,8 +11,9 @@ import saga from 'containers/ResetPasswordPage/saga';
 import reducer from 'containers/ResetPasswordPage/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
-  changeFieldAction,
   resetPasswordAction,
+  setResetCodeAction,
+  setFormValuesAction,
 } from 'containers/ResetPasswordPage/actions';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -22,7 +23,6 @@ import {
   makePasswordSelector,
 } from 'containers/ResetPasswordPage/selectors';
 import { Helmet } from 'react-helmet';
-import { hideHeaderAction } from 'containers/App/actions';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ResetPasswordPage/messages';
@@ -42,7 +42,7 @@ const stateSelector = createStructuredSelector({
   password: makePasswordSelector(),
   isLoading: makeIsLoadingSelector(),
   confirmPassword: makeConfirmPasswordSelector(),
-  validationError: makeErrorsSelector(),
+  errors: makeErrorsSelector(),
 });
 
 const formItemLayout = {
@@ -65,30 +65,23 @@ export default function ResetPasswordPage() {
 
   useInjectReducer({ key, reducer });
 
-  const hideHeader = () => dispatch(hideHeaderAction(true));
-
   const [form] = Form.useForm();
 
-  const onChangeField = (e) =>
-    dispatch(changeFieldAction(e.target.name, e.target.value));
-
-  const { password, confirmPassword, validationError, isLoading } =
-    useSelector(stateSelector);
+  const { errors, isLoading } = useSelector(stateSelector);
 
   const { code } = useParams();
 
   const [lowerCheck, upperCheck, numChecker, charCheck] =
-    usePasswordStrengthCheckHook(password);
+    usePasswordStrengthCheckHook(form.getFieldValue('password'));
 
   useEffect(() => {
-    hideHeader();
-  }, []);
-
-  useEffect(() => {
-    dispatch(changeFieldAction('code', code));
+    dispatch(setResetCodeAction(code));
   }, [code]);
-
-  const onFinish = () => dispatch(resetPasswordAction());
+  const onFinish = async () => {
+    await form.validateFields();
+    dispatch(setFormValuesAction(form.getFieldsValue()));
+    dispatch(resetPasswordAction());
+  };
 
   const checkConfirm = (rule, value, callback) => {
     const newPassword = form.getFieldValue('password');
@@ -100,6 +93,12 @@ export default function ResetPasswordPage() {
       callback();
     }
   };
+
+  useEffect(() => {
+    if (errors?.length) {
+      form.setFields(errors);
+    }
+  }, [errors]);
 
   return (
     <div className="content-page">
@@ -142,10 +141,7 @@ export default function ResetPasswordPage() {
           name="password"
           id="password"
           type="password"
-          value={password}
           placeholder={commonMessages.passwordPlaceHolder}
-          changeHandler={onChangeField}
-          error={validationError.password}
         >
           <Progress
             percent={
@@ -172,11 +168,8 @@ export default function ResetPasswordPage() {
           ]}
           name="confirmPassword"
           id="confirmPassword"
-          type="confirmPassword"
-          value={confirmPassword}
+          type="password"
           placeholder={commonMessages.confirmPasswordLabel}
-          changeHandler={onChangeField}
-          error={validationError.confirmPassword}
         />
 
         <FormButtonWrapper

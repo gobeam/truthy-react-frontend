@@ -41,11 +41,10 @@ const CreateUserModal = ({ onCancel, visible }) => {
   } = useGetUserForm({
     formName: 'create-user',
     roles,
-    errors,
     device,
   });
 
-  const onSubmit = async () => {
+  const onSubmitCreateForm = async () => {
     await form.validateFields();
     dispatch(setFormValues(form.getFieldsValue()));
     dispatch(submitFormAction());
@@ -76,9 +75,8 @@ const CreateUserModal = ({ onCancel, visible }) => {
     <Modal
       title={intl.formatMessage(messages.addTitle)}
       visible={visible}
-      onOk={onSubmit}
+      onOk={onSubmitCreateForm}
       onCancel={onCancelModal}
-      maskClosable={false}
     >
       <Form>
         <NameInput />

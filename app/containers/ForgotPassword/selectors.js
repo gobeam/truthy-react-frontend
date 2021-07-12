@@ -3,8 +3,17 @@ import { initialState } from 'containers/ForgotPassword/reducer';
 const selectForgotPasswordPageDomain = (state) =>
   state.forgotPassword || initialState;
 
-const makeEmailSelector = () =>
-  createSelector(selectForgotPasswordPageDomain, (substate) => substate.email);
+const makeFormValuesSelector = () =>
+  createSelector(
+    selectForgotPasswordPageDomain,
+    (substate) => substate.formValues,
+  );
+
+const makeInitialValuesSelector = () =>
+  createSelector(
+    selectForgotPasswordPageDomain,
+    (substate) => substate.initialValues,
+  );
 
 const makeErrorsSelector = () =>
   createSelector(selectForgotPasswordPageDomain, (substate) => substate.errors);
@@ -15,4 +24,9 @@ const makeIsLoadingSelector = () =>
     (substate) => substate.isLoading,
   );
 
-export { makeEmailSelector, makeErrorsSelector, makeIsLoadingSelector };
+export {
+  makeFormValuesSelector,
+  makeErrorsSelector,
+  makeIsLoadingSelector,
+  makeInitialValuesSelector,
+};

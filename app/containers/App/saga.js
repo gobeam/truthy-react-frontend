@@ -2,8 +2,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import ApiEndpoint, { BASE_URL } from 'utils/api';
 import {
-  asyncEnd,
-  asyncStart,
+  asyncEndAction,
+  asyncStartAction,
   getProfileAction,
   getProfileErrorAction,
   getProfileSuccessAction,
@@ -71,7 +71,7 @@ export function* handleLogout() {
  * @returns {IterableIterator<*>}
  */
 export function* handleRefreshToken() {
-  yield put(asyncStart());
+  yield put(asyncStartAction());
   const requestUrl = ApiEndpoint.getRefreshTokenPath();
   const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
 
@@ -80,12 +80,12 @@ export function* handleRefreshToken() {
     if (response.error) {
       yield put(isLoggedErrorAction());
       yield showFormattedAlert('error', messages.invalidRefresh);
-      return yield put(asyncEnd());
+      return yield put(asyncEndAction());
     }
     return yield put(getProfileAction());
   } catch (error) {
     yield put(isLoggedErrorAction());
-    yield put(asyncEnd());
+    yield put(asyncEndAction());
     return yield showFormattedAlert('error', messages.invalidRefresh);
   }
 }

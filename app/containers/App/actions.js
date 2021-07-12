@@ -95,7 +95,7 @@ export function isLoggedErrorAction() {
 }
 
 /**
- 
+
  * User login to the application, this is the global action
  *
  * @return {object} An action object with a type of LOGGED_IN
@@ -128,13 +128,13 @@ export function logoutSuccessAction() {
   };
 }
 
-export function asyncStart() {
+export function asyncStartAction() {
   return {
     type: ASYNC_START,
   };
 }
 
-export function asyncEnd() {
+export function asyncEndAction() {
   return {
     type: ASYNC_END,
   };

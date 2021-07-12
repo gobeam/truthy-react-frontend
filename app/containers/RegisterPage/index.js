@@ -12,7 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import reducer from 'containers/RegisterPage/reducer';
 import messages from 'containers/RegisterPage/messages';
 import saga from 'containers/RegisterPage/saga';
-import RegisterForm from 'components/RegisterForm';
+import RegisterForm from 'containers/RegisterPage/registerForm';
 import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { hideHeaderAction } from 'containers/App/actions';

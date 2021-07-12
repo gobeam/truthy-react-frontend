@@ -8,27 +8,25 @@ import {
   ADD_VALIDATION_ERROR,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FIELD,
-  REGISTER_ERROR,
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
+  SET_FORM_VALUES,
 } from 'containers/RegisterPage/constants';
 
-export function changeFieldAction(key, val) {
+export function setFormValuesAction(formValues) {
   return {
-    type: CHANGE_FIELD,
-    key,
-    val,
+    type: SET_FORM_VALUES,
+    formValues,
   };
 }
 
-export function asyncStart() {
+export function asyncStartAction() {
   return {
     type: ASYNC_START,
   };
 }
 
-export function asyncEnd() {
+export function asyncEndAction() {
   return {
     type: ASYNC_END,
   };
@@ -50,12 +48,5 @@ export function enterRegisterAction() {
 export function registerSuccessAction() {
   return {
     type: REGISTER_SUCCESS,
-  };
-}
-
-export function registerErrorAction(error) {
-  return {
-    type: REGISTER_ERROR,
-    error,
   };
 }

@@ -8,6 +8,7 @@ const FormWrapper = ({
   children,
   device,
   name,
+  classname,
   values,
   responsive = false,
   ...props
@@ -16,6 +17,7 @@ const FormWrapper = ({
     {...props}
     {...(device === 'MOBILE' ? { layout: 'vertical' } : layout)}
     scrollToFirstError
+    className={classname}
     form={formInstance}
     name={name}
     initialValues={values}
@@ -28,6 +30,7 @@ FormWrapper.propTypes = {
   formInstance: PropTypes.object,
   children: PropTypes.node,
   device: PropTypes.string,
+  classname: PropTypes.string,
   name: PropTypes.string.isRequired,
   values: PropTypes.object,
   layout: PropTypes.object,

@@ -11,11 +11,11 @@ const selectLoginPageDomain = (state) => state.login || initialState;
  * Other specific selectors
  */
 
-const makeUsernameSelector = () =>
-  createSelector(selectLoginPageDomain, (substate) => substate.username);
+const makeInitialValuesSelector = () =>
+  createSelector(selectLoginPageDomain, (substate) => substate.initialValues);
 
-const makePasswordSelector = () =>
-  createSelector(selectLoginPageDomain, (substate) => substate.password);
+const makeFormValuesSelector = () =>
+  createSelector(selectLoginPageDomain, (substate) => substate.formValues);
 
 const makeErrorSelector = () =>
   createSelector(selectLoginPageDomain, (substate) => substate.errors);
@@ -33,8 +33,8 @@ const makeSelectLoginPage = () =>
 export default makeSelectLoginPage;
 
 export {
-  makeUsernameSelector,
-  makePasswordSelector,
+  makeInitialValuesSelector,
+  makeFormValuesSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
 };
