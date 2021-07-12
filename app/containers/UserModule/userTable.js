@@ -11,7 +11,6 @@ import { Button, Table, Tag } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import {
   makeIsLoadingSelector,
-  makeRolesListSelector,
   makeUsersSelector,
 } from 'containers/UserModule/selectors';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
@@ -22,7 +21,6 @@ import { POST, PUT } from 'utils/constants';
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
   users: makeUsersSelector(),
-  roles: makeRolesListSelector(),
   user: makeLoggedInUserSelector(),
 });
 
@@ -39,7 +37,7 @@ const EditRoutePermission = {
 
 function UserTable(props) {
   const { onCreate, onEdit } = props;
-  const { users, user } = useSelector(stateSelector);
+  const { users, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
 
@@ -78,6 +76,7 @@ function UserTable(props) {
   return (
     <>
       <Table
+        loading={isLoading}
         pagination={paginationOptions}
         rowKey="id"
         dataSource={users.results}

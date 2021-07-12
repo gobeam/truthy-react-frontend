@@ -10,13 +10,27 @@ import {
   ASSIGN_USERS,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FORM_FIELD,
   CLEAR_FORM,
+  SET_FORM_METHOD,
   SET_PAGE_NUMBER,
   SET_PAGE_SIZE,
+  SET_SEARCH_KEYWORD,
+  SET_ID,
+  SET_FORM_VALUES,
+  SET_INITIAL_VALUES,
 } from 'containers/UserModule/constants';
 
+const EmptyField = {
+  username: '',
+  email: '',
+  roleId: '',
+  name: '',
+  status: '',
+};
+
 export const initialState = {
+  initialValues: EmptyField,
+  formValues: {},
   keywords: '',
   username: '',
   email: '',
@@ -38,7 +52,7 @@ export const initialState = {
     next: 0,
     previous: 0,
   },
-  errors: {},
+  errors: [],
   isLoading: false,
   formMethod: null,
   id: null,
@@ -54,12 +68,23 @@ const userModuleReducer = produce((draft, action) => {
     case ASSIGN_ROLES:
       draft.roles = action.roles;
       break;
-    case CHANGE_FORM_FIELD:
-      draft[action.key] = action.value;
-      delete draft.errors[action.key];
+    case SET_INITIAL_VALUES:
+      draft.initialValues = action.initialValues;
+      break;
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
       break;
     case SET_PAGE_NUMBER:
       draft.pageNumber = action.pageNumber;
+      break;
+    case SET_FORM_METHOD:
+      draft.formMethod = action.method;
+      break;
+    case SET_ID:
+      draft.id = action.id;
+      break;
+    case SET_SEARCH_KEYWORD:
+      draft.keywords = action.keywords;
       break;
     case SET_PAGE_SIZE:
       draft.pageSize = action.pageSize;
@@ -82,7 +107,9 @@ const userModuleReducer = produce((draft, action) => {
       draft.password = '';
       draft.confirmPassword = '';
       draft.keywords = '';
-      draft.errors = {};
+      draft.errors = [];
+      draft.formValues = {};
+      draft.initialValues = EmptyField;
       draft.clearFormField = false;
       draft.isLoading = false;
       draft.formMethod = null;

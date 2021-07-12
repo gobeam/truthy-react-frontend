@@ -8,7 +8,6 @@ export const ADD_VALIDATION_ERROR =
   'containers/UserModule/ADD_VALIDATION_ERROR';
 export const ASYNC_START = 'containers/UserModule/ASYNC_START';
 export const ASYNC_END = 'containers/UserModule/ASYNC_END';
-export const CHANGE_FORM_FIELD = 'containers/UserModule/CHANGE_FORM_FIELD';
 export const QUERY_USERS = 'containers/UserModule/QUERY_USERS';
 export const QUERY_ROLES = 'containers/UserModule/QUERY_ROLES';
 export const ASSIGN_ROLES = 'containers/UserModule/ASSIGN_ROLES';
@@ -23,3 +22,8 @@ export const CLEAR_FORM = 'containers/UserModule/CLEAR_FORM';
 export const CLEAR_FORM_FIELD = 'containers/UserModule/CLEAR_FORM_FIELD';
 
 export const ASSIGN_USERS = 'containers/UserModule/ASSIGN_USERS';
+export const SET_FORM_METHOD = 'containers/UserModule/SET_FORM_METHOD';
+export const SET_ID = 'containers/UserModule/SET_ID';
+export const SET_SEARCH_KEYWORD = 'containers/UserModule/SET_SEARCH_KEYWORD';
+export const SET_FORM_VALUES = 'containers/UserModule/SET_FORM_VALUES';
+export const SET_INITIAL_VALUES = 'containers/UserModule/SET_INITIAL_VALUES';

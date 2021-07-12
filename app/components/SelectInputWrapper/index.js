@@ -15,7 +15,7 @@ const SelectInputWrapper = (props) => {
     value,
     disabled = false,
     required = true,
-    changeHandler,
+    changeHandler = () => {},
     error,
   } = props;
 
@@ -52,7 +52,7 @@ SelectInputWrapper.propTypes = {
   label: PropTypes.object.isRequired,
   id: PropTypes.string,
   classname: PropTypes.string,
-  changeHandler: PropTypes.func.isRequired,
+  changeHandler: PropTypes.func,
 };
 
 export default SelectInputWrapper;

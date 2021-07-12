@@ -15,46 +15,35 @@ import {
   assignUsersAction,
   asyncEndAction,
   asyncStartAction,
-  changeFieldAction,
   clearFormFieldAction,
   enterValidationErrorAction,
   queryUsersAction,
+  setInitialValuesAction,
 } from 'containers/UserModule/actions';
 import {
-  makeEmailSelector,
   makeFormMethodSelector,
+  makeFormValuesSelector,
   makeIdSelector,
   makeKeywordsSelector,
-  makeNameSelector,
   makePageNumberSelector,
   makePageSizeSelector,
-  makeRoleIdSelector,
-  makeStatusSelector,
-  makeUserNameSelector,
 } from 'containers/UserModule/selectors';
 import { showFormattedAlert } from 'common/saga';
 import { DELETE, GET, PUT } from 'utils/constants';
 
 export function* handleSubmitForm() {
-  const email = yield select(makeEmailSelector());
-  const roleId = yield select(makeRoleIdSelector());
-  const name = yield select(makeNameSelector());
-  const username = yield select(makeUserNameSelector());
-  const status = yield select(makeStatusSelector());
+  const formValues = yield select(makeFormValuesSelector());
   const formMethod = yield select(makeFormMethodSelector());
   const id = yield select(makeIdSelector());
   const requestUrl = `/users${formMethod === PUT ? `/${id}` : ''}`;
-  const payload = ApiEndpoint.makeApiPayload(requestUrl, formMethod, {
-    email,
-    roleId,
-    name,
-    username,
-    status,
-  });
+  const payload = ApiEndpoint.makeApiPayload(
+    requestUrl,
+    formMethod,
+    formValues,
+  );
   try {
     yield call(request, payload);
     yield put(queryUsersAction());
-    yield put(changeFieldAction('formPage', false));
     yield put(clearFormFieldAction());
     yield put(asyncEndAction());
     const message =
@@ -118,11 +107,13 @@ export function* handleGetUserById() {
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
     const response = yield call(request, payload);
-    yield put(changeFieldAction('name', response.name));
-    yield put(changeFieldAction('email', response.email));
-    yield put(changeFieldAction('username', response.username));
-    yield put(changeFieldAction('status', response.status));
-    yield put(changeFieldAction('roleId', response.role?.id || ''));
+
+    yield put(
+      setInitialValuesAction({
+        ...response,
+        roleId: response.role?.id || '',
+      }),
+    );
     return yield put(asyncEndAction());
   } catch (error) {
     return yield put(asyncEndAction());

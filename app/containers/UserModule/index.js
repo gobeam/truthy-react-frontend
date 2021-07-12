@@ -21,10 +21,12 @@ import {
   makePageSizeSelector,
 } from 'containers/UserModule/selectors';
 import {
-  changeFieldAction,
   getUserByIdAction,
   queryRolesListAction,
   queryUsersAction,
+  setFormMethodAction,
+  setIdAction,
+  setSearchKeywordAction,
 } from 'containers/UserModule/actions';
 import SearchInput from 'components/SearchInput';
 import UserTable from 'containers/UserModule/userTable';
@@ -50,18 +52,20 @@ const UserModule = () => {
   const { pageNumber, pageSize, isLoading, id } = useSelector(stateSelector);
   const loadUsers = () => dispatch(queryUsersAction());
   const loadRoles = () => dispatch(queryRolesListAction());
-  const onChangeField = (keyName, value) =>
-    dispatch(changeFieldAction(keyName, value));
-  const handleSubmitForm = () => loadUsers();
+  const onKeywordChange = (keywords) =>
+    dispatch(setSearchKeywordAction(keywords)) && loadUsers();
+  const onchangeFormMethod = (formMethod) =>
+    dispatch(setFormMethodAction(formMethod));
+  const onSetId = (entityId) => dispatch(setIdAction(entityId));
 
   const onCreate = () => {
-    onChangeField('formMethod', POST);
+    onchangeFormMethod(POST);
     setCreateUser(true);
   };
 
   const onEdit = (updateId) => {
-    onChangeField('id', updateId);
-    onChangeField('formMethod', PUT);
+    onSetId(updateId);
+    onchangeFormMethod(PUT);
     setEditUser(true);
   };
 
@@ -88,23 +92,17 @@ const UserModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      <SearchInput
-        isLoading={isLoading}
-        onChangeField={onChangeField}
-        onSubmitForm={handleSubmitForm}
-      />
+      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
       <CreateUserModal
         visible={createUser}
         onCancel={() => setCreateUser(false)}
         onCreate={() => setCreateUser(false)}
       />
-      {editUser ? (
-        <EditUserModal
-          visible={editUser}
-          onCancel={() => setEditUser(false)}
-          onCreate={() => setEditUser(false)}
-        />
-      ) : null}
+      <EditUserModal
+        visible={editUser}
+        onCancel={() => setEditUser(false)}
+        onCreate={() => setEditUser(false)}
+      />
       <UserTable onCreate={onCreate} onEdit={onEdit} />
     </>
   );

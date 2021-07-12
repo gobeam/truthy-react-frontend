@@ -7,8 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import SelectInputWrapper from 'components/SelectInputWrapper';
 import FormInputWrapper from 'components/FormInputWrapper';
 import { rules } from 'common/rules';
-import { useDispatch } from 'react-redux';
-import { changeFieldAction } from 'containers/UserModule/actions';
 
 const layout = {
   labelCol: { span: 6 },
@@ -29,24 +27,15 @@ const useGetUserForm = ({
   formName = 'form',
   roles = [],
   errors = {},
-  initialValues = { name: '', username: '', email: '', roleId: '', status: '' },
+  initialValues,
   device,
 }) => {
   const [formInstance] = Form.useForm();
-  const dispatch = useDispatch();
-
-  const onChangeField = (e) =>
-    dispatch(changeFieldAction(e.target.name, e.target.value));
-
-  const onChangeStatus = (value) =>
-    dispatch(changeFieldAction('status', value));
-
-  const onChangeRole = (value) => dispatch(changeFieldAction('roleId', value));
 
   const WrappedForm = ({ ...props }) => (
     <FormWrapper
       {...props}
-      // values={initialValues}
+      values={initialValues}
       formInstance={formInstance}
       layout={layout}
       device={device}
@@ -61,14 +50,12 @@ const useGetUserForm = ({
     const nameInput = (
       <FormInputWrapper
         label={commonMessages.nameLabel}
-        value={initialValues.name}
         rules={rules.name}
         name="name"
         id="name"
         type="text"
         required={false}
         placeholder={commonMessages.namePlaceHolder}
-        changeHandler={onChangeField}
         error={errors.name}
       />
     );
@@ -86,7 +73,6 @@ const useGetUserForm = ({
         type="text"
         required={false}
         placeholder={commonMessages.emailPlaceHolder}
-        changeHandler={onChangeField}
         error={errors.email}
       />
     );
@@ -103,7 +89,6 @@ const useGetUserForm = ({
         type="text"
         required={false}
         placeholder={commonMessages.usernamePlaceHolder}
-        changeHandler={onChangeField}
         error={errors.username}
       />
     );
@@ -137,7 +122,6 @@ const useGetUserForm = ({
         ]}
         label={messages.statusLabel}
         required
-        changeHandler={onChangeStatus}
         error={errors.status}
       >
         {statusOptionList}
@@ -165,7 +149,6 @@ const useGetUserForm = ({
         ]}
         label={messages.roleLabel}
         required
-        changeHandler={onChangeRole}
         error={errors.roleId}
       >
         {roleOptionList}

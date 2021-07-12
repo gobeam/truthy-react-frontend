@@ -6,6 +6,7 @@ import messages from 'containers/UserModule/messages';
 import PropTypes from 'prop-types';
 import {
   clearFormAction,
+  setFormValues,
   submitFormAction,
 } from 'containers/UserModule/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,6 +47,7 @@ const CreateUserModal = ({ onCancel, visible }) => {
 
   const onSubmit = async () => {
     await form.validateFields();
+    dispatch(setFormValues(form.getFieldsValue()));
     dispatch(submitFormAction());
   };
 
@@ -63,6 +65,12 @@ const CreateUserModal = ({ onCancel, visible }) => {
       onCancel();
     }
   }, [clearFormField]);
+
+  useEffect(() => {
+    if (errors?.length) {
+      form.setFields(errors);
+    }
+  }, [errors]);
 
   return (
     <Modal

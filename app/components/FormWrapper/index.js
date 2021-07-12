@@ -8,13 +8,14 @@ const FormWrapper = ({
   children,
   device,
   name,
-  values = {},
+  values,
   responsive = false,
   ...props
 }) => (
   <Form
     {...props}
     {...(device === 'MOBILE' ? { layout: 'vertical' } : layout)}
+    scrollToFirstError
     form={formInstance}
     name={name}
     initialValues={values}
