@@ -67,6 +67,10 @@ export default defineMessages({
     id: `${scope}.editLabel`,
     defaultMessage: `Edit`,
   },
+  modifyPermission: {
+    id: `${scope}.modifyPermission`,
+    defaultMessage: `Modify Permission`,
+  },
   viewLabel: {
     id: `${scope}.viewLabel`,
     defaultMessage: `View`,
@@ -160,5 +164,25 @@ export default defineMessages({
   confirmPasswordMatchError: {
     id: `${scope}.confirmPasswordMatchError`,
     defaultMessage: 'Confirm password does not match your password!',
+  },
+  confirmationMessage: {
+    id: `${scope}.confirmationMessage`,
+    defaultMessage: 'Are you sure you want to delete?',
+  },
+  emptyPermissionError: {
+    id: `${scope}.emptyPermissionError`,
+    defaultMessage: 'Please select some permissions to update or cancel!',
+  },
+  deleteSuccess: {
+    id: `${scope}.deleteSuccess`,
+    defaultMessage: 'Data deleted successfully!',
+  },
+  deleteError: {
+    id: `${scope}.deleteError`,
+    defaultMessage: 'Could not delete data, try again later!',
+  },
+  syncSuccess: {
+    id: `${scope}.syncSuccess`,
+    defaultMessage: 'Synchronise successful!',
   },
 });

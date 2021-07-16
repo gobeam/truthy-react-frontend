@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -14,33 +14,76 @@ import saga from 'containers/RoleModule/saga';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/RoleModule/messages';
-import RoleList from 'components/RolePage/List';
-import RoleForm from 'components/RolePage/Form';
 import {
-  makeIsFormPageSelector,
+  makeIdSelector,
+  makeIsLoadingSelector,
   makeLimitSelector,
   makePageNumberSelector,
 } from 'containers/RoleModule/selectors';
 import {
+  deleteItemByIdAction,
+  getRoleByIdAction,
   queryPermissionListAction,
   queryRolesAction,
+  setFormMethodAction,
+  setIdAction,
+  setKeywordsAction,
 } from 'containers/RoleModule/actions';
+import SearchInput from 'components/SearchInput';
+import CreateRoleModal from 'containers/RoleModule/createRoleModal';
+import EditRoleModal from 'containers/RoleModule/editRoleModal';
+import RoleTable from 'containers/RoleModule/roleTable';
+import { POST, PUT } from 'utils/constants';
+import ModifyPermissionModal from 'containers/RoleModule/modifyPermissionModal';
 
 const key = 'roleModule';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
-  formPage: makeIsFormPageSelector(),
   limit: makeLimitSelector(),
+  isLoading: makeIsLoadingSelector(),
+  id: makeIdSelector(),
 });
 
 export default function RoleModule() {
   const dispatch = useDispatch();
-  const { pageNumber, formPage, limit } = useSelector(stateSelector);
-  const loadRoles = () => dispatch(queryRolesAction());
-  const loadPermissionList = () => dispatch(queryPermissionListAction());
+  const { pageNumber, limit, isLoading, id } = useSelector(stateSelector);
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const [createRole, setCreateRole] = useState(false);
+  const [editRole, setEditRole] = useState(false);
+  const [modifyPermission, setModifyPermission] = useState(false);
+
+  const loadRoles = () => dispatch(queryRolesAction());
+  const loadPermissionList = () => dispatch(queryPermissionListAction());
+  const onKeywordChange = (keywords) =>
+    dispatch(setKeywordsAction(keywords)) && loadRoles();
+  const onchangeFormMethod = (formMethod) =>
+    dispatch(setFormMethodAction(formMethod));
+  const onCreate = () => {
+    onchangeFormMethod(POST);
+    setCreateRole(true);
+  };
+  const onEdit = (updateId) => {
+    dispatch(setIdAction(updateId));
+    onchangeFormMethod(PUT);
+    setEditRole(true);
+  };
+
+  const onModifyPermission = (updateId) => {
+    dispatch(setIdAction(updateId));
+    onchangeFormMethod(PUT);
+    setModifyPermission(true);
+  };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getRoleByIdAction(id));
+    }
+  }, [id]);
+
+  const onDelete = (deleteId) => dispatch(deleteItemByIdAction(deleteId));
 
   useEffect(() => {
     loadPermissionList();
@@ -59,7 +102,28 @@ export default function RoleModule() {
           </Helmet>
         )}
       </FormattedMessage>
-      {!formPage ? <RoleList /> : <RoleForm />}
+      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+      <CreateRoleModal
+        visible={createRole}
+        onCancel={() => setCreateRole(false)}
+        onCreate={() => setCreateRole(false)}
+      />
+      <EditRoleModal
+        visible={editRole}
+        onCancel={() => setEditRole(false)}
+        onCreate={() => setEditRole(false)}
+      />
+      <ModifyPermissionModal
+        visible={modifyPermission}
+        onCancel={() => setModifyPermission(false)}
+        onCreate={() => setModifyPermission(false)}
+      />
+      <RoleTable
+        onCreate={onCreate}
+        onEdit={onEdit}
+        onModifyPermission={onModifyPermission}
+        onDelete={onDelete}
+      />
     </>
   );
 }

@@ -10,6 +10,11 @@ const selectRoleModuleDomain = (state) => state.roleModule || initialState;
 /**
  * Other specific selectors
  */
+const makeInitialValuesSelector = () =>
+  createSelector(selectRoleModuleDomain, (substate) => substate.initialValues);
+
+const makeFormValuesSelector = () =>
+  createSelector(selectRoleModuleDomain, (substate) => substate.formValues);
 
 const makeIsLoadingSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.isLoading);
@@ -17,29 +22,17 @@ const makeIsLoadingSelector = () =>
 const makeKeywordsSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.keywords);
 
-const makeIsFormPageSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.formPage);
-
 const makeFormMethodSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.formMethod);
 
-const makeUpdateIdSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.updateId);
-
-const makeFormTitleSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.formTitle);
-
-const makeNameSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.name);
+const makeIdSelector = () =>
+  createSelector(selectRoleModuleDomain, (substate) => substate.id);
 
 const makePermissionListSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.permissionList);
 
 const makePageNumberSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.pageNumber);
-
-const makeDescriptionSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.description);
 
 const makePermissionsSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.permissions);
@@ -53,19 +46,21 @@ const makeErrorSelector = () =>
 const makeLimitSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.limit);
 
+const makeInitiateCleanFieldSelector = () =>
+  createSelector(selectRoleModuleDomain, (substate) => substate.initiateClean);
+
 export {
+  makeInitiateCleanFieldSelector,
+  makeInitialValuesSelector,
+  makeFormValuesSelector,
   makeLimitSelector,
   makeKeywordsSelector,
-  makeUpdateIdSelector,
-  makeFormTitleSelector,
-  makeIsFormPageSelector,
+  makeIdSelector,
   makeFormMethodSelector,
   makeIsLoadingSelector,
   makePermissionListSelector,
   makeErrorSelector,
   makePageNumberSelector,
   makeRolesSelector,
-  makeNameSelector,
   makePermissionsSelector,
-  makeDescriptionSelector,
 };

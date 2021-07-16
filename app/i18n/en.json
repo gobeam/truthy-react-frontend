@@ -69,6 +69,9 @@
   "common.messages.invalidRefresh": "Session out",
   "common.messages.pagination": "Showing {start} to {end} of {total}",
   "common.messages.weakPassword": "Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character and should be minimum 6 characters and maximum upto 20 characters!",
+  "common.messages.modifyPermission": "Modify Permission",
+  "common.messages.confirmationMessage": "Are you sure you want to delete?",
+  "common.messages.emptyPermissionError": "Please select some permissions to update or cancel!",
 
   "common.messages.nameLabel": "Name",
   "common.messages.passwordLabel": "Password",
@@ -86,6 +89,9 @@
   "common.messages.confirmPasswordRequired": "Please confirm your password!",
   "common.messages.confirmPasswordMatchError": "Confirm password does not match your password!",
   "common.messages.usernamePlaceHolder": "Input your username!",
+  "common.messages.deleteSuccess": "Data deleted successfully!",
+  "common.messages.deleteError": "Could not delete data, try again later!",
+  "common.messages.syncSuccess": "Synchronization is successfully completed!",
 
   "containers.ResetPassword.helmetResetPasswordTitle": "Reset Password Page",
   "containers.ResetPassword.resetPassword": "Reset Password",

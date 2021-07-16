@@ -77,6 +77,12 @@
   "common.messages.passwordRequired": "कृपया तपाईको पासवर्ड राख्नुहोस्!",
   "common.messages.confirmPasswordRequired": "कृपया तपाईको पासवर्ड पुष्टि गर्नुहोस्!",
   "common.messages.confirmPasswordMatchError": "पुष्टि पासवर्ड तपाईंको पासवर्डसँग मेल खाँदैन!",
+  "common.messages.modifyPermission": "अनुमति परिमार्जन गर्नुहोस्",
+  "common.messages.confirmationMessage": "के तपाईं निश्चित रूपमा हटाउन चाहनुहुन्छ?",
+  "common.messages.emptyPermissionError": "कृपया अद्यावधिक गर्न केहि अनुमतिहरू चयन गर्नुहोस्, अन्यथा रद्द गर्नुहोस्!",
+  "common.messages.deleteSuccess": "डाटा सफलतापूर्वक हटाइयो!",
+  "common.messages.deleteError": "डाटा हटाउन सकेन, पछि पुन: प्रयास गर्नुहोस्!",
+  "common.messages.syncSuccess": "समक्रमण सफलतापूर्वक सम्पन्न भयो!",
 
   "components.SearchInput.searchPlaceHolder": "खोज्नुहोस्",
 
