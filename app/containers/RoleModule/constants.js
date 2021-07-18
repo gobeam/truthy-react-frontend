@@ -21,6 +21,7 @@ export const SET_FORM_METHOD = 'containers/RoleModule/SET_FORM_METHOD';
 export const SET_FORM_VALUES = 'containers/RoleModule/SET_FORM_VALUES';
 export const SET_INITIAL_VALUES = 'containers/RoleModule/SET_INITIAL_VALUES';
 export const INITIATE_CLEAN = 'containers/RoleModule/INITIATE_CLEAN';
+export const SET_PAGE_SIZE = 'containers/RoleModule/SET_PAGE_SIZE';
 export const SET_ID = 'containers/RoleModule/SET_ID';
 export const QUERY_PERMISSION_LIST =
   'containers/RoleModule/QUERY_PERMISSION_LIST';

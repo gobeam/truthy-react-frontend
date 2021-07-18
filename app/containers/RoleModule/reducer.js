@@ -19,6 +19,7 @@ import {
   SET_INITIAL_VALUES,
   SET_KEYWORD,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
 } from 'containers/RoleModule/constants';
 
 const EmptyFormField = {
@@ -32,7 +33,7 @@ export const initialState = {
   formValues: {},
   keywords: '',
   pageNumber: 1,
-  limit: 10,
+  pageSize: 10,
   roles: {
     results: [],
     pageSize: 10,
@@ -66,6 +67,9 @@ const roleModuleReducer = produce((draft, action) => {
     case SET_FORM_METHOD:
       draft.formMethod = action.formMethod;
       break;
+    case SET_PAGE_SIZE:
+      draft.pageSize = action.pageSize;
+      break;
     case SET_INITIAL_VALUES:
       draft.initialValues = action.initialValues;
       break;
@@ -86,7 +90,6 @@ const roleModuleReducer = produce((draft, action) => {
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
-      draft.isLoading = false;
       break;
     case ASYNC_START:
       draft.isLoading = true;
@@ -101,7 +104,6 @@ const roleModuleReducer = produce((draft, action) => {
       draft.errors = [];
       draft.permissions = [];
       draft.isLoading = false;
-      draft.formPage = false;
       draft.initiateClean = false;
       draft.formMethod = null;
       draft.id = null;

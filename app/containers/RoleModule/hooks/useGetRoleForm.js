@@ -3,7 +3,7 @@ import { Col, Form } from 'antd';
 import FormWrapper from 'components/FormWrapper';
 import messages from 'containers/RoleModule/messages';
 import FormInputWrapper from 'components/FormInputWrapper';
-import { rules } from 'common/rules';
+import { FormattedMessage } from 'react-intl';
 
 const layout = {
   labelCol: { span: 6 },
@@ -45,11 +45,16 @@ const useGetRoleForm = ({
     const nameInput = (
       <FormInputWrapper
         label={messages.nameLabel}
-        rules={rules.name}
+        rules={[
+          {
+            required: true,
+            message: <FormattedMessage {...messages.nameRequired} />,
+          },
+        ]}
         name="name"
         id="name"
         type="text"
-        required={false}
+        required
         placeholder={messages.namePlaceHolder}
       />
     );
@@ -60,11 +65,16 @@ const useGetRoleForm = ({
     const descriptionInput = (
       <FormInputWrapper
         label={messages.descriptionLabel}
-        rules={rules.name}
+        rules={[
+          {
+            required: true,
+            message: <FormattedMessage {...messages.descriptionRequired} />,
+          },
+        ]}
         name="description"
         id="description"
         type="text"
-        required={false}
+        required
         placeholder={messages.descriptionPlaceHolder}
       />
     );

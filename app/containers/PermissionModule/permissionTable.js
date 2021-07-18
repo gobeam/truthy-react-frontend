@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import messages from 'containers/RoleModule/messages';
+import messages from 'containers/PermissionModule/messages';
 import commonMessages from 'common/messages';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setPageNumberAction,
   setPageSizeAction,
-} from 'containers/RoleModule/actions';
+} from 'containers/PermissionModule/actions';
 import { Button, Modal, Table } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
@@ -16,35 +16,35 @@ import PropTypes from 'prop-types';
 import { DELETE, POST, PUT } from 'utils/constants';
 import {
   makeIsLoadingSelector,
-  makeRolesSelector,
-} from 'containers/RoleModule/selectors';
+  makePermissionsSelector,
+} from 'containers/PermissionModule/selectors';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
-  roles: makeRolesSelector(),
+  permissions: makePermissionsSelector(),
   user: makeLoggedInUserSelector(),
 });
 
 const CreateRoutePermission = {
-  resource: 'role',
+  resource: 'permission',
   method: POST,
-  path: '/roles',
+  path: '/permissions',
 };
 const EditRoutePermission = {
-  resource: 'role',
+  resource: 'permission',
   method: PUT,
-  path: '/roles/:id',
+  path: '/permissions/:id',
 };
 
 const DeleteRoutePermission = {
-  resource: 'role',
+  resource: 'permission',
   method: DELETE,
-  path: '/roles/:id',
+  path: '/permissions/:id',
 };
 
-function RoleTable(props) {
-  const { onCreate, onEdit, onModifyPermission, onDelete } = props;
-  const { roles, user, isLoading } = useSelector(stateSelector);
+function PermissionTable(props) {
+  const { onCreate, onEdit, onDelete } = props;
+  const { permissions, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
 
@@ -58,7 +58,7 @@ function RoleTable(props) {
       dispatch(setPageNumberAction(page));
     },
     pageSizeOptions: [5, 10, 20, 30, 50, 100],
-    total: roles.totalItems,
+    total: permissions.totalItems,
     showTotal: (total, range) => (
       <FormattedMessage
         {...commonMessages.pagination}
@@ -73,7 +73,12 @@ function RoleTable(props) {
         loading={isLoading}
         pagination={paginationOptions}
         rowKey="id"
-        dataSource={roles.results}
+        dataSource={permissions.results}
+        expandable={{
+          expandedRowRender: (record) => (
+            <p style={{ margin: 0 }}>{record.description}</p>
+          ),
+        }}
         scroll={{ x: 500 }}
         title={() =>
           checkPermissionForComponent(user.role, CreateRoutePermission) ? (
@@ -84,27 +89,21 @@ function RoleTable(props) {
         }
       >
         <Table.Column
-          title={intl.formatMessage(messages.nameLabel)}
-          dataIndex="name"
+          title={intl.formatMessage(messages.resourceLabel)}
+          dataIndex="resource"
           width={100}
-          render={(_, { name }) => name}
+          render={(_, { resource }) => resource}
         />
         <Table.Column
-          title={intl.formatMessage(messages.descriptionLabel)}
-          dataIndex="description"
-          key="description"
+          title={intl.formatMessage(messages.methodLabel)}
+          dataIndex="method"
+          key="method"
           width={100}
         />
         <Table.Column
-          title={intl.formatMessage(messages.dateLabel)}
-          dataIndex="createdAt"
-          key="createdAt"
-          render={(_, { createdAt }) => (
-            <FormattedMessage
-              {...messages.createdAt}
-              values={{ ts: Date.parse(createdAt) }}
-            />
-          )}
+          title={intl.formatMessage(messages.pathLabel)}
+          dataIndex="path"
+          key="path"
           width={100}
         />
         <Table.Column
@@ -116,14 +115,9 @@ function RoleTable(props) {
           render={(_, { id }) => (
             <>
               {checkPermissionForComponent(user.role, EditRoutePermission) ? (
-                <>
-                  <Button type="link" onClick={() => onModifyPermission(id)}>
-                    <FormattedMessage {...commonMessages.modifyPermission} />
-                  </Button>
-                  <Button type="link" onClick={() => onEdit(id)}>
-                    <FormattedMessage {...commonMessages.editLabel} />
-                  </Button>
-                </>
+                <Button type="link" onClick={() => onEdit(id)}>
+                  <FormattedMessage {...commonMessages.editLabel} />
+                </Button>
               ) : null}
               {checkPermissionForComponent(user.role, DeleteRoutePermission) ? (
                 <Button
@@ -153,11 +147,10 @@ function RoleTable(props) {
   );
 }
 
-RoleTable.propTypes = {
+PermissionTable.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onModifyPermission: PropTypes.func.isRequired,
 };
 
-export default RoleTable;
+export default PermissionTable;

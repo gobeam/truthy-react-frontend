@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import messages from 'containers/RoleModule/messages';
+import messages from 'containers/EmailTemplateModule/messages';
 import commonMessages from 'common/messages';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setPageNumberAction,
   setPageSizeAction,
-} from 'containers/RoleModule/actions';
+} from 'containers/EmailTemplateModule/actions';
 import { Button, Modal, Table } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
@@ -16,35 +16,35 @@ import PropTypes from 'prop-types';
 import { DELETE, POST, PUT } from 'utils/constants';
 import {
   makeIsLoadingSelector,
-  makeRolesSelector,
-} from 'containers/RoleModule/selectors';
+  makeTemplatesSelector,
+} from 'containers/EmailTemplateModule/selectors';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
-  roles: makeRolesSelector(),
+  templates: makeTemplatesSelector(),
   user: makeLoggedInUserSelector(),
 });
 
 const CreateRoutePermission = {
-  resource: 'role',
+  resource: 'emailTemplates',
   method: POST,
-  path: '/roles',
+  path: '/email-templates',
 };
 const EditRoutePermission = {
-  resource: 'role',
+  resource: 'emailTemplates',
   method: PUT,
-  path: '/roles/:id',
+  path: '/email-templates/:id',
 };
 
 const DeleteRoutePermission = {
-  resource: 'role',
+  resource: 'emailTemplates',
   method: DELETE,
-  path: '/roles/:id',
+  path: '/email-templates/:id',
 };
 
-function RoleTable(props) {
-  const { onCreate, onEdit, onModifyPermission, onDelete } = props;
-  const { roles, user, isLoading } = useSelector(stateSelector);
+function EmailTemplateTable(props) {
+  const { onCreate, onEdit, onDelete } = props;
+  const { templates, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
 
@@ -58,7 +58,7 @@ function RoleTable(props) {
       dispatch(setPageNumberAction(page));
     },
     pageSizeOptions: [5, 10, 20, 30, 50, 100],
-    total: roles.totalItems,
+    total: templates.totalItems,
     showTotal: (total, range) => (
       <FormattedMessage
         {...commonMessages.pagination}
@@ -73,7 +73,7 @@ function RoleTable(props) {
         loading={isLoading}
         pagination={paginationOptions}
         rowKey="id"
-        dataSource={roles.results}
+        dataSource={templates.results}
         scroll={{ x: 500 }}
         title={() =>
           checkPermissionForComponent(user.role, CreateRoutePermission) ? (
@@ -84,27 +84,21 @@ function RoleTable(props) {
         }
       >
         <Table.Column
-          title={intl.formatMessage(messages.nameLabel)}
-          dataIndex="name"
-          width={100}
-          render={(_, { name }) => name}
-        />
-        <Table.Column
-          title={intl.formatMessage(messages.descriptionLabel)}
-          dataIndex="description"
-          key="description"
+          title={intl.formatMessage(messages.titleLabel)}
+          dataIndex="title"
+          key="title"
           width={100}
         />
         <Table.Column
-          title={intl.formatMessage(messages.dateLabel)}
-          dataIndex="createdAt"
-          key="createdAt"
-          render={(_, { createdAt }) => (
-            <FormattedMessage
-              {...messages.createdAt}
-              values={{ ts: Date.parse(createdAt) }}
-            />
-          )}
+          title={intl.formatMessage(messages.subjectLabel)}
+          dataIndex="subject"
+          key="subject"
+          width={100}
+        />
+        <Table.Column
+          title={intl.formatMessage(messages.senderLabel)}
+          dataIndex="sender"
+          key="sender"
           width={100}
         />
         <Table.Column
@@ -116,14 +110,9 @@ function RoleTable(props) {
           render={(_, { id }) => (
             <>
               {checkPermissionForComponent(user.role, EditRoutePermission) ? (
-                <>
-                  <Button type="link" onClick={() => onModifyPermission(id)}>
-                    <FormattedMessage {...commonMessages.modifyPermission} />
-                  </Button>
-                  <Button type="link" onClick={() => onEdit(id)}>
-                    <FormattedMessage {...commonMessages.editLabel} />
-                  </Button>
-                </>
+                <Button type="link" onClick={() => onEdit(id)}>
+                  <FormattedMessage {...commonMessages.editLabel} />
+                </Button>
               ) : null}
               {checkPermissionForComponent(user.role, DeleteRoutePermission) ? (
                 <Button
@@ -153,11 +142,10 @@ function RoleTable(props) {
   );
 }
 
-RoleTable.propTypes = {
+EmailTemplateTable.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onModifyPermission: PropTypes.func.isRequired,
 };
 
-export default RoleTable;
+export default EmailTemplateTable;

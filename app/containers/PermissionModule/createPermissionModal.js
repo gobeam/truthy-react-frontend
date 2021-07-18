@@ -1,43 +1,47 @@
 import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 import { useIntl } from 'react-intl';
-import messages from 'containers/RoleModule/messages';
+import messages from 'containers/PermissionModule/messages';
 import PropTypes from 'prop-types';
 import {
   clearFormAction,
   setFormValues,
   submitFormAction,
-} from 'containers/RoleModule/actions';
+} from 'containers/PermissionModule/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
   makeErrorSelector,
-  makeInitialValuesSelector,
   makeInitiateCleanFieldSelector,
   makeIsLoadingSelector,
-} from 'containers/RoleModule/selectors';
+} from 'containers/PermissionModule/selectors';
 import { makeDeviceSelector } from 'containers/App/selectors';
-import useGetRoleForm from 'containers/RoleModule/hooks/useGetRoleForm';
+import useGetPermissionForm from 'containers/PermissionModule/hooks/useGetPermissionForm';
 import commonMessage from 'common/messages';
 
 const stateSelector = createStructuredSelector({
   errors: makeErrorSelector(),
   device: makeDeviceSelector(),
   initiateClean: makeInitiateCleanFieldSelector(),
-  initialValues: makeInitialValuesSelector(),
   isLoading: makeIsLoadingSelector(),
 });
 
-const EditRoleModal = ({ onCancel, visible }) => {
+const CreatePermissionModal = ({ onCancel, visible }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { errors, device, initiateClean, isLoading, initialValues } =
+  const { errors, device, initiateClean, isLoading } =
     useSelector(stateSelector);
 
-  const { Form, form, NameInput, DescriptionInput } = useGetRoleForm({
-    formName: 'create-role',
+  const {
+    Form,
+    form,
+    ResourceInput,
+    DescriptionInput,
+    MethodInput,
+    PathInput,
+  } = useGetPermissionForm({
+    formName: 'create-permission',
     device,
-    initialValues,
   });
 
   const onSubmitCreateForm = async () => {
@@ -47,8 +51,8 @@ const EditRoleModal = ({ onCancel, visible }) => {
   };
 
   const onCancelModal = () => {
-    form.resetFields();
     onCancel();
+    form.resetFields();
   };
 
   useEffect(() => {
@@ -67,12 +71,10 @@ const EditRoleModal = ({ onCancel, visible }) => {
     }
   }, [errors]);
 
-  useEffect(() => visible && form.resetFields(), [initialValues]);
-
   return (
     <Modal
       confirmLoading={isLoading}
-      title={intl.formatMessage(messages.editTitle)}
+      title={intl.formatMessage(messages.addTitle)}
       visible={visible}
       onOk={onSubmitCreateForm}
       onCancel={onCancelModal}
@@ -80,16 +82,18 @@ const EditRoleModal = ({ onCancel, visible }) => {
       cancelText={intl.formatMessage(commonMessage.cancel)}
     >
       <Form>
-        <NameInput />
+        <ResourceInput />
         <DescriptionInput />
+        <MethodInput />
+        <PathInput />
       </Form>
     </Modal>
   );
 };
 
-EditRoleModal.propTypes = {
+CreatePermissionModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };
 
-export default EditRoleModal;
+export default CreatePermissionModal;

@@ -53,7 +53,7 @@ const useGetUserForm = ({
         name="name"
         id="name"
         type="text"
-        required={false}
+        required
         placeholder={commonMessages.namePlaceHolder}
       />
     );
@@ -69,7 +69,7 @@ const useGetUserForm = ({
         name="email"
         id="email"
         type="text"
-        required={false}
+        required
         placeholder={commonMessages.emailPlaceHolder}
       />
     );
@@ -84,7 +84,7 @@ const useGetUserForm = ({
         name="username"
         id="username"
         type="text"
-        required={false}
+        required
         placeholder={commonMessages.usernamePlaceHolder}
       />
     );

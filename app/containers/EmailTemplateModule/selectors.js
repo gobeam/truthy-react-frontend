@@ -24,12 +24,6 @@ const makeKeywordsSelector = () =>
     (substate) => substate.keywords,
   );
 
-const makeIsFormPageSelector = () =>
-  createSelector(
-    selectEmailTemplateModuleDomain,
-    (substate) => substate.formPage,
-  );
-
 const makeFormMethodSelector = () =>
   createSelector(
     selectEmailTemplateModuleDomain,
@@ -37,39 +31,12 @@ const makeFormMethodSelector = () =>
   );
 
 const makeUpdateIdSelector = () =>
-  createSelector(
-    selectEmailTemplateModuleDomain,
-    (substate) => substate.updateId,
-  );
-
-const makeFormTitleSelector = () =>
-  createSelector(
-    selectEmailTemplateModuleDomain,
-    (substate) => substate.formTitle,
-  );
-
-const makeTemplateTitleSelector = () =>
-  createSelector(selectEmailTemplateModuleDomain, (substate) => substate.title);
-
-const makeTemplateBodySelector = () =>
-  createSelector(selectEmailTemplateModuleDomain, (substate) => substate.body);
+  createSelector(selectEmailTemplateModuleDomain, (substate) => substate.id);
 
 const makeTemplateEditedBodySelector = () =>
   createSelector(
     selectEmailTemplateModuleDomain,
     (substate) => substate.editedBody,
-  );
-
-const makeSenderSelector = () =>
-  createSelector(
-    selectEmailTemplateModuleDomain,
-    (substate) => substate.sender,
-  );
-
-const makeSubjectSelector = () =>
-  createSelector(
-    selectEmailTemplateModuleDomain,
-    (substate) => substate.subject,
   );
 
 const makePageNumberSelector = () =>
@@ -79,7 +46,10 @@ const makePageNumberSelector = () =>
   );
 
 const makeLimitSelector = () =>
-  createSelector(selectEmailTemplateModuleDomain, (substate) => substate.limit);
+  createSelector(
+    selectEmailTemplateModuleDomain,
+    (substate) => substate.pageSize,
+  );
 
 const makeTemplatesSelector = () =>
   createSelector(
@@ -93,20 +63,35 @@ const makeErrorSelector = () =>
     (substate) => substate.errors,
   );
 
+const makeInitiateCleanFieldSelector = () =>
+  createSelector(
+    selectEmailTemplateModuleDomain,
+    (substate) => substate.initiateClean,
+  );
+
+const makeFormValuesSelector = () =>
+  createSelector(
+    selectEmailTemplateModuleDomain,
+    (substate) => substate.formValues,
+  );
+
+const makeInitialValuesSelector = () =>
+  createSelector(
+    selectEmailTemplateModuleDomain,
+    (substate) => substate.initialValues,
+  );
+
 export {
+  makeInitialValuesSelector,
+  makeInitiateCleanFieldSelector,
+  makeFormValuesSelector,
   makeLimitSelector,
   makeTemplateEditedBodySelector,
-  makeTemplateTitleSelector,
-  makeTemplateBodySelector,
-  makeSenderSelector,
   makeKeywordsSelector,
   makeUpdateIdSelector,
-  makeFormTitleSelector,
-  makeIsFormPageSelector,
   makeFormMethodSelector,
   makeIsLoadingSelector,
   makeErrorSelector,
   makePageNumberSelector,
   makeTemplatesSelector,
-  makeSubjectSelector,
 };

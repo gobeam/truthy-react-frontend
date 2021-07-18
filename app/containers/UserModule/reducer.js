@@ -95,7 +95,6 @@ const userModuleReducer = produce((draft, action) => {
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
-      draft.isLoading = false;
       break;
     case ASYNC_START:
       draft.isLoading = true;

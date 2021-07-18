@@ -77,13 +77,13 @@ export default function RoleModule() {
     setModifyPermission(true);
   };
 
+  const onDelete = (deleteId) => dispatch(deleteItemByIdAction(deleteId));
+
   useEffect(() => {
     if (id) {
       dispatch(getRoleByIdAction(id));
     }
   }, [id]);
-
-  const onDelete = (deleteId) => dispatch(deleteItemByIdAction(deleteId));
 
   useEffect(() => {
     loadPermissionList();

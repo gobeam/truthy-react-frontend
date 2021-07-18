@@ -11,7 +11,7 @@ import {
 } from 'containers/App/selectors';
 import ReactSvg from 'assets/logo/react.svg';
 import AntdSvg from 'assets/logo/antd.svg';
-import { appLocales } from 'i18n/language/index';
+import { appLocales } from 'common/language/index';
 import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
   MenuUnfoldOutlined,

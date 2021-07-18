@@ -92,4 +92,20 @@ export default defineMessages({
     id: `${scope}.cancelBtn`,
     defaultMessage: 'Cancel',
   },
+  resourceRequired: {
+    id: `${scope}.resourceRequired`,
+    defaultMessage: 'Resource name should not be empty!',
+  },
+  descriptionRequired: {
+    id: `${scope}.descriptionRequired`,
+    defaultMessage: 'Description should not be empty!',
+  },
+  methodRequired: {
+    id: `${scope}.methodRequired`,
+    defaultMessage: 'Cancel',
+  },
+  pathRequired: {
+    id: `${scope}.pathRequired`,
+    defaultMessage: 'Cancel',
+  },
 });

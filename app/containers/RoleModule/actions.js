@@ -24,6 +24,7 @@ import {
   SET_PAGE_NUMBER,
   SUBMIT_FORM,
   INITIATE_CLEAN,
+  SET_PAGE_SIZE,
 } from 'containers/RoleModule/constants';
 
 export function enterValidationErrorAction(errors) {
@@ -106,6 +107,13 @@ export function setPageNumberAction(pageNumber) {
   return {
     type: SET_PAGE_NUMBER,
     pageNumber,
+  };
+}
+
+export function setPageSizeAction(pageSize) {
+  return {
+    type: SET_PAGE_SIZE,
+    pageSize,
   };
 }
 

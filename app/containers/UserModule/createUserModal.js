@@ -17,6 +17,7 @@ import {
   makeRolesListSelector,
 } from 'containers/UserModule/selectors';
 import { makeDeviceSelector } from 'containers/App/selectors';
+import commonMessage from 'common/messages';
 
 const stateSelector = createStructuredSelector({
   roles: makeRolesListSelector(),
@@ -77,6 +78,8 @@ const CreateUserModal = ({ onCancel, visible }) => {
       visible={visible}
       onOk={onSubmitCreateForm}
       onCancel={onCancelModal}
+      okText={intl.formatMessage(commonMessage.okLabel)}
+      cancelText={intl.formatMessage(commonMessage.cancel)}
     >
       <Form>
         <NameInput />

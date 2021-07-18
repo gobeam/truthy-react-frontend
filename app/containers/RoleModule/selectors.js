@@ -44,7 +44,7 @@ const makeErrorSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.errors);
 
 const makeLimitSelector = () =>
-  createSelector(selectRoleModuleDomain, (substate) => substate.limit);
+  createSelector(selectRoleModuleDomain, (substate) => substate.pageSize);
 
 const makeInitiateCleanFieldSelector = () =>
   createSelector(selectRoleModuleDomain, (substate) => substate.initiateClean);

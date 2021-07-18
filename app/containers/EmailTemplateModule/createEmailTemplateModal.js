@@ -1,54 +1,53 @@
 import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 import { useIntl } from 'react-intl';
-import messages from 'containers/RoleModule/messages';
+import messages from 'containers/EmailTemplateModule/messages';
+import commonMessage from 'common/messages';
 import PropTypes from 'prop-types';
 import {
   clearFormAction,
   setFormValues,
   submitFormAction,
-} from 'containers/RoleModule/actions';
+} from 'containers/EmailTemplateModule/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
   makeErrorSelector,
-  makeInitialValuesSelector,
   makeInitiateCleanFieldSelector,
   makeIsLoadingSelector,
-} from 'containers/RoleModule/selectors';
+} from 'containers/EmailTemplateModule/selectors';
 import { makeDeviceSelector } from 'containers/App/selectors';
-import useGetRoleForm from 'containers/RoleModule/hooks/useGetRoleForm';
-import commonMessage from 'common/messages';
+import useGetEmailTemplateForm from 'containers/EmailTemplateModule/hooks/useGetEmailTemplateForm';
 
 const stateSelector = createStructuredSelector({
   errors: makeErrorSelector(),
   device: makeDeviceSelector(),
   initiateClean: makeInitiateCleanFieldSelector(),
-  initialValues: makeInitialValuesSelector(),
   isLoading: makeIsLoadingSelector(),
 });
 
-const EditRoleModal = ({ onCancel, visible }) => {
+const CreateEmailTemplateModal = ({ onCancel, visible }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { errors, device, initiateClean, isLoading, initialValues } =
+
+  const { errors, device, initiateClean, isLoading } =
     useSelector(stateSelector);
 
-  const { Form, form, NameInput, DescriptionInput } = useGetRoleForm({
-    formName: 'create-role',
-    device,
-    initialValues,
-  });
+  const { Form, form, body, TitleInput, SubjectInput, SenderInput, BodyInput } =
+    useGetEmailTemplateForm({
+      formName: 'create-email-template',
+      device,
+    });
 
   const onSubmitCreateForm = async () => {
     await form.validateFields();
-    dispatch(setFormValues(form.getFieldsValue()));
+    dispatch(setFormValues({ ...form.getFieldsValue(), body }));
     dispatch(submitFormAction());
   };
 
   const onCancelModal = () => {
-    form.resetFields();
     onCancel();
+    form.resetFields();
   };
 
   useEffect(() => {
@@ -67,29 +66,30 @@ const EditRoleModal = ({ onCancel, visible }) => {
     }
   }, [errors]);
 
-  useEffect(() => visible && form.resetFields(), [initialValues]);
-
   return (
     <Modal
       confirmLoading={isLoading}
-      title={intl.formatMessage(messages.editTitle)}
+      title={intl.formatMessage(messages.addTitle)}
       visible={visible}
       onOk={onSubmitCreateForm}
       onCancel={onCancelModal}
+      width={1000}
       okText={intl.formatMessage(commonMessage.okLabel)}
       cancelText={intl.formatMessage(commonMessage.cancel)}
     >
       <Form>
-        <NameInput />
-        <DescriptionInput />
+        <TitleInput />
+        <SubjectInput />
+        <SenderInput />
+        <BodyInput />
       </Form>
     </Modal>
   );
 };
 
-EditRoleModal.propTypes = {
+CreateEmailTemplateModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };
 
-export default EditRoleModal;
+export default CreateEmailTemplateModal;

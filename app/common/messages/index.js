@@ -9,51 +9,55 @@ export const scope = 'common.messages';
 export default defineMessages({
   success: {
     id: `${scope}.success`,
-    defaultMessage: `Success`,
+    defaultMessage: 'Success',
   },
   error: {
     id: `${scope}.error`,
-    defaultMessage: `Error`,
+    defaultMessage: 'Error',
   },
   warning: {
     id: `${scope}.warning`,
-    defaultMessage: `Warning`,
+    defaultMessage: 'Warning',
   },
   info: {
     id: `${scope}.info`,
-    defaultMessage: `Info`,
+    defaultMessage: 'Info',
   },
   primary: {
     id: `${scope}.primary`,
-    defaultMessage: `Message`,
+    defaultMessage: 'Message',
   },
   invalidRefresh: {
     id: `${scope}.invalidRefresh`,
-    defaultMessage: `Session out`,
+    defaultMessage: 'Session out',
   },
   submit: {
     id: `${scope}.submit`,
-    defaultMessage: `Submit`,
+    defaultMessage: 'Submit',
   },
   complete: {
     id: `${scope}.complete`,
-    defaultMessage: `Complete`,
+    defaultMessage: 'Complete',
   },
   sourceCode: {
     id: `${scope}.sourceCode`,
-    defaultMessage: `Source Code`,
+    defaultMessage: 'Source Code',
   },
   hideCode: {
     id: `${scope}.hideCode`,
-    defaultMessage: `Hide Code`,
+    defaultMessage: 'Hide Code',
   },
   showCode: {
     id: `${scope}.showCode`,
-    defaultMessage: `Show Code`,
+    defaultMessage: 'Show Code',
   },
   cancel: {
     id: `${scope}.cancel`,
-    defaultMessage: `Cancel`,
+    defaultMessage: 'Cancel',
+  },
+  okLabel: {
+    id: `${scope}.okLabel`,
+    defaultMessage: 'Ok',
   },
   unauthorized: {
     id: `${scope}.unauthorized`,
@@ -184,5 +188,13 @@ export default defineMessages({
   syncSuccess: {
     id: `${scope}.syncSuccess`,
     defaultMessage: 'Synchronise successful!',
+  },
+  yesLabel: {
+    id: `${scope}.yesLabel`,
+    defaultMessage: 'Yes',
+  },
+  noLabel: {
+    id: `${scope}.noLabel`,
+    defaultMessage: 'No',
   },
 });

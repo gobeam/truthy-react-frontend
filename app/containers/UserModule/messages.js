@@ -37,7 +37,7 @@ export default defineMessages({
   },
   statusRequired: {
     id: `${scope}.statusRequired`,
-    defaultMessage: 'At least one status must be selected!',
+    defaultMessage: "User's status must be specified!",
   },
   usernamePlaceHolder: {
     id: `${scope}.usernamePlaceHolder`,

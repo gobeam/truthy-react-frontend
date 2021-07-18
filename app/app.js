@@ -17,7 +17,6 @@ import FontFaceObserver from 'fontfaceobserver';
 import 'antd/dist/antd.css';
 // import 'scss/volt.scss';
 import 'sanitize.css/sanitize.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 // Import root app
 import App from 'containers/App';
 // Import Language Provider

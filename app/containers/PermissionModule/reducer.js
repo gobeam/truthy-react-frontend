@@ -9,12 +9,18 @@ import {
   ASSIGN_PERMISSION,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FORM_FIELD,
   CLEAR_FORM,
+  INITIATE_CLEAN,
+  SET_FORM_METHOD,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
+  SET_KEYWORD,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
 } from 'containers/PermissionModule/constants';
 
-const emptyFormFieldError = {
+const EmptyFormField = {
   resource: '',
   description: '',
   path: '',
@@ -23,9 +29,10 @@ const emptyFormFieldError = {
 
 export const initialState = {
   keywords: '',
-  ...emptyFormFieldError,
+  formValues: {},
+  initialValues: EmptyFormField,
   pageNumber: 1,
-  limit: 10,
+  pageSize: 10,
   permissions: {
     results: [],
     pageSize: 10,
@@ -34,12 +41,11 @@ export const initialState = {
     next: 0,
     previous: 0,
   },
-  errors: emptyFormFieldError,
+  errors: [],
   isLoading: false,
-  formPage: false,
+  initiateClean: false,
   formMethod: null,
-  updateId: null,
-  formTitle: null,
+  id: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -49,16 +55,32 @@ const permissionModuleReducer = produce((draft, action) => {
       draft.permissions = action.permissions;
       draft.isLoading = false;
       break;
-    case CHANGE_FORM_FIELD:
-      draft[action.key] = action.value;
-      draft.errors[action.key] = '';
+    case INITIATE_CLEAN:
+      draft.initiateClean = true;
       break;
     case SET_PAGE_NUMBER:
       draft.pageNumber = action.pageNumber;
       break;
+    case SET_PAGE_SIZE:
+      draft.pageSize = action.pageSize;
+      break;
+    case SET_FORM_METHOD:
+      draft.formMethod = action.formMethod;
+      break;
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
+      break;
+    case SET_KEYWORD:
+      draft.keywords = action.keywords;
+      break;
+    case SET_ID:
+      draft.id = action.id;
+      break;
+    case SET_INITIAL_VALUES:
+      draft.initialValues = action.initialValues;
+      break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
-      draft.isLoading = false;
       break;
     case ASYNC_START:
       draft.isLoading = true;
@@ -67,17 +89,14 @@ const permissionModuleReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case CLEAR_FORM:
-      draft.resource = '';
-      draft.description = '';
-      draft.path = '';
-      draft.method = '';
       draft.keywords = '';
-      draft.errors = emptyFormFieldError;
+      draft.errors = [];
+      draft.initialValues = EmptyFormField;
+      draft.formValues = {};
       draft.isLoading = false;
-      draft.formPage = false;
       draft.formMethod = null;
-      draft.updateId = null;
-      draft.formTitle = null;
+      draft.id = null;
+      draft.initiateClean = false;
       break;
   }
 }, initialState);

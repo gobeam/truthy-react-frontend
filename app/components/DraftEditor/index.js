@@ -4,8 +4,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import htmlToDraft from 'html-to-draftjs';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { Button, Form } from '@themesberg/react-bootstrap';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
 import {
   customChunkRenderer,
   entityMapper,
@@ -15,7 +13,10 @@ import PropTypes from 'prop-types';
 import ToolWrapper from 'components/DraftEditor/ToolWrapper';
 import commonMessages from 'common/messages';
 import { FormattedMessage } from 'react-intl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Input, Button } from 'antd';
+import { CodeOutlined } from '@ant-design/icons';
+
+const { TextArea } = Input;
 
 const styles = {
   editorStyle: (invalid) => ({
@@ -113,7 +114,7 @@ class Editor extends Component {
         className="rdw-option-wrapper"
         onClick={this.toggleEditorCode}
       >
-        <FontAwesomeIcon icon={faCode} className="me-2" />
+        <CodeOutlined />
         {showEditorCode ? (
           <FormattedMessage {...commonMessages.hideCode} />
         ) : (
@@ -136,29 +137,17 @@ class Editor extends Component {
           customBlockRenderFunc={customBlockRenderFunc}
         />
         {showEditorCode && (
-          <div style={{ width: '100%' }}>
-            <Form.Group className="mb-3">
-              <Form.Label>
-                <FormattedMessage {...commonMessages.sourceCode} />
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="10"
-                value={editorHTML}
-                onChange={this.onEditEditorHTML}
-              />
-            </Form.Group>
-            <div>
-              <Button
-                onClick={this.addHtmlToEditor}
-                variant="primary"
-                type="button"
-                className="me-1"
-              >
-                <FormattedMessage {...commonMessages.complete} />
-              </Button>
-            </div>
-          </div>
+          <>
+            <FormattedMessage {...commonMessages.sourceCode} />
+            <TextArea
+              rows={4}
+              value={editorHTML}
+              onChange={this.onEditEditorHTML}
+            />
+            <Button onClick={this.addHtmlToEditor}>
+              <FormattedMessage {...commonMessages.complete} />
+            </Button>
+          </>
         )}
       </>
     );
