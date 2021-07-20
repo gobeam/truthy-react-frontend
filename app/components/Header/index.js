@@ -11,7 +11,7 @@ import {
 } from 'containers/App/selectors';
 import ReactSvg from 'assets/logo/react.svg';
 import AntdSvg from 'assets/logo/antd.svg';
-import { appLocales } from 'common/language/index';
+import { appLocales } from 'common/language';
 import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
   MenuUnfoldOutlined,
@@ -58,7 +58,7 @@ const HeaderComponent = () => {
             tabIndex={0}
             aria-hidden="true"
             role="button"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/profile')}
           >
             <FormattedMessage {...messages.profile} />
           </span>

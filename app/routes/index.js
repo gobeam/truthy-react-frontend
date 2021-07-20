@@ -132,7 +132,7 @@ const routes = [
             path="/profile"
             method="get"
             resource="user"
-            defaultPermission={false}
+            defaultPermission
           />
         ),
       },
