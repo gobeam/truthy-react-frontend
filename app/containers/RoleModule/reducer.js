@@ -4,30 +4,36 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
+  ASSIGN_PERMISSION_LIST,
   ASSIGN_ROLES,
   ASYNC_END,
   ASYNC_START,
   CHANGE_FORM_FIELD,
-  ASSIGN_PERMISSION_LIST,
-  SET_PAGE_NUMBER,
   CLEAR_FORM,
+  INITIATE_CLEAN,
+  SET_FORM_METHOD,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
+  SET_KEYWORD,
+  SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
 } from 'containers/RoleModule/constants';
 
-const emptyFormFieldError = {
+const EmptyFormField = {
   name: '',
   description: '',
   permissions: '',
 };
 
 export const initialState = {
-  name: '',
+  initialValues: EmptyFormField,
+  formValues: {},
   keywords: '',
-  description: '',
   pageNumber: 1,
-  limit: 10,
+  pageSize: 10,
   roles: {
     results: [],
     pageSize: 10,
@@ -38,12 +44,11 @@ export const initialState = {
   },
   permissions: [],
   permissionList: {},
-  errors: emptyFormFieldError,
+  errors: [],
   isLoading: false,
-  formPage: false,
+  initiateClean: false,
   formMethod: null,
-  updateId: null,
-  formTitle: null,
+  id: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -53,19 +58,38 @@ const roleModuleReducer = produce((draft, action) => {
       draft.roles = action.roles;
       draft.isLoading = false;
       break;
+    case INITIATE_CLEAN:
+      draft.initiateClean = true;
+      break;
     case ASSIGN_PERMISSION_LIST:
       draft.permissionList = action.permissionList;
       break;
+    case SET_FORM_METHOD:
+      draft.formMethod = action.formMethod;
+      break;
+    case SET_PAGE_SIZE:
+      draft.pageSize = action.pageSize;
+      break;
+    case SET_INITIAL_VALUES:
+      draft.initialValues = action.initialValues;
+      break;
+    case SET_ID:
+      draft.id = action.id;
+      break;
+    case SET_KEYWORD:
+      draft.keywords = action.keywords;
+      break;
     case CHANGE_FORM_FIELD:
       draft[action.key] = action.value;
-      draft.errors[action.key] = '';
+      break;
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
       break;
     case SET_PAGE_NUMBER:
       draft.pageNumber = action.pageNumber;
       break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
-      draft.isLoading = false;
       break;
     case ASYNC_START:
       draft.isLoading = true;
@@ -74,17 +98,15 @@ const roleModuleReducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
     case CLEAR_FORM:
-    case LOCATION_CHANGE:
-      draft.name = '';
       draft.keywords = '';
-      draft.description = '';
+      draft.initialValues = EmptyFormField;
+      draft.formValues = {};
+      draft.errors = [];
       draft.permissions = [];
-      draft.errors = emptyFormFieldError;
       draft.isLoading = false;
-      draft.formPage = false;
+      draft.initiateClean = false;
       draft.formMethod = null;
-      draft.updateId = null;
-      draft.formTitle = null;
+      draft.id = null;
       break;
   }
 }, initialState);

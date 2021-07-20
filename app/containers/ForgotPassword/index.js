@@ -11,52 +11,68 @@ import saga from 'containers/ForgotPassword/saga';
 import reducer from 'containers/ForgotPassword/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
-  changeFieldAction,
-  validateFormAction,
+  forgotPasswordAction,
+  setFormValuesAction,
 } from 'containers/ForgotPassword/actions';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeEmailSelector,
   makeErrorsSelector,
+  makeInitialValuesSelector,
   makeIsLoadingSelector,
 } from 'containers/ForgotPassword/selectors';
 import { Helmet } from 'react-helmet';
-import { hideHeaderAction } from 'containers/App/actions';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
-import loginMessage from 'components/LoginForm/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
-import { Card, Col, Container, Form, Row } from '@themesberg/react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import BgImage from 'assets/img/illustrations/signin.svg';
-import AuthFormGroupWrapper from 'components/AuthFormGroupWrapper';
+import { Form, Typography } from 'antd';
+import FormInputWrapper from 'components/FormInputWrapper';
+import AlertMessage from 'containers/AlertMessage';
+import commonMessage from 'common/messages';
+import FormWrapper from 'components/FormWrapper';
+
+const { Title } = Typography;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    md: { span: 24 },
+    sm: { span: 24 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    md: { span: 24 },
+    sm: { span: 24 },
+  },
+};
 
 const key = 'forgotPassword';
 
 const stateSelector = createStructuredSelector({
-  email: makeEmailSelector(),
   errors: makeErrorsSelector(),
   isLoading: makeIsLoadingSelector(),
+  initialValues: makeInitialValuesSelector(),
 });
 
 export default function ForgotPasswordPage() {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
-  const hideHeader = () => dispatch(hideHeaderAction(true));
-  const submitForgotPasswordForm = (e) =>
-    dispatch(validateFormAction()) && e.preventDefault();
-  const onChangeField = (e) =>
-    dispatch(changeFieldAction(e.target.name, e.target.value));
-  const { email, errors, isLoading } = useSelector(stateSelector);
+  const { errors, isLoading, initialValues } = useSelector(stateSelector);
+  const onFinish = async () => {
+    await form.validateFields();
+    dispatch(setFormValuesAction(form.getFieldsValue()));
+    dispatch(forgotPasswordAction());
+  };
   useEffect(() => {
-    hideHeader();
-  }, []);
+    if (errors?.length) {
+      form.setFields(errors);
+    }
+  }, [errors]);
 
   return (
-    <main>
+    <div className="content-page">
       <FormattedMessage {...messages.helmetForgotPwdTitle}>
         {(title) => (
           <Helmet>
@@ -64,59 +80,48 @@ export default function ForgotPasswordPage() {
           </Helmet>
         )}
       </FormattedMessage>
-      <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
-        <Container>
-          <p className="text-center">
-            <Card.Link as={Link} to="/" className="text-gray-700">
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" />
-              <FormattedMessage {...messages.back} />
-            </Card.Link>
-          </p>
-          <Row
-            className="justify-content-center form-bg-image"
-            style={{ backgroundImage: `url(${BgImage})` }}
-          >
-            <Col
-              xs={12}
-              className="d-flex align-items-center justify-content-center"
-            >
-              <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">
-                    <FormattedMessage {...messages.forgotPassword} />
-                  </h3>
-                </div>
-                <Form
-                  noValidate
-                  validated={errors.length < 1}
-                  className="mt-4"
-                  onSubmit={submitForgotPasswordForm}
-                >
-                  <AuthFormGroupWrapper
-                    label={loginMessage.email}
-                    name="email"
-                    id="email"
-                    type="email"
-                    value={email}
-                    icon={faEnvelope}
-                    required={false}
-                    focus={false}
-                    placeholder={loginMessage.emailPlaceHolder}
-                    changeHandler={onChangeField}
-                    error={errors.email}
-                  />
-                  <FormButtonWrapper
-                    className="w-100"
-                    variant="primary"
-                    disabled={isLoading}
-                    label={messages.forgotPasswordBtn}
-                  />
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </main>
+
+      <FormWrapper
+        {...formItemLayout}
+        values={initialValues}
+        formInstance={form}
+        onFinish={onFinish}
+        name="forgot-password-form"
+      >
+        <Title level={2}>
+          <FormattedMessage {...messages.forgotPassword} />
+        </Title>
+
+        <AlertMessage />
+
+        <FormInputWrapper
+          name="email"
+          label={commonMessage.emailLabel}
+          id="email"
+          type="email"
+          rules={[
+            {
+              type: 'email',
+              message: (
+                <FormattedMessage {...commonMessage.validEmailRequired} />
+              ),
+            },
+            {
+              required: true,
+              whitespace: true,
+              message: <FormattedMessage {...commonMessage.emailRequired} />,
+            },
+          ]}
+          placeholder={commonMessage.emailPlaceHolder}
+        />
+
+        <FormButtonWrapper
+          variant="primary"
+          disabled={isLoading}
+          form={form}
+          label={messages.forgotPasswordBtn}
+        />
+      </FormWrapper>
+    </div>
   );
 }

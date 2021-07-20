@@ -22,7 +22,7 @@ export default defineMessages({
     defaultMessage: 'Password changed successful!',
   },
   resetPasswordBtn: {
-    id: `${scope}.forgotPasswordBtn`,
+    id: `${scope}.resetPasswordBtn`,
     defaultMessage: 'Reset',
   },
   back: {

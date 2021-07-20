@@ -4,7 +4,6 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import { CHANGE_FIELD } from 'containers/UserAccountPage/constants';
 
 export const initialState = {
@@ -34,24 +33,6 @@ const userPageReducer = produce((draft, action) => {
       draft[action.key] = action.val;
       draft.errors[action.key] = '';
       draft.isLoading = false;
-      break;
-    case LOCATION_CHANGE:
-      draft.todoLimit = 1;
-      draft.feedLimit = 1;
-      // draft.accountId = '';
-      // draft.userInfo = {};
-      // draft.todos = {
-      //   docs: [],
-      //   page: 0,
-      //   totalPages: 0,
-      //   totalDocs: 0,
-      // };
-      // draft.feeds = {
-      //   docs: [],
-      //   page: 0,
-      //   totalPages: 0,
-      //   totalDocs: 0,
-      // };
       break;
   }
 }, initialState);

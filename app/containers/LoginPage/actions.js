@@ -6,49 +6,26 @@
 
 import {
   ADD_VALIDATION_ERROR,
-  ASYNC_START,
-  CHANGE_PASSWORD,
-  ENTER_LOGIN,
-  LOGIN_PROCESS,
   ASYNC_END,
-  CHANGE_USERNAME,
-  VALIDATE_FORM,
-  LOGIN_ERROR,
+  ASYNC_START,
+  LOGIN_PROCESS,
+  SET_FORM_VALUES,
 } from 'containers/LoginPage/constants';
 
-export function changePasswordAction(password) {
+export function setFormValuesAction(formValues) {
   return {
-    type: CHANGE_PASSWORD,
-    password,
+    type: SET_FORM_VALUES,
+    formValues,
   };
 }
 
-export function changeUsernameAction(username) {
-  return {
-    type: CHANGE_USERNAME,
-    username,
-  };
-}
-
-export function onFormValidation() {
-  return {
-    type: VALIDATE_FORM,
-  };
-}
-
-export function isLoggedAction() {
-  return {
-    type: ENTER_LOGIN,
-  };
-}
-
-export function asyncStart() {
+export function asyncStartAction() {
   return {
     type: ASYNC_START,
   };
 }
 
-export function asyncEnd() {
+export function asyncEndAction() {
   return {
     type: ASYNC_END,
   };
@@ -64,12 +41,5 @@ export function enterValidationErrorAction(errors) {
 export function enterLoginAction() {
   return {
     type: LOGIN_PROCESS,
-  };
-}
-
-export function loginErrorAction(error) {
-  return {
-    type: LOGIN_ERROR,
-    error,
   };
 }

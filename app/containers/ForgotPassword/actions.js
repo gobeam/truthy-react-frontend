@@ -5,21 +5,16 @@
  */
 
 import {
-  FORGOT_PASSWORD,
   ADD_VALIDATION_ERROR,
-  CHANGE_FIELD,
-  VALIDATE_FORM,
+  FORGOT_PASSWORD,
+  SET_FORM_VALUES,
+  ASYNC_START,
+  ASYNC_END,
 } from 'containers/ForgotPassword/constants';
 
 export function forgotPasswordAction() {
   return {
     type: FORGOT_PASSWORD,
-  };
-}
-
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
   };
 }
 
@@ -30,10 +25,21 @@ export function enterValidationErrorAction(errors) {
   };
 }
 
-export function changeFieldAction(key, val) {
+export function setFormValuesAction(formValues) {
   return {
-    type: CHANGE_FIELD,
-    key,
-    val,
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function asyncStartAction() {
+  return {
+    type: ASYNC_START,
+  };
+}
+
+export function asyncEndAction() {
+  return {
+    type: ASYNC_END,
   };
 }

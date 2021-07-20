@@ -5,20 +5,26 @@
  */
 
 import {
-  GET_ROLE_BY_ID,
   ADD_VALIDATION_ERROR,
-  VALIDATE_FORM,
-  ASSIGN_ROLES,
-  CHANGE_FORM_FIELD,
   ASSIGN_PERMISSION_LIST,
+  ASSIGN_ROLES,
+  ASYNC_END,
+  ASYNC_START,
+  CHANGE_FORM_FIELD,
+  CLEAR_FORM,
   DELETE_ITEM_BY_ID,
+  GET_ROLE_BY_ID,
   QUERY_PERMISSION_LIST,
   QUERY_ROLES,
+  SET_FORM_METHOD,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
+  SET_KEYWORD,
   SET_PAGE_NUMBER,
-  ASYNC_START,
-  ASYNC_END,
   SUBMIT_FORM,
-  CLEAR_FORM,
+  INITIATE_CLEAN,
+  SET_PAGE_SIZE,
 } from 'containers/RoleModule/constants';
 
 export function enterValidationErrorAction(errors) {
@@ -52,6 +58,12 @@ export function queryPermissionListAction() {
   };
 }
 
+export function initiateCleanAction() {
+  return {
+    type: INITIATE_CLEAN,
+  };
+}
+
 export function clearFormAction() {
   return {
     type: CLEAR_FORM,
@@ -61,12 +73,6 @@ export function clearFormAction() {
 export function getRoleByIdAction() {
   return {
     type: GET_ROLE_BY_ID,
-  };
-}
-
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
   };
 }
 
@@ -104,10 +110,52 @@ export function setPageNumberAction(pageNumber) {
   };
 }
 
+export function setPageSizeAction(pageSize) {
+  return {
+    type: SET_PAGE_SIZE,
+    pageSize,
+  };
+}
+
 export function changeFieldAction(key, value) {
   return {
     type: CHANGE_FORM_FIELD,
     key,
     value,
+  };
+}
+
+export function setKeywordsAction(keywords) {
+  return {
+    type: SET_KEYWORD,
+    keywords,
+  };
+}
+
+export function setFormMethodAction(formMethod) {
+  return {
+    type: SET_FORM_METHOD,
+    formMethod,
+  };
+}
+
+export function setIdAction(id) {
+  return {
+    type: SET_ID,
+    id,
+  };
+}
+
+export function setFormValues(formValues) {
+  return {
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function setInitialValuesAction(initialValues) {
+  return {
+    type: SET_INITIAL_VALUES,
+    initialValues,
   };
 }

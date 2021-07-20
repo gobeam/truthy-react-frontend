@@ -27,4 +27,9 @@ export default defineMessages({
     id: `${scope}.permissionPage`,
     defaultMessage: `Permission`,
   },
+
+  settingPage: {
+    id: `${scope}.settingPage`,
+    defaultMessage: `Settings`,
+  },
 });

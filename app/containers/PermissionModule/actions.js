@@ -10,15 +10,27 @@ import {
   ASSIGN_PERMISSION,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FORM_FIELD,
   CLEAR_FORM,
   DELETE_ITEM_BY_ID,
   GET_PERMISSION_BY_ID,
   QUERY_PERMISSION,
   SET_PAGE_NUMBER,
   SUBMIT_FORM,
-  VALIDATE_FORM,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
+  SET_KEYWORD,
+  SET_FORM_METHOD,
+  INITIATE_CLEAN,
+  SET_PAGE_SIZE,
 } from 'containers/PermissionModule/constants';
+
+export function setFormMethodAction(formMethod) {
+  return {
+    type: SET_FORM_METHOD,
+    formMethod,
+  };
+}
 
 export function enterValidationErrorAction(errors) {
   return {
@@ -63,12 +75,6 @@ export function getPermissionByIdAction() {
   };
 }
 
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
-  };
-}
-
 export function submitFormAction() {
   return {
     type: SUBMIT_FORM,
@@ -96,10 +102,43 @@ export function setPageNumberAction(pageNumber) {
   };
 }
 
-export function changeFieldAction(key, value) {
+export function setIdAction(id) {
   return {
-    type: CHANGE_FORM_FIELD,
-    key,
-    value,
+    type: SET_ID,
+    id,
+  };
+}
+
+export function setFormValues(formValues) {
+  return {
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function setInitialValuesAction(initialValues) {
+  return {
+    type: SET_INITIAL_VALUES,
+    initialValues,
+  };
+}
+
+export function setKeywordsAction(keywords) {
+  return {
+    type: SET_KEYWORD,
+    keywords,
+  };
+}
+
+export function initiateCleanAction() {
+  return {
+    type: INITIATE_CLEAN,
+  };
+}
+
+export function setPageSizeAction(pageSize) {
+  return {
+    type: SET_PAGE_SIZE,
+    pageSize,
   };
 }

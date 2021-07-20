@@ -13,6 +13,10 @@ export default defineMessages({
     id: `${scope}.back`,
     defaultMessage: 'Go Back',
   },
+  register: {
+    id: `${scope}.register`,
+    defaultMessage: 'Register',
+  },
   internalError: {
     id: `${scope}.internalError`,
     defaultMessage:
@@ -34,14 +38,6 @@ export default defineMessages({
     id: `${scope}.alreadyAccount`,
     defaultMessage: 'Already have an account?',
   },
-  name: {
-    id: `${scope}.name`,
-    defaultMessage: 'Name',
-  },
-  username: {
-    id: `${scope}.username`,
-    defaultMessage: 'Username',
-  },
   agreeTo: {
     id: `${scope}.agreeTo`,
     defaultMessage: 'I agree to the',
@@ -62,5 +58,17 @@ export default defineMessages({
   signBtn: {
     id: `${scope}.signBtn`,
     defaultMessage: 'Sign up',
+  },
+  acceptTerm: {
+    id: `${scope}.acceptTerm`,
+    defaultMessage: 'Should accept terms and condition!',
+  },
+  readTerm: {
+    id: `${scope}.readTerm`,
+    defaultMessage: 'I have read the {TermsAndConditionsLink}',
+  },
+  termsAndConditions: {
+    id: `${scope}.termsAndConditions`,
+    defaultMessage: 'Terms and conditions',
   },
 });

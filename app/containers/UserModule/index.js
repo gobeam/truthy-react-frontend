@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -14,41 +14,74 @@ import saga from 'containers/UserModule/saga';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/UserModule/messages';
-import UserList from 'components/UserPage/List';
-import UserForm from 'components/UserPage/Form';
 import {
-  makeIsFormPageSelector,
-  makeLimitSelector,
+  makeIdSelector,
+  makeIsLoadingSelector,
   makePageNumberSelector,
+  makePageSizeSelector,
 } from 'containers/UserModule/selectors';
 import {
+  getUserByIdAction,
   queryRolesListAction,
   queryUsersAction,
+  setFormMethodAction,
+  setIdAction,
+  setSearchKeywordAction,
 } from 'containers/UserModule/actions';
+import SearchInput from 'components/SearchInput';
+import UserTable from 'containers/UserModule/userTable';
+import CreateUserModal from 'containers/UserModule/createUserModal';
+import { POST, PUT } from 'utils/constants';
+import EditUserModal from 'containers/UserModule/editUserModal';
 
 const key = 'userModule';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
-  formPage: makeIsFormPageSelector(),
-  limit: makeLimitSelector(),
+  pageSize: makePageSizeSelector(),
+  isLoading: makeIsLoadingSelector(),
+  id: makeIdSelector(),
 });
 
 const UserModule = () => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const { pageNumber, formPage, limit } = useSelector(stateSelector);
+  const [createUser, setCreateUser] = useState(false);
+  const [editUser, setEditUser] = useState(false);
+  const { pageNumber, pageSize, isLoading, id } = useSelector(stateSelector);
   const loadUsers = () => dispatch(queryUsersAction());
   const loadRoles = () => dispatch(queryRolesListAction());
+  const onKeywordChange = (keywords) =>
+    dispatch(setSearchKeywordAction(keywords)) && loadUsers();
+  const onchangeFormMethod = (formMethod) =>
+    dispatch(setFormMethodAction(formMethod));
+  const onSetId = (entityId) => dispatch(setIdAction(entityId));
+
+  const onCreate = () => {
+    onchangeFormMethod(POST);
+    setCreateUser(true);
+  };
+
+  const onEdit = (updateId) => {
+    onSetId(updateId);
+    onchangeFormMethod(PUT);
+    setEditUser(true);
+  };
 
   useEffect(() => {
     loadRoles();
   }, []);
 
   useEffect(() => {
+    if (id) {
+      dispatch(getUserByIdAction(id));
+    }
+  }, [id]);
+
+  useEffect(() => {
     loadUsers();
-  }, [pageNumber, limit]);
+  }, [pageNumber, pageSize]);
 
   return (
     <>
@@ -59,7 +92,18 @@ const UserModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      {!formPage ? <UserList /> : <UserForm />}
+      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+      <CreateUserModal
+        visible={createUser}
+        onCancel={() => setCreateUser(false)}
+        onCreate={() => setCreateUser(false)}
+      />
+      <EditUserModal
+        visible={editUser}
+        onCancel={() => setEditUser(false)}
+        onCreate={() => setEditUser(false)}
+      />
+      <UserTable onCreate={onCreate} onEdit={onEdit} />
     </>
   );
 };

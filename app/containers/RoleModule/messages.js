@@ -31,6 +31,14 @@ export default defineMessages({
     id: `${scope}.descriptionPlaceHolder`,
     defaultMessage: 'Input description',
   },
+  descriptionRequired: {
+    id: `${scope}.descriptionRequired`,
+    defaultMessage: 'The description should not be empty!',
+  },
+  nameRequired: {
+    id: `${scope}.nameRequired`,
+    defaultMessage: 'Role name should not be empty!',
+  },
   dateLabel: {
     id: `${scope}.dateLabel`,
     defaultMessage: 'Created At',

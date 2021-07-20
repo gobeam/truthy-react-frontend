@@ -10,15 +10,20 @@ import {
   ASSIGN_USERS,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FORM_FIELD,
   CLEAR_FORM,
+  CLEAR_FORM_FIELD,
   DELETE_ITEM_BY_ID,
   GET_USER_BY_ID,
   QUERY_ROLES,
   QUERY_USERS,
+  SET_FORM_METHOD,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
+  SET_SEARCH_KEYWORD,
   SUBMIT_FORM,
-  VALIDATE_FORM,
 } from 'containers/UserModule/constants';
 
 export function enterValidationErrorAction(errors) {
@@ -64,15 +69,15 @@ export function getUserByIdAction() {
   };
 }
 
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
-  };
-}
-
 export function submitFormAction() {
   return {
     type: SUBMIT_FORM,
+  };
+}
+
+export function clearFormFieldAction() {
+  return {
+    type: CLEAR_FORM_FIELD,
   };
 }
 
@@ -104,10 +109,44 @@ export function setPageNumberAction(pageNumber) {
   };
 }
 
-export function changeFieldAction(key, value) {
+export function setPageSizeAction(pageSize) {
   return {
-    type: CHANGE_FORM_FIELD,
-    key,
-    value,
+    type: SET_PAGE_SIZE,
+    pageSize,
+  };
+}
+
+export function setFormMethodAction(method) {
+  return {
+    type: SET_FORM_METHOD,
+    method,
+  };
+}
+
+export function setIdAction(id) {
+  return {
+    type: SET_ID,
+    id,
+  };
+}
+
+export function setSearchKeywordAction(keywords) {
+  return {
+    type: SET_SEARCH_KEYWORD,
+    keywords,
+  };
+}
+
+export function setFormValues(formValues) {
+  return {
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function setInitialValuesAction(initialValues) {
+  return {
+    type: SET_INITIAL_VALUES,
+    initialValues,
   };
 }

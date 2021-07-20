@@ -1,56 +1,50 @@
-/**
- * Parses the JSON returned by a network request
- *
- * @param  {object} response A response from a network request
- *
- * @return {object}          The parsed JSON from the request
- */
-function parseJSON(response) {
-  if (response.status === 204 || response.status === 205) {
-    return null;
-  }
-  return response.json();
-}
+import axios from 'axios';
+import { store } from 'store';
+import { SHOW_SNACK_MESSAGE } from 'containers/SnackMessage/constants';
+import uuid from 'react-uuid';
 
 /**
- * Checks if a network request came back fine, and throws an error if not
- *
- * @param  {object} response   A response from a network request
- *
- * @return {object|undefined} Returns either the response, or throws an error
+ * Create an Axios Client with defaults
  */
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  if (response.status === 401) {
-    const urlLastSegment = window.location.pathname.split('/').pop();
-    // if not in login page redirect to login page
-    const publicLinks = ['', 'login', 'register', 'forgot-password'];
-    if (!publicLinks.includes(urlLastSegment)) {
-      window.location.href = `/login?path=${window.location.pathname}`;
+const client = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URI,
+});
+
+/**
+ * Request Wrapper with default success/error actions
+ */
+const request = (options) => {
+  const onSuccess = (response) =>
+    // console.debug('Request Successful!', response);
+    response.data;
+  const onError = (error) => {
+    // console.error('Request Failed:', error.config);
+    if (error.response) {
+      // Request was made but server responded with something
+      // other than 2xx
+      // console.error('Status:', error.response.status);
+      // console.error('Data:', error.response.data);
+      // console.error('Headers:', error.response.headers);
+      if ([401, 403, 429].includes(error.response.status)) {
+        store.dispatch({
+          type: SHOW_SNACK_MESSAGE,
+          snack: {
+            type: 'error',
+            message: error.response.data.message,
+            id: uuid(),
+          },
+        });
+      }
+    } else {
+      // Something else happened while setting up the request
+      // triggered the error
+      // console.error('Error Message:', error.message);
     }
-  }
-  // send validation and forbidden request response
 
-  if ([429, 422, 403].includes(response.status)) {
-    return response;
-  }
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
-}
+    return Promise.reject(error.response || error.message);
+  };
 
-/**
- * Requests a URL, returning a promise
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- *
- * @return {object}           The response data
- */
-export default function request(url, options) {
-  return fetch(url, { ...options, credentials: 'include' })
-    .then(checkStatus)
-    .then(parseJSON);
-}
+  return client(options).then(onSuccess).catch(onError);
+};
+
+export default request;

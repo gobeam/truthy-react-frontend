@@ -12,6 +12,12 @@ const selectPermissionModuleDomain = (state) =>
  * Other specific selectors
  */
 
+const makeInitialValuesSelector = () =>
+  createSelector(
+    selectPermissionModuleDomain,
+    (substate) => substate.initialValues,
+  );
+
 const makeIsLoadingSelector = () =>
   createSelector(
     selectPermissionModuleDomain,
@@ -21,9 +27,6 @@ const makeIsLoadingSelector = () =>
 const makeKeywordsSelector = () =>
   createSelector(selectPermissionModuleDomain, (substate) => substate.keywords);
 
-const makeIsFormPageSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.formPage);
-
 const makeFormMethodSelector = () =>
   createSelector(
     selectPermissionModuleDomain,
@@ -31,28 +34,7 @@ const makeFormMethodSelector = () =>
   );
 
 const makeUpdateIdSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.updateId);
-
-const makeFormTitleSelector = () =>
-  createSelector(
-    selectPermissionModuleDomain,
-    (substate) => substate.formTitle,
-  );
-
-const makeResourceNameSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.resource);
-
-const makeDescriptionSelector = () =>
-  createSelector(
-    selectPermissionModuleDomain,
-    (substate) => substate.description,
-  );
-
-const makePathNameSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.path);
-
-const makeMethodNameSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.method);
+  createSelector(selectPermissionModuleDomain, (substate) => substate.id);
 
 const makePageNumberSelector = () =>
   createSelector(
@@ -61,7 +43,7 @@ const makePageNumberSelector = () =>
   );
 
 const makeLimitSelector = () =>
-  createSelector(selectPermissionModuleDomain, (substate) => substate.limit);
+  createSelector(selectPermissionModuleDomain, (substate) => substate.pageSize);
 
 const makePermissionsSelector = () =>
   createSelector(
@@ -72,19 +54,28 @@ const makePermissionsSelector = () =>
 const makeErrorSelector = () =>
   createSelector(selectPermissionModuleDomain, (substate) => substate.errors);
 
+const makeInitiateCleanFieldSelector = () =>
+  createSelector(
+    selectPermissionModuleDomain,
+    (substate) => substate.initiateClean,
+  );
+
+const makeFormValuesSelector = () =>
+  createSelector(
+    selectPermissionModuleDomain,
+    (substate) => substate.formValues,
+  );
+
 export {
+  makeInitialValuesSelector,
+  makeFormValuesSelector,
+  makeInitiateCleanFieldSelector,
   makeLimitSelector,
-  makePathNameSelector,
-  makeMethodNameSelector,
-  makeResourceNameSelector,
   makeKeywordsSelector,
   makeUpdateIdSelector,
-  makeFormTitleSelector,
-  makeIsFormPageSelector,
   makeFormMethodSelector,
   makeIsLoadingSelector,
   makeErrorSelector,
   makePageNumberSelector,
   makePermissionsSelector,
-  makeDescriptionSelector,
 };

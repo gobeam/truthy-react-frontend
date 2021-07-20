@@ -5,10 +5,8 @@ import {
   QUERY_PERMISSION_LIST,
   QUERY_ROLES,
   SUBMIT_FORM,
-  VALIDATE_FORM,
 } from 'containers/RoleModule/constants';
 import ApiEndpoint from 'utils/api';
-import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
 import _ from 'lodash';
@@ -17,89 +15,59 @@ import {
   assignRolesAction,
   asyncEndAction,
   asyncStartAction,
-  changeFieldAction,
-  clearFormAction,
   enterValidationErrorAction,
+  initiateCleanAction,
   queryRolesAction,
-  submitFormAction,
+  setInitialValuesAction,
 } from 'containers/RoleModule/actions';
 import {
-  makeDescriptionSelector,
   makeFormMethodSelector,
+  makeFormValuesSelector,
+  makeIdSelector,
   makeKeywordsSelector,
   makeLimitSelector,
-  makeNameSelector,
   makePageNumberSelector,
-  makePermissionsSelector,
-  makeUpdateIdSelector,
 } from 'containers/RoleModule/selectors';
-import { checkError } from 'helpers/Validation';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { DELETE, GET, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
-  const name = yield select(makeNameSelector());
-  const description = yield select(makeDescriptionSelector());
-  const permissions = yield select(makePermissionsSelector());
+  yield put(asyncStartAction());
+  const data = yield select(makeFormValuesSelector());
   const method = yield select(makeFormMethodSelector());
-  const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles${
-    method === 'put' ? `/${id}` : ''
-  }`;
-  const payload = ApiEndpoint.makeApiPayload(method.toUpperCase(), {
-    name,
-    description,
-    permissions,
-  });
+  const id = yield select(makeIdSelector());
+  const requestUrl = `/roles${method === PUT ? `/${id}` : ''}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, method, data);
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(asyncEndAction());
-    if (response && response.error) {
-      return yield put(enterValidationErrorAction(response.error));
-    }
+    yield call(request, payload);
     yield put(queryRolesAction());
-    yield put(changeFieldAction('formPage', false));
-    yield put(clearFormAction());
+    yield put(initiateCleanAction());
+    yield put(asyncEndAction());
     const message =
-      method === 'put' ? commonMessage.updateSuccess : commonMessage.addSuccess;
-    return yield showFormattedErrorMessage('success', message);
+      method === PUT ? commonMessage.updateSuccess : commonMessage.addSuccess;
+    return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
+    if (error.data && error.data.statusCode === 422) {
+      return yield put(enterValidationErrorAction(error.data.message));
+    }
+    return yield showFormattedAlert('error', commonMessage.serverError);
   }
-}
-
-export function* handleValidateForm() {
-  yield put(asyncStartAction());
-  const name = yield select(makeNameSelector());
-  const model = {
-    name: {
-      value: name,
-      validator: ['isString', 'isNotEmpty'],
-    },
-  };
-  const err = checkError(model);
-  if (Object.keys(err).length > 0) {
-    yield put(asyncEndAction());
-    return yield put(enterValidationErrorAction(err));
-  }
-  return yield put(submitFormAction());
 }
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${data.id}`;
-  const payload = ApiEndpoint.makeApiPayload('DELETE');
+  const requestUrl = `/roles/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, DELETE);
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryRolesAction());
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.deleteSuccess,
-    );
+    return yield showFormattedAlert('success', commonMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', commonMessage.deleteError);
   }
 }
 
@@ -108,20 +76,11 @@ export function* handleQueryRole() {
   const pageNumber = yield select(makePageNumberSelector());
   const limit = yield select(makeLimitSelector());
   const keywords = yield select(makeKeywordsSelector());
-  const queryObject = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObject.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObject)
-    .map((key) => `${key}=${queryObject[key]}`)
-    .join('&');
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles?${queryString}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const queryString = buildQueryString(keywords, pageNumber, limit);
+  const requestUrl = `/roles?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     return yield put(assignRolesAction(response));
   } catch (error) {
     return yield put(asyncEndAction());
@@ -130,16 +89,38 @@ export function* handleQueryRole() {
 
 export function* handleQueryPermission() {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions?limit=300`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/permissions?limit=300`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     if (response.results) {
+      const permissionsArray = response.results;
+      const permissionCheckBoxArray = [];
+
+      // eslint-disable-next-line no-restricted-syntax
+      for (const permission of permissionsArray) {
+        permissionCheckBoxArray.push({
+          resource: permission.resource,
+          title: permission.description,
+          key: permission.id,
+        });
+      }
       const groupedPermissionByResource = _.groupBy(
-        response.results,
+        permissionCheckBoxArray,
         'resource',
       );
-      return yield put(assignPermissionListAction(groupedPermissionByResource));
+      const treeStructure = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const resourcePermissionTitle of Object.keys(
+        groupedPermissionByResource,
+      )) {
+        treeStructure.push({
+          title: resourcePermissionTitle,
+          key: resourcePermissionTitle,
+          children: groupedPermissionByResource[resourcePermissionTitle],
+        });
+      }
+      return yield put(assignPermissionListAction(treeStructure));
     }
     return yield put(asyncEndAction());
   } catch (error) {
@@ -149,15 +130,19 @@ export function* handleQueryPermission() {
 
 export function* handleGetRoleById() {
   yield put(asyncStartAction());
-  const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles/${id}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const id = yield select(makeIdSelector());
+  const requestUrl = `/roles/${id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(changeFieldAction('name', response.name));
-    yield put(changeFieldAction('description', response.description));
+    const response = yield call(request, payload);
     const permissions = response.permission.map((permission) => permission.id);
-    yield put(changeFieldAction('permissions', permissions));
+    yield put(
+      setInitialValuesAction({
+        name: response.name,
+        description: response.description,
+        permissions,
+      }),
+    );
     return yield put(asyncEndAction());
   } catch (error) {
     return yield put(asyncEndAction());
@@ -167,7 +152,6 @@ export function* handleGetRoleById() {
 export default function* roleModuleSaga() {
   yield takeLatest(GET_ROLE_BY_ID, handleGetRoleById);
   yield takeLatest(SUBMIT_FORM, handleSubmitForm);
-  yield takeLatest(VALIDATE_FORM, handleValidateForm);
   yield takeLatest(QUERY_ROLES, handleQueryRole);
   yield takeLatest(QUERY_PERMISSION_LIST, handleQueryPermission);
   yield takeLatest(DELETE_ITEM_BY_ID, handleDeleteItemById);

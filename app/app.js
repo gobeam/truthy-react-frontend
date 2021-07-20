@@ -12,13 +12,11 @@ import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
 import FontFaceObserver from 'fontfaceobserver';
-import history from 'utils/history';
 // Import css
-import 'scss/volt.scss';
+import 'antd/dist/antd.css';
+// import 'scss/volt.scss';
 import 'sanitize.css/sanitize.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 // Import root app
 import App from 'containers/App';
 // Import Language Provider
@@ -28,10 +26,10 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
-import configureStore from 'configure-store';
+import { store } from 'store';
 // Import i18n messages
 import { DEFAULT_LOCALE, translationMessages } from 'i18n';
-import { loadState, saveState } from 'services/persist.service';
+import { saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import reportWebVitals from 'reportWebVitals';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
@@ -45,9 +43,6 @@ openSansObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 });
 
-// Create redux store with history
-const initialState = loadState();
-const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 store.subscribe(
@@ -63,9 +58,7 @@ const render = (messages) => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <App />
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,

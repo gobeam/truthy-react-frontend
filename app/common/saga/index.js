@@ -1,21 +1,19 @@
 import React from 'react';
 import { put } from 'redux-saga/effects';
-import { enqueueSnackbarAction } from 'containers/SnackBar/actions';
 import { FormattedMessage } from 'react-intl';
+import { enqueueAlertAction } from 'containers/AlertMessage/actions';
 
 /**
  * show formatted error message
  * @param type
  * @param message
- * @param autoHide
  * @returns {IterableIterator<*>}
  */
-export function* showFormattedErrorMessage(type, message, autoHide = true) {
+export function* showFormattedAlert(type, message) {
   return yield put(
-    enqueueSnackbarAction({
+    enqueueAlertAction({
       message: <FormattedMessage {...message} />,
       type,
-      autoHide,
     }),
   );
 }
@@ -24,15 +22,13 @@ export function* showFormattedErrorMessage(type, message, autoHide = true) {
  * show error message
  * @param type
  * @param message
- * @param autoHide
  * @returns {IterableIterator<*>}
  */
-export function* showErrorMessage(type, message, autoHide = true) {
+export function* showAlert(type, message) {
   return yield put(
-    enqueueSnackbarAction({
+    enqueueAlertAction({
       message,
       type,
-      autoHide,
     }),
   );
 }

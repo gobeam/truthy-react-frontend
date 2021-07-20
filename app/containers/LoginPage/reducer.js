@@ -4,41 +4,38 @@
  *
  */
 import produce from 'immer';
-import { LOCATION_CHANGE } from 'connected-react-router';
 import {
   ADD_VALIDATION_ERROR,
-  CHANGE_USERNAME,
+  ASYNC_END,
+  ASYNC_START,
   CHANGE_LOGIN,
-  CHANGE_PASSWORD,
   ENTER_LOGIN_ERROR,
   LOGIN,
   LOGIN_ERROR,
   LOGIN_SUCCESS,
-  ASYNC_END,
-  ASYNC_START,
+  SET_FORM_VALUES,
 } from 'containers/LoginPage/constants';
 
-export const initialState = {
+const EmptyFields = {
   username: '',
   password: '',
-  errors: {},
+};
+export const initialState = {
+  initialValues: EmptyFields,
+  formValues: {},
+  errors: [],
   isLoading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const loginPageReducer = produce((draft, action) => {
   switch (action.type) {
-    case CHANGE_PASSWORD:
-      draft.password = action.password;
-      draft.errors.password = '';
-      break;
-    case CHANGE_USERNAME:
-      draft.username = action.username;
-      draft.errors.username = '';
-      break;
     case ADD_VALIDATION_ERROR:
       draft.errors = action.errors;
       draft.isLoading = false;
+      break;
+    case SET_FORM_VALUES:
+      draft.formValues = action.formValues;
       break;
     case CHANGE_LOGIN:
       draft.login = action.login;
@@ -64,13 +61,6 @@ const loginPageReducer = produce((draft, action) => {
       break;
     case LOGIN_ERROR:
       draft.error = action.error;
-      draft.isLoading = false;
-      break;
-    case LOCATION_CHANGE:
-      draft.username = '';
-      draft.password = '';
-      draft.error = '';
-      draft.errors = {};
       draft.isLoading = false;
       break;
   }

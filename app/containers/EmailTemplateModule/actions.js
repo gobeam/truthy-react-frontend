@@ -9,15 +9,27 @@ import {
   ASSIGN_TEMPLATE,
   ASYNC_END,
   ASYNC_START,
-  CHANGE_FORM_FIELD,
   CLEAR_FORM,
   DELETE_ITEM_BY_ID,
   GET_TEMPLATE_BY_ID,
+  INITIATE_CLEAN,
   QUERY_TEMPLATE,
+  SET_FORM_METHOD,
+  SET_FORM_VALUES,
+  SET_ID,
+  SET_INITIAL_VALUES,
   SET_PAGE_NUMBER,
+  SET_PAGE_SIZE,
   SUBMIT_FORM,
-  VALIDATE_FORM,
+  SET_KEYWORD,
 } from 'containers/EmailTemplateModule/constants';
+
+export function setFormMethodAction(formMethod) {
+  return {
+    type: SET_FORM_METHOD,
+    formMethod,
+  };
+}
 
 export function enterValidationErrorAction(errors) {
   return {
@@ -56,12 +68,6 @@ export function getTemplateByIdAction() {
   };
 }
 
-export function validateFormAction() {
-  return {
-    type: VALIDATE_FORM,
-  };
-}
-
 export function submitFormAction() {
   return {
     type: SUBMIT_FORM,
@@ -89,10 +95,43 @@ export function setPageNumberAction(pageNumber) {
   };
 }
 
-export function changeFieldAction(key, value) {
+export function initiateCleanAction() {
   return {
-    type: CHANGE_FORM_FIELD,
-    key,
-    value,
+    type: INITIATE_CLEAN,
+  };
+}
+
+export function setPageSizeAction(pageSize) {
+  return {
+    type: SET_PAGE_SIZE,
+    pageSize,
+  };
+}
+
+export function setInitialValuesAction(initialValues) {
+  return {
+    type: SET_INITIAL_VALUES,
+    initialValues,
+  };
+}
+
+export function setIdAction(id) {
+  return {
+    type: SET_ID,
+    id,
+  };
+}
+
+export function setFormValues(formValues) {
+  return {
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function setKeywordsAction(keywords) {
+  return {
+    type: SET_KEYWORD,
+    keywords,
   };
 }

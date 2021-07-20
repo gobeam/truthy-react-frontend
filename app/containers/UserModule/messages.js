@@ -31,6 +31,14 @@ export default defineMessages({
     id: `${scope}.statusLabel`,
     defaultMessage: 'Status',
   },
+  roleRequired: {
+    id: `${scope}.roleRequired`,
+    defaultMessage: 'At least one role must be selected!',
+  },
+  statusRequired: {
+    id: `${scope}.statusRequired`,
+    defaultMessage: "User's status must be specified!",
+  },
   usernamePlaceHolder: {
     id: `${scope}.usernamePlaceHolder`,
     defaultMessage: 'Input username',
@@ -94,5 +102,9 @@ export default defineMessages({
   blocked: {
     id: `${scope}.blocked`,
     defaultMessage: 'Blocked',
+  },
+  select: {
+    id: `${scope}.select`,
+    defaultMessage: 'Select',
   },
 });

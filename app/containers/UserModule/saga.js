@@ -5,7 +5,6 @@ import {
   QUERY_ROLES,
   QUERY_USERS,
   SUBMIT_FORM,
-  VALIDATE_FORM,
 } from 'containers/UserModule/constants';
 import ApiEndpoint from 'utils/api';
 import deleteMessage from 'components/DeleteModal/messages';
@@ -16,140 +15,77 @@ import {
   assignUsersAction,
   asyncEndAction,
   asyncStartAction,
-  changeFieldAction,
-  clearFormAction,
+  clearFormFieldAction,
   enterValidationErrorAction,
   queryUsersAction,
-  submitFormAction,
+  setInitialValuesAction,
 } from 'containers/UserModule/actions';
 import {
-  makeEmailSelector,
   makeFormMethodSelector,
+  makeFormValuesSelector,
+  makeIdSelector,
   makeKeywordsSelector,
-  makeLimitSelector,
-  makeNameSelector,
   makePageNumberSelector,
-  makeRoleIdSelector,
-  makeStatusSelector,
-  makeUpdateIdSelector,
-  makeUserNameSelector,
+  makePageSizeSelector,
 } from 'containers/UserModule/selectors';
-import { checkError } from 'helpers/Validation';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { DELETE, GET, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
-  const email = yield select(makeEmailSelector());
-  const roleId = yield select(makeRoleIdSelector());
-  const name = yield select(makeNameSelector());
-  const username = yield select(makeUserNameSelector());
-  const status = yield select(makeStatusSelector());
+  const formValues = yield select(makeFormValuesSelector());
   const formMethod = yield select(makeFormMethodSelector());
-  const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users${
-    formMethod === 'put' ? `/${id}` : ''
-  }`;
-  const payload = ApiEndpoint.makeApiPayload(formMethod.toUpperCase(), {
-    email,
-    roleId,
-    name,
-    username,
-    status,
-  });
+  const id = yield select(makeIdSelector());
+  const requestUrl = `/users${formMethod === PUT ? `/${id}` : ''}`;
+  const payload = ApiEndpoint.makeApiPayload(
+    requestUrl,
+    formMethod,
+    formValues,
+  );
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(asyncEndAction());
-    if (response && response.error) {
-      return yield put(enterValidationErrorAction(response.error));
-    }
+    yield call(request, payload);
     yield put(queryUsersAction());
-    yield put(changeFieldAction('formPage', false));
-    yield put(clearFormAction());
+    yield put(clearFormFieldAction());
+    yield put(asyncEndAction());
     const message =
-      formMethod === 'put'
+      formMethod === PUT
         ? commonMessage.updateSuccess
         : commonMessage.addSuccess;
-    return yield showFormattedErrorMessage('success', message);
+    return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
+    if (error.data && error.data.statusCode === 422) {
+      return yield put(enterValidationErrorAction(error.data.message));
+    }
+    return yield showFormattedAlert('error', commonMessage.serverError);
   }
-}
-
-export function* handleValidateForm() {
-  yield put(asyncStartAction());
-  const email = yield select(makeEmailSelector());
-  const roleId = yield select(makeRoleIdSelector());
-  const name = yield select(makeNameSelector());
-  const username = yield select(makeUserNameSelector());
-  const status = yield select(makeStatusSelector());
-  const model = {
-    email: {
-      value: email,
-      validator: ['isEmail', 'isString', 'isNotEmpty'],
-    },
-    roleId: {
-      value: roleId,
-      key: 'role',
-      validator: ['isInt', 'isNotEmpty'],
-    },
-    name: {
-      value: name,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    username: {
-      value: username,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    status: {
-      value: status,
-      validator: ['isString', 'isNotEmpty'],
-    },
-  };
-  const err = checkError(model);
-  if (Object.keys(err).length > 0) {
-    yield put(asyncEndAction());
-    return yield put(enterValidationErrorAction(err));
-  }
-  return yield put(submitFormAction());
 }
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users/${data.id}`;
-  const payload = ApiEndpoint.makeApiPayload('DELETE');
+  const requestUrl = `/users/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, DELETE);
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryUsersAction());
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.deleteSuccess,
-    );
+    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', deleteMessage.deleteError);
   }
 }
 
 export function* handleQueryUsersList() {
+  yield put(asyncStartAction());
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
-  const limit = yield select(makeLimitSelector());
-  const queryObj = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObj.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObj)
-    .map((key) => `${key}=${queryObj[key]}`)
-    .join('&');
-  yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users?${queryString}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const limit = yield select(makePageSizeSelector());
+  const queryString = buildQueryString(keywords, pageNumber, limit);
+  const requestUrl = `/users?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     return yield put(assignUsersAction(response));
   } catch (error) {
     return yield put(asyncEndAction());
@@ -158,17 +94,17 @@ export function* handleQueryUsersList() {
 
 export function* handleGetUserById() {
   yield put(asyncStartAction());
-  const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/users/${id}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const id = yield select(makeIdSelector());
+  const requestUrl = `/users/${id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(changeFieldAction('name', response.name));
-    yield put(changeFieldAction('email', response.email));
-    yield put(changeFieldAction('username', response.username));
-    yield put(changeFieldAction('status', response.status));
+    const response = yield call(request, payload);
+
     yield put(
-      changeFieldAction('roleId', response.role ? response.role.id : ''),
+      setInitialValuesAction({
+        ...response,
+        roleId: response.role?.id || '',
+      }),
     );
     return yield put(asyncEndAction());
   } catch (error) {
@@ -178,10 +114,10 @@ export function* handleGetUserById() {
 
 export function* handleQueryRoles() {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/roles?limit=300`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/roles?limit=300`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     if (response.results) {
       return yield put(assignRolesListAction(response.results));
     }
@@ -196,6 +132,5 @@ export default function* permissionModuleSaga() {
   yield takeLatest(QUERY_ROLES, handleQueryRoles);
   yield takeLatest(GET_USER_BY_ID, handleGetUserById);
   yield takeLatest(SUBMIT_FORM, handleSubmitForm);
-  yield takeLatest(VALIDATE_FORM, handleValidateForm);
   yield takeLatest(DELETE_ITEM_BY_ID, handleDeleteItemById);
 }

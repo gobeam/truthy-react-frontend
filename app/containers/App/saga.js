@@ -1,11 +1,9 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
-import Common from 'utils/common';
 import ApiEndpoint, { BASE_URL } from 'utils/api';
 import {
-  asyncEnd,
-  asyncStart,
+  asyncEndAction,
+  asyncStartAction,
   getProfileAction,
   getProfileErrorAction,
   getProfileSuccessAction,
@@ -18,25 +16,22 @@ import {
 } from 'containers/App/actions';
 import {
   GET_PROFILE_REQUEST,
-  LOGIN_PATH,
   LOGOUT,
-  PUBLIC_REDIRECT_LOGGED,
   REFRESH_TOKEN,
 } from 'containers/App/constants';
-import { makeIsLoggedSelector } from 'containers/App/selectors';
-import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
 import messages from 'common/messages';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { GET, POST } from 'utils/constants';
 
 /**
  *  query logged in user profile
  * @returns {IterableIterator<*>}
  */
 export function* handleProfile() {
-  const requestURL = ApiEndpoint.getProfilePath();
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = ApiEndpoint.getProfilePath();
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     if (response.error) {
       if (response.message === 'token expired') {
         return yield put(refreshTokenAction());
@@ -51,9 +46,7 @@ export function* handleProfile() {
     yield put(hideHeaderAction(false));
     return yield put(getProfileSuccessAction(response));
   } catch (error) {
-    if (error.message !== 'Failed to fetch') {
-      yield put(isLoggedErrorAction());
-    }
+    yield put(isLoggedErrorAction());
     return yield put(getProfileErrorAction('Internal Server Error'));
   }
 }
@@ -63,15 +56,13 @@ export function* handleProfile() {
  * @returns {IterableIterator<*>}
  */
 export function* handleLogout() {
-  const requestURL = ApiEndpoint.getLogoutPath();
-  const payload = ApiEndpoint.makeApiPayload('post', true, {});
+  const requestUrl = ApiEndpoint.getLogoutPath();
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, true, {});
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(logoutSuccessAction());
-    return yield put(push(LOGIN_PATH));
   } catch (error) {
     yield put(logoutErrorAction(error));
-    return yield put(push(LOGIN_PATH));
   }
 }
 
@@ -80,40 +71,26 @@ export function* handleLogout() {
  * @returns {IterableIterator<*>}
  */
 export function* handleRefreshToken() {
-  yield put(asyncStart());
-  const requestURL = ApiEndpoint.getRefreshTokenPath();
-  const requestPayload = ApiEndpoint.makeApiPayload('POST', {});
+  yield put(asyncStartAction());
+  const requestUrl = ApiEndpoint.getRefreshTokenPath();
+  const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
 
   try {
-    const response = yield call(request, requestURL, requestPayload);
+    const response = yield call(request, requestPayload);
     if (response.error) {
       yield put(isLoggedErrorAction());
-      yield showFormattedErrorMessage('danger', messages.invalidRefresh);
-      return yield put(asyncEnd());
+      yield showFormattedAlert('error', messages.invalidRefresh);
+      return yield put(asyncEndAction());
     }
     return yield put(getProfileAction());
   } catch (error) {
     yield put(isLoggedErrorAction());
-    yield put(asyncEnd());
-    return yield showFormattedErrorMessage('danger', messages.invalidRefresh);
+    yield put(asyncEndAction());
+    return yield showFormattedAlert('error', messages.invalidRefresh);
   }
-}
-
-/**
- * handle successful authenticated redirect
- * @returns {IterableIterator<<"SELECT", SelectEffectDescriptor>|<"PUT", PutEffectDescriptor<CallHistoryMethodAction<[, ]>>>|boolean|*>}
- */
-export function* handlePublicRedirect() {
-  const isLogged = yield select(makeIsLoggedSelector());
-  if (isLogged) {
-    const redirectUrl = Common.getParameterByName('path') || SUCCESS_REDIRECT;
-    return yield put(push(redirectUrl));
-  }
-  return true;
 }
 
 export default function* appPageSaga() {
-  yield takeLatest(PUBLIC_REDIRECT_LOGGED, handlePublicRedirect);
   yield takeLatest(LOGOUT, handleLogout);
   yield takeLatest(GET_PROFILE_REQUEST, handleProfile);
   yield takeLatest(REFRESH_TOKEN, handleRefreshToken);

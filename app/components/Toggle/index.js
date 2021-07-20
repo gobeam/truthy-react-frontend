@@ -6,34 +6,35 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '@themesberg/react-bootstrap';
-import ToggleOption from '../ToggleOption';
+import { Select } from 'antd';
+import { injectIntl } from 'react-intl';
+
+const { Option } = Select;
 
 const Toggle = (props) => {
-  let content = <option>--</option>;
-  if (props.values) {
-    content = props.values.map((value) => (
-      <ToggleOption key={value} value={value} message={props.messages[value]} />
+  const { values, value, intl, onToggle, messages } = props;
+  let content = <Option>--</Option>;
+  if (values) {
+    content = values.map((optVal) => (
+      <Option key={optVal} value={optVal}>
+        {messages[optVal] ? intl.formatMessage(messages[optVal]) : optVal}
+      </Option>
     ));
   }
 
   return (
-    <Form.Control
-      as="select"
-      size="sm"
-      value={props.value}
-      onChange={props.onToggle}
-    >
+    <Select value={value} onChange={onToggle}>
       {content}
-    </Form.Control>
+    </Select>
   );
 };
 
 Toggle.propTypes = {
   onToggle: PropTypes.func,
+  intl: PropTypes.object,
   values: PropTypes.array,
   value: PropTypes.string,
   messages: PropTypes.object,
 };
 
-export default Toggle;
+export default injectIntl(Toggle);

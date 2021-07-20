@@ -5,7 +5,6 @@ import {
   QUERY_PERMISSION,
   SUBMIT_FORM,
   SYNC_PERMISSION,
-  VALIDATE_FORM,
 } from 'containers/PermissionModule/constants';
 import ApiEndpoint from 'utils/api';
 import deleteMessage from 'components/DeleteModal/messages';
@@ -15,131 +14,74 @@ import {
   assignPermissionAction,
   asyncEndAction,
   asyncStartAction,
-  changeFieldAction,
-  clearFormAction,
   enterValidationErrorAction,
+  initiateCleanAction,
   queryPermissionAction,
-  submitFormAction,
+  setInitialValuesAction,
 } from 'containers/PermissionModule/actions';
 import {
-  makeDescriptionSelector,
   makeFormMethodSelector,
+  makeFormValuesSelector,
   makeKeywordsSelector,
   makeLimitSelector,
-  makeMethodNameSelector,
   makePageNumberSelector,
-  makePathNameSelector,
-  makeResourceNameSelector,
   makeUpdateIdSelector,
 } from 'containers/PermissionModule/selectors';
-import { checkError } from 'helpers/Validation';
-import { showFormattedErrorMessage } from 'common/saga';
+import { showFormattedAlert } from 'common/saga';
+import { DELETE, GET, POST, PUT } from 'utils/constants';
+import { buildQueryString } from 'common/helpers';
 
 export function* handleSubmitForm() {
-  const resource = yield select(makeResourceNameSelector());
-  const description = yield select(makeDescriptionSelector());
-  const method = yield select(makeMethodNameSelector());
-  const path = yield select(makePathNameSelector());
+  yield put(asyncStartAction());
+  const data = yield select(makeFormValuesSelector());
   const formMethod = yield select(makeFormMethodSelector());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions${
-    formMethod === 'put' ? `/${id}` : ''
-  }`;
-  const payload = ApiEndpoint.makeApiPayload(formMethod.toUpperCase(), {
-    resource,
-    description,
-    method,
-    path,
-  });
+  const requestUrl = `/permissions${formMethod === PUT ? `/${id}` : ''}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, formMethod, data);
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(asyncEndAction());
-    if (response && response.error) {
-      return yield put(enterValidationErrorAction(response.error));
-    }
+    yield call(request, payload);
     yield put(queryPermissionAction());
-    yield put(changeFieldAction('formPage', false));
-    yield put(clearFormAction());
+    yield put(initiateCleanAction());
+    yield put(asyncEndAction());
     const message =
-      formMethod === 'put'
+      formMethod === PUT
         ? commonMessage.updateSuccess
         : commonMessage.addSuccess;
-    return yield showFormattedErrorMessage('success', message);
+    return yield showFormattedAlert('success', message);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', commonMessage.serverError);
+    if (error.data && error.data.statusCode === 422) {
+      return yield put(enterValidationErrorAction(error.data.message));
+    }
+    return yield showFormattedAlert('error', commonMessage.serverError);
   }
-}
-
-export function* handleValidateForm() {
-  yield put(asyncStartAction());
-  const resource = yield select(makeResourceNameSelector());
-  const description = yield select(makeDescriptionSelector());
-  const method = yield select(makeMethodNameSelector());
-  const path = yield select(makePathNameSelector());
-  const model = {
-    resource: {
-      value: resource,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    description: {
-      value: description,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    method: {
-      value: method,
-      validator: ['isString', 'isNotEmpty'],
-    },
-    path: {
-      value: path,
-      validator: ['isString', 'isNotEmpty'],
-    },
-  };
-  const err = checkError(model);
-  if (Object.keys(err).length > 0) {
-    yield put(asyncEndAction());
-    return yield put(enterValidationErrorAction(err));
-  }
-  return yield put(submitFormAction());
 }
 
 export function* handleDeleteItemById(data) {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/${data.id}`;
-  const payload = ApiEndpoint.makeApiPayload('DELETE');
+  const requestUrl = `/permissions/${data.id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, DELETE);
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryPermissionAction());
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.deleteSuccess,
-    );
+    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedErrorMessage('danger', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', deleteMessage.deleteError);
   }
 }
 
 export function* handleQueryPermission() {
+  yield put(asyncStartAction());
   const pageNumber = yield select(makePageNumberSelector());
   const keywords = yield select(makeKeywordsSelector());
   const limit = yield select(makeLimitSelector());
-  const queryObj = {
-    page: pageNumber > 0 ? pageNumber : 1,
-    limit: limit > 0 ? limit : 10,
-  };
-  if (keywords && keywords.trim().length > 0) {
-    queryObj.keywords = keywords;
-  }
-  const queryString = Object.keys(queryObj)
-    .map((key) => `${key}=${queryObj[key]}`)
-    .join('&');
-  yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions?${queryString}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const queryString = buildQueryString(keywords, pageNumber, limit);
+  const requestUrl = `/permissions?${queryString}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
+    const response = yield call(request, payload);
     return yield put(assignPermissionAction(response));
   } catch (error) {
     return yield put(asyncEndAction());
@@ -149,14 +91,11 @@ export function* handleQueryPermission() {
 export function* handleGetPermissionById() {
   yield put(asyncStartAction());
   const id = yield select(makeUpdateIdSelector());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/${id}`;
-  const payload = ApiEndpoint.makeApiPayload('GET');
+  const requestUrl = `/permissions/${id}`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
-    const response = yield call(request, requestURL, payload);
-    yield put(changeFieldAction('resource', response.resource));
-    yield put(changeFieldAction('description', response.description));
-    yield put(changeFieldAction('method', response.method));
-    yield put(changeFieldAction('path', response.path));
+    const response = yield call(request, payload);
+    yield put(setInitialValuesAction(response));
     return yield put(asyncEndAction());
   } catch (error) {
     return yield put(asyncEndAction());
@@ -165,15 +104,12 @@ export function* handleGetPermissionById() {
 
 export function* handleSyncPermission() {
   yield put(asyncStartAction());
-  const requestURL = `${ApiEndpoint.getBasePath()}/permissions/sync`;
-  const payload = ApiEndpoint.makeApiPayload('POST', {});
+  const requestUrl = `/permissions/sync`;
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
   try {
-    yield call(request, requestURL, payload);
+    yield call(request, payload);
     yield put(queryPermissionAction());
-    return yield showFormattedErrorMessage(
-      'success',
-      deleteMessage.syncSuccess,
-    );
+    return yield showFormattedAlert('success', deleteMessage.syncSuccess);
   } catch (error) {
     return yield put(asyncEndAction());
   }
@@ -184,6 +120,5 @@ export default function* permissionModuleSaga() {
   yield takeLatest(QUERY_PERMISSION, handleQueryPermission);
   yield takeLatest(GET_PERMISSION_BY_ID, handleGetPermissionById);
   yield takeLatest(SUBMIT_FORM, handleSubmitForm);
-  yield takeLatest(VALIDATE_FORM, handleValidateForm);
   yield takeLatest(DELETE_ITEM_BY_ID, handleDeleteItemById);
 }

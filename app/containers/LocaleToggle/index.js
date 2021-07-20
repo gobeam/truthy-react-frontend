@@ -12,9 +12,10 @@ import { createSelector } from 'reselect';
 import Toggle from 'components/Toggle';
 import Wrapper from 'containers/LocaleToggle/Wrapper';
 import messages from 'containers/LocaleToggle/messages';
-import { appLocales } from 'i18n';
 import { changeLocaleAction } from 'containers/LanguageProvider/actions';
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
+
+const appLocales = ['en', 'ne'];
 
 export function LocaleToggle(props) {
   return (

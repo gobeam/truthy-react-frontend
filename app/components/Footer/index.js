@@ -4,20 +4,28 @@ import messages from 'components/Footer/messages';
 import { Button, Card, Col, Row } from '@themesberg/react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import GitHubButton from 'react-github-btn';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs, faDownload } from '@fortawesome/free-solid-svg-icons';
 import LocaleToggle from 'containers/LocaleToggle';
+import { Layout } from 'antd';
+import { useLocalStorage } from 'hooks/localstorage';
 
-const Footer = (props) => {
+const { Footer } = Layout;
+
+const FooterComponent = () => {
   const currentYear = moment().get('year');
-  const { showSettings } = props;
 
-  const toggleSettings = (toggle) => {
-    props.toggleSettings(toggle);
+  const [showSettings, setShowSettings] = useLocalStorage(
+    'settingsVisible',
+    false,
+  );
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
   };
+
   return (
-    <div>
+    <Footer>
       {showSettings ? (
         <Card className="theme-settings">
           <Card.Body className="pt-4">
@@ -90,29 +98,12 @@ const Footer = (props) => {
                 <FormattedMessage {...messages.language} />
                 <LocaleToggle />
               </li>
-              <li className="list-inline-item px-0 px-sm-2">
-                <FormattedMessage
-                  {...messages.themeMadeBy}
-                  values={{
-                    author: (
-                      <Card.Link href="https://themesberg.com" target="_blank">
-                        themesberg
-                      </Card.Link>
-                    ),
-                  }}
-                />
-              </li>
             </ul>
           </Col>
         </Row>
       </footer>
-    </div>
+    </Footer>
   );
 };
 
-Footer.propTypes = {
-  showSettings: PropTypes.bool,
-  toggleSettings: PropTypes.func.isRequired,
-};
-
-export default Footer;
+export default FooterComponent;

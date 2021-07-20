@@ -1,40 +1,41 @@
 export const BASE_URL = process.env.REACT_APP_API_BASE_URI;
-const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URI}`;
 const AUTH_PATH = '/auth/login';
 const PROFILE_PATH = '/auth/profile';
 const LOGOUT_PATH = '/logout';
 
 export default class ApiEndpoint {
-  static getBasePath = () => `${API_BASE_URL}`;
+  static getLoginPath = () => AUTH_PATH;
 
-  static getLoginPath = () => `${API_BASE_URL + AUTH_PATH}`;
+  static getProfilePath = () => PROFILE_PATH;
 
-  static getProfilePath = () => `${API_BASE_URL + PROFILE_PATH}`;
+  static getLogoutPath = () => LOGOUT_PATH;
 
-  static getLogoutPath = () => `${API_BASE_URL + LOGOUT_PATH}`;
+  static getRegisterPath = () => `/auth/register`;
 
-  static getRegisterPath = () => `${API_BASE_URL}/auth/register`;
-
-  static getRefreshTokenPath = () => `${API_BASE_URL}/refresh`;
+  static getRefreshTokenPath = () => `/refresh`;
 
   /**
    * Make API payload
+   * @param url
    * @param method
    * @param payload
    * @param contentType
    * @returns {{headers: {}, method: *}}
    */
-  static makeApiPayload = (method, payload = null, contentType = null) => {
+  static makeApiPayload = (url, method, payload = null, contentType = null) => {
     const jsonPayload = {
+      url,
       method,
+      withCredentials: true,
       headers: {},
     };
     if (!contentType) {
       jsonPayload.headers.Accept = 'application/json';
       jsonPayload.headers['Content-Type'] = 'application/json';
+      jsonPayload.headers['Content-Type'] = 'application/json';
     }
     if (payload !== null) {
-      jsonPayload.body = contentType ? payload : JSON.stringify(payload);
+      jsonPayload.data = payload;
     }
     return jsonPayload;
   };

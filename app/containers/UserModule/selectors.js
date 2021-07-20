@@ -14,53 +14,23 @@ const selectUserModuleDomain = (state) => state.userModule || initialState;
 const makeIsLoadingSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.isLoading);
 
-const makeStatusSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.status);
-
 const makeRolesListSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.roles);
-
-const makeRoleIdSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.roleId);
 
 const makeKeywordsSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.keywords);
 
-const makeIsFormPageSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.formPage);
-
 const makeFormMethodSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.formMethod);
 
-const makeUpdateIdSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.updateId);
-
-const makeFormTitleSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.formTitle);
-
-const makeUserNameSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.username);
-
-const makeEmailSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.email);
-
-const makeNameSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.name);
-
-const makePasswordSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.password);
-
-const makeConfirmPasswordSelector = () =>
-  createSelector(
-    selectUserModuleDomain,
-    (substate) => substate.confirmPassword,
-  );
+const makeIdSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.id);
 
 const makePageNumberSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.pageNumber);
 
-const makeLimitSelector = () =>
-  createSelector(selectUserModuleDomain, (substate) => substate.limit);
+const makePageSizeSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.pageSize);
 
 const makeUsersSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.users);
@@ -68,20 +38,23 @@ const makeUsersSelector = () =>
 const makeErrorSelector = () =>
   createSelector(selectUserModuleDomain, (substate) => substate.errors);
 
+const makeClearFormFieldSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.clearFormField);
+
+const makeInitialValuesSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.initialValues);
+
+const makeFormValuesSelector = () =>
+  createSelector(selectUserModuleDomain, (substate) => substate.formValues);
+
 export {
-  makeRoleIdSelector,
-  makeStatusSelector,
+  makeInitialValuesSelector,
+  makeFormValuesSelector,
+  makeClearFormFieldSelector,
+  makePageSizeSelector,
   makeRolesListSelector,
-  makeLimitSelector,
-  makeUserNameSelector,
-  makePasswordSelector,
-  makeConfirmPasswordSelector,
-  makeNameSelector,
-  makeEmailSelector,
   makeKeywordsSelector,
-  makeUpdateIdSelector,
-  makeFormTitleSelector,
-  makeIsFormPageSelector,
+  makeIdSelector,
   makeFormMethodSelector,
   makeIsLoadingSelector,
   makeErrorSelector,

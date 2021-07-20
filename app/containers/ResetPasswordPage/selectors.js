@@ -27,7 +27,21 @@ const makeErrorsSelector = () =>
 const makeCodeSelector = () =>
   createSelector(selectResetPasswordPageDomain, (substate) => substate.code);
 
+const makeFormValuesSelector = () =>
+  createSelector(
+    selectResetPasswordPageDomain,
+    (substate) => substate.formValues,
+  );
+
+const makeInitialValuesSelector = () =>
+  createSelector(
+    selectResetPasswordPageDomain,
+    (substate) => substate.initialValues,
+  );
+
 export {
+  makeFormValuesSelector,
+  makeInitialValuesSelector,
   makeIsLoadingSelector,
   makeCodeSelector,
   makePasswordSelector,
