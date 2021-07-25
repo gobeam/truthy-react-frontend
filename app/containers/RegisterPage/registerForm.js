@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -68,9 +68,10 @@ const RegisterForm = (props) => {
   const dispatch = useDispatch();
   const { errors, isLoading, initialValues } = useSelector(stateSelector);
   const [form] = Form.useForm();
+  const [password, setPassword] = useState('');
 
   const [lowerCheck, upperCheck, numChecker, charCheck] =
-    usePasswordStrengthCheckHook(form.getFieldValue('password'));
+    usePasswordStrengthCheckHook(password);
 
   const onFinish = async () => {
     await form.validateFields();
@@ -78,15 +79,14 @@ const RegisterForm = (props) => {
     dispatch(enterRegisterAction());
   };
 
-  const checkConfirm = (rule, value, callback) => {
+  const checkConfirm = (rule, value) => {
     const newPassword = form.getFieldValue('password');
     if (newPassword !== value) {
-      callback(
-        <FormattedMessage {...commonMessage.confirmPasswordMatchError} />,
+      return Promise.reject(
+        new Error(intl.formatMessage(commonMessage.confirmPasswordMatchError)),
       );
-    } else {
-      callback();
     }
+    return Promise.resolve();
   };
 
   useEffect(() => {
@@ -125,6 +125,7 @@ const RegisterForm = (props) => {
         name="password"
         id="password"
         placeholder={commonMessage.passwordPlaceHolder}
+        changeHandler={(e) => setPassword(e.target.value)}
       >
         <Progress
           percent={

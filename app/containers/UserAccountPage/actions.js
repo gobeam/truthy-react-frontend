@@ -5,10 +5,18 @@
  */
 
 import {
-  CHANGE_FIELD,
-  GET_USER_DETAIL,
-  QUERY_USER_FEED,
-  QUERY_USER_TODO,
+  ADD_VALIDATION_ERROR,
+  ASYNC_END,
+  ASYNC_START,
+  CLEAR_FORM,
+  INITIATE_CLEAN,
+  SET_FORM_VALUES,
+  SET_INITIAL_VALUES,
+  SUBMIT_FORM,
+  SUBMIT_CHANGE_PASSWORD_FORM,
+  QUERY_REFRESH_TOKEN_LIST,
+  ASSIGN_REFRESH_TOKEN_LIST,
+  DISABLE_TOKEN,
 } from 'containers/UserAccountPage/constants';
 
 /**
@@ -17,28 +25,79 @@ import {
  * @return {object} An action object with a type of IS_LOGGED
  */
 
-export function changeFieldAction(key, val) {
+export function enterValidationErrorAction(errors) {
   return {
-    type: CHANGE_FIELD,
-    key,
-    val,
+    type: ADD_VALIDATION_ERROR,
+    errors,
   };
 }
 
-export function queryUserTodoAction() {
+export function asyncStartAction() {
   return {
-    type: QUERY_USER_TODO,
+    type: ASYNC_START,
   };
 }
 
-export function queryUserFeedAction() {
+export function asyncEndAction() {
   return {
-    type: QUERY_USER_FEED,
+    type: ASYNC_END,
   };
 }
 
-export function getUserDetailAction() {
+export function initiateCleanAction() {
   return {
-    type: GET_USER_DETAIL,
+    type: INITIATE_CLEAN,
+  };
+}
+
+export function disableTokenAction(id) {
+  return {
+    type: DISABLE_TOKEN,
+    id,
+  };
+}
+
+export function queryRefreshTokenListAction() {
+  return {
+    type: QUERY_REFRESH_TOKEN_LIST,
+  };
+}
+
+export function assignRefreshTokenListAction(tokenList) {
+  return {
+    type: ASSIGN_REFRESH_TOKEN_LIST,
+    tokenList,
+  };
+}
+
+export function clearFormAction() {
+  return {
+    type: CLEAR_FORM,
+  };
+}
+
+export function submitFormAction() {
+  return {
+    type: SUBMIT_FORM,
+  };
+}
+
+export function submitChangePasswordFormAction() {
+  return {
+    type: SUBMIT_CHANGE_PASSWORD_FORM,
+  };
+}
+
+export function setFormValues(formValues) {
+  return {
+    type: SET_FORM_VALUES,
+    formValues,
+  };
+}
+
+export function setInitialValuesAction(initialValues) {
+  return {
+    type: SET_INITIAL_VALUES,
+    initialValues,
   };
 }

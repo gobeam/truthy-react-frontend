@@ -11,9 +11,8 @@ import {
   asyncStartAction,
   enterValidationErrorAction,
 } from 'containers/ResetPasswordPage/actions';
-import commonMessages from 'common/messages';
 import messages from 'containers/ResetPasswordPage/messages';
-import { showFormattedAlert } from 'common/saga';
+import { showAlert, showFormattedAlert } from 'common/saga';
 import { PUT } from 'utils/constants';
 
 export function* handleResetPassword() {
@@ -40,7 +39,7 @@ export function* handleResetPassword() {
     if (error.data && error.data.statusCode === 422) {
       return yield put(enterValidationErrorAction(error.data.message));
     }
-    return yield showFormattedAlert('error', commonMessages.serverError);
+    return yield showAlert('error', error.data.message);
   }
 }
 

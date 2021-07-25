@@ -33,9 +33,25 @@ export default class ApiEndpoint {
       jsonPayload.headers.Accept = 'application/json';
       jsonPayload.headers['Content-Type'] = 'application/json';
       jsonPayload.headers['Content-Type'] = 'application/json';
+    } else {
+      jsonPayload.headers['Content-Type'] = contentType;
     }
     if (payload !== null) {
-      jsonPayload.data = payload;
+      const formData = new FormData();
+      switch (jsonPayload.headers['Content-Type']) {
+        case 'application/json':
+          jsonPayload.data = payload;
+          break;
+        case 'multipart/form-data':
+          // eslint-disable-next-line no-restricted-syntax
+          for (const key of Object.keys(payload)) {
+            formData.append(key, payload[key]);
+          }
+          jsonPayload.data = formData;
+          break;
+        default:
+          jsonPayload.data = null;
+      }
     }
     return jsonPayload;
   };

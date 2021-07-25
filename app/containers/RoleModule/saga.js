@@ -28,7 +28,7 @@ import {
   makeLimitSelector,
   makePageNumberSelector,
 } from 'containers/RoleModule/selectors';
-import { showFormattedAlert } from 'common/saga';
+import { showAlert, showFormattedAlert } from 'common/saga';
 import { DELETE, GET, PUT } from 'utils/constants';
 import { buildQueryString } from 'common/helpers';
 
@@ -52,7 +52,7 @@ export function* handleSubmitForm() {
     if (error.data && error.data.statusCode === 422) {
       return yield put(enterValidationErrorAction(error.data.message));
     }
-    return yield showFormattedAlert('error', commonMessage.serverError);
+    return yield showAlert('error', error.data.message);
   }
 }
 

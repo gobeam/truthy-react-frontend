@@ -8,8 +8,7 @@ import { makeFormValuesSelector } from 'containers/RegisterPage/selectors';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 import messages from 'containers/RegisterPage/messages';
-import commonMessages from 'common/messages';
-import { showFormattedAlert } from 'common/saga';
+import { showAlert, showFormattedAlert } from 'common/saga';
 import { POST } from 'utils/constants';
 
 export function* handleRegister() {
@@ -33,7 +32,7 @@ export function* handleRegister() {
     if (error.data && error.data.statusCode === 422) {
       return yield put(enterValidationErrorAction(error.data.message));
     }
-    return yield showFormattedAlert('error', commonMessages.serverError);
+    return yield showAlert('error', error.data.message);
   }
 }
 

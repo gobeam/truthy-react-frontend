@@ -2,9 +2,10 @@ import React from 'react';
 import { put } from 'redux-saga/effects';
 import { FormattedMessage } from 'react-intl';
 import { enqueueAlertAction } from 'containers/AlertMessage/actions';
+import { enqueueSnackMessageAction } from 'containers/SnackMessage/actions';
 
 /**
- * show formatted error message
+ * show formatted error alert
  * @param type
  * @param message
  * @returns {IterableIterator<*>}
@@ -20,6 +21,23 @@ export function* showFormattedAlert(type, message) {
 
 /**
  * show error message
+ * @param type
+ * @param message
+ * @param translate
+ * @returns {IterableIterator<*>}
+ */
+export function* showMessage(type, message, translate = false) {
+  return yield put(
+    enqueueSnackMessageAction({
+      message,
+      type,
+      translate,
+    }),
+  );
+}
+
+/**
+ * show error alert
  * @param type
  * @param message
  * @returns {IterableIterator<*>}

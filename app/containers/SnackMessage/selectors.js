@@ -15,7 +15,11 @@ const makeIdSelector = () =>
 const makeDurationSelector = () =>
   createSelector(selectSnackMessage, (substate) => substate.duration);
 
+const makeTranslateSelector = () =>
+  createSelector(selectSnackMessage, (substate) => substate.translate);
+
 export {
+  makeTranslateSelector,
   makeDurationSelector,
   makeIdSelector,
   makeSnackMessageSelector,

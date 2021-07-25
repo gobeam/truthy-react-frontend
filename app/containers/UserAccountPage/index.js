@@ -4,68 +4,37 @@
  *
  */
 
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/UserAccountPage/saga';
 import reducer from 'containers/UserAccountPage/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
-import {
-  changeFieldAction,
-  getUserDetailAction,
-} from 'containers/UserAccountPage/actions';
-import { createStructuredSelector } from 'reselect';
-import {
-  makeUserIdSelector,
-  makeUserInfoSelector,
-} from 'containers/UserAccountPage/selectors';
-import { BASE_URL } from 'utils/api';
+import { Tabs } from 'antd';
+import ProfileForm from 'containers/UserAccountPage/profileForm';
+import messages from 'containers/UserAccountPage/messages';
+import { useIntl } from 'react-intl';
+import SecurityTab from 'containers/UserAccountPage/securityTab';
+import LoginActivity from 'containers/UserAccountPage/loginActivity';
 
+const { TabPane } = Tabs;
 const key = 'userAccount';
 
-const stateSelector = createStructuredSelector({
-  userInfo: makeUserInfoSelector(),
-  accountId: makeUserIdSelector(),
-});
-
-export default function VerifyAccountPage() {
-  const dispatch = useDispatch();
+export default function UserAccountPage() {
+  const intl = useIntl();
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
-  const { accountId, userInfo } = useSelector(stateSelector);
 
-  const { account } = useParams();
-
-  useEffect(() => {
-    dispatch(changeFieldAction('accountId', account));
-  }, [account]);
-
-  useEffect(() => {
-    if (accountId) {
-      dispatch(getUserDetailAction());
-    }
-  }, [accountId]);
   return (
-    <>
-      <div className="flex">
-        <div className="bg-white mt-20 pb-6 w-full justify-center items-center md:max-w-sm rounded-lg shadow-sm mx-auto">
-          <div className="relative shadow mx-auto h-24 w-24 border-white rounded-full border-4">
-            <img
-              alt="user"
-              className="object-cover w-full h-full"
-              src={
-                userInfo.image ? `${BASE_URL}/uploads/${userInfo.image}` : ''
-              }
-            />
-          </div>
-          <div className="mt-16">
-            <h1 className="text-lg text-center font-semibold">
-              {userInfo.name}
-            </h1>
-          </div>
-        </div>
-      </div>
-    </>
+    <Tabs tabPosition="left">
+      <TabPane tab={intl.formatMessage(messages.accountTab)} key="1">
+        <ProfileForm />
+      </TabPane>
+      <TabPane tab={intl.formatMessage(messages.securityTab)} key="2">
+        <SecurityTab />
+      </TabPane>
+      <TabPane tab={intl.formatMessage(messages.loginActivity)} key="3">
+        <LoginActivity />
+      </TabPane>
+    </Tabs>
   );
 }

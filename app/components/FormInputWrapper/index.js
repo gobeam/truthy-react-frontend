@@ -11,7 +11,7 @@ const FormInputWrapper = (props) => {
     placeholder,
     icon,
     children = null,
-    required = true,
+    required = false,
     passwordInput = false,
     name,
     id,
@@ -19,6 +19,7 @@ const FormInputWrapper = (props) => {
     type,
     value,
     disabled = false,
+    allowClear = false,
     changeHandler = () => {},
     min = 0,
     max = 0,
@@ -50,6 +51,7 @@ const FormInputWrapper = (props) => {
             placeholder={intl.formatMessage(placeholder)}
             onChange={changeHandler}
             disabled={disabled}
+            allowClear={allowClear}
           />
         ) : (
           <Input
@@ -64,6 +66,7 @@ const FormInputWrapper = (props) => {
             placeholder={intl.formatMessage(placeholder)}
             onChange={changeHandler}
             disabled={disabled}
+            allowClear={allowClear}
           />
         )}
       </Form.Item>
@@ -77,6 +80,7 @@ FormInputWrapper.propTypes = {
   rules: PropTypes.array,
   min: PropTypes.number,
   max: PropTypes.number,
+  allowClear: PropTypes.bool,
   disabled: PropTypes.bool,
   passwordInput: PropTypes.bool,
   label: PropTypes.object,

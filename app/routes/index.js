@@ -113,14 +113,14 @@ const routes = [
         ),
       },
       {
-        path: 'user/:account',
+        path: 'account-setting',
         element: (
           <PrivateRoute
             element={<UserAccountPage />}
-            path="/user/:account"
+            path="/account-setting"
             method="get"
             resource="user"
-            defaultPermission={false}
+            defaultPermission
           />
         ),
       },

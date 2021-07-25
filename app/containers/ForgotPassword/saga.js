@@ -8,10 +8,9 @@ import {
   asyncStartAction,
 } from 'containers/ForgotPassword/actions';
 import messages from 'containers/ForgotPassword/messages';
-import { showFormattedAlert } from 'common/saga';
+import { showAlert, showFormattedAlert } from 'common/saga';
 import { PUT } from 'utils/constants';
 import { enterValidationErrorAction } from 'containers/LoginPage/actions';
-import commonMessages from 'common/messages';
 
 export function* handleForgotPassword() {
   yield put(asyncStartAction());
@@ -31,7 +30,7 @@ export function* handleForgotPassword() {
     if (error.data && error.data.statusCode === 422) {
       return yield put(enterValidationErrorAction(error.data.message));
     }
-    return yield showFormattedAlert('error', commonMessages.serverError);
+    return yield showAlert('error', error.data.message);
   }
 }
 

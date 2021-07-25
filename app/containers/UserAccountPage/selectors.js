@@ -3,28 +3,29 @@ import { initialState } from 'containers/UserAccountPage/reducer';
 
 const selectUserAccountPage = (state) => state.userAccount || initialState;
 
-const makeUserFeedSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.feeds);
+const makeInitialValuesSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.initialValues);
 
-const makeUserTodoSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.todos);
+const makeFormValuesSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.formValues);
 
-const makeUserIdSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.accountId);
+const makeIsLoadingSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.isLoading);
 
-const makeTodoLimitSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.todoLimit);
-const makeFeedLimitSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.feedLimit);
+const makeErrorSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.errors);
 
-const makeUserInfoSelector = () =>
-  createSelector(selectUserAccountPage, (substate) => substate.userInfo);
+const makeInitiateCleanFieldSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.initiateClean);
+
+const makeTokenListSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.tokenList);
 
 export {
-  makeUserInfoSelector,
-  makeTodoLimitSelector,
-  makeFeedLimitSelector,
-  makeUserIdSelector,
-  makeUserFeedSelector,
-  makeUserTodoSelector,
+  makeTokenListSelector,
+  makeInitialValuesSelector,
+  makeFormValuesSelector,
+  makeIsLoadingSelector,
+  makeErrorSelector,
+  makeInitiateCleanFieldSelector,
 };
