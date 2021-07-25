@@ -8,7 +8,6 @@ import loginPageReducer from 'containers/LoginPage/reducer';
 import registerPageReducer from 'containers/RegisterPage/reducer';
 import alertMessageReducer from 'containers/AlertMessage/reducer';
 import snackMessageReducer from 'containers/SnackMessage/reducer';
-import profileReducer from 'containers/ProfilePage/reducer';
 import verifyPageReducer from 'containers/VerifyAccountPage/reducer';
 import forgotPasswordReducer from 'containers/ForgotPassword/reducer';
 import resetPasswordReducer from 'containers/ResetPasswordPage/reducer';
@@ -30,7 +29,6 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     login: loginPageReducer,
     register: registerPageReducer,
-    profilePage: profileReducer,
     forgotPassword: forgotPasswordReducer,
     resetPassword: resetPasswordReducer,
     verifyPage: verifyPageReducer,
