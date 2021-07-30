@@ -155,11 +155,12 @@ const HeaderComponent = () => {
                   <Avatar
                     style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
                   >
-                    {user.name
-                      .split(' ')
-                      .map((name) => name[0])
-                      .join('')
-                      .toUpperCase()}
+                    {user?.name ||
+                      'N A'
+                        .split(' ')
+                        .map((name) => name[0])
+                        .join('')
+                        .toUpperCase()}
                   </Avatar>
                 )}
               </span>

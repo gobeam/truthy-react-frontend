@@ -20,6 +20,8 @@ import {
   ASYNC_START,
   TOGGLE_COLLAPSE,
   CHANGE_DEVICE,
+  OTP_VERIFIED,
+  OTP_UNVERIFIED,
 } from 'containers/App/constants';
 
 const device = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
@@ -31,6 +33,7 @@ export const initialState = {
   device,
   collapsed,
   isLoading: false,
+  otpVerified: true,
   isLogged: null,
   errors: {},
   user: {},
@@ -48,6 +51,12 @@ const appPageReducer = produce((draft, action) => {
     case CHANGE_DEVICE:
       draft.device = action.device;
       break;
+    case OTP_VERIFIED:
+      draft.otpVerified = true;
+      break;
+    case OTP_UNVERIFIED:
+      draft.otpVerified = false;
+      break;
     case TOGGLE_COLLAPSE:
       draft.collapsed = action.toggle;
       break;
@@ -60,6 +69,7 @@ const appPageReducer = produce((draft, action) => {
       break;
     case IS_LOGGED_ERROR:
       draft.isLogged = false;
+      draft.otpVerified = true;
       break;
     case GET_PROFILE_SUCCESS:
       draft.user = action.user;

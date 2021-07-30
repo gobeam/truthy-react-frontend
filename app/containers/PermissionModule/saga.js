@@ -7,7 +7,6 @@ import {
   SYNC_PERMISSION,
 } from 'containers/PermissionModule/constants';
 import ApiEndpoint from 'utils/api';
-import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
 import {
@@ -65,10 +64,10 @@ export function* handleDeleteItemById(data) {
     yield call(request, payload);
     yield put(queryPermissionAction());
     yield put(asyncEndAction());
-    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
+    return yield showFormattedAlert('success', commonMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedAlert('error', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', commonMessage.deleteError);
   }
 }
 
@@ -109,7 +108,7 @@ export function* handleSyncPermission() {
   try {
     yield call(request, payload);
     yield put(queryPermissionAction());
-    return yield showFormattedAlert('success', deleteMessage.syncSuccess);
+    return yield showFormattedAlert('success', commonMessage.syncSuccess);
   } catch (error) {
     return yield put(asyncEndAction());
   }

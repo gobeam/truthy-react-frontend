@@ -26,7 +26,11 @@ const makeDeviceSelector = () =>
 const makeCollapsedSelector = () =>
   createSelector(selectGlobal, (globalState) => globalState.collapsed);
 
+const makeOtpVerificationSelector = () =>
+  createSelector(selectGlobal, (globalState) => globalState.otpVerified);
+
 export {
+  makeOtpVerificationSelector,
   makeCollapsedSelector,
   makeDeviceSelector,
   makeIsLoadingSelector,

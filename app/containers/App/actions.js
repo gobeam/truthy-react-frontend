@@ -20,6 +20,8 @@ import {
   LOGOUT,
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
+  OTP_UNVERIFIED,
+  OTP_VERIFIED,
   QUERY_NOTIFICATIONS,
   REFRESH_TOKEN,
   TOGGLE_COLLAPSE,
@@ -185,5 +187,17 @@ export function changeDeviceAction(device) {
   return {
     type: CHANGE_DEVICE,
     device,
+  };
+}
+
+export function otpVerifiedAction() {
+  return {
+    type: OTP_VERIFIED,
+  };
+}
+
+export function otpUnVerifiedAction() {
+  return {
+    type: OTP_UNVERIFIED,
   };
 }

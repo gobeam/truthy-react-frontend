@@ -6,7 +6,6 @@ import {
   SUBMIT_FORM,
 } from 'containers/EmailTemplateModule/constants';
 import ApiEndpoint from 'utils/api';
-import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
 import {
@@ -63,10 +62,10 @@ export function* handleDeleteItemById(data) {
     yield call(request, payload);
     yield put(queryTemplateAction());
     yield put(asyncEndAction());
-    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
+    return yield showFormattedAlert('success', commonMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedAlert('error', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', commonMessage.deleteError);
   }
 }
 

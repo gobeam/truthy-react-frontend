@@ -20,3 +20,5 @@ export const ASYNC_END = 'containers/App/ASYNC_END';
 export const REFRESH_TOKEN = 'containers/App/REFRESH_TOKEN';
 export const TOGGLE_COLLAPSE = 'containers/App/TOGGLE_COLLAPSE';
 export const CHANGE_DEVICE = 'containers/App/CHANGE_DEVICE';
+export const OTP_VERIFIED = 'containers/App/OTP_VERIFIED';
+export const OTP_UNVERIFIED = 'containers/App/OTP_UNVERIFIED';

@@ -20,6 +20,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 import { Layout } from 'antd';
 import 'containers/App/index.less';
+import GlobalStyle from 'global-styles';
 
 const key = 'global';
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
       <Helmet titleTemplate="%s - Truthy" defaultTitle="TRUTHY">
         <meta name="description" content="Truthy CMS" />
       </Helmet>
+      <GlobalStyle />
       <Layout>
         <BrowserRouter>
           <RenderRouter />

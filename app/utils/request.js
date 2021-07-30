@@ -2,6 +2,7 @@ import axios from 'axios';
 import { store } from 'store';
 import { SHOW_SNACK_MESSAGE } from 'containers/SnackMessage/constants';
 import uuid from 'react-uuid';
+import { otpUnVerifiedAction } from 'containers/App/actions';
 
 /**
  * Create an Axios Client with defaults
@@ -25,6 +26,13 @@ const request = (options) => {
       // console.error('Status:', error.response.status);
       // console.error('Data:', error.response.data);
       // console.error('Headers:', error.response.headers);
+      if (
+        error.response.status === 403 &&
+        error.response.data.message === 'OTP required'
+      ) {
+        store.dispatch(otpUnVerifiedAction());
+        return {};
+      }
       if ([401, 403, 429].includes(error.response.status)) {
         store.dispatch({
           type: SHOW_SNACK_MESSAGE,
@@ -35,10 +43,6 @@ const request = (options) => {
           },
         });
       }
-    } else {
-      // Something else happened while setting up the request
-      // triggered the error
-      // console.error('Error Message:', error.message);
     }
 
     return Promise.reject(error.response || error.message);

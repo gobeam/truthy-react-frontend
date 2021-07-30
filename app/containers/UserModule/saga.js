@@ -7,7 +7,6 @@ import {
   SUBMIT_FORM,
 } from 'containers/UserModule/constants';
 import ApiEndpoint from 'utils/api';
-import deleteMessage from 'components/DeleteModal/messages';
 import commonMessage from 'common/messages';
 import request from 'utils/request';
 import {
@@ -69,10 +68,10 @@ export function* handleDeleteItemById(data) {
     yield call(request, payload);
     yield put(queryUsersAction());
     yield put(asyncEndAction());
-    return yield showFormattedAlert('success', deleteMessage.deleteSuccess);
+    return yield showFormattedAlert('success', commonMessage.deleteSuccess);
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showFormattedAlert('error', deleteMessage.deleteError);
+    return yield showFormattedAlert('error', commonMessage.deleteError);
   }
 }
 
