@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "module": "commonjs",
+    "target": "es2016",
+    "jsx": "preserve",
+    "checkJs": true,
+    "baseUrl": "app"
   },
-  "include": ["src"]
+  "exclude": ["node_modules", ".cache", "dist"]
 }

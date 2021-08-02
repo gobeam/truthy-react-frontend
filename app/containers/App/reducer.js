@@ -22,6 +22,8 @@ import {
   CHANGE_DEVICE,
   OTP_VERIFIED,
   OTP_UNVERIFIED,
+  CHANGE_OTP_VALUE,
+  OTP_ERROR,
 } from 'containers/App/constants';
 
 const device = /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)
@@ -34,8 +36,10 @@ export const initialState = {
   collapsed,
   isLoading: false,
   otpVerified: true,
+  otp: '',
+  otpError: false,
   isLogged: null,
-  errors: {},
+  errors: [],
   user: {},
 };
 
@@ -43,6 +47,9 @@ setAutoFreeze(false);
 /* eslint-disable default-case, no-param-reassign */
 const appPageReducer = produce((draft, action) => {
   switch (action.type) {
+    case OTP_ERROR:
+      draft.otpError = true;
+      break;
     case CHANGE_FIELD:
       draft[action.key] = action.val;
       draft.errors[action.key] = '';
@@ -53,6 +60,10 @@ const appPageReducer = produce((draft, action) => {
       break;
     case OTP_VERIFIED:
       draft.otpVerified = true;
+      break;
+    case CHANGE_OTP_VALUE:
+      draft.otp = action.otp;
+      draft.otpError = false;
       break;
     case OTP_UNVERIFIED:
       draft.otpVerified = false;
@@ -86,10 +97,12 @@ const appPageReducer = produce((draft, action) => {
     case LOGOUT:
     case LOGOUT_SUCCESS:
     case LOGOUT_ERROR:
-      draft.erros = {};
+      draft.errors = [];
+      draft.otp = '';
       draft.error = '';
       draft.user = {};
       draft.isLogged = false;
+      draft.otpError = false;
       break;
     default:
   }

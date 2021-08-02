@@ -8,30 +8,46 @@ import { createStructuredSelector } from 'reselect';
 import {
   makeCollapsedSelector,
   makeDeviceSelector,
+  makeOtpErrorSelector,
+  makeOtpVerificationSelector,
 } from 'containers/App/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import MenuComponent from 'components/Layout/Menu';
 import {
+  authenticateOtpAction,
   changeDeviceAction,
+  changeOtpValueAction,
   toggleCollapseAction,
 } from 'containers/App/actions';
 import AlertMessage from 'containers/AlertMessage';
 import SnackMessage from 'containers/SnackMessage';
+import OtpModal from 'components/OtpModal';
 
 const { Sider, Content } = Layout;
 const WIDTH = 992;
+const OTP_LENGTH = 6;
 
 const stateSelector = createStructuredSelector({
   device: makeDeviceSelector(),
   collapsed: makeCollapsedSelector(),
+  otpError: makeOtpErrorSelector(),
+  otpVerified: makeOtpVerificationSelector(),
 });
 
 const LayoutPage = () => {
   const dispatch = useDispatch();
-  const { device, collapsed } = useSelector(stateSelector);
+  const { device, collapsed, otpError, otpVerified } =
+    useSelector(stateSelector);
   const isMobile = device === 'MOBILE';
   const location = useLocation();
   const navigate = useNavigate();
+
+  const onChangeOtp = (otp) => {
+    dispatch(changeOtpValueAction(otp));
+    if (otp.trim().length === OTP_LENGTH) {
+      dispatch(authenticateOtpAction());
+    }
+  };
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -83,9 +99,17 @@ const LayoutPage = () => {
         )}
         <Content className="layout-page-content">
           <SnackMessage />
+          <AlertMessage />
+          <OtpModal
+            visible={!otpVerified}
+            autoFocus
+            length={OTP_LENGTH}
+            className="otpContainer"
+            inputClassName={`otpInput ${otpError ? 'shake-input' : ''}`}
+            onChangeOTP={onChangeOtp}
+          />
           <Suspense fallback={<LoadingIndicator />}>
-            <AlertMessage />
-            <Outlet />
+            {otpVerified ? <Outlet /> : null}
           </Suspense>
         </Content>
       </Layout>

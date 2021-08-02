@@ -86,6 +86,10 @@
   "common.messages.syncSuccess": "समक्रमण सफलतापूर्वक सम्पन्न भयो!",
   "common.messages.yesLabel": "हो",
   "common.messages.noLabel": "होईन",
+  "common.messages.otpVerificationSuccess": "OTP कोड सफलतापूर्वक प्रमाणित भयो!",
+  "common.messages.otpGenerateSuccess": "OTP कोड सफलतापूर्वक उत्पन्न भयो!",
+  "common.messages.otpLabel": "एक समय पासवर्ड प्रमाणिकरण",
+  "common.messages.generateOtp": "OTP सिर्जना गर्नुहोस्",
 
   "components.SearchInput.searchPlaceHolder": "खोज्नुहोस्",
 

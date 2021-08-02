@@ -7,8 +7,11 @@
 import {
   ASYNC_END,
   ASYNC_START,
+  AUTHENTICATE_OTP,
   CHANGE_DEVICE,
   CHANGE_FIELD,
+  CHANGE_OTP_VALUE,
+  GENERATE_OTP,
   GET_PROFILE_ERROR,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -25,6 +28,7 @@ import {
   QUERY_NOTIFICATIONS,
   REFRESH_TOKEN,
   TOGGLE_COLLAPSE,
+  OTP_ERROR,
 } from 'containers/App/constants';
 
 /**
@@ -136,9 +140,22 @@ export function asyncStartAction() {
   };
 }
 
+export function authenticateOtpAction() {
+  return {
+    type: AUTHENTICATE_OTP,
+  };
+}
+
 export function asyncEndAction() {
   return {
     type: ASYNC_END,
+  };
+}
+
+export function changeOtpValueAction(otp) {
+  return {
+    type: CHANGE_OTP_VALUE,
+    otp,
   };
 }
 
@@ -199,5 +216,17 @@ export function otpVerifiedAction() {
 export function otpUnVerifiedAction() {
   return {
     type: OTP_UNVERIFIED,
+  };
+}
+
+export function generateOtpAction() {
+  return {
+    type: GENERATE_OTP,
+  };
+}
+
+export function otpCodeErrorAction() {
+  return {
+    type: OTP_ERROR,
   };
 }

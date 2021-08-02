@@ -197,4 +197,20 @@ export default defineMessages({
     id: `${scope}.noLabel`,
     defaultMessage: 'No',
   },
+  otpVerificationSuccess: {
+    id: `${scope}.otpVerificationSuccess`,
+    defaultMessage: 'OTP code verified successfully!',
+  },
+  otpGenerateSuccess: {
+    id: `${scope}.otpGenerateSuccess`,
+    defaultMessage: 'OTP code generated successfully!',
+  },
+  otpLabel: {
+    id: `${scope}.otpLabel`,
+    defaultMessage: 'One Time Password Verification',
+  },
+  generateOtp: {
+    id: `${scope}.generateOtp`,
+    defaultMessage: 'Generate OTP',
+  },
 });

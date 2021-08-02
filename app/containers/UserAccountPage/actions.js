@@ -17,6 +17,7 @@ import {
   QUERY_REFRESH_TOKEN_LIST,
   ASSIGN_REFRESH_TOKEN_LIST,
   DISABLE_TOKEN,
+  UPDATE_TWO_FA_STATUS,
 } from 'containers/UserAccountPage/constants';
 
 /**
@@ -41,6 +42,12 @@ export function asyncStartAction() {
 export function asyncEndAction() {
   return {
     type: ASYNC_END,
+  };
+}
+
+export function updateTwoFaStatusAction() {
+  return {
+    type: UPDATE_TWO_FA_STATUS,
   };
 }
 

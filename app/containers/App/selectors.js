@@ -29,7 +29,15 @@ const makeCollapsedSelector = () =>
 const makeOtpVerificationSelector = () =>
   createSelector(selectGlobal, (globalState) => globalState.otpVerified);
 
+const makeOtpValueSelector = () =>
+  createSelector(selectGlobal, (globalState) => globalState.otp);
+
+const makeOtpErrorSelector = () =>
+  createSelector(selectGlobal, (globalState) => globalState.otpError);
+
 export {
+  makeOtpErrorSelector,
+  makeOtpValueSelector,
   makeOtpVerificationSelector,
   makeCollapsedSelector,
   makeDeviceSelector,

@@ -1,6 +1,5 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
-import ApiEndpoint, { BASE_URL } from 'utils/api';
+import messages from 'common/messages';
+import { showFormattedAlert, showMessage } from 'common/saga';
 import {
   asyncEndAction,
   asyncStartAction,
@@ -12,16 +11,22 @@ import {
   isLoggedSuccessAction,
   logoutErrorAction,
   logoutSuccessAction,
+  otpCodeErrorAction,
+  otpVerifiedAction,
   refreshTokenAction,
 } from 'containers/App/actions';
 import {
+  AUTHENTICATE_OTP,
+  GENERATE_OTP,
   GET_PROFILE_REQUEST,
   LOGOUT,
   REFRESH_TOKEN,
 } from 'containers/App/constants';
-import messages from 'common/messages';
-import { showFormattedAlert } from 'common/saga';
+import { makeOtpValueSelector } from 'containers/App/selectors';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import ApiEndpoint, { BASE_URL } from 'utils/api';
 import { GET, POST } from 'utils/constants';
+import request from 'utils/request';
 
 /**
  *  query logged in user profile
@@ -90,8 +95,41 @@ export function* handleRefreshToken() {
   }
 }
 
+export function* handleAuthenticateOtp() {
+  yield put(asyncStartAction());
+  const code = yield select(makeOtpValueSelector());
+  const requestUrl = '/twofa/authenticate';
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, { code });
+  try {
+    yield call(request, payload);
+    yield put(getProfileAction());
+    yield put(otpVerifiedAction());
+    yield put(asyncEndAction());
+    return yield showMessage('success', messages.otpVerificationSuccess, true);
+  } catch (error) {
+    yield put(otpCodeErrorAction());
+    return yield put(asyncEndAction());
+  }
+}
+
+export function* handleGenerateOtp() {
+  yield put(asyncStartAction());
+  const requestUrl = '/twofa/generate';
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
+  try {
+    yield call(request, payload);
+    yield put(asyncEndAction());
+    return yield showMessage('success', messages.otpGenerateSuccess, true);
+  } catch (error) {
+    yield put(asyncEndAction());
+    return yield showMessage('error', error.data.message);
+  }
+}
+
 export default function* appPageSaga() {
   yield takeLatest(LOGOUT, handleLogout);
   yield takeLatest(GET_PROFILE_REQUEST, handleProfile);
   yield takeLatest(REFRESH_TOKEN, handleRefreshToken);
+  yield takeLatest(AUTHENTICATE_OTP, handleAuthenticateOtp);
+  yield takeLatest(GENERATE_OTP, handleGenerateOtp);
 }

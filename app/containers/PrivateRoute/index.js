@@ -4,23 +4,24 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Navigate } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
+import LoadingIndicator from 'components/LoadingIndicator';
 import {
   makeIsLoggedSelector,
   makeLoggedInUserSelector,
+  makeOtpErrorSelector,
   makeOtpVerificationSelector,
 } from 'containers/App/selectors';
-import LoadingIndicator from 'components/LoadingIndicator';
-import PropTypes from 'prop-types';
-import { checkPermissionForComponent } from 'utils/permission';
 import PermissionDeniedPage from 'containers/PermissionDeniedPage';
-import OtpModal from 'components/OtpModal';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, Route } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
+  otpError: makeOtpErrorSelector(),
   isLogged: makeIsLoggedSelector(),
   otpVerified: makeOtpVerificationSelector(),
 });
@@ -41,26 +42,13 @@ const PrivateRoute = (props) => {
         }),
       );
     }
-  }, [path]);
+  }, [user, path]);
 
   if (isLogged === null) {
     return <LoadingIndicator />;
   }
 
-  if (!otpVerified) {
-    return (
-      <OtpModal
-        autoFocus
-        length={6}
-        className="otpContainer"
-        inputClassName="otpInput"
-        onChangeOTP={() => {}}
-        // onChangeOTP={(otp) => console.log('String OTP: ', otp)}
-      />
-    );
-  }
-
-  if (!permitted) {
+  if (!permitted && otpVerified) {
     return <PermissionDeniedPage />;
   }
   return isLogged ? <Route {...props} /> : <Navigate to="/login" />;

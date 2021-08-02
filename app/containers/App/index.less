@@ -15,3 +15,20 @@
     }
   }
 }
+
+input
+  {
+    transition: box-shadow 0.5s;
+    &.shake-input
+    {
+      animation: shake 0.1s ease-in-out 0s 2;
+      box-shadow: 0 0 0.5em red;
+    }
+  }
+
+  @keyframes shake {
+    0% { margin-left: 0rem; }
+    25% { margin-left: 0.5rem; }
+    75% { margin-left: -0.5rem; }
+    100% { margin-left: 0rem; }
+  }

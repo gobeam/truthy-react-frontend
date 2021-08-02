@@ -49,7 +49,7 @@ store.subscribe(
   throttle(() => {
     saveState({
       language: store.getState().language,
-      global: store.getState().global,
+      // global: store.getState().global,
     });
   }, 1000),
 );

@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import uuid from 'react-uuid';
 import OTPInput from 'components/OtpModal/otpInput';
 import { Button, Modal } from 'antd';
+import { useDispatch } from 'react-redux';
+import { generateOtpAction } from 'containers/App/actions';
+import { useIntl } from 'react-intl';
+import commonMessages from 'common/messages';
 
 const OtpModalComponent = (props) => {
   const {
@@ -13,11 +17,15 @@ const OtpModalComponent = (props) => {
     onChangeOTP,
     inputClassName,
     inputStyle,
+    visible,
     ...rest
   } = props;
-
+  const dispatch = useDispatch();
+  const intl = useIntl();
   const [activeInput, setActiveInput] = useState(0);
   const [otpValues, setOTPValues] = useState(Array(6).fill(''));
+
+  const onGenerateOtp = () => dispatch(generateOtpAction());
 
   // Helper to return OTP from inputs
   const handleOtpChange = useCallback(
@@ -158,15 +166,14 @@ const OtpModalComponent = (props) => {
   );
   return (
     <Modal
-      title="Basic Modal"
-      visible
+      maskStyle={{
+        backdropFilter: 'blur(6px)',
+      }}
+      title={intl.formatMessage(commonMessages.otpLabel)}
+      visible={visible}
       width={600}
       closable={false}
-      footer={[
-        <Button key="submit" type="primary" loading={false} onClick={() => {}}>
-          Submit
-        </Button>,
-      ]}
+      footer={null}
     >
       <div {...rest}>
         {Array(length)
@@ -188,7 +195,9 @@ const OtpModalComponent = (props) => {
             />
           ))}
       </div>
-      <Button type="link">Generate OTP</Button>
+      <Button type="link" onClick={onGenerateOtp}>
+        {intl.formatMessage(commonMessages.generateOtp)}
+      </Button>
     </Modal>
   );
 };
@@ -197,6 +206,7 @@ OtpModalComponent.propTypes = {
   onChangeOTP: PropTypes.func.isRequired,
   length: PropTypes.number.isRequired,
   autoFocus: PropTypes.bool,
+  visible: PropTypes.bool,
   isNumberInput: PropTypes.bool,
   disabled: PropTypes.bool,
   style: PropTypes.object,

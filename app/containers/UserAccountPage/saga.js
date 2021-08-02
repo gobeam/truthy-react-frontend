@@ -6,6 +6,7 @@ import {
   QUERY_REFRESH_TOKEN_LIST,
   SUBMIT_CHANGE_PASSWORD_FORM,
   SUBMIT_FORM,
+  UPDATE_TWO_FA_STATUS,
 } from 'containers/UserAccountPage/constants';
 import { makeFormValuesSelector } from 'containers/UserAccountPage/selectors';
 import {
@@ -96,9 +97,26 @@ export function* disableToken(data) {
   }
 }
 
+export function* handleUpdateTwoFactorStatus() {
+  yield put(asyncStartAction());
+  const data = yield select(makeFormValuesSelector());
+  const requestUrl = '/twofa';
+  const payload = ApiEndpoint.makeApiPayload(requestUrl, PUT, data);
+  try {
+    yield call(request, payload);
+    yield put(getProfileAction());
+    yield put(asyncEndAction());
+    return yield showMessage('success', messages.toggleTwoFaSuccess, true);
+  } catch (error) {
+    yield put(asyncEndAction());
+    return yield showMessage('error', error.data.message);
+  }
+}
+
 export default function* homePageSaga() {
   yield takeLatest(SUBMIT_FORM, updateProfile);
   yield takeLatest(QUERY_REFRESH_TOKEN_LIST, queryRefreshToken);
   yield takeLatest(SUBMIT_CHANGE_PASSWORD_FORM, changePassword);
   yield takeLatest(DISABLE_TOKEN, disableToken);
+  yield takeLatest(UPDATE_TWO_FA_STATUS, handleUpdateTwoFactorStatus);
 }

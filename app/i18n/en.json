@@ -73,6 +73,10 @@
   "common.messages.modifyPermission": "Modify Permission",
   "common.messages.confirmationMessage": "Are you sure you want to delete?",
   "common.messages.emptyPermissionError": "Please select some permissions to update or cancel!",
+  "common.messages.otpVerificationSuccess": "OTP code verified successfully!",
+  "common.messages.otpGenerateSuccess": "OTP code generated successfully!",
+  "common.messages.otpLabel": "One Time Password Verification",
+  "common.messages.generateOtp": "Generate OTP",
 
   "common.messages.nameLabel": "Name",
   "common.messages.passwordLabel": "Password",
