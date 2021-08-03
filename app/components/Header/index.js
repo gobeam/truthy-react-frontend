@@ -26,7 +26,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from 'components/Header/messages';
 import { changeLocaleAction } from 'containers/LanguageProvider/actions';
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
-import useCookie from 'hooks/useCookie';
+import { useCookie } from 'hooks/useCookie';
 import { BASE_URL } from 'utils/api';
 
 const { Header } = Layout;

@@ -35,4 +35,4 @@ const useCookie = (key, defaultValue) => {
   return [cookie, updateCookie];
 };
 
-export default useCookie;
+export { useCookie, getItem, setItem };
