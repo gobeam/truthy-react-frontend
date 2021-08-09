@@ -90,6 +90,7 @@
   "common.messages.otpGenerateSuccess": "OTP कोड सफलतापूर्वक उत्पन्न भयो!",
   "common.messages.otpLabel": "एक समय पासवर्ड प्रमाणिकरण",
   "common.messages.generateOtp": "OTP सिर्जना गर्नुहोस्",
+  "common.messages.validateLabel": "प्रमाणित गर्नुहोस्",
 
   "components.SearchInput.searchPlaceHolder": "खोज्नुहोस्",
 

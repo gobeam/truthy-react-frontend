@@ -18,6 +18,7 @@ import {
   ASSIGN_REFRESH_TOKEN_LIST,
   DISABLE_TOKEN,
   UPDATE_TWO_FA_STATUS,
+  SET_LIMIT,
 } from 'containers/UserAccountPage/constants';
 
 /**
@@ -48,6 +49,13 @@ export function asyncEndAction() {
 export function updateTwoFaStatusAction() {
   return {
     type: UPDATE_TWO_FA_STATUS,
+  };
+}
+
+export function setLimitAction(limit) {
+  return {
+    type: SET_LIMIT,
+    limit,
   };
 }
 

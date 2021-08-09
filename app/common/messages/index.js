@@ -213,4 +213,8 @@ export default defineMessages({
     id: `${scope}.generateOtp`,
     defaultMessage: 'Generate OTP',
   },
+  validateLabel: {
+    id: `${scope}.validateLabel`,
+    defaultMessage: 'Validate',
+  },
 });

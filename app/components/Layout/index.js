@@ -1,27 +1,28 @@
-import React, { Suspense, useEffect } from 'react';
 import { Drawer, Layout } from 'antd';
-import 'components/Layout/index.less';
 import HeaderComponent from 'components/Header';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import LoadingIndicator from 'components/LoadingIndicator';
-import { createStructuredSelector } from 'reselect';
-import {
-  makeCollapsedSelector,
-  makeDeviceSelector,
-  makeOtpErrorSelector,
-  makeOtpVerificationSelector,
-} from 'containers/App/selectors';
-import { useDispatch, useSelector } from 'react-redux';
+import 'components/Layout/index.less';
 import MenuComponent from 'components/Layout/Menu';
+import LoadingIndicator from 'components/LoadingIndicator';
+import OtpModal from 'components/OtpModal';
+import AlertMessage from 'containers/AlertMessage';
 import {
   authenticateOtpAction,
   changeDeviceAction,
   changeOtpValueAction,
+  otpCodeErrorAction,
   toggleCollapseAction,
 } from 'containers/App/actions';
-import AlertMessage from 'containers/AlertMessage';
-import SnackMessage from 'containers/SnackMessage';
-import OtpModal from 'components/OtpModal';
+import {
+  makeCollapsedSelector,
+  makeDeviceSelector,
+  makeOtpErrorSelector,
+  makeOtpValueSelector,
+  makeOtpVerificationSelector,
+} from 'containers/App/selectors';
+import React, { Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
 const { Sider, Content } = Layout;
 const WIDTH = 992;
@@ -32,11 +33,12 @@ const stateSelector = createStructuredSelector({
   collapsed: makeCollapsedSelector(),
   otpError: makeOtpErrorSelector(),
   otpVerified: makeOtpVerificationSelector(),
+  otpValue: makeOtpValueSelector(),
 });
 
 const LayoutPage = () => {
   const dispatch = useDispatch();
-  const { device, collapsed, otpError, otpVerified } =
+  const { device, collapsed, otpError, otpVerified, otpValue } =
     useSelector(stateSelector);
   const isMobile = device === 'MOBILE';
   const location = useLocation();
@@ -44,8 +46,12 @@ const LayoutPage = () => {
 
   const onChangeOtp = (otp) => {
     dispatch(changeOtpValueAction(otp));
-    if (otp.trim().length === OTP_LENGTH) {
+  };
+  const onVerifyOtp = () => {
+    if (otpValue.trim().length === OTP_LENGTH) {
       dispatch(authenticateOtpAction());
+    } else {
+      dispatch(otpCodeErrorAction());
     }
   };
 
@@ -98,7 +104,6 @@ const LayoutPage = () => {
           </Drawer>
         )}
         <Content className="layout-page-content">
-          <SnackMessage />
           <AlertMessage />
           <OtpModal
             visible={!otpVerified}
@@ -107,6 +112,7 @@ const LayoutPage = () => {
             className="otpContainer"
             inputClassName={`otpInput ${otpError ? 'shake-input' : ''}`}
             onChangeOTP={onChangeOtp}
+            onVerifyOtp={onVerifyOtp}
           />
           <Suspense fallback={<LoadingIndicator />}>
             {otpVerified ? <Outlet /> : null}

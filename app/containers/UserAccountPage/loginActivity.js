@@ -11,7 +11,7 @@ import saga from 'containers/UserAccountPage/saga';
 import reducer from 'containers/UserAccountPage/reducer';
 import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
-import { Button, List, Modal } from 'antd';
+import { Button, List, Modal, Skeleton } from 'antd';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
   makeErrorSelector,
@@ -54,6 +54,7 @@ const ListItem = ({ item, onDelete, intl }) => {
     <List.Item
       actions={[
         <Button
+          disabled={item.loading}
           type="link"
           onClick={() => {
             Modal.confirm({
@@ -73,24 +74,26 @@ const ListItem = ({ item, onDelete, intl }) => {
         </Button>,
       ]}
     >
-      <List.Item.Meta
-        title={
-          <FormattedMessage
-            {...messages.osDetail}
-            values={{ os: ua.os.name, version: ua.os.version }}
-          />
-        }
-        description={
-          <FormattedMessage
-            {...messages.browserDetail}
-            values={{
-              browser: ua.browser.name,
-              version: ua.browser.version,
-              ts: Date.parse(item.expires),
-            }}
-          />
-        }
-      />
+      <Skeleton title={false} loading={item.loading} active>
+        <List.Item.Meta
+          title={
+            <FormattedMessage
+              {...messages.osDetail}
+              values={{ os: ua.os.name, version: ua.os.version }}
+            />
+          }
+          description={
+            <FormattedMessage
+              {...messages.browserDetail}
+              values={{
+                browser: ua.browser.name,
+                version: ua.browser.version,
+                ts: Date.parse(item.expires),
+              }}
+            />
+          }
+        />
+      </Skeleton>
     </List.Item>
   );
 };
@@ -101,20 +104,50 @@ const LoginActivity = () => {
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
   const { loading, tokenList } = useSelector(stateSelector);
+  const [refreshTokenList, setRefreshTokenList] = React.useState([]);
+  const onQueryRefreshTokenList = () => dispatch(queryRefreshTokenListAction());
+  const onLoadMore = () => {
+    setRefreshTokenList(
+      refreshTokenList.concat([...new Array(5)].map(() => ({ loading: true }))),
+    );
+    onQueryRefreshTokenList();
+  };
 
   const disableRefreshToken = (id) => {
     dispatch(disableTokenAction(id));
   };
+  const loadMore =
+    !loading && tokenList.next > 0 ? (
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: 12,
+          height: 32,
+          lineHeight: '32px',
+        }}
+      >
+        <Button onClick={onLoadMore}>
+          <FormattedMessage {...messages.loadMoreLabel} />
+        </Button>
+      </div>
+    ) : null;
 
   useEffect(() => {
-    dispatch(queryRefreshTokenListAction());
+    onQueryRefreshTokenList();
   }, []);
+
+  useEffect(() => {
+    if (tokenList.results) {
+      setRefreshTokenList(tokenList.results);
+    }
+  }, [tokenList.results]);
 
   return (
     <List
       loading={loading}
       itemLayout="horizontal"
-      dataSource={tokenList}
+      dataSource={refreshTokenList}
+      loadMore={loadMore}
       renderItem={(item) => (
         <ListItem
           item={item}

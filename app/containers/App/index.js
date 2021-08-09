@@ -21,6 +21,7 @@ import saga from 'containers/App/saga';
 import { Layout } from 'antd';
 import 'containers/App/index.less';
 import GlobalStyle from 'global-styles';
+import SnackMessage from 'containers/SnackMessage';
 
 const key = 'global';
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
         <meta name="description" content="Truthy CMS" />
       </Helmet>
       <GlobalStyle />
+      <SnackMessage />
       <Layout>
         <BrowserRouter>
           <RenderRouter />

@@ -14,6 +14,7 @@ export const SET_INITIAL_VALUES = 'app/UserAccountPage/SET_INITIAL_VALUES';
 export const SUBMIT_FORM = 'app/UserAccountPage/SUBMIT_FORM';
 export const DISABLE_TOKEN = 'app/UserAccountPage/DISABLE_TOKEN';
 export const UPDATE_TWO_FA_STATUS = 'app/UserAccountPage/UPDATE_TWO_FA_STATUS';
+export const SET_LIMIT = 'app/UserAccountPage/SET_LIMIT';
 export const QUERY_REFRESH_TOKEN_LIST =
   'app/UserAccountPage/QUERY_REFRESH_TOKEN_LIST';
 export const ASSIGN_REFRESH_TOKEN_LIST =

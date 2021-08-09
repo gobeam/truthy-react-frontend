@@ -1,12 +1,10 @@
-import React, { memo, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import uuid from 'react-uuid';
-import OTPInput from 'components/OtpModal/otpInput';
 import { Button, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
-import { generateOtpAction } from 'containers/App/actions';
-import { useIntl } from 'react-intl';
 import commonMessages from 'common/messages';
+import OTPInput from 'components/OtpModal/otpInput';
+import PropTypes from 'prop-types';
+import React, { memo, useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
+import uuid from 'react-uuid';
 
 const OtpModalComponent = (props) => {
   const {
@@ -15,17 +13,15 @@ const OtpModalComponent = (props) => {
     autoFocus,
     disabled,
     onChangeOTP,
+    onVerifyOtp,
     inputClassName,
     inputStyle,
     visible,
     ...rest
   } = props;
-  const dispatch = useDispatch();
   const intl = useIntl();
   const [activeInput, setActiveInput] = useState(0);
   const [otpValues, setOTPValues] = useState(Array(6).fill(''));
-
-  const onGenerateOtp = () => dispatch(generateOtpAction());
 
   // Helper to return OTP from inputs
   const handleOtpChange = useCallback(
@@ -173,7 +169,11 @@ const OtpModalComponent = (props) => {
       visible={visible}
       width={600}
       closable={false}
-      footer={null}
+      footer={[
+        <Button type="primary" onClick={onVerifyOtp} key="validate-btn">
+          {intl.formatMessage(commonMessages.validateLabel)}
+        </Button>,
+      ]}
     >
       <div {...rest}>
         {Array(length)
@@ -195,15 +195,16 @@ const OtpModalComponent = (props) => {
             />
           ))}
       </div>
-      <Button type="link" onClick={onGenerateOtp}>
+      {/* <Button type="link" onClick={onGenerateOtp}>
         {intl.formatMessage(commonMessages.generateOtp)}
-      </Button>
+      </Button> */}
     </Modal>
   );
 };
 
 OtpModalComponent.propTypes = {
   onChangeOTP: PropTypes.func.isRequired,
+  onVerifyOtp: PropTypes.func.isRequired,
   length: PropTypes.number.isRequired,
   autoFocus: PropTypes.bool,
   visible: PropTypes.bool,

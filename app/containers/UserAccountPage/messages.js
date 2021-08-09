@@ -87,6 +87,10 @@ export default defineMessages({
     id: `${scope}.osDetail`,
     defaultMessage: 'Operating System name: {os}, Version: {version}',
   },
+  loadMoreLabel: {
+    id: `${scope}.loadMoreLabel`,
+    defaultMessage: 'Load More',
+  },
   browserDetail: {
     id: `${scope}.browserDetail`,
     defaultMessage:

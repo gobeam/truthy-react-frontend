@@ -19,6 +19,7 @@ import {
 const EmptyFields = {
   username: '',
   password: '',
+  remember: false,
 };
 export const initialState = {
   initialValues: EmptyFields,

@@ -25,4 +25,3 @@ export const OTP_UNVERIFIED = 'containers/App/OTP_UNVERIFIED';
 export const CHANGE_OTP_VALUE = 'containers/App/CHANGE_OTP_VALUE';
 export const AUTHENTICATE_OTP = 'containers/App/AUTHENTICATE_OTP';
 export const OTP_ERROR = 'containers/App/OTP_ERROR';
-export const GENERATE_OTP = 'containers/App/GENERATE_OTP';

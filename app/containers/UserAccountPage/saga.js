@@ -8,7 +8,11 @@ import {
   SUBMIT_FORM,
   UPDATE_TWO_FA_STATUS,
 } from 'containers/UserAccountPage/constants';
-import { makeFormValuesSelector } from 'containers/UserAccountPage/selectors';
+import {
+  makeFormValuesSelector,
+  makeLimitSelector,
+  makeTokenListSelector,
+} from 'containers/UserAccountPage/selectors';
 import {
   assignRefreshTokenListAction,
   asyncEndAction,
@@ -16,11 +20,13 @@ import {
   enterValidationErrorAction,
   initiateCleanAction,
   queryRefreshTokenListAction,
+  setLimitAction,
 } from 'containers/UserAccountPage/actions';
 import { GET, PUT } from 'utils/constants';
 import messages from 'containers/UserAccountPage/messages';
 import { showAlert, showFormattedAlert, showMessage } from 'common/saga';
 import { getProfileAction } from 'containers/App/actions';
+import uuid from 'react-uuid';
 
 export function* updateProfile() {
   yield put(asyncStartAction());
@@ -61,13 +67,22 @@ export function* changePassword() {
     if (error.data && error.data.statusCode === 422) {
       return yield put(enterValidationErrorAction(error.data.message));
     }
-    return yield showMessage('error', error.data.message);
+    return yield showMessage({
+      type: 'error',
+      message: error.data.message,
+      translate: false,
+      id: uuid(),
+    });
   }
 }
 
 export function* queryRefreshToken() {
   yield put(asyncStartAction());
-  const requestUrl = '/auth/token-info';
+  const tokenList = yield select(makeTokenListSelector());
+  const limit = yield select(makeLimitSelector());
+  const queryLimit = tokenList.next > 0 ? limit + 5 : limit;
+  const requestUrl = `/auth/token-info?limit=${queryLimit}`;
+  yield put(setLimitAction(queryLimit));
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
     const response = yield call(request, payload);
@@ -75,7 +90,12 @@ export function* queryRefreshToken() {
     return yield put(asyncEndAction());
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showMessage('error', error.data.message);
+    return yield showMessage({
+      type: 'error',
+      message: error.data.message,
+      translate: false,
+      id: uuid(),
+    });
   }
 }
 
@@ -90,10 +110,20 @@ export function* disableToken(data) {
     yield call(request, payload);
     yield put(asyncEndAction());
     yield put(queryRefreshTokenListAction());
-    return yield showMessage('success', messages.sessionClearSuccess, true);
+    return yield showMessage({
+      type: 'success',
+      message: messages.sessionClearSuccess,
+      translate: true,
+      id: uuid(),
+    });
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showMessage('error', error.data.message);
+    return yield showMessage({
+      type: 'error',
+      message: error.data.message,
+      translate: false,
+      id: uuid(),
+    });
   }
 }
 
@@ -106,10 +136,20 @@ export function* handleUpdateTwoFactorStatus() {
     yield call(request, payload);
     yield put(getProfileAction());
     yield put(asyncEndAction());
-    return yield showMessage('success', messages.toggleTwoFaSuccess, true);
+    return yield showMessage({
+      type: 'success',
+      message: messages.toggleTwoFaSuccess,
+      translate: true,
+      id: uuid(),
+    });
   } catch (error) {
     yield put(asyncEndAction());
-    return yield showMessage('error', error.data.message);
+    return yield showMessage({
+      type: 'error',
+      message: error.data.message,
+      translate: false,
+      id: uuid(),
+    });
   }
 }
 

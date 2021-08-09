@@ -11,7 +11,6 @@ import {
   CHANGE_DEVICE,
   CHANGE_FIELD,
   CHANGE_OTP_VALUE,
-  GENERATE_OTP,
   GET_PROFILE_ERROR,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -23,12 +22,12 @@ import {
   LOGOUT,
   LOGOUT_ERROR,
   LOGOUT_SUCCESS,
+  OTP_ERROR,
   OTP_UNVERIFIED,
   OTP_VERIFIED,
   QUERY_NOTIFICATIONS,
   REFRESH_TOKEN,
   TOGGLE_COLLAPSE,
-  OTP_ERROR,
 } from 'containers/App/constants';
 
 /**
@@ -216,12 +215,6 @@ export function otpVerifiedAction() {
 export function otpUnVerifiedAction() {
   return {
     type: OTP_UNVERIFIED,
-  };
-}
-
-export function generateOtpAction() {
-  return {
-    type: GENERATE_OTP,
   };
 }
 

@@ -24,14 +24,8 @@ export function* attemptLogin() {
     formValues,
   );
   try {
-    const response = yield call(request, requestPayload);
+    yield call(request, requestPayload);
     yield put(asyncEndAction());
-    if (response.statusCode === 429) {
-      return yield showAlert('error', response.message);
-    }
-    if (response.statusCode === 422) {
-      return yield put(enterValidationErrorAction(response.error));
-    }
     yield put(clearSnackMessageAction());
     yield put(getProfileAction());
     return yield showFormattedAlert('success', messages.loginSuccess);

@@ -21,7 +21,11 @@ const makeInitiateCleanFieldSelector = () =>
 const makeTokenListSelector = () =>
   createSelector(selectUserAccountPage, (substate) => substate.tokenList);
 
+const makeLimitSelector = () =>
+  createSelector(selectUserAccountPage, (substate) => substate.limit);
+
 export {
+  makeLimitSelector,
   makeTokenListSelector,
   makeInitialValuesSelector,
   makeFormValuesSelector,

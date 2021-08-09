@@ -20,20 +20,12 @@ export function* showFormattedAlert(type, message) {
 }
 
 /**
- * show error message
- * @param type
- * @param message
- * @param translate
+ * show formatted snack message
+ * @param payload: {type: string, message: string, translate: boolean, id: string}
  * @returns {IterableIterator<*>}
  */
-export function* showMessage(type, message, translate = false) {
-  return yield put(
-    enqueueSnackMessageAction({
-      message,
-      type,
-      translate,
-    }),
-  );
+export function* showMessage(payload) {
+  return yield put(enqueueSnackMessageAction(payload));
 }
 
 /**

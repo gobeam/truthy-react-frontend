@@ -6,6 +6,7 @@
 import produce from 'immer';
 import {
   ADD_VALIDATION_ERROR,
+  SET_LIMIT,
   ASSIGN_REFRESH_TOKEN_LIST,
   ASYNC_END,
   ASYNC_START,
@@ -26,15 +27,26 @@ const EmptyFormField = {
 export const initialState = {
   initialValues: EmptyFormField,
   formValues: {},
+  limit: 5,
   isLoading: false,
   initiateClean: false,
   errors: [],
-  tokenList: [],
+  tokenList: {
+    results: [],
+    pageSize: 10,
+    currentPage: 0,
+    totalItems: 0,
+    next: 0,
+    previous: 0,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const userPageReducer = produce((draft, action) => {
   switch (action.type) {
+    case SET_LIMIT:
+      draft.limit = action.limit;
+      break;
     case INITIATE_CLEAN:
       draft.initiateClean = true;
       break;

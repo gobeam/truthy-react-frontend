@@ -4,7 +4,6 @@ import {
   asyncEndAction,
   asyncStartAction,
   getProfileAction,
-  getProfileErrorAction,
   getProfileSuccessAction,
   hideHeaderAction,
   isLoggedErrorAction,
@@ -13,11 +12,9 @@ import {
   logoutSuccessAction,
   otpCodeErrorAction,
   otpVerifiedAction,
-  refreshTokenAction,
 } from 'containers/App/actions';
 import {
   AUTHENTICATE_OTP,
-  GENERATE_OTP,
   GET_PROFILE_REQUEST,
   LOGOUT,
   REFRESH_TOKEN,
@@ -27,6 +24,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import ApiEndpoint, { BASE_URL } from 'utils/api';
 import { GET, POST } from 'utils/constants';
 import request from 'utils/request';
+import uuid from 'react-uuid';
 
 /**
  *  query logged in user profile
@@ -37,13 +35,6 @@ export function* handleProfile() {
   const payload = ApiEndpoint.makeApiPayload(requestUrl, GET);
   try {
     const response = yield call(request, payload);
-    if (response.error) {
-      if (response.message === 'token expired') {
-        return yield put(refreshTokenAction());
-      }
-      yield put(getProfileSuccessAction({}));
-      return yield put(isLoggedErrorAction());
-    }
     response.image = response.image
       ? `${BASE_URL}/uploads/${response.data.image}`
       : '';
@@ -51,8 +42,7 @@ export function* handleProfile() {
     yield put(hideHeaderAction(false));
     return yield put(getProfileSuccessAction(response));
   } catch (error) {
-    yield put(isLoggedErrorAction());
-    return yield put(getProfileErrorAction('Internal Server Error'));
+    return yield put(isLoggedErrorAction());
   }
 }
 
@@ -65,9 +55,9 @@ export function* handleLogout() {
   const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, true, {});
   try {
     yield call(request, payload);
-    yield put(logoutSuccessAction());
+    return yield put(logoutSuccessAction());
   } catch (error) {
-    yield put(logoutErrorAction(error));
+    return yield put(logoutErrorAction(error));
   }
 }
 
@@ -81,12 +71,7 @@ export function* handleRefreshToken() {
   const requestPayload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
 
   try {
-    const response = yield call(request, requestPayload);
-    if (response.error) {
-      yield put(isLoggedErrorAction());
-      yield showFormattedAlert('error', messages.invalidRefresh);
-      return yield put(asyncEndAction());
-    }
+    yield call(request, requestPayload);
     return yield put(getProfileAction());
   } catch (error) {
     yield put(isLoggedErrorAction());
@@ -105,24 +90,15 @@ export function* handleAuthenticateOtp() {
     yield put(getProfileAction());
     yield put(otpVerifiedAction());
     yield put(asyncEndAction());
-    return yield showMessage('success', messages.otpVerificationSuccess, true);
+    return yield showMessage({
+      type: 'success',
+      message: messages.otpVerificationSuccess,
+      translate: true,
+      id: uuid(),
+    });
   } catch (error) {
     yield put(otpCodeErrorAction());
     return yield put(asyncEndAction());
-  }
-}
-
-export function* handleGenerateOtp() {
-  yield put(asyncStartAction());
-  const requestUrl = '/twofa/generate';
-  const payload = ApiEndpoint.makeApiPayload(requestUrl, POST, {});
-  try {
-    yield call(request, payload);
-    yield put(asyncEndAction());
-    return yield showMessage('success', messages.otpGenerateSuccess, true);
-  } catch (error) {
-    yield put(asyncEndAction());
-    return yield showMessage('error', error.data.message);
   }
 }
 
@@ -131,5 +107,4 @@ export default function* appPageSaga() {
   yield takeLatest(GET_PROFILE_REQUEST, handleProfile);
   yield takeLatest(REFRESH_TOKEN, handleRefreshToken);
   yield takeLatest(AUTHENTICATE_OTP, handleAuthenticateOtp);
-  yield takeLatest(GENERATE_OTP, handleGenerateOtp);
 }
