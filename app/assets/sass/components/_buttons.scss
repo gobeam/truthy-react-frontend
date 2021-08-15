@@ -1,0 +1,48 @@
+.ant-btn-primary{
+    @include bg-border-color($primary, $primary);
+    background-position: center;
+    transition: background 0.8s;
+    height: 38px;
+    text-transform: capitalize;
+    border-radius: 5px;
+    &.active, &:hover, &:focus{
+        @include bg-border-color($primary, $primary);
+    }
+    &:hover{
+        background: $primary radial-gradient(circle, transparent 1%, $primary 1%) center/15000%;
+    }
+    &.active {
+            background-color: rgba($primary, 0.5);
+            background-size: 100%;
+            transition: background 0s;
+        }
+}
+
+
+// .ant-btn-loading-icon{
+// display: none;
+// }
+
+/* Ripple effect */
+// .ripple {
+  
+//   }
+//   .ripple:hover {
+//     background: $primary radial-gradient(circle, transparent 1%, $primary 1%) center/15000%;
+//   }
+//   .ripple
+  
+  /* Button style */
+//   button {
+//     border: none;
+//     border-radius: 2px;
+//     padding: 12px 18px;
+//     font-size: 16px;
+//     text-transform: uppercase;
+//     cursor: pointer;
+//     color: white;
+//     background-color: #2196f3;
+//     box-shadow: 0 0 4px #999;
+//     outline: none;
+//   }
+  

@@ -24,7 +24,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/ForgotPassword/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
-import { Form, Typography } from 'antd';
+import { Form, Typography, Row, Col } from 'antd';
 import FormInputWrapper from 'components/FormInputWrapper';
 import AlertMessage from 'containers/AlertMessage';
 import commonMessage from 'common/messages';
@@ -72,7 +72,7 @@ export default function ForgotPasswordPage() {
   }, [errors]);
 
   return (
-    <div className="content-page">
+    <div className="login-page mh-100">
       <FormattedMessage {...messages.helmetForgotPwdTitle}>
         {(title) => (
           <Helmet>
@@ -80,48 +80,54 @@ export default function ForgotPasswordPage() {
           </Helmet>
         )}
       </FormattedMessage>
+      <Row className="login-center">
+        <Col xl={8} className="m-auto">
+          <FormWrapper
+            {...formItemLayout}
+            values={initialValues}
+            formInstance={form}
+            onFinish={onFinish}
+            classname="login-page-form form-ant-items"
+            name="forgot-password-form"
+          >
+            <Title level={3}>
+              <FormattedMessage {...messages.forgotPassword} />
+            </Title>
 
-      <FormWrapper
-        {...formItemLayout}
-        values={initialValues}
-        formInstance={form}
-        onFinish={onFinish}
-        name="forgot-password-form"
-      >
-        <Title level={2}>
-          <FormattedMessage {...messages.forgotPassword} />
-        </Title>
+            <AlertMessage />
 
-        <AlertMessage />
+            <FormInputWrapper
+              name="email"
+              label={commonMessage.emailLabel}
+              id="email"
+              type="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: (
+                    <FormattedMessage {...commonMessage.validEmailRequired} />
+                  ),
+                },
+                {
+                  required: true,
+                  whitespace: true,
+                  message: (
+                    <FormattedMessage {...commonMessage.emailRequired} />
+                  ),
+                },
+              ]}
+              placeholder={commonMessage.emailPlaceHolder}
+            />
 
-        <FormInputWrapper
-          name="email"
-          label={commonMessage.emailLabel}
-          id="email"
-          type="email"
-          rules={[
-            {
-              type: 'email',
-              message: (
-                <FormattedMessage {...commonMessage.validEmailRequired} />
-              ),
-            },
-            {
-              required: true,
-              whitespace: true,
-              message: <FormattedMessage {...commonMessage.emailRequired} />,
-            },
-          ]}
-          placeholder={commonMessage.emailPlaceHolder}
-        />
-
-        <FormButtonWrapper
-          variant="primary"
-          disabled={isLoading}
-          form={form}
-          label={messages.forgotPasswordBtn}
-        />
-      </FormWrapper>
+            <FormButtonWrapper
+              variant="primary"
+              disabled={isLoading}
+              form={form}
+              label={messages.forgotPasswordBtn}
+            />
+          </FormWrapper>
+        </Col>
+      </Row>
     </div>
   );
 }

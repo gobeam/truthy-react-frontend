@@ -128,6 +128,7 @@ const HeaderComponent = () => {
         <div className="actions">
           <Dropdown
             trigger={['click']}
+            placement="bottomCenter"
             overlay={
               <Menu onClick={selectLocale}>
                 {appLocales.map((lang) => (

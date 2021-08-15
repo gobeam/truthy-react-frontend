@@ -14,9 +14,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import FontFaceObserver from 'fontfaceobserver';
 // Import css
+
 import 'antd/dist/antd.css';
 // import 'scss/volt.scss';
-import 'sanitize.css/sanitize.css';
+// import 'sanitize.css/sanitize.css';
+
+import 'assets/sass/main.scss';
+
 // Import root app
 import App from 'containers/App';
 // Import Language Provider

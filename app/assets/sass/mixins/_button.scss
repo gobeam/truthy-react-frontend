@@ -1,0 +1,26 @@
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+
+@mixin button-bg($bg) {
+    background: $bg;
+    @include transition(all 0.4s ease);
+    &:hover {
+      background:darken($bg,8%);
+    
+      border: none;
+    }
+    &:active {
+      background:darken($bg,25%);
+    } 
+  }
+
+  @mixin bg-border-color($bg, $border){
+    background-color: $bg;
+    border-color:  $border;
+  }
+

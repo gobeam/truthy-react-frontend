@@ -1,0 +1,81 @@
+.home-wrapper{
+@include d-center;
+flex-direction: column;
+background-color: $bg-color;
+
+}
+
+.btn-primary{
+  background-color: $primary;
+  height: 38px;
+  border-radius: 8px;
+  padding: 10px 50px;
+  @include d-center;
+  color: $white;
+  &:hover{
+    color: $white;
+  }
+}
+
+
+
+
+
+// ?login 
+
+.login-page{
+  display: flex;
+  align-items: center;
+  .ant-row{
+    width: 100%;
+  }
+  &-form{
+    padding: 30px;
+    background-color: $white;
+    border-radius: 5px;
+    h3{
+      text-transform: capitalize;
+
+    }
+  }
+  .link{
+    text-align: center;
+    display: block;
+    text-transform: capitalize;
+  }
+  .ant-btn-primary{
+    width: 100%;
+  }
+}
+
+
+// ?navbar 
+
+  .ant-dropdown-menu-title-content{
+    .anticon{
+      padding-right: 7px;
+    }
+  }
+
+  .ant-dropdown-menu-item-divider{
+    margin:0;
+  }
+
+  .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title{
+    padding: 7px 25px 7px 13px;
+  }
+
+  .ant-dropdown-menu{
+    border-radius:5px ;
+    top: 30px;
+  }
+
+  .ant-dropdown-placement-bottomCenter{
+    width: 140px;
+  }
+
+  .ant-dropdown-menu-title-content{
+    img{
+      height: 15px;
+    }
+  }

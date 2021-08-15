@@ -12,9 +12,11 @@ export default function HomePage() {
   useInjectSaga({ key: 'homePage', saga });
 
   return (
-    <div>
+    <div className="home-wrapper mh-100">
       <p>This is home page</p>
-      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/login" className="btn-primary">
+        Login
+      </NavLink>
     </div>
   );
 }

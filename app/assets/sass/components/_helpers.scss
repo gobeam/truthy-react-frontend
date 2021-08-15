@@ -1,0 +1,39 @@
+.mh-100{
+    min-height: 100vh;
+}
+
+.vh-center{
+    @include d-center;
+  }
+
+  .spin{
+      i{
+        background-color: $primary;
+
+      }
+
+  }
+  .d-flex{
+      display: flex;
+  }
+
+  .w-100{
+    width: 100%;
+  }
+  
+  .m-auto{
+    margin: auto;
+  }
+  
+
+  .ml-auto{
+      margin-left: auto;
+  }
+
+  a{
+      color: $primary;
+      &:hover{
+        color: $primary;
+        text-decoration: underline;
+      }
+  }

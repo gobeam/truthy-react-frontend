@@ -4,8 +4,8 @@ import { Spin } from 'antd';
 import Wrapper from 'components/LoadingIndicator/Wrapper';
 
 const LoadingIndicator = () => (
-  <Wrapper>
-    <Spin />
+  <Wrapper className="mh-100 vh-center">
+    <Spin className="spin" />
   </Wrapper>
 );
 

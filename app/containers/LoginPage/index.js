@@ -10,10 +10,11 @@ import { useInjectReducer } from 'utils/injectReducer';
 import reducer from 'containers/LoginPage/reducer';
 import LoginForm from 'containers/LoginPage/loginForm';
 import saga from 'containers/LoginPage/saga';
-import 'containers/LoginPage/index.less';
+// import 'containers/LoginPage/index.less';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/LoginPage/messages';
+import { Row, Col } from 'antd';
 
 const key = 'login';
 
@@ -22,7 +23,7 @@ export default function LoginPage() {
   useInjectSaga({ key, saga });
 
   return (
-    <div className="login-page">
+    <div className="login-page mh-100">
       <FormattedMessage {...messages.helmetLoginTitle}>
         {(title) => (
           <Helmet>
@@ -30,7 +31,11 @@ export default function LoginPage() {
           </Helmet>
         )}
       </FormattedMessage>
-      <LoginForm />
+      <Row className="login-center">
+        <Col xl={8} className="m-auto">
+          <LoginForm />
+        </Col>
+      </Row>
     </div>
   );
 }
