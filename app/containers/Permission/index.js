@@ -35,7 +35,7 @@ import { POST, PUT } from 'utils/constants';
 import { Button, Col, Modal, Row } from 'antd';
 import { ExclamationCircleOutlined, SyncOutlined } from '@ant-design/icons';
 
-const key = 'Permission';
+const key = 'permission';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),

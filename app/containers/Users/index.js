@@ -34,7 +34,7 @@ import CreateUserModal from 'containers/Users/createUserModal';
 import { POST, PUT } from 'utils/constants';
 import EditUserModal from 'containers/Users/editUserModal';
 
-const key = 'Users';
+const key = 'users';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
@@ -75,7 +75,7 @@ const Users = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getUserByIdAction(id));
+      dispatch(getUserByIdAction());
     }
   }, [id]);
 
@@ -96,13 +96,8 @@ const Users = () => {
       <CreateUserModal
         visible={createUser}
         onCancel={() => setCreateUser(false)}
-        onCreate={() => setCreateUser(false)}
       />
-      <EditUserModal
-        visible={editUser}
-        onCancel={() => setEditUser(false)}
-        onCreate={() => setEditUser(false)}
-      />
+      <EditUserModal visible={editUser} onCancel={() => setEditUser(false)} />
       <UserTable onCreate={onCreate} onEdit={onEdit} />
     </>
   );

@@ -13,10 +13,11 @@ import forgotPasswordReducer from 'containers/ForgotPassword/reducer';
 import resetPasswordReducer from 'containers/ResetPassword/reducer';
 import userAccountReducer from 'containers/UserAccount/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
-import RoleReducer from 'containers/Role/reducer';
-import PermissionReducer from 'containers/Permission/reducer';
-import UsersReducer from 'containers/Users/reducer';
-import EmailTemplateReducer from 'containers/EmailTemplate/reducer';
+import roleReducer from 'containers/Role/reducer';
+import permissionReducer from 'containers/Permission/reducer';
+import usersReducer from 'containers/Users/reducer';
+import DashboardReducer from 'containers/Dashboard/reducer';
+import emailTemplateReducer from 'containers/EmailTemplate/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -33,10 +34,11 @@ export default function createReducer(injectedReducers = {}) {
     resetPassword: resetPasswordReducer,
     verifyPage: verifyPageReducer,
     userAccount: userAccountReducer,
-    Role: RoleReducer,
-    Permission: PermissionReducer,
-    Users: UsersReducer,
-    emailTemplate: EmailTemplateReducer,
+    dashboard: DashboardReducer,
+    role: roleReducer,
+    permission: permissionReducer,
+    users: usersReducer,
+    emailTemplate: emailTemplateReducer,
     ...injectedReducers,
   });
 }

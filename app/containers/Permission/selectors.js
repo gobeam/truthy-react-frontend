@@ -5,7 +5,7 @@ import { initialState } from 'containers/Permission/reducer';
  * Direct selector to the Permission state domain
  */
 
-const selectPermissionDomain = (state) => state.Permission || initialState;
+const selectPermissionDomain = (state) => state.permission || initialState;
 
 /**
  * Other specific selectors

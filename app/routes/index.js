@@ -7,7 +7,7 @@ import VerifyAccount from 'containers/VerifyAccount/Loadable';
 import ForgotPassword from 'containers/ForgotPassword/Loadable';
 import ResetPassword from 'containers/ResetPassword/Loadable';
 import UserAccount from 'containers/UserAccount/Loadable';
-import DashboardPage from 'containers/DashboardPage/Loadable';
+import Dashboard from 'containers/Dashboard/Loadable';
 import Role from 'containers/Role/Loadable';
 import EmailTemplate from 'containers/EmailTemplate/Loadable';
 import Users from 'containers/Users/Loadable';
@@ -57,7 +57,7 @@ const routes = [
         path: 'dashboard',
         element: (
           <PrivateRoute
-            element={<DashboardPage />}
+            element={<Dashboard />}
             method="get"
             resource="dashboard"
             defaultPermission

@@ -5,7 +5,7 @@ import { initialState } from 'containers/Role/reducer';
  * Direct selector to the Role state domain
  */
 
-const selectRoleDomain = (state) => state.Role || initialState;
+const selectRoleDomain = (state) => state.role || initialState;
 
 /**
  * Other specific selectors

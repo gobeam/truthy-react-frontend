@@ -45,7 +45,6 @@ const EditUserModal = ({ onCancel, visible }) => {
   } = useGetUserForm({
     formName: 'create-user',
     roles,
-    errors,
     device,
     initialValues,
   });

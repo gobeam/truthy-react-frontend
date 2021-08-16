@@ -5,7 +5,7 @@ import { initialState } from 'containers/Users/reducer';
  * Direct selector to the Users state domain
  */
 
-const selectUsersDomain = (state) => state.Users || initialState;
+const selectUsersDomain = (state) => state.users || initialState;
 
 /**
  * Other specific selectors

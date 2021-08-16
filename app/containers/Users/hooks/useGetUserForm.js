@@ -26,7 +26,7 @@ const useGetUserForm = ({
   responsive = false,
   formName = 'form',
   roles = [],
-  initialValues,
+  initialValues = {},
   device,
 }) => {
   const [formInstance] = Form.useForm();

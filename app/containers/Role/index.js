@@ -36,7 +36,7 @@ import RoleTable from 'containers/Role/roleTable';
 import { POST, PUT } from 'utils/constants';
 import ModifyPermissionModal from 'containers/Role/modifyPermissionModal';
 
-const key = 'Role';
+const key = 'role';
 
 const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
