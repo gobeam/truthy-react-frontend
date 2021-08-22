@@ -32,7 +32,7 @@ export default function LoginPage() {
         )}
       </FormattedMessage>
       <Row className="login-center">
-        <Col xl={8} className="m-auto">
+        <Col xl={6} lg={10} md={10} xs={16} className="m-auto">
           <LoginForm />
         </Col>
       </Row>

@@ -174,6 +174,7 @@ const OtpModalComponent = (props) => {
           {intl.formatMessage(commonMessages.validateLabel)}
         </Button>,
       ]}
+      centered
     >
       <div {...rest}>
         {Array(length)

@@ -79,3 +79,62 @@ background-color: $bg-color;
       height: 15px;
     }
   }
+
+  .ant-layout-has-sider{
+    min-height: calc(100vh - 64px);
+  }
+
+  .layout-page-content{
+    padding: 30px;
+  }
+
+  .truthy-breadcrumb{
+    
+    .links{
+        font-size: 14px;
+        // color: $primary;
+    }
+    .ant-breadcrumb-separator{
+        font-size: 14px;
+        color: $text-color;
+    }
+    .current{
+        font-size: 14px;
+        &.active{
+            color: $primary;
+        }
+    }
+}
+
+.truthy-content-header{
+  margin-bottom: 20px;
+  margin-top: 20px;
+  .ant-input-search{
+    position: relative;
+
+  }
+  .ant-input-affix-wrapper > input.ant-input{
+    padding-left: 10px;
+  }
+  .ant-input-group{
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .ant-input-group-addon{
+    position: absolute;
+    right: 32px;
+    left: auto !important;
+    border: 0 !important;
+    height: 100%;
+    top: 1px;
+    background-color: transparent;
+    z-index: 9;
+    button{
+
+    border: 0;
+    height: 42px;
+
+    }
+  }
+}

@@ -42,3 +42,16 @@
   }
 
 }
+
+
+.ant-modal{
+  &-content{
+      border-radius: 5px;
+  }
+  &-header{
+    border-radius: 5px 5px 0 0;
+  }
+  &-title{
+    font-weight: 500;
+  }
+}

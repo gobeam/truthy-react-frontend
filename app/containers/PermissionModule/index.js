@@ -32,8 +32,9 @@ import CreatePermissionModal from 'containers/PermissionModule/createPermissionM
 import EditPermissionModal from 'containers/PermissionModule/editPermissionModal';
 import PermissionTable from 'containers/PermissionModule/permissionTable';
 import { POST, PUT } from 'utils/constants';
-import { Button, Col, Modal, Row } from 'antd';
+import { Breadcrumb, Button, Modal } from 'antd';
 import { ExclamationCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { NavLink } from 'react-router-dom';
 
 const key = 'permissionModule';
 
@@ -74,7 +75,7 @@ const PermissionModule = () => {
   }, [pageNumber, limit]);
 
   return (
-    <>
+    <div className="truthy-wrapper">
       <FormattedMessage {...messages.helmetTitle}>
         {(title) => (
           <Helmet>
@@ -82,30 +83,52 @@ const PermissionModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      <Row>
-        <Col span={8}>
-          <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
-        </Col>
-        <Col span={8} offset={8}>
-          <Button
-            type="primary"
-            icon={<SyncOutlined />}
-            onClick={() => {
-              Modal.confirm({
-                okText: intl.formatMessage(messages.syncOk),
-                okType: 'danger',
-                cancelText: intl.formatMessage(messages.cancelBtn),
-                icon: <ExclamationCircleOutlined />,
-                title: intl.formatMessage(messages.syncConfirmationMessage),
-                onOk: (close) => onSync() && close(),
-              });
-            }}
-          >
-            <FormattedMessage {...messages.syncLabel} />
-          </Button>
-        </Col>
-      </Row>
-
+      <div className="truthy-breadcrumb">
+        <h2>Permission</h2>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <NavLink to="/" className="links">
+              Dashboard
+            </NavLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item className="current active">
+            Permission
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="truthy-content-header">
+        <div className="d-flex align-items-center">
+          <div className="add-wrap">
+            <Button
+              type="primary"
+              icon={<SyncOutlined />}
+              onClick={() => {
+                Modal.confirm({
+                  okText: intl.formatMessage(messages.syncOk),
+                  okType: 'danger',
+                  cancelText: intl.formatMessage(messages.cancelBtn),
+                  icon: <ExclamationCircleOutlined />,
+                  title: intl.formatMessage(messages.syncConfirmationMessage),
+                  onOk: (close) => onSync() && close(),
+                });
+              }}
+            >
+              <FormattedMessage {...messages.syncLabel} />
+            </Button>
+          </div>
+          <div className="d-flex ml-auto search-wrap">
+            <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+          </div>
+        </div>
+      </div>
+      <div className="truthy-table ">
+        <PermissionTable
+          onCreate={onCreate}
+          onEdit={onEdit}
+          onModifyPermission={() => {}}
+          onDelete={onDelete}
+        />
+      </div>
       <CreatePermissionModal
         visible={createPermission}
         onCancel={() => setCreatePermission(false)}
@@ -116,13 +139,7 @@ const PermissionModule = () => {
         onCancel={() => setEditPermission(false)}
         onCreate={() => setEditPermission(false)}
       />
-      <PermissionTable
-        onCreate={onCreate}
-        onEdit={onEdit}
-        onModifyPermission={() => {}}
-        onDelete={onDelete}
-      />
-    </>
+    </div>
   );
 };
 

@@ -109,7 +109,7 @@ const LayoutPage = () => {
             visible={!otpVerified}
             autoFocus
             length={OTP_LENGTH}
-            className="otpContainer"
+            className="otp-wrapper"
             inputClassName={`otpInput ${otpError ? 'shake-input' : ''}`}
             onChangeOTP={onChangeOtp}
             onVerifyOtp={onVerifyOtp}

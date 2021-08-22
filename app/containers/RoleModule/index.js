@@ -35,6 +35,8 @@ import EditRoleModal from 'containers/RoleModule/editRoleModal';
 import RoleTable from 'containers/RoleModule/roleTable';
 import { POST, PUT } from 'utils/constants';
 import ModifyPermissionModal from 'containers/RoleModule/modifyPermissionModal';
+import { Breadcrumb } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const key = 'roleModule';
 
@@ -94,7 +96,7 @@ export default function RoleModule() {
   }, [pageNumber, limit]);
 
   return (
-    <>
+    <div className="truthy-wrapper">
       <FormattedMessage {...messages.helmetTitle}>
         {(title) => (
           <Helmet>
@@ -102,7 +104,33 @@ export default function RoleModule() {
           </Helmet>
         )}
       </FormattedMessage>
-      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+      <div className="truthy-breadcrumb">
+        <h2>Role</h2>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <NavLink to="/" className="links">
+              Dashboard
+            </NavLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item className="current active">Role</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="truthy-content-header">
+        <div className="d-flex align-items-center">
+          <div className="d-flex ml-auto search-wrap">
+            <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+          </div>
+        </div>
+      </div>
+
+      <div className="truthy-table ">
+        <RoleTable
+          onCreate={onCreate}
+          onEdit={onEdit}
+          onModifyPermission={onModifyPermission}
+          onDelete={onDelete}
+        />
+      </div>
       <CreateRoleModal
         visible={createRole}
         onCancel={() => setCreateRole(false)}
@@ -118,12 +146,6 @@ export default function RoleModule() {
         onCancel={() => setModifyPermission(false)}
         onCreate={() => setModifyPermission(false)}
       />
-      <RoleTable
-        onCreate={onCreate}
-        onEdit={onEdit}
-        onModifyPermission={onModifyPermission}
-        onDelete={onDelete}
-      />
-    </>
+    </div>
   );
 }

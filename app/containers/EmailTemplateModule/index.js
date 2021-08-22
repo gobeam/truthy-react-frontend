@@ -31,6 +31,8 @@ import {
   setKeywordsAction,
 } from 'containers/EmailTemplateModule/actions';
 import { POST, PUT } from 'utils/constants';
+import { Breadcrumb } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const key = 'emailTemplate';
 
@@ -79,7 +81,36 @@ const EmailTemplateModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+      <div className="truthy-breadcrumb">
+        <h2>Email Template</h2>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <NavLink to="/" className="links">
+              Dashboard
+            </NavLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item className="current active">
+            Email Template
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="truthy-content-header">
+        <div className="d-flex">
+          <div className="d-flex ml-auto search-wrap">
+            <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+          </div>
+        </div>
+      </div>
+
+      <div className="truthy-table ">
+        <EmailTemplateTable
+          onCreate={onCreate}
+          onEdit={onEdit}
+          onModifyPermission={() => {}}
+          onDelete={onDelete}
+        />
+      </div>
+
       <CreateEmailTemplateModal
         visible={createEmailTemplate}
         onCancel={() => setCreateEmailTemplate(false)}
@@ -89,12 +120,6 @@ const EmailTemplateModule = () => {
         visible={editEmailTemplate}
         onCancel={() => setEditEmailTemplate(false)}
         onCreate={() => setEditEmailTemplate(false)}
-      />
-      <EmailTemplateTable
-        onCreate={onCreate}
-        onEdit={onEdit}
-        onModifyPermission={() => {}}
-        onDelete={onDelete}
       />
     </>
   );

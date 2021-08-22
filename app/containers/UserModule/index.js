@@ -33,6 +33,8 @@ import UserTable from 'containers/UserModule/userTable';
 import CreateUserModal from 'containers/UserModule/createUserModal';
 import { POST, PUT } from 'utils/constants';
 import EditUserModal from 'containers/UserModule/editUserModal';
+import { Breadcrumb } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const key = 'userModule';
 
@@ -84,7 +86,7 @@ const UserModule = () => {
   }, [pageNumber, pageSize]);
 
   return (
-    <>
+    <div className="truthy-wrapper">
       <FormattedMessage {...messages.helmetTitle}>
         {(title) => (
           <Helmet>
@@ -92,7 +94,33 @@ const UserModule = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+      <div className="truthy-breadcrumb">
+        <h2>User Management</h2>
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <NavLink to="/" className="links">
+              Dashboard
+            </NavLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item className="current active">
+            User Management
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="truthy-content-header">
+        <div className="d-flex">
+          {/* <div className="add-wrap">
+
+          </div> */}
+          <div className="d-flex ml-auto search-wrap">
+            <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
+          </div>
+        </div>
+      </div>
+
+      <div className="truthy-table ">
+        <UserTable onCreate={onCreate} onEdit={onEdit} />
+      </div>
       <CreateUserModal
         visible={createUser}
         onCancel={() => setCreateUser(false)}
@@ -103,8 +131,7 @@ const UserModule = () => {
         onCancel={() => setEditUser(false)}
         onCreate={() => setEditUser(false)}
       />
-      <UserTable onCreate={onCreate} onEdit={onEdit} />
-    </>
+    </div>
   );
 };
 
