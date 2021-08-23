@@ -78,7 +78,7 @@ const LayoutPage = () => {
   }, []);
 
   return (
-    <Layout className="layout-page">
+    <Layout className="layout-page mh-100">
       <HeaderComponent collapsed={collapsed} toggle={toggle} />
       <Layout>
         {!isMobile ? (

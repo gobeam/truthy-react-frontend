@@ -2,16 +2,16 @@ import React from 'react';
 import LoginPage from 'containers/LoginPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
-import ProfilePage from 'containers/ProfilePage/Loadable';
-import VerifyAccountPage from 'containers/VerifyAccountPage/Loadable';
+import Profile from 'containers/Profile/Loadable';
+import VerifyAccount from 'containers/VerifyAccount/Loadable';
 import ForgotPassword from 'containers/ForgotPassword/Loadable';
-import ResetPasswordPage from 'containers/ResetPasswordPage/Loadable';
-import UserAccountPage from 'containers/UserAccountPage/Loadable';
-import DashboardPage from 'containers/DashboardPage/Loadable';
-import RoleModule from 'containers/RoleModule/Loadable';
-import EmailTemplateModule from 'containers/EmailTemplateModule/Loadable';
-import UserModule from 'containers/UserModule/Loadable';
-import PermissionModule from 'containers/PermissionModule/Loadable';
+import ResetPassword from 'containers/ResetPassword/Loadable';
+import UserAccount from 'containers/UserAccount/Loadable';
+import Dashboard from 'containers/Dashboard/Loadable';
+import Role from 'containers/Role/Loadable';
+import EmailTemplate from 'containers/EmailTemplate/Loadable';
+import Users from 'containers/Users/Loadable';
+import Permission from 'containers/Permission/Loadable';
 import Layout from 'components/Layout';
 import PrivateRoute from 'containers/PrivateRoute';
 import PublicRoute from 'containers/PublicRoute';
@@ -32,11 +32,11 @@ const routes = [
   },
   {
     path: 'reset/:code',
-    element: <PublicRoute element={<ResetPasswordPage />} />,
+    element: <PublicRoute element={<ResetPassword />} />,
   },
   {
     path: 'verify/:code',
-    element: <PublicRoute element={<VerifyAccountPage />} />,
+    element: <PublicRoute element={<VerifyAccount />} />,
   },
   {
     path: '/',
@@ -57,7 +57,7 @@ const routes = [
         path: 'dashboard',
         element: (
           <PrivateRoute
-            element={<DashboardPage />}
+            element={<Dashboard />}
             method="get"
             resource="dashboard"
             defaultPermission
@@ -68,7 +68,7 @@ const routes = [
         path: 'users',
         element: (
           <PrivateRoute
-            element={<UserModule />}
+            element={<Users />}
             path="/users"
             method="get"
             resource="user"
@@ -80,7 +80,7 @@ const routes = [
         path: 'roles',
         element: (
           <PrivateRoute
-            element={<RoleModule />}
+            element={<Role />}
             path="/roles"
             method="get"
             resource="role"
@@ -92,7 +92,7 @@ const routes = [
         path: 'permissions',
         element: (
           <PrivateRoute
-            element={<PermissionModule />}
+            element={<Permission />}
             path="/permissions"
             method="get"
             resource="permission"
@@ -104,7 +104,7 @@ const routes = [
         path: 'email-templates',
         element: (
           <PrivateRoute
-            element={<EmailTemplateModule />}
+            element={<EmailTemplate />}
             path="/email-templates"
             method="get"
             resource="emailTemplates"
@@ -116,7 +116,7 @@ const routes = [
         path: 'account-setting',
         element: (
           <PrivateRoute
-            element={<UserAccountPage />}
+            element={<UserAccount />}
             path="/account-setting"
             method="get"
             resource="user"
@@ -128,7 +128,7 @@ const routes = [
         path: 'profile',
         element: (
           <PrivateRoute
-            element={<ProfilePage />}
+            element={<Profile />}
             path="/profile"
             method="get"
             resource="user"
