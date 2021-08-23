@@ -67,4 +67,8 @@ export default defineMessages({
     id: `${scope}.listTitle`,
     defaultMessage: 'Roles',
   },
+  dashboardTitle: {
+    id: `${scope}.dashboardTitle`,
+    defaultMessage: 'Dashboard',
+  },
 });

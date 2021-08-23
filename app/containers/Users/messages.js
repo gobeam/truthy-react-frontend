@@ -85,7 +85,7 @@ export default defineMessages({
   },
   listTitle: {
     id: `${scope}.listTitle`,
-    defaultMessage: 'Users',
+    defaultMessage: 'User Management',
   },
   cancelBtn: {
     id: `${scope}.cancelBtn`,
@@ -106,5 +106,9 @@ export default defineMessages({
   select: {
     id: `${scope}.select`,
     defaultMessage: 'Select',
+  },
+  dashboardTitle: {
+    id: `${scope}.dashboardTitle`,
+    defaultMessage: 'Dashboard',
   },
 });

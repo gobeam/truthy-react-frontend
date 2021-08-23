@@ -132,7 +132,7 @@
   "containers.Role.descriptionLabel": "वर्णन",
   "containers.Role.actionLabel": "कार्य",
   "containers.Role.createdAt": "{ts, date, ::yyyyMMdd}",
-  "containers.Role.listTitle": "भूमिकाहरू",
+  "containers.Role.listTitle": "भूमिका व्यवस्थापन",
   "containers.Role.namePlaceHolder": "शीर्षक",
   "containers.Role.descriptionPlaceHolder": "वर्णन",
   "containers.Role.editTitle": "भूमिका सम्पादन गर्नुहोस्",
@@ -141,6 +141,7 @@
   "containers.Role.addTitle": "भूमिका थप्नुहोस्",
   "containers.Role.descriptionRequired": "विवरण खाली हुनु हुँदैन!",
   "containers.Role.nameRequired": "भूमिकाको नाम खाली हुनु हुँदैन!",
+  "containers.Role.dashboardTitle": "ड्यासबोर्ड",
 
   "containers.Permission.helmetTitle": "अनुमति",
   "containers.Permission.editTitle": "अनुमति सम्पादन गर्नुहोस्",
@@ -156,7 +157,7 @@
   "containers.Permission.addLabel": "नयाँ थप्नुहोस्",
   "containers.Permission.actionLabel": "कार्य",
   "containers.Permission.createdAt": "{ts, date, ::yyyyMMdd}",
-  "containers.Permission.listTitle": "अनुमतिहरू",
+  "containers.Permission.listTitle": "अनुमति व्यवस्थापन",
   "containers.Permission.dateLabel": "सिर्जना गरिएको मिति",
   "containers.Permission.syncLabel": "समिकरण अनुमति",
   "containers.Permission.syncConfirm": "समिकरण अनुमति पुष्टिकरण",
@@ -167,6 +168,7 @@
   "containers.Permission.descriptionRequired": "वअनुमतिको विवरण खाली हुनु हुँदैन!",
   "containers.Permission.methodRequired": "अनुरोध विधिको नाम खाली हुनुहुन्न!",
   "containers.Permission.pathRequired": "अनुरोधको पथनाम खाली हुनुहुन्न!",
+  "containers.Permission.dashboardTitle": "ड्यासबोर्ड",
 
   "components.TablePagination.first": "पहिलो",
   "components.TablePagination.previous": "अघिल्लो",
@@ -195,7 +197,7 @@
   "containers.Users.addTitle": "प्रयोगकर्ता थप्नुहोस्",
   "containers.Users.usernameLabel": "प्रयोगकर्ता नाम",
   "containers.Users.statusLabel": "स्थिति",
-  "containers.Users.listTitle": "प्रयोगकर्ताहरू",
+  "containers.Users.listTitle": "प्रयोगकर्ता व्यवस्थापन",
   "containers.Users.cancelBtn": "रद्द गर्नुहोस्",
   "containers.Users.dateLabel": "सिर्जना गरिएको मिति",
   "containers.Users.addLabel": "नयाँ थप्नुहोस्",
@@ -208,6 +210,7 @@
   "containers.Users.roleLabel": "भूमिका",
   "containers.Users.statusRequired": "प्रयोगकर्ताको खाता स्थिति निर्दिष्ट गर्नुपर्दछ!",
   "containers.Users.roleRequired": "कम्तिमा एउटा भूमिका चयन गर्नुपर्नेछ!",
+  "containers.Users.dashboardTitle": "ड्यासबोर्ड",
 
   "containers.EmailTemplate.helmetTitle": "ईमेल टेम्प्लेटहरू",
   "containers.EmailTemplate.editTitle": "ईमेल टेम्पलेट सम्पादन गर्नुहोस्",
@@ -226,5 +229,6 @@
   "containers.EmailTemplate.actionLabel": "कार्य",
   "containers.EmailTemplate.listTitle": "ईमेल टेम्पलेट",
   "containers.EmailTemplate.cancelBtn": "रद्द गर्नुहोस्",
+  "containers.EmailTemplate.dashboardTitle": "ड्यासबोर्ड",
   "containers.EmailTemplate.createdAt": "{ts, date, ::yyyyMMdd}"
 }
