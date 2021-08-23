@@ -8,7 +8,11 @@ import {
   setPageSizeAction,
 } from 'containers/EmailTemplate/actions';
 import { Button, Modal, Table } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+} from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
@@ -18,6 +22,7 @@ import {
   makeIsLoadingSelector,
   makeTemplatesSelector,
 } from 'containers/EmailTemplate/selectors';
+import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
@@ -110,14 +115,20 @@ function EmailTemplateTable(props) {
           render={(_, { id }) => (
             <>
               {checkPermissionForComponent(user.role, EditRoutePermission) ? (
-                <Button type="link" onClick={() => onEdit(id)}>
-                  <FormattedMessage {...commonMessages.editLabel} />
-                </Button>
+                <ToolTipButtonWrapper
+                  title={commonMessages.editLabel}
+                  clickEvent={() => onEdit(id)}
+                >
+                  <EditOutlined />
+                </ToolTipButtonWrapper>
               ) : null}
               {checkPermissionForComponent(user.role, DeleteRoutePermission) ? (
-                <Button
-                  type="link"
-                  onClick={() => {
+                <ToolTipButtonWrapper
+                  danger
+                  color="#f44336"
+                  key="#f44336"
+                  title={commonMessages.removeLabel}
+                  clickEvent={() => {
                     Modal.confirm({
                       okText: intl.formatMessage(commonMessages.yesLabel),
                       okType: 'danger',
@@ -129,10 +140,9 @@ function EmailTemplateTable(props) {
                       onOk: (close) => onDelete(id) && close(),
                     });
                   }}
-                  danger
                 >
-                  <FormattedMessage {...commonMessages.removeLabel} />
-                </Button>
+                  <DeleteOutlined />
+                </ToolTipButtonWrapper>
               ) : null}
             </>
           )}

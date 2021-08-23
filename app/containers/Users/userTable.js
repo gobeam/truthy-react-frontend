@@ -17,6 +17,8 @@ import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
 import PropTypes from 'prop-types';
 import { POST, PUT } from 'utils/constants';
+import { EditOutlined } from '@ant-design/icons';
+import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
@@ -136,9 +138,12 @@ function UserTable(props) {
           align="center"
           render={(_, { id }) =>
             checkPermissionForComponent(user.role, EditRoutePermission) ? (
-              <Button type="primary" onClick={() => onEdit(id)}>
-                <FormattedMessage {...commonMessages.editLabel} />
-              </Button>
+              <ToolTipButtonWrapper
+                title={commonMessages.editLabel}
+                clickEvent={() => onEdit(id)}
+              >
+                <EditOutlined />
+              </ToolTipButtonWrapper>
             ) : null
           }
         />

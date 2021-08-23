@@ -1,23 +1,28 @@
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import messages from 'containers/Permission/messages';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+} from '@ant-design/icons';
+import { Button, Modal, Table } from 'antd';
 import commonMessages from 'common/messages';
-import { useDispatch, useSelector } from 'react-redux';
+import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import {
   setPageNumberAction,
   setPageSizeAction,
 } from 'containers/Permission/actions';
-import { Button, Modal, Table } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { createStructuredSelector } from 'reselect';
-import { makeLoggedInUserSelector } from 'containers/App/selectors';
-import { checkPermissionForComponent } from 'utils/permission';
-import PropTypes from 'prop-types';
-import { DELETE, POST, PUT } from 'utils/constants';
+import messages from 'containers/Permission/messages';
 import {
   makeIsLoadingSelector,
   makePermissionsSelector,
 } from 'containers/Permission/selectors';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { DELETE, POST, PUT } from 'utils/constants';
+import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
@@ -115,14 +120,20 @@ function PermissionTable(props) {
           render={(_, { id }) => (
             <>
               {checkPermissionForComponent(user.role, EditRoutePermission) ? (
-                <Button type="link" onClick={() => onEdit(id)}>
-                  <FormattedMessage {...commonMessages.editLabel} />
-                </Button>
+                <ToolTipButtonWrapper
+                  title={commonMessages.editLabel}
+                  clickEvent={() => onEdit(id)}
+                >
+                  <EditOutlined />
+                </ToolTipButtonWrapper>
               ) : null}
               {checkPermissionForComponent(user.role, DeleteRoutePermission) ? (
-                <Button
-                  type="link"
-                  onClick={() => {
+                <ToolTipButtonWrapper
+                  danger
+                  color="#f44336"
+                  key="#f44336"
+                  title={commonMessages.removeLabel}
+                  clickEvent={() => {
                     Modal.confirm({
                       okText: intl.formatMessage(commonMessages.yesLabel),
                       okType: 'danger',
@@ -134,10 +145,9 @@ function PermissionTable(props) {
                       onOk: (close) => onDelete(id) && close(),
                     });
                   }}
-                  danger
                 >
-                  <FormattedMessage {...commonMessages.removeLabel} />
-                </Button>
+                  <DeleteOutlined />
+                </ToolTipButtonWrapper>
               ) : null}
             </>
           )}
