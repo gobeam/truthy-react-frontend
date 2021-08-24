@@ -26,7 +26,7 @@ const wrapperCol = {
 const useGetEmailTemplateForm = ({
   responsive = false,
   formName = 'role-form',
-  initialValues,
+  initialValues = {},
   device,
 }) => {
   const [formInstance] = Form.useForm();

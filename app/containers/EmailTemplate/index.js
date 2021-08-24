@@ -108,7 +108,6 @@ const EmailTemplate = () => {
         <EmailTemplateTable
           onCreate={onCreate}
           onEdit={onEdit}
-          onModifyPermission={() => {}}
           onDelete={onDelete}
         />
       </div>
@@ -116,12 +115,10 @@ const EmailTemplate = () => {
       <CreateEmailTemplateModal
         visible={createEmailTemplate}
         onCancel={() => setCreateEmailTemplate(false)}
-        onCreate={() => setCreateEmailTemplate(false)}
       />
       <EditEmailTemplateModal
         visible={editEmailTemplate}
         onCancel={() => setEditEmailTemplate(false)}
-        onCreate={() => setEditEmailTemplate(false)}
       />
     </>
   );

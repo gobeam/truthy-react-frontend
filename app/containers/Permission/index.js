@@ -127,19 +127,16 @@ const Permission = () => {
         <PermissionTable
           onCreate={onCreate}
           onEdit={onEdit}
-          onModifyPermission={() => {}}
           onDelete={onDelete}
         />
       </div>
       <CreatePermissionModal
         visible={createPermission}
         onCancel={() => setCreatePermission(false)}
-        onCreate={() => setCreatePermission(false)}
       />
       <EditPermissionModal
         visible={editPermission}
         onCancel={() => setEditPermission(false)}
-        onCreate={() => setEditPermission(false)}
       />
     </div>
   );
