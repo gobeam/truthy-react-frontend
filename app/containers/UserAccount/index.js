@@ -25,16 +25,18 @@ export default function UserAccount() {
   useInjectReducer({ key, reducer });
 
   return (
-    <Tabs tabPosition="left">
-      <TabPane tab={intl.formatMessage(messages.accountTab)} key="1">
-        <ProfileForm />
-      </TabPane>
-      <TabPane tab={intl.formatMessage(messages.securityTab)} key="2">
-        <SecurityTab />
-      </TabPane>
-      <TabPane tab={intl.formatMessage(messages.loginActivity)} key="3">
-        <LoginActivity />
-      </TabPane>
-    </Tabs>
+    <div className="profile card">
+      <Tabs tabPosition="left">
+        <TabPane tab={intl.formatMessage(messages.accountTab)} key="1">
+          <ProfileForm />
+        </TabPane>
+        <TabPane tab={intl.formatMessage(messages.securityTab)} key="2">
+          <SecurityTab />
+        </TabPane>
+        <TabPane tab={intl.formatMessage(messages.loginActivity)} key="3">
+          <LoginActivity />
+        </TabPane>
+      </Tabs>
+    </div>
   );
 }

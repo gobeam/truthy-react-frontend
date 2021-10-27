@@ -89,6 +89,7 @@ export default function ProfileForm() {
           form={form}
           onFinish={onFinish}
           name="user-account"
+          className="user-acccount"
         >
           <FormInputWrapper
             name="email"
@@ -148,7 +149,7 @@ export default function ProfileForm() {
         <Title level={3}>
           <FormattedMessage {...messages.avatarLabel} />
         </Title>
-        <div>
+        <div className="user-image">
           <img src={`${BASE_URL}/assets/profile/${user.avatar}`} alt="avatar" />
         </div>
         <Upload showUploadList={false} {...uploadProps}>

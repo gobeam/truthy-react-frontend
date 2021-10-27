@@ -10,7 +10,6 @@ import usePasswordStrengthCheckHook from 'common/hooks/passwordStrengthHook';
 import commonMessages from 'common/messages';
 import { checkIfStrongPassword } from 'common/validator';
 import FormInputWrapper from 'components/FormInputWrapper';
-import FormWrapper from 'components/FormWrapper';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import {
   clearFormAction,
@@ -159,7 +158,12 @@ export default function SecurityTab() {
         onCancel={handleCancel}
         confirmLoading={loading}
       >
-        <FormWrapper formInstance={form} name="change-password-form">
+        <Form
+          layout="vertical"
+          form={form}
+          name="user-account"
+          className="change-password-form"
+        >
           <FormInputWrapper
             passwordInput
             label={messages.oldPasswordLabel}
@@ -226,7 +230,7 @@ export default function SecurityTab() {
             type="password"
             placeholder={commonMessages.confirmPasswordLabel}
           />
-        </FormWrapper>
+        </Form>
       </Modal>
     </>
   );

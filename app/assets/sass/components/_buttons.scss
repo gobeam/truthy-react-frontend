@@ -1,3 +1,13 @@
+
+.ant-btn-link{
+    color: $primary;
+    &:hover, &:active, &:focus{
+        color: $primary;
+        background: transparent;
+        border-color: transparent;
+    }
+    
+}
 .ant-btn-primary{
     @include bg-border-color($primary, $primary);
     background-position: center;
@@ -37,10 +47,34 @@
     
 }
 
+.ant-modal-footer, .ant-upload{
+    .ant-btn{
+        background-position: center;
+        transition: all ease 0.3s;
+        height: 38px;
+        text-transform: capitalize;
+        border-radius: 5px;
+       
+        &:hover, &:active, &:focus{
+            color: $primary;
+            background: #fff;
+            border-color: $primary;
+        }
+        &.active {
+            background-size: 100%;
+            transition: background 0s;
+        }
+    }
+}
 
 @keyframes shake {
     0% { margin-left: 0rem; }
     25% { margin-left: 0.5rem; }
     75% { margin-left: -0.5rem; }
     100% { margin-left: 0rem; }
+}
+
+
+.ant-switch-checked{
+    background-color: $primary;
 }
