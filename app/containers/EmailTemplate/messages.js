@@ -75,6 +75,10 @@ export default defineMessages({
     id: `${scope}.listTitle`,
     defaultMessage: 'Email Template',
   },
+  dashboardTitle: {
+    id: `${scope}.dashboardTitle`,
+    defaultMessage: 'Dashboard',
+  },
   cancelBtn: {
     id: `${scope}.cancelBtn`,
     defaultMessage: 'Cancel',

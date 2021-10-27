@@ -84,7 +84,9 @@ const Permission = () => {
         )}
       </FormattedMessage>
       <div className="truthy-breadcrumb">
-        <h2>Permission</h2>
+        <h2>
+          <FormattedMessage {...messages.listTitle} />
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item>
             <NavLink to="/" className="links">
@@ -92,7 +94,7 @@ const Permission = () => {
             </NavLink>
           </Breadcrumb.Item>
           <Breadcrumb.Item className="current active">
-            Permission
+            <FormattedMessage {...messages.listTitle} />
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -125,19 +127,16 @@ const Permission = () => {
         <PermissionTable
           onCreate={onCreate}
           onEdit={onEdit}
-          onModifyPermission={() => {}}
           onDelete={onDelete}
         />
       </div>
       <CreatePermissionModal
         visible={createPermission}
         onCancel={() => setCreatePermission(false)}
-        onCreate={() => setCreatePermission(false)}
       />
       <EditPermissionModal
         visible={editPermission}
         onCancel={() => setEditPermission(false)}
-        onCreate={() => setEditPermission(false)}
       />
     </div>
   );

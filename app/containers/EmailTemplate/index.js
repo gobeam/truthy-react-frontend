@@ -82,15 +82,17 @@ const EmailTemplate = () => {
         )}
       </FormattedMessage>
       <div className="truthy-breadcrumb">
-        <h2>Email Template</h2>
+        <h2>
+          <FormattedMessage {...messages.listTitle} />
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item>
             <NavLink to="/" className="links">
-              Dashboard
+              <FormattedMessage {...messages.dashboardTitle} />
             </NavLink>
           </Breadcrumb.Item>
           <Breadcrumb.Item className="current active">
-            Email Template
+            <FormattedMessage {...messages.listTitle} />
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -106,7 +108,6 @@ const EmailTemplate = () => {
         <EmailTemplateTable
           onCreate={onCreate}
           onEdit={onEdit}
-          onModifyPermission={() => {}}
           onDelete={onDelete}
         />
       </div>
@@ -114,12 +115,10 @@ const EmailTemplate = () => {
       <CreateEmailTemplateModal
         visible={createEmailTemplate}
         onCancel={() => setCreateEmailTemplate(false)}
-        onCreate={() => setCreateEmailTemplate(false)}
       />
       <EditEmailTemplateModal
         visible={editEmailTemplate}
         onCancel={() => setEditEmailTemplate(false)}
-        onCreate={() => setEditEmailTemplate(false)}
       />
     </>
   );

@@ -108,4 +108,8 @@ export default defineMessages({
     id: `${scope}.pathRequired`,
     defaultMessage: 'Cancel',
   },
+  dashboardTitle: {
+    id: `${scope}.dashboardTitle`,
+    defaultMessage: 'Dashboard',
+  },
 });

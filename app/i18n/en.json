@@ -113,7 +113,7 @@
   "containers.Role.descriptionLabel": "Description",
   "containers.Role.actionLabel": "Action",
   "containers.Role.createdAt": "{ts, date, ::yyyyMMdd}",
-  "containers.Role.listTitle": "Roles",
+  "containers.Role.listTitle": "Role Management",
   "containers.Role.namePlaceHolder": "Input role name",
   "containers.Role.descriptionPlaceHolder": "Input description",
   "containers.Role.editTitle": "Edit Role",
@@ -122,6 +122,7 @@
   "containers.Role.addTitle": "Add Role",
   "containers.Role.descriptionRequired": "The description should not be empty!",
   "containers.Role.nameRequired": "The name of role should not be empty!",
+  "containers.Role.dashboardTitle": "Dashboard",
 
   "containers.Permission.helmetTitle": "Permission",
   "containers.Permission.editTitle": "Edit Permission",
@@ -137,7 +138,7 @@
   "containers.Permission.addLabel": "Add New",
   "containers.Permission.actionLabel": "Action",
   "containers.Permission.createdAt": "{ts, date, ::yyyyMMdd}",
-  "containers.Permission.listTitle": "Permissions",
+  "containers.Permission.listTitle": "Permission Management",
   "containers.Permission.dateLabel": "Created At",
   "containers.Permission.syncLabel": "Synchronize Permissions",
   "containers.Permission.syncConfirm": "Synchronize Permission Confirmation",
@@ -148,11 +149,12 @@
   "containers.Permission.descriptionRequired": "Permission's Description should not be empty!",
   "containers.Permission.methodRequired": "The request Method's name should not be empty!",
   "containers.Permission.pathRequired": "The request's path name should not be empty!",
+  "containers.Permission.dashboardTitle": "Dashboard",
 
   "containers.Users.helmetTitle": "User Management",
   "containers.Users.editTitle": "Edit User",
   "containers.Users.addTitle": "Add User",
-  "containers.Users.listTitle": "Users",
+  "containers.Users.listTitle": "User Management",
   "containers.Users.cancelBtn": "Cancel",
   "containers.Users.dateLabel": "Created At",
   "containers.Users.addLabel": "Add New",
@@ -166,6 +168,7 @@
   "containers.Users.roleLabel": "Role",
   "containers.Users.statusRequired": "User's account status must be specified",
   "containers.Users.roleRequired": "At least one role must be selected!",
+  "containers.Users.dashboardTitle": "Dashboard",
 
   "containers.LocaleToggle.en": "en",
   "containers.LocaleToggle.np": "np",
@@ -224,5 +227,6 @@
   "containers.EmailTemplate.actionLabel": "Action",
   "containers.EmailTemplate.listTitle": "Email Template",
   "containers.EmailTemplate.cancelBtn": "Cancel",
+  "containers.EmailTemplate.dashboardTitle": "Dashboard",
   "containers.EmailTemplate.createdAt": "{ts, date, ::yyyyMMdd}"
 }

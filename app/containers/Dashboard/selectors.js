@@ -9,4 +9,15 @@ const makeIsLoadingSelector = () =>
 const makeUserStatsSelector = () =>
   createSelector(selectDashboardDomain, (substate) => substate.userStats);
 
-export { makeIsLoadingSelector, makeUserStatsSelector };
+const makeDeviceChartSelector = () =>
+  createSelector(selectDashboardDomain, (substate) => substate.deviceChart);
+
+const makeDeviceTypeSelector = () =>
+  createSelector(selectDashboardDomain, (substate) => substate.deviceType);
+
+export {
+  makeIsLoadingSelector,
+  makeUserStatsSelector,
+  makeDeviceChartSelector,
+  makeDeviceTypeSelector,
+};

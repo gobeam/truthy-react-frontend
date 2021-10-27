@@ -95,15 +95,17 @@ const Users = () => {
         )}
       </FormattedMessage>
       <div className="truthy-breadcrumb">
-        <h2>User Management</h2>
+        <h2>
+          <FormattedMessage {...messages.listTitle} />
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item>
             <NavLink to="/" className="links">
-              Dashboard
+              <FormattedMessage {...messages.dashboardTitle} />
             </NavLink>
           </Breadcrumb.Item>
           <Breadcrumb.Item className="current active">
-            User Management
+            <FormattedMessage {...messages.listTitle} />
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>

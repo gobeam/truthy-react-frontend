@@ -105,14 +105,18 @@ export default function Role() {
         )}
       </FormattedMessage>
       <div className="truthy-breadcrumb">
-        <h2>Role</h2>
+        <h2>
+          <FormattedMessage {...messages.listTitle} />
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item>
             <NavLink to="/" className="links">
-              Dashboard
+              <FormattedMessage {...messages.dashboardTitle} />
             </NavLink>
           </Breadcrumb.Item>
-          <Breadcrumb.Item className="current active">Role</Breadcrumb.Item>
+          <Breadcrumb.Item className="current active">
+            <FormattedMessage {...messages.listTitle} />
+          </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="truthy-content-header">

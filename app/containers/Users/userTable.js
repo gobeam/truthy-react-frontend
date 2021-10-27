@@ -77,19 +77,17 @@ function UserTable(props) {
 
   return (
     <>
+      {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+        <Button type="primary" onClick={onCreate}>
+          <FormattedMessage {...messages.addLabel} />
+        </Button>
+      ) : null}
       <Table
         loading={isLoading}
         pagination={paginationOptions}
         rowKey="id"
         dataSource={users.results}
         scroll={{ x: 500 }}
-        title={() =>
-          checkPermissionForComponent(user.role, CreateRoutePermission) ? (
-            <Button type="primary" onClick={onCreate}>
-              <FormattedMessage {...messages.addLabel} />
-            </Button>
-          ) : null
-        }
       >
         <Table.Column
           title={intl.formatMessage(commonMessages.nameLabel)}
