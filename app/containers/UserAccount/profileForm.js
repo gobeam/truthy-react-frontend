@@ -50,12 +50,12 @@ export default function ProfileForm() {
     beforeUpload: (file) => {
       const validExtension = ['image/png', 'image/jpg', 'image/jpeg'];
       const checkExtension = validExtension.includes(file.type);
-      const validSize = file.size <= 10000;
+      const validSize = file.size / 1024 / 1024 <= 2;
       if (!checkExtension) {
         message.error(`${file.name} is not a valid file type!`);
       }
       if (!validSize) {
-        message.error('Avatar cannot be greater than 1mb');
+        message.error('Avatar cannot be greater than 2mb');
       }
       return checkExtension && validSize ? true : Upload.LIST_IGNORE;
     },
