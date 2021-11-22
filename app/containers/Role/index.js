@@ -35,8 +35,10 @@ import EditRoleModal from 'containers/Role/editRoleModal';
 import RoleTable from 'containers/Role/roleTable';
 import { POST, PUT } from 'utils/constants';
 import ModifyPermissionModal from 'containers/Role/modifyPermissionModal';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { checkPermissionForComponent } from 'utils/permission';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
 
 const key = 'role';
 
@@ -45,11 +47,17 @@ const stateSelector = createStructuredSelector({
   limit: makeLimitSelector(),
   isLoading: makeIsLoadingSelector(),
   id: makeIdSelector(),
+  user: makeLoggedInUserSelector(),
 });
+const CreateRoutePermission = {
+  resource: 'role',
+  method: POST,
+  path: '/roles',
+};
 
 export default function Role() {
   const dispatch = useDispatch();
-  const { pageNumber, limit, isLoading, id } = useSelector(stateSelector);
+  const { pageNumber, limit, isLoading, id, user } = useSelector(stateSelector);
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -121,6 +129,13 @@ export default function Role() {
       </div>
       <div className="truthy-content-header">
         <div className="d-flex align-items-center">
+          <div>
+            {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+              <Button type="primary" onClick={onCreate}>
+                <FormattedMessage {...messages.addLabel} />
+              </Button>
+            ) : null}
+          </div>
           <div className="d-flex ml-auto search-wrap">
             <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
           </div>

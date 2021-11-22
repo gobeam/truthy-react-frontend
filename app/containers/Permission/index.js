@@ -35,6 +35,8 @@ import { POST, PUT } from 'utils/constants';
 import { Breadcrumb, Button, Modal } from 'antd';
 import { ExclamationCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
+import { checkPermissionForComponent } from 'utils/permission';
 
 const key = 'permission';
 
@@ -42,7 +44,13 @@ const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
   limit: makeLimitSelector(),
   isLoading: makeIsLoadingSelector(),
+  user: makeLoggedInUserSelector(),
 });
+const CreateRoutePermission = {
+  resource: 'permission',
+  method: POST,
+  path: '/permissions',
+};
 
 const Permission = () => {
   const dispatch = useDispatch();
@@ -51,7 +59,7 @@ const Permission = () => {
   useInjectSaga({ key, saga });
   const [createPermission, setCreatePermission] = useState(false);
   const [editPermission, setEditPermission] = useState(false);
-  const { pageNumber, limit, isLoading } = useSelector(stateSelector);
+  const { pageNumber, limit, isLoading, user } = useSelector(stateSelector);
   const onchangeFormMethod = (formMethod) =>
     dispatch(setFormMethodAction(formMethod));
   const loadPermissions = () => dispatch(queryPermissionAction());
@@ -100,7 +108,13 @@ const Permission = () => {
       </div>
       <div className="truthy-content-header">
         <div className="d-flex align-items-center">
-          <div className="add-wrap">
+          <div className="add-wrap ">
+            {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+              <Button type="primary" onClick={onCreate} className="mr-2">
+                <FormattedMessage {...messages.addLabel} />
+              </Button>
+            ) : null}
+
             <Button
               type="primary"
               icon={<SyncOutlined />}
@@ -117,6 +131,7 @@ const Permission = () => {
             >
               <FormattedMessage {...messages.syncLabel} />
             </Button>
+            <div></div>
           </div>
           <div className="d-flex ml-auto search-wrap">
             <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />

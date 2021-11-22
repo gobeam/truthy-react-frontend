@@ -1,127 +1,157 @@
-.home-wrapper{
-@include d-center;
-flex-direction: column;
-background-color: $bg-color;
-
+.home-wrapper {
+  @include d-center;
+  flex-direction: column;
+  background-color: $bg-color;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: $primary;
   height: 38px;
   border-radius: 8px;
   padding: 10px 50px;
   @include d-center;
   color: $white;
-  &:hover{
+  &:hover {
     color: $white;
   }
 }
 
+// ?login
 
-
-
-
-// ?login 
-
-.login-page{
+.login-page {
   display: flex;
   align-items: center;
-  .ant-row{
+  .ant-row {
     width: 100%;
   }
-  &-form{
+  &-form {
     padding: 30px;
     background-color: $white;
     border-radius: 5px;
-    h3{
+    h3 {
       text-transform: capitalize;
-
     }
   }
-  .link{
+  .link {
     text-align: center;
     display: block;
     text-transform: capitalize;
   }
-  .ant-btn-primary{
+  .ant-btn-primary {
     width: 100%;
   }
 }
 
-
-// ?navbar 
-
-  .ant-dropdown-menu-title-content{
-    .anticon{
-      padding-right: 7px;
-    }
-  }
-
-  .ant-dropdown-menu-item-divider{
-    margin:0;
-  }
-
-  .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title{
-    padding: 7px 25px 7px 13px;
-  }
-
-  .ant-dropdown-menu{
-    border-radius:5px ;
-    top: 30px;
-  }
-
-  .ant-dropdown-placement-bottomCenter{
-    width: 140px;
-  }
-
-  .ant-dropdown-menu-title-content{
-    img{
-      height: 15px;
-    }
-  }
-
-  .ant-layout-has-sider{
-    min-height: calc(100vh - 64px);
-  }
-
-  .layout-page-content{
+// register-page
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f2f5;
+  min-height: 100vh;
+  &-form {
     padding: 30px;
+    background-color: $white;
+    border-radius: 5px;
+    width: 450px;
+    .ant-input {
+      padding-left: 10px;
+    }
+    .ant-input-affix-wrapper > input.ant-input {
+      padding-left: 10px !important;
+    }
+    h2 {
+      text-align: center;
+    }
+    &_button {
+      width: 100%;
+    }
   }
-
-  .truthy-breadcrumb{
-    
-    .links{
-        font-size: 14px;
-        // color: $primary;
-    }
-    .ant-breadcrumb-separator{
-        font-size: 14px;
-        color: $text-color;
-    }
-    .current{
-        font-size: 14px;
-        &.active{
-            color: $primary;
-        }
-    }
+  .ant-form-item:last-child {
+    margin-bottom: 0 !important;
+  }
+  .ant-btn-primary {
+    width: 100%;
+  }
+  .link-login {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
 }
 
-.truthy-content-header{
+// ?navbar
+
+.ant-dropdown-menu-title-content {
+  .anticon {
+    padding-right: 7px;
+  }
+}
+
+.ant-dropdown-menu-item-divider {
+  margin: 0;
+}
+
+.ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu-title {
+  padding: 7px 25px 7px 13px;
+}
+
+.ant-dropdown-menu {
+  border-radius: 5px;
+  top: 30px;
+}
+
+.ant-dropdown-placement-bottomCenter {
+  width: 140px;
+}
+
+.ant-dropdown-menu-title-content {
+  img {
+    height: 15px;
+  }
+}
+
+.ant-layout-has-sider {
+  min-height: calc(100vh - 64px);
+}
+
+.layout-page-content {
+  padding: 30px;
+}
+
+.truthy-breadcrumb {
+  .links {
+    font-size: 14px;
+    // color: $primary;
+  }
+  .ant-breadcrumb-separator {
+    font-size: 14px;
+    color: $text-color;
+  }
+  .current {
+    font-size: 14px;
+    &.active {
+      color: $primary;
+    }
+  }
+}
+
+.truthy-content-header {
   margin-bottom: 20px;
   margin-top: 20px;
-  .ant-input-search{
+  .ant-input-search {
     position: relative;
-
   }
-  .ant-input-affix-wrapper > input.ant-input{
+  .ant-input-affix-wrapper > input.ant-input {
     padding-left: 10px;
   }
-  .ant-input-group{
+  .ant-input-group {
     position: relative;
     display: flex;
     align-items: center;
   }
-  .ant-input-group-addon{
+  .ant-input-group-addon {
     position: absolute;
     right: 32px;
     left: auto !important;
@@ -130,11 +160,13 @@ background-color: $bg-color;
     top: 1px;
     background-color: transparent;
     z-index: 9;
-    button{
-
-    border: 0;
-    height: 42px;
-
+    button {
+      border: 0;
+      height: 42px;
     }
   }
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
 }

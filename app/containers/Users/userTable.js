@@ -7,7 +7,7 @@ import {
   setPageNumberAction,
   setPageSizeAction,
 } from 'containers/Users/actions';
-import { Button, Table, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import {
   makeIsLoadingSelector,
@@ -16,7 +16,7 @@ import {
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
 import PropTypes from 'prop-types';
-import { POST, PUT } from 'utils/constants';
+import { PUT } from 'utils/constants';
 import { EditOutlined } from '@ant-design/icons';
 import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper';
 
@@ -26,11 +26,11 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-const CreateRoutePermission = {
-  resource: 'user',
-  method: POST,
-  path: '/users',
-};
+// const CreateRoutePermission = {
+//   resource: 'user',
+//   method: POST,
+//   path: '/users',
+// };
 const EditRoutePermission = {
   resource: 'user',
   method: PUT,
@@ -38,7 +38,7 @@ const EditRoutePermission = {
 };
 
 function UserTable(props) {
-  const { onCreate, onEdit } = props;
+  const { onEdit } = props;
   const { users, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -77,11 +77,11 @@ function UserTable(props) {
 
   return (
     <>
-      {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+      {/* {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
         <Button type="primary" onClick={onCreate}>
           <FormattedMessage {...messages.addLabel} />
         </Button>
-      ) : null}
+      ) : null} */}
       <Table
         loading={isLoading}
         pagination={paginationOptions}

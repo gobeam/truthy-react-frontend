@@ -7,7 +7,7 @@ import {
   setPageNumberAction,
   setPageSizeAction,
 } from 'containers/EmailTemplate/actions';
-import { Button, Modal, Table } from 'antd';
+import { Modal, Table } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
@@ -17,7 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
 import PropTypes from 'prop-types';
-import { DELETE, POST, PUT } from 'utils/constants';
+import { DELETE, PUT } from 'utils/constants';
 import {
   makeIsLoadingSelector,
   makeTemplatesSelector,
@@ -30,11 +30,11 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-const CreateRoutePermission = {
-  resource: 'emailTemplates',
-  method: POST,
-  path: '/email-templates',
-};
+// const CreateRoutePermission = {
+//   resource: 'emailTemplates',
+//   method: POST,
+//   path: '/email-templates',
+// };
 const EditRoutePermission = {
   resource: 'emailTemplates',
   method: PUT,
@@ -48,7 +48,7 @@ const DeleteRoutePermission = {
 };
 
 function EmailTemplateTable(props) {
-  const { onCreate, onEdit, onDelete } = props;
+  const { onEdit, onDelete } = props;
   const { templates, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -74,11 +74,6 @@ function EmailTemplateTable(props) {
 
   return (
     <>
-      {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
-        <Button type="primary" onClick={onCreate}>
-          <FormattedMessage {...messages.addLabel} />
-        </Button>
-      ) : null}
       <Table
         loading={isLoading}
         pagination={paginationOptions}
@@ -151,7 +146,7 @@ function EmailTemplateTable(props) {
 }
 
 EmailTemplateTable.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  // onCreate: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

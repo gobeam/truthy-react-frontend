@@ -3,7 +3,7 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, Table } from 'antd';
+import { Modal, Table } from 'antd';
 import commonMessages from 'common/messages';
 import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
@@ -21,7 +21,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { DELETE, POST, PUT } from 'utils/constants';
+import { DELETE, PUT } from 'utils/constants';
 import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
@@ -30,11 +30,11 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-const CreateRoutePermission = {
-  resource: 'permission',
-  method: POST,
-  path: '/permissions',
-};
+// const CreateRoutePermission = {
+//   resource: 'permission',
+//   method: POST,
+//   path: '/permissions',
+// };
 const EditRoutePermission = {
   resource: 'permission',
   method: PUT,
@@ -48,7 +48,7 @@ const DeleteRoutePermission = {
 };
 
 function PermissionTable(props) {
-  const { onCreate, onEdit, onDelete } = props;
+  const { onEdit, onDelete } = props;
   const { permissions, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -74,11 +74,6 @@ function PermissionTable(props) {
 
   return (
     <>
-      {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
-        <Button type="primary" onClick={onCreate}>
-          <FormattedMessage {...messages.addLabel} />
-        </Button>
-      ) : null}
       <Table
         loading={isLoading}
         pagination={paginationOptions}
@@ -156,7 +151,7 @@ function PermissionTable(props) {
 }
 
 PermissionTable.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  // onCreate: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

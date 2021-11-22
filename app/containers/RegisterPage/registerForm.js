@@ -18,7 +18,7 @@ import {
 } from 'containers/RegisterPage/selectors';
 import messages from 'containers/RegisterPage/messages';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Form, Progress, Typography } from 'antd';
+import { Col, Form, Progress, Row, Typography } from 'antd';
 import FormCheckboxWrapper from 'components/FormCheckboxWrapper';
 import FormInputWrapper from 'components/FormInputWrapper';
 import FormButtonWrapper from 'components/FormButtonWrapper';
@@ -99,6 +99,7 @@ const RegisterForm = (props) => {
     <FormWrapper
       {...formItemLayout}
       values={initialValues}
+      classname="register-page-form"
       formInstance={form}
       onFinish={onFinish}
       name="register-form"
@@ -109,6 +110,28 @@ const RegisterForm = (props) => {
 
       <AlertMessage />
 
+      <Row gutter={[16, 25]}>
+        <Col xl={12} lg={12} md={12} xs={24}>
+          <FormInputWrapper
+            label={commonMessage.usernameLabel}
+            name="username"
+            id="username"
+            type="text"
+            rules={rules.username}
+            placeholder={commonMessage.usernamePlaceHolder}
+          />
+        </Col>
+        <Col xl={12} lg={12} md={12} xs={24}>
+          <FormInputWrapper
+            label={commonMessage.nameLabel}
+            name="name"
+            id="name"
+            type="text"
+            rules={rules.name}
+            placeholder={commonMessage.namePlaceHolder}
+          />
+        </Col>
+      </Row>
       <FormInputWrapper
         name="email"
         label={commonMessage.emailLabel}
@@ -156,24 +179,6 @@ const RegisterForm = (props) => {
         placeholder={commonMessage.confirmPasswordLabel}
       />
 
-      <FormInputWrapper
-        label={commonMessage.usernameLabel}
-        name="username"
-        id="username"
-        type="text"
-        rules={rules.username}
-        placeholder={commonMessage.usernamePlaceHolder}
-      />
-
-      <FormInputWrapper
-        label={commonMessage.nameLabel}
-        name="name"
-        id="name"
-        type="text"
-        rules={rules.name}
-        placeholder={commonMessage.namePlaceHolder}
-      />
-
       <FormCheckboxWrapper
         layout={selectLayout}
         rules={[
@@ -198,13 +203,18 @@ const RegisterForm = (props) => {
           }}
         />
       </FormCheckboxWrapper>
-
-      <FormButtonWrapper
-        variant="primary"
-        disabled={isLoading}
-        form={form}
-        label={messages.signBtn}
-      />
+      <div className="register-btn-wrapper">
+        <FormButtonWrapper
+          variant="primary"
+          disabled={isLoading}
+          form={form}
+          className="mb-0"
+          label={messages.signBtn}
+        />
+      </div>
+      <div className="link-login">
+        Already Have An Account ? <Link to="/login">Login</Link>
+      </div>
     </FormWrapper>
   );
 };

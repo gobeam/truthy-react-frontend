@@ -31,8 +31,10 @@ import {
   setKeywordsAction,
 } from 'containers/EmailTemplate/actions';
 import { POST, PUT } from 'utils/constants';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
+import { checkPermissionForComponent } from 'utils/permission';
 
 const key = 'emailTemplate';
 
@@ -40,7 +42,14 @@ const stateSelector = createStructuredSelector({
   pageNumber: makePageNumberSelector(),
   limit: makeLimitSelector(),
   isLoading: makeIsLoadingSelector(),
+  user: makeLoggedInUserSelector(),
 });
+
+const CreateRoutePermission = {
+  resource: 'emailTemplates',
+  method: POST,
+  path: '/email-templates',
+};
 
 const EmailTemplate = () => {
   const dispatch = useDispatch();
@@ -50,7 +59,7 @@ const EmailTemplate = () => {
   const [createEmailTemplate, setCreateEmailTemplate] = useState(false);
   const [editEmailTemplate, setEditEmailTemplate] = useState(false);
 
-  const { pageNumber, limit, isLoading } = useSelector(stateSelector);
+  const { pageNumber, limit, isLoading, user } = useSelector(stateSelector);
   const loadTemplates = () => dispatch(queryTemplateAction());
   const onchangeFormMethod = (formMethod) =>
     dispatch(setFormMethodAction(formMethod));
@@ -98,6 +107,13 @@ const EmailTemplate = () => {
       </div>
       <div className="truthy-content-header">
         <div className="d-flex">
+          <div>
+            {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+              <Button type="primary" onClick={onCreate}>
+                <FormattedMessage {...messages.addLabel} />
+              </Button>
+            ) : null}
+          </div>
           <div className="d-flex ml-auto search-wrap">
             <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
           </div>

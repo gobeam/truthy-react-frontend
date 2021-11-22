@@ -33,8 +33,10 @@ import UserTable from 'containers/Users/userTable';
 import CreateUserModal from 'containers/Users/createUserModal';
 import { POST, PUT } from 'utils/constants';
 import EditUserModal from 'containers/Users/editUserModal';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { checkPermissionForComponent } from 'utils/permission';
+import { makeLoggedInUserSelector } from 'containers/App/selectors';
 
 const key = 'users';
 
@@ -43,7 +45,14 @@ const stateSelector = createStructuredSelector({
   pageSize: makePageSizeSelector(),
   isLoading: makeIsLoadingSelector(),
   id: makeIdSelector(),
+  user: makeLoggedInUserSelector(),
 });
+
+const CreateRoutePermission = {
+  resource: 'user',
+  method: POST,
+  path: '/users',
+};
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -51,7 +60,9 @@ const Users = () => {
   useInjectSaga({ key, saga });
   const [createUser, setCreateUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
-  const { pageNumber, pageSize, isLoading, id } = useSelector(stateSelector);
+  const { user, pageNumber, pageSize, isLoading, id } =
+    useSelector(stateSelector);
+
   const loadUsers = () => dispatch(queryUsersAction());
   const loadRoles = () => dispatch(queryRolesListAction());
   const onKeywordChange = (keywords) =>
@@ -111,9 +122,13 @@ const Users = () => {
       </div>
       <div className="truthy-content-header">
         <div className="d-flex">
-          {/* <div className="add-wrap">
-
-          </div> */}
+          <div className="add-wrap">
+            {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
+              <Button type="primary" onClick={onCreate}>
+                <FormattedMessage {...messages.addLabel} />
+              </Button>
+            ) : null}
+          </div>
           <div className="d-flex ml-auto search-wrap">
             <SearchInput isLoading={isLoading} onSearch={onKeywordChange} />
           </div>

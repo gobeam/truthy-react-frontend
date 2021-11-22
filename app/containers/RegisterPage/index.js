@@ -17,6 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { hideHeaderAction } from 'containers/App/actions';
 import 'containers/RegisterPage/index.less';
+import { Row, Col } from 'antd';
 
 const key = 'register';
 
@@ -45,7 +46,11 @@ export default function RegisterPage() {
           </Helmet>
         )}
       </FormattedMessage>
-      <RegisterForm />
+      <Row className="register-center">
+        <Col xl={24} lg={10} md={10} xs={16} className="m-auto">
+          <RegisterForm />
+        </Col>
+      </Row>
     </div>
   );
 }

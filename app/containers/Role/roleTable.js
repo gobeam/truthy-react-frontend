@@ -4,7 +4,7 @@ import {
   ExclamationCircleOutlined,
   LockOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, Table } from 'antd';
+import { Modal, Table } from 'antd';
 import commonMessages from 'common/messages';
 import ToolTipButtonWrapper from 'components/ToolTipButtonWrapper/index';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
@@ -22,7 +22,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { DELETE, POST, PUT } from 'utils/constants';
+import { DELETE, PUT } from 'utils/constants';
 import { checkPermissionForComponent } from 'utils/permission';
 
 const stateSelector = createStructuredSelector({
@@ -31,11 +31,11 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-const CreateRoutePermission = {
-  resource: 'role',
-  method: POST,
-  path: '/roles',
-};
+// const CreateRoutePermission = {
+//   resource: 'role',
+//   method: POST,
+//   path: '/roles',
+// };
 const EditRoutePermission = {
   resource: 'role',
   method: PUT,
@@ -49,7 +49,7 @@ const DeleteRoutePermission = {
 };
 
 function RoleTable(props) {
-  const { onCreate, onEdit, onModifyPermission, onDelete } = props;
+  const { onEdit, onModifyPermission, onDelete } = props;
   const { roles, user, isLoading } = useSelector(stateSelector);
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -75,11 +75,6 @@ function RoleTable(props) {
 
   return (
     <>
-      {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
-        <Button type="primary" onClick={onCreate}>
-          <FormattedMessage {...messages.addLabel} />
-        </Button>
-      ) : null}
       <Table
         loading={isLoading}
         pagination={paginationOptions}
