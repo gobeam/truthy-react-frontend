@@ -45,20 +45,24 @@ const Profile = () => {
           </Button>,
         ]}
       />
-      <Descriptions>
-        <Descriptions.Item label="UserName">{user.username}</Descriptions.Item>
-        <Descriptions.Item label="Role">
-          {user.role?.name || <FormattedMessage {...messages.na} />}
-        </Descriptions.Item>
-        <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
-        <Descriptions.Item label="Name">{user.name}</Descriptions.Item>
-        <Descriptions.Item label="Contact">
-          {user.contact || <FormattedMessage {...messages.na} />}
-        </Descriptions.Item>
-        <Descriptions.Item label="Address">
-          {user.address || <FormattedMessage {...messages.na} />}
-        </Descriptions.Item>
-      </Descriptions>
+      <div>
+        <Descriptions>
+          <Descriptions.Item label="UserName">
+            {user.username}
+          </Descriptions.Item>
+          <Descriptions.Item label="Role">
+            {user.role?.name || <FormattedMessage {...messages.na} />}
+          </Descriptions.Item>
+          <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
+          <Descriptions.Item label="Name">{user.name}</Descriptions.Item>
+          <Descriptions.Item label="Contact">
+            {user.contact || <FormattedMessage {...messages.na} />}
+          </Descriptions.Item>
+          <Descriptions.Item label="Address">
+            {user.address || <FormattedMessage {...messages.na} />}
+          </Descriptions.Item>
+        </Descriptions>
+      </div>
     </>
   );
 };
