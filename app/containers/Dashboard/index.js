@@ -8,7 +8,7 @@ import React, { Suspense, useEffect } from 'react';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/Dashboard/saga';
 import reducer from 'containers/Dashboard/reducer';
-import { Col, Row, Statistic } from 'antd';
+import { Card, Col, Row, Statistic } from 'antd';
 import { UserOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
@@ -61,37 +61,43 @@ export default function Dashboard() {
     <>
       <Row gutter={16}>
         <Col span={8}>
-          <Statistic
-            loading={isLoading}
-            valueStyle={{ color: '#3f8600' }}
-            prefix={<UsergroupAddOutlined />}
-            title={intl.formatMessage(messages.totalUser, {
-              count: userStats.total,
-            })}
-            value={userStats.total}
-          />
+          <Card>
+            <Statistic
+              loading={isLoading}
+              valueStyle={{ color: '#3f8600' }}
+              prefix={<UsergroupAddOutlined />}
+              title={intl.formatMessage(messages.totalUser, {
+                count: userStats.total,
+              })}
+              value={userStats.total}
+            />
+          </Card>
         </Col>
         <Col span={8}>
-          <Statistic
-            loading={isLoading}
-            valueStyle={{ color: '#3f8600' }}
-            prefix={<UserOutlined />}
-            title={intl.formatMessage(messages.activeUser, {
-              count: userStats.active,
-            })}
-            value={userStats.active}
-          />
+          <Card>
+            <Statistic
+              loading={isLoading}
+              valueStyle={{ color: '#3f8600' }}
+              prefix={<UserOutlined />}
+              title={intl.formatMessage(messages.activeUser, {
+                count: userStats.active,
+              })}
+              value={userStats.active}
+            />
+          </Card>
         </Col>
         <Col span={8}>
-          <Statistic
-            loading={isLoading}
-            valueStyle={{ color: 'red' }}
-            prefix={<UserOutlined />}
-            title={intl.formatMessage(messages.inActiveUser, {
-              count: userStats.inactive,
-            })}
-            value={userStats.inactive}
-          />
+          <Card>
+            <Statistic
+              loading={isLoading}
+              valueStyle={{ color: 'red' }}
+              prefix={<UserOutlined />}
+              title={intl.formatMessage(messages.inActiveUser, {
+                count: userStats.inactive,
+              })}
+              value={userStats.inactive}
+            />
+          </Card>
         </Col>
       </Row>
       <Row
