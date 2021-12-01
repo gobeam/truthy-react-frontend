@@ -37,6 +37,7 @@ import { Breadcrumb, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { checkPermissionForComponent } from 'utils/permission';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
+import { PlusOutlined } from '@ant-design/icons';
 
 const key = 'users';
 
@@ -125,7 +126,7 @@ const Users = () => {
           <div className="add-wrap">
             {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
               <Button type="primary" onClick={onCreate}>
-                <FormattedMessage {...messages.addLabel} />
+                <PlusOutlined /> <FormattedMessage {...messages.addLabel} />
               </Button>
             ) : null}
           </div>

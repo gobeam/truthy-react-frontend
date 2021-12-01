@@ -77,11 +77,6 @@ function UserTable(props) {
 
   return (
     <>
-      {/* {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
-        <Button type="primary" onClick={onCreate}>
-          <FormattedMessage {...messages.addLabel} />
-        </Button>
-      ) : null} */}
       <Table
         loading={isLoading}
         pagination={paginationOptions}

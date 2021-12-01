@@ -177,3 +177,12 @@
 .w-100 {
   width: 100%;
 }
+
+
+.layout-page-content > :nth-child(2){
+  flex: initial;
+}
+
+.ant-card {
+border-radius: 8px;
+}

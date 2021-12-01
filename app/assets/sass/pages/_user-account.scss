@@ -24,6 +24,16 @@
             object-fit: contain;
         }
     }
+    .ant-tabs-ink-bar{
+        background: $primary;
+      }
+    // .ant-tabs-nav-list{
+    //     padding-right: 20px;
+    //     .ant-tabs-tab-active{
+    //         background-color: rgba($primary, 0.14);
+    //         border-radius: 5px;
+    //     }
+    // }
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
@@ -33,3 +43,14 @@
 .ant-tabs-tab:hover {
     color: $primary;
 }
+
+
+  .profile-details-card{
+      .ant-card-body{
+          margin: 0;
+          .ant-page-header{
+              padding: 0;
+              margin-bottom: 15px;
+          }
+      }
+  }
