@@ -32,20 +32,20 @@ const Profile = () => {
           </Helmet>
         )}
       </FormattedMessage>
-      <PageHeaderWrapper
-        title={messages.pageHeader}
-        avatar={
-          user.avatar
-            ? { src: `${BASE_URL}/assets/profile/${user.avatar}` }
-            : null
-        }
-        extra={[
-          <Button key="3" onClick={() => navigate('/account-setting')}>
-            <FormattedMessage {...messages.editProfileLabel} />
-          </Button>,
-        ]}
-      />
-      <div>
+      <div className="truthy-table profile-details-card">
+        <PageHeaderWrapper
+          title={messages.pageHeader}
+          avatar={
+            user.avatar
+              ? { src: `${BASE_URL}/assets/profile/${user.avatar}` }
+              : null
+          }
+          extra={[
+            <Button key="3" onClick={() => navigate('/account-setting')}>
+              <FormattedMessage {...messages.editProfileLabel} />
+            </Button>,
+          ]}
+        />
         <Descriptions>
           <Descriptions.Item label="UserName">
             {user.username}
