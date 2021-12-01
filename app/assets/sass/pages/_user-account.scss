@@ -48,9 +48,10 @@
   .profile-details-card{
       .ant-card-body{
           margin: 0;
-          .ant-page-header{
-              padding: 0;
-              margin-bottom: 15px;
-          }
+          
       }
+      .ant-page-header{
+        padding: 0;
+        margin-bottom: 15px;
+    }
   }
