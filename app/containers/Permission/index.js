@@ -33,7 +33,11 @@ import EditPermissionModal from 'containers/Permission/editPermissionModal';
 import PermissionTable from 'containers/Permission/permissionTable';
 import { POST, PUT } from 'utils/constants';
 import { Breadcrumb, Button, Modal } from 'antd';
-import { ExclamationCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import {
+  ExclamationCircleOutlined,
+  PlusOutlined,
+  SyncOutlined,
+} from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { checkPermissionForComponent } from 'utils/permission';
@@ -111,13 +115,13 @@ const Permission = () => {
           <div className="add-wrap ">
             {checkPermissionForComponent(user.role, CreateRoutePermission) ? (
               <Button type="primary" onClick={onCreate} className="mr-2">
-                <FormattedMessage {...messages.addLabel} />
+                <PlusOutlined /> <FormattedMessage {...messages.addLabel} />
               </Button>
             ) : null}
 
             <Button
               type="primary"
-              icon={<SyncOutlined />}
+              // icon={<SyncOutlined />}
               onClick={() => {
                 Modal.confirm({
                   okText: intl.formatMessage(messages.syncOk),
@@ -129,7 +133,7 @@ const Permission = () => {
                 });
               }}
             >
-              <FormattedMessage {...messages.syncLabel} />
+              <SyncOutlined /> <FormattedMessage {...messages.syncLabel} />
             </Button>
             <div></div>
           </div>

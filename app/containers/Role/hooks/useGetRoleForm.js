@@ -36,6 +36,7 @@ const useGetRoleForm = ({
       device={device}
       responsive={responsive}
       name={formName}
+      classname="form-ant-items"
     />
   );
 

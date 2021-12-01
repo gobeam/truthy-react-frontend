@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
             values={initialValues}
             formInstance={form}
             onFinish={onFinish}
-            classname="login-page-form form-ant-items"
+            className="login-page-form form-ant-items"
             name="forgot-password-form"
           >
             <Title level={3}>
