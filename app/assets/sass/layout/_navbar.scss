@@ -26,7 +26,17 @@
 
 .home-page {
   .ant-layout-header {
+    background: #ececec;
     // background: url('./../../../assets//images/navbar.png');
+  }
+  .ant-menu-horizontal{
+    border: 0;
+  }
+  .ant-menu-item::after{
+    display: none;
+  }
+  .ant-menu{
+    background: #ececec;
   }
 }
 
