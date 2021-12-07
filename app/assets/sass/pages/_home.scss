@@ -189,7 +189,7 @@
 }
 
 .ant-card {
-border-radius: 8px;
+  border-radius: 8px;
 }
 
 .banner{
@@ -221,10 +221,10 @@ img{
 .container{
   max-width: 	1200px;
   width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .align-items-center{
@@ -246,12 +246,12 @@ img{
     border-radius: 50px;
     padding: 0 34px;
     box-shadow: 2px 3px 6px rgba(57, 175, 159, 0.32);
-}
+  }
 }
 
 // /helps oontent
 .home-page{
-   font-family: "Public Sans", sans-serif;;
+  font-family: "Public Sans", sans-serif;;
 }
 
 .truthy-helps {
@@ -261,13 +261,9 @@ img{
   }
 }
 .truthy-help-content{
-  background: url('../../assets/images/helps-bg.png');
-  height: 200px;
-  h3{
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 65px;
-  }
+  // background: url('../../assets/images/helps-bg.png');
+  // height: 200px;
+  
   .card-inner{
     text-align: center;
     .img-wrap{
@@ -284,17 +280,17 @@ img{
     }
     p{
       line-height: 1.5;
-    font-size: 1rem;
-    font-weight: 400;
-    color: rgb(99, 115, 129);
-}
+      font-size: 1rem;
+      font-weight: 400;
+      color: rgb(99, 115, 129);
+    }
   }
   .ant-card{
     background-color: rgb(244, 246, 248);
     padding: 25px;
   }
   .card-one{
- 
+    
     margin-top: -40px;
   }
   .card-two{
@@ -315,4 +311,67 @@ img{
     }
   }
   
+}
+
+.heading{
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 65px;
+}
+
+.contributors{
+  margin: 40px 0;
+  width: 100%;
+  .ant-card{
+    padding: 20px 40px;
+    width: 100%;
+    cursor: pointer;
+    // background-color: transparent;
+    border: 0;
+  }
+  .card-contibution{
+    position: relative;
+    &:hover{
+      .designation{
+        opacity: 1;
+      }
+    }
+  }
+  .card-inner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .img-wrap{
+      height: 100px;
+      width: 100px;
+      background: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .designation{
+      position: absolute;
+      bottom: 0;
+      opacity: 0;
+      padding-bottom: 10px;
+      transition: all ease .5s;
+      .icon{
+        cursor: pointer;
+        svg{
+          font-size: 20px;
+          color: #000000;
+        }
+      }
+      .linked{
+        margin-left: 10px;
+        svg{
+          color: #0084be;
+        }
+      }
+    }
+   
+   
+  }
 }

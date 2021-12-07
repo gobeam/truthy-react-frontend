@@ -9,7 +9,7 @@ import React from 'react';
 function TruthyHelps() {
   return (
     <div className="truthy-help-content">
-      <h3 className="text-center">What Truthy helps you ?</h3>
+      <h3 className="text-center heading">What Truthy helps you ?</h3>
       <div className="truthy-helps ">
         <div className="container">
           <Row gutter={20}>
