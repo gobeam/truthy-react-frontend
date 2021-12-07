@@ -37,7 +37,7 @@ function Contributors() {
                       <h4 className="text-center">{item.author}</h4>
                     </div>
                     <h4>{item.author}</h4>
-                    <p>{item.designation}</p>
+                    <p className="mb-3">{item.designation}</p>
 
                     <div className="designation d-flex">
                       <div className="icon git">

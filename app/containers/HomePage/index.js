@@ -10,6 +10,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import Navbar from 'common/layout/Navbar';
 import TruthyHelps from 'common/HomeContent/TruthyHelps';
 import Contributors from 'common/HomeContent/Contributors';
+import Footer from 'common/HomeContent/Footer';
 import saga from './saga';
 // import NavImg from '../../assets/images/navbar.png'
 import Banner from './banner';
@@ -27,6 +28,7 @@ export default function HomePage() {
         <Banner />
         <TruthyHelps />
         <Contributors />
+        <Footer />
         {/* <NavLink to="/login" className="btn-primary">
           Login
         </NavLink> */}
