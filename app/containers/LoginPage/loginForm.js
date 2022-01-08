@@ -100,7 +100,9 @@ const LoginForm = () => {
       <Form.Item>
         <div className="d-flex">
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox>
+              <FormattedMessage {...messages.rememberMe} />
+            </Checkbox>
           </Form.Item>
           <div className="ml-auto">
             <Link className="login-form-forgot" to="/forgot-password">

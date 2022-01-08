@@ -24,4 +24,8 @@ export default defineMessages({
     defaultMessage:
       'In-active {count, plural, =0 {user} one { user} other { users}}',
   },
+  deviceChart: {
+    id: `${scope}.deviceChart`,
+    defaultMessage: 'Devices',
+  },
 });

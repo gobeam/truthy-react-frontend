@@ -3,10 +3,14 @@ import { Pie } from '@ant-design/charts';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BROWSER, OS } from 'containers/Dashboard/constants';
+import { useIntl } from 'react-intl';
+import messages from 'containers/Dashboard/messages';
 
 const { Text } = Typography;
 
 const DeviceChart = ({ deviceType, loading, data, handleChange }) => {
+  const intl = useIntl();
+
   const config = {
     appendPadding: 10,
     data,
@@ -42,7 +46,7 @@ const DeviceChart = ({ deviceType, loading, data, handleChange }) => {
       loading={loading}
       className=""
       bordered={false}
-      title="Devices"
+      title={intl.formatMessage(messages.deviceChart)}
       style={{
         height: '100%',
       }}
@@ -58,7 +62,7 @@ const DeviceChart = ({ deviceType, loading, data, handleChange }) => {
       }
     >
       <div>
-        <Text>销售额</Text>
+        <Text>{intl.formatMessage(messages.deviceChart)}</Text>
         <Pie {...config} />
       </div>
     </Card>
@@ -70,7 +74,7 @@ DeviceChart.propTypes = {
   intl: PropTypes.object,
   loading: PropTypes.bool,
   handleChange: PropTypes.func,
-  data: PropTypes.object,
+  data: PropTypes.array,
 };
 
 export default DeviceChart;

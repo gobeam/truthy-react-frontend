@@ -18,6 +18,7 @@ import permissionReducer from 'containers/Permission/reducer';
 import usersReducer from 'containers/Users/reducer';
 import DashboardReducer from 'containers/Dashboard/reducer';
 import emailTemplateReducer from 'containers/EmailTemplate/reducer';
+import homePageReducer from 'containers/HomePage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -25,6 +26,7 @@ import emailTemplateReducer from 'containers/EmailTemplate/reducer';
 export default function createReducer(injectedReducers = {}) {
   return combineReducers({
     global: globalReducer,
+    homePage: homePageReducer,
     alertMessage: alertMessageReducer,
     snackMessage: snackMessageReducer,
     language: languageProviderReducer,

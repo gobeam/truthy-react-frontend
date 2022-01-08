@@ -1,22 +1,24 @@
 import { Button, Col, Row } from 'antd';
 import React from 'react';
-// @ts-ignore
-import Welcome from '../../assets/images/reporting.gif';
+import { useIntl } from 'react-intl';
+import Welcome from 'assets/images/reporting.gif';
+import messages from 'containers/HomePage/messages';
 
-function Banner() {
+const Banner = () => {
+  const intl = useIntl();
   return (
     <div className="banner">
       <div className="container">
         <Row gutter={[16, 16]} className="align-items-center">
           <Col sm={10}>
             <div className="banner-content">
-              <h2>Make Potential Possible</h2>
-              <p>
-                Lorem Loream Loream Lorem Lorem
-                LoremLoremLoremLoremLoremLoremLorem
-              </p>
+              <h2>{intl.formatMessage(messages.header)}</h2>
+              <p>{intl.formatMessage(messages.description)}</p>
               <Button className="round" type="primary">
-                Get Started
+                <a href="https://github.com/gobeam/truthy" target="_blank">
+                  {' '}
+                  {intl.formatMessage(messages.startedButton)}
+                </a>
               </Button>
             </div>
           </Col>
@@ -29,6 +31,6 @@ function Banner() {
       </div>
     </div>
   );
-}
+};
 
 export default Banner;

@@ -119,7 +119,6 @@ function EmailTemplateTable(props) {
                 <ToolTipButtonWrapper
                   danger
                   color="#f44336"
-                  key="#f44336"
                   title={commonMessages.removeLabel}
                   clickEvent={() => {
                     Modal.confirm({

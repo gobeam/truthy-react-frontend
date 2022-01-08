@@ -10,11 +10,10 @@ const ToolTipButtonWrapper = ({
   className = '',
   danger = false,
   color = '#39af9f',
-  key = '#39af9f',
 }) => {
   const intl = useIntl();
   return (
-    <Tooltip title={intl.formatMessage(title)} color={color} key={key}>
+    <Tooltip title={intl.formatMessage(title)} color={color}>
       <Button
         type="link"
         onClick={clickEvent}
@@ -34,7 +33,6 @@ ToolTipButtonWrapper.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   color: PropTypes.string,
-  key: PropTypes.string,
 };
 
 export default ToolTipButtonWrapper;

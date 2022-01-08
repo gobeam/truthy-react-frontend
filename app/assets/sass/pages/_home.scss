@@ -261,7 +261,9 @@ img{
   }
 }
 .truthy-help-content{
-  // background: url('../../assets/images/helps-bg.png');
+  // background: url('../../images/helps-bg.jpg') no-repeat center center fixed;
+  background: url('assets/images/helps-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   // height: 200px;
   
   .card-inner{

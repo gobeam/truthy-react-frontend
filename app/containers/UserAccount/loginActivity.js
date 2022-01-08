@@ -70,7 +70,7 @@ const ListItem = ({ item, onDelete, intl }) => {
             });
           }}
         >
-          Clear
+          <FormattedMessage {...messages.clear} />
         </Button>,
       ]}
     >

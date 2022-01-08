@@ -9,7 +9,7 @@ export const scope = 'containers.UserAccount';
 export default defineMessages({
   helmetTitle: {
     id: `${scope}.helmetTitle`,
-    defaultMessage: 'Role',
+    defaultMessage: 'User Account Setting',
   },
   contact: {
     id: `${scope}.contact`,
@@ -107,6 +107,10 @@ export default defineMessages({
   onLabel: {
     id: `${scope}.onLabel`,
     defaultMessage: 'on',
+  },
+  clear: {
+    id: `${scope}.clear`,
+    defaultMessage: 'Clear',
   },
   offLabel: {
     id: `${scope}.offLabel`,

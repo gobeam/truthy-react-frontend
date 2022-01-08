@@ -213,7 +213,10 @@ const RegisterForm = (props) => {
         />
       </div>
       <div className="link-login">
-        Already Have An Account ? <Link to="/login">Login</Link>
+        <FormattedMessage {...messages.alreadyAccount} />{' '}
+        <Link to="/login">
+          <FormattedMessage {...messages.loginHere} />
+        </Link>
       </div>
     </FormWrapper>
   );

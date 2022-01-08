@@ -62,7 +62,17 @@ module.exports = (options) => ({
       {
         test: /\.(scss|css)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
@@ -73,24 +83,16 @@ module.exports = (options) => ({
         use: [
           {
             loader: 'svg-url-loader',
-            options: {
-              // Inline files smaller than 10 kB
-              limit: 10 * 1024,
-              noquotes: true,
-            },
           },
         ],
       },
       {
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(png|gif|jpe?g)$/i,
+        type: 'asset',
+        generator: {
+          filename: 'assets/images/[name].[hash:6][ext]',
+        },
         use: [
-          {
-            loader: 'url-loader',
-            options: {
-              // Inline files smaller than 10 kB
-              limit: 10 * 1024,
-            },
-          },
           {
             loader: 'image-webpack-loader',
             options: {

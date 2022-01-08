@@ -53,4 +53,8 @@ export default defineMessages({
     id: `${scope}.register`,
     defaultMessage: 'register now!',
   },
+  rememberMe: {
+    id: `${scope}.rememberMe`,
+    defaultMessage: 'Remember me',
+  },
 });
