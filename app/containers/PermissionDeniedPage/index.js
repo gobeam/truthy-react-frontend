@@ -17,16 +17,18 @@ const PermissionDeniedPage = () => {
   const navigate = useNavigate();
   const clickBack = () => navigate('/login');
   return (
-    <Result
-      status="403"
-      title={<FormattedMessage {...messages.header} />}
-      subTitle={<FormattedMessage {...messages.message} />}
-      extra={
-        <Button type="primary" onClick={clickBack}>
-          <FormattedMessage {...messages.back} />
-        </Button>
-      }
-    />
+    <div className="mh-100">
+      <Result
+        status="403"
+        title={<FormattedMessage {...messages.header} />}
+        subTitle={<FormattedMessage {...messages.message} />}
+        extra={
+          <Button type="primary" onClick={clickBack}>
+            <FormattedMessage {...messages.back} />
+          </Button>
+        }
+      />
+    </div>
   );
 };
 

@@ -60,7 +60,7 @@ const LoginForm = () => {
       onFinish={onFinish}
       name="login-form"
     >
-      <Title level={2}>
+      <Title level={3}>
         <FormattedMessage {...messages.inputLogin} />
       </Title>
 
@@ -98,13 +98,18 @@ const LoginForm = () => {
       />
 
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Link className="login-form-forgot" to="/forgot-password">
-          <FormattedMessage {...messages.lostPassword} />
-        </Link>
+        <div className="d-flex">
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>
+              <FormattedMessage {...messages.rememberMe} />
+            </Checkbox>
+          </Form.Item>
+          <div className="ml-auto">
+            <Link className="login-form-forgot" to="/forgot-password">
+              <FormattedMessage {...messages.lostPassword} />
+            </Link>
+          </div>
+        </div>
       </Form.Item>
 
       <FormButtonWrapper
@@ -113,7 +118,7 @@ const LoginForm = () => {
         form={form}
         label={messages.submit}
       />
-      <Link className="login-form-forgot" to="/register">
+      <Link className="link" to="/register">
         <FormattedMessage {...messages.register} />
       </Link>
     </FormWrapper>

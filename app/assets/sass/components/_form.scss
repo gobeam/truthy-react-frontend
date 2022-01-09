@@ -1,0 +1,58 @@
+.ant-input-affix-wrapper, .ant-input{
+    border-radius: 5px;
+    min-height: 42px;
+    padding:0px;
+    overflow: hidden;
+    &:focus{
+        box-shadow: 0 0 0 2px rgba($primary, 0.2);
+        border-color: $primary;
+    }
+}
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled){
+    &:hover{
+        border-color: $primary;
+    }
+}
+
+// #create-user{
+//    @extend .ant-input-affix-wrapper;
+// }
+
+.ant-input-affix-wrapper > input.ant-input{
+    padding-left: 30px;
+}
+
+.ant-form-item-has-success.ant-form-item-has-feedback .ant-form-item-children-icon{
+color: $primary;
+}
+
+.ant-input-suffix{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.ant-input-prefix{
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+}
+
+.ant-checkbox-checked {
+.ant-checkbox-inner{
+   @include bg-border-color($primary, $primary)
+}
+}
+
+.ant-form-item-label{
+    text-align: left;
+}
+
+.form-ant-items{
+    .ant-input{
+        padding-left: 15px;
+    }
+}

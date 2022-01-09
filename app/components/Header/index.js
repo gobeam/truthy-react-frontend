@@ -9,14 +9,12 @@ import {
   makeIsLoggedSelector,
   makeLoggedInUserSelector,
 } from 'containers/App/selectors';
-import LongLogoSvg from 'assets/logo/long-logo.svg';
-import ShortLogoSvg from 'assets/logo/short-logo.svg';
-import { appLocales } from 'common/language';
+import LongLogoSvg from 'assets/images/logo/long-logo.svg';
+import ShortLogoSvg from 'assets/images/logo/short-logo.svg';
 import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  TranslationOutlined,
   UserOutlined,
   LogoutOutlined,
   SettingOutlined,
@@ -24,15 +22,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import messages from 'components/Header/messages';
-import { changeLocaleAction } from 'containers/LanguageProvider/actions';
-import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
-import { useCookie } from 'hooks/useCookie';
 import { BASE_URL } from 'utils/api';
+import LocaleToggle from 'containers/LocaleToggle';
 
 const { Header } = Layout;
 
 const stateSelector = createStructuredSelector({
-  locale: makeSelectLocale(),
   user: makeLoggedInUserSelector(),
   device: makeDeviceSelector(),
   collapsed: makeCollapsedSelector(),
@@ -43,11 +38,8 @@ const stateSelector = createStructuredSelector({
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const [cookie, updateCookie] = useCookie('lang', 'en');
 
-  const { user, isLogged, device, collapsed, locale } =
-    useSelector(stateSelector);
+  const { user, isLogged, device, collapsed } = useSelector(stateSelector);
   const onLogout = () => dispatch(logoutAction());
   const toggle = () => dispatch(toggleCollapseAction(!collapsed));
 
@@ -102,12 +94,6 @@ const HeaderComponent = () => {
     navigate('/login');
   };
 
-  const selectLocale = ({ key }) => {
-    dispatch(changeLocaleAction(key));
-    // setCurrentLang(key);
-    updateCookie(key, 10);
-  };
-
   return (
     <Header className="layout-page-header">
       {device !== 'MOBILE' && (
@@ -126,26 +112,7 @@ const HeaderComponent = () => {
           </span>
         </div>
         <div className="actions">
-          <Dropdown
-            trigger={['click']}
-            overlay={
-              <Menu onClick={selectLocale}>
-                {appLocales.map((lang) => (
-                  <Menu.Item
-                    style={{ textAlign: 'left' }}
-                    disabled={locale === lang.label}
-                    key={lang.label}
-                  >
-                    {lang.flag} {lang.label}
-                  </Menu.Item>
-                ))}
-              </Menu>
-            }
-          >
-            <span>
-              <TranslationOutlined />
-            </span>
-          </Dropdown>
+          <LocaleToggle />
           {isLogged ? (
             <Dropdown overlay={menu} trigger={['click']}>
               <span className="user-action">

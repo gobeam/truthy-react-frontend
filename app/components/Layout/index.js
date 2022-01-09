@@ -78,7 +78,7 @@ const LayoutPage = () => {
   }, []);
 
   return (
-    <Layout className="layout-page">
+    <Layout className="layout-page mh-100">
       <HeaderComponent collapsed={collapsed} toggle={toggle} />
       <Layout>
         {!isMobile ? (
@@ -109,7 +109,7 @@ const LayoutPage = () => {
             visible={!otpVerified}
             autoFocus
             length={OTP_LENGTH}
-            className="otpContainer"
+            className="otp-wrapper"
             inputClassName={`otpInput ${otpError ? 'shake-input' : ''}`}
             onChangeOTP={onChangeOtp}
             onVerifyOtp={onVerifyOtp}

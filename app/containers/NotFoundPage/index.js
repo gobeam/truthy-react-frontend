@@ -16,16 +16,18 @@ import history from 'utils/history';
 const NotFound = () => {
   const clickBack = () => history.push('/');
   return (
-    <Result
-      status="404"
-      title={<FormattedMessage {...messages.header} />}
-      subTitle={<FormattedMessage {...messages.message} />}
-      extra={
-        <Button type="primary" onClick={clickBack}>
-          <FormattedMessage {...messages.back} />
-        </Button>
-      }
-    />
+    <div className="mh-100">
+      <Result
+        status="404"
+        title={<FormattedMessage {...messages.header} />}
+        subTitle={<FormattedMessage {...messages.message} />}
+        extra={
+          <Button type="primary" onClick={clickBack}>
+            <FormattedMessage {...messages.back} />
+          </Button>
+        }
+      />
+    </div>
   );
 };
 

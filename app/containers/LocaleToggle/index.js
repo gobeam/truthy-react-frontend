@@ -5,45 +5,54 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-
-import Toggle from 'components/Toggle';
-import Wrapper from 'containers/LocaleToggle/Wrapper';
-import messages from 'containers/LocaleToggle/messages';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Dropdown, Menu } from 'antd';
+import { TranslationOutlined } from '@ant-design/icons';
 import { changeLocaleAction } from 'containers/LanguageProvider/actions';
+import { useCookie } from 'hooks/useCookie';
 import { makeSelectLocale } from 'containers/LanguageProvider/selectors';
+import { appLocales } from 'common/language';
 
-const appLocales = ['en', 'ne'];
+const stateSelector = createStructuredSelector({
+  locale: makeSelectLocale(),
+});
 
-export function LocaleToggle(props) {
+export function LocaleToggle() {
+  const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
+  const [cookie, updateCookie] = useCookie('lang', 'en');
+  const { locale } = useSelector(stateSelector);
+
+  const selectLocale = ({ key }) => {
+    dispatch(changeLocaleAction(key));
+    // @ts-ignore
+    updateCookie(key, 10);
+  };
+
   return (
-    <Wrapper>
-      <Toggle
-        value={props.locale}
-        values={appLocales}
-        messages={messages}
-        onToggle={props.onLocaleToggle}
-      />
-    </Wrapper>
+    <Dropdown
+      trigger={['click']}
+      placement="bottomCenter"
+      overlay={
+        <Menu onClick={selectLocale}>
+          {appLocales.map((lang) => (
+            <Menu.Item
+              style={{ textAlign: 'left' }}
+              disabled={locale === lang.label}
+              key={lang.label}
+            >
+              {lang.flag} {lang.label}
+            </Menu.Item>
+          ))}
+        </Menu>
+      }
+    >
+      <span>
+        <TranslationOutlined />
+      </span>
+    </Dropdown>
   );
 }
 
-LocaleToggle.propTypes = {
-  onLocaleToggle: PropTypes.func,
-  locale: PropTypes.string,
-};
-
-const mapStateToProps = createSelector(makeSelectLocale(), (locale) => ({
-  locale,
-}));
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onLocaleToggle: (evt) => dispatch(changeLocaleAction(evt.target.value)),
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LocaleToggle);
+export default LocaleToggle;

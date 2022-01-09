@@ -1,0 +1,59 @@
+.user-acccount, .change-password-form{
+    .ant-input-affix-wrapper > input.ant-input{
+        padding-left: 10px;
+    }
+}
+
+.card{
+    background-color: $white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.profile{
+    .user-image{
+        border-radius: 8px;
+        border: 1px solid #f0f0f0;
+        background-color: #efefef;
+        height: 100px;
+        width: 100px;
+        margin-bottom: 10px;
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+    .ant-tabs-ink-bar{
+        background: $primary;
+      }
+    // .ant-tabs-nav-list{
+    //     padding-right: 20px;
+    //     .ant-tabs-tab-active{
+    //         background-color: rgba($primary, 0.14);
+    //         border-radius: 5px;
+    //     }
+    // }
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: $primary;
+}
+
+.ant-tabs-tab:hover {
+    color: $primary;
+}
+
+
+  .profile-details-card{
+      .ant-card-body{
+          margin: 0;
+          
+      }
+      .ant-page-header{
+        padding: 0;
+        margin-bottom: 15px;
+    }
+  }
+
+  

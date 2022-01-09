@@ -8,40 +8,27 @@
 // Needed for redux-saga es6 generator support
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
-// Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import FontFaceObserver from 'fontfaceobserver';
-// Import css
 import 'antd/dist/antd.css';
-// import 'scss/volt.scss';
-import 'sanitize.css/sanitize.css';
+import 'assets/sass/main.scss';
 // Import root app
 import App from 'containers/App';
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 // Load the favicon and the .htaccess file
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./assets/images/icons/favicon.ico';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
-import { store } from 'store';
 // Import i18n messages
-import { DEFAULT_LOCALE, translationMessages } from 'i18n';
 import { saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import reportWebVitals from 'reportWebVitals';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
-
-// Observe loading of Open Sans (to remove open sans, remove the <link> tag in
-// the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Open Sans', {});
-
-// When Open Sans is loaded, add a font-family using Open Sans to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-});
+import { store } from './store';
+import { DEFAULT_LOCALE, translationMessages } from './i18n';
 
 const MOUNT_NODE = document.getElementById('app');
 

@@ -49,7 +49,7 @@ export default ({ key, saga, mode }) =>
     return hoistNonReactStatics(InjectSaga, WrappedComponent);
   };
 
-const useInjectSaga = ({ key, saga, mode }) => {
+const useInjectSaga = ({ key, saga, mode = null }) => {
   const store = useStore();
 
   React.useEffect(() => {

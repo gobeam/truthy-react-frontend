@@ -1,0 +1,57 @@
+.ant-alert{
+  &-error{
+    @include bg-border-color($danger-bg, $danger-bg);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    .ant-alert-with-description{
+      padding: 8px 15px;
+    }
+    .ant-alert-message{
+      margin-bottom: 0;
+      color: $danger !important;
+      line-height: 19px;
+     }
+    .ant-alert-icon{
+      font-size: 20px;
+      margin-right: 10px;
+      color: $danger-icon;
+    }
+  
+  }
+  &-success{
+    @include bg-border-color($success-bg, $success-bg);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    .ant-alert-with-description{
+      padding: 8px 15px;
+    }
+    .ant-alert-message{
+      margin-bottom: 0;
+      color: $success !important;
+      line-height: 19px;
+     }
+    .ant-alert-icon{
+      font-size: 20px;
+      margin-right: 10px;
+      color: $success-icon;
+    }
+  
+  }
+  &-description{
+    margin-top: 5px;
+  }
+
+}
+
+
+.ant-modal{
+  &-content{
+      border-radius: 5px;
+  }
+  &-header{
+    border-radius: 5px 5px 0 0;
+  }
+  &-title{
+    font-weight: 500;
+  }
+}

@@ -34,6 +34,6 @@ export function* handleForgotPassword() {
   }
 }
 
-export default function* homePageSaga() {
+export default function* forgotPasswordSaga() {
   yield takeLatest(FORGOT_PASSWORD, handleForgotPassword);
 }

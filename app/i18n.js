@@ -32,6 +32,8 @@ const translationMessages = {
   ne: formatTranslationMessages('ne', neTranslationMessages),
 };
 
-exports.formatTranslationMessages = formatTranslationMessages;
-exports.translationMessages = translationMessages;
-exports.DEFAULT_LOCALE = DEFAULT_LOCALE;
+module.exports = {
+  formatTranslationMessages,
+  translationMessages,
+  DEFAULT_LOCALE,
+};

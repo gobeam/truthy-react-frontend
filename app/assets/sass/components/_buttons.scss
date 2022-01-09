@@ -1,0 +1,94 @@
+.ant-btn-link {
+  color: $primary;
+  &:hover,
+  &:active,
+  &:focus {
+    color: $primary;
+    background: transparent;
+    border-color: transparent;
+  }
+}
+.ant-btn-primary {
+  @include bg-border-color($primary, $primary);
+  background-position: center;
+  transition: background 0.8s;
+  height: 38px;
+  text-transform: capitalize;
+  border-radius: 5px;
+  &.active,
+  &:hover,
+  &:focus {
+    @include bg-border-color($primary, $primary);
+  }
+  &:hover {
+    background: $primary radial-gradient(circle, transparent 1%, $primary 1%)
+      center/15000%;
+  }
+  &.active {
+    background-color: rgba($primary, 0.5);
+    background-size: 100%;
+    transition: background 0s;
+  }
+}
+
+.otp-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  .danger {
+    border: 1px solid $danger;
+  }
+  input {
+    transition: box-shadow 0.5s;
+    &.shake-input {
+      animation: shake 0.1s ease-in-out 0s 2;
+      box-shadow: 2px 3px 6px rgba($danger, 0.15);
+    }
+  }
+}
+
+.ant-modal-footer,
+.ant-upload {
+  .ant-btn {
+    background-position: center;
+    transition: all ease 0.3s;
+    height: 38px;
+    text-transform: capitalize;
+    border-radius: 5px;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: $primary;
+      background: #fff;
+      border-color: $primary;
+    }
+    &.active {
+      background-size: 100%;
+      transition: background 0s;
+    }
+  }
+}
+
+@keyframes shake {
+  0% {
+    margin-left: 0rem;
+  }
+  25% {
+    margin-left: 0.5rem;
+  }
+  75% {
+    margin-left: -0.5rem;
+  }
+  100% {
+    margin-left: 0rem;
+  }
+}
+
+.ant-switch-checked {
+  background-color: $primary;
+}
+
+.mr-2 {
+  margin-right: 12px;
+}

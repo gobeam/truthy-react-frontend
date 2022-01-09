@@ -104,7 +104,6 @@ export default defineMessages({
     defaultMessage:
       'Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, one special character and should be minimum 6 characters and maximum upto 20 characters!!',
   },
-
   nameLabel: {
     id: `${scope}.nameLabel`,
     defaultMessage: 'Name',

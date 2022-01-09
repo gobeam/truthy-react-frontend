@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const Toggle = (props) => {
   const { values, value, intl, onToggle, messages } = props;
-  let content = <Option>--</Option>;
+  let content = <Option value={null}>--</Option>;
   if (values) {
     content = values.map((optVal) => (
       <Option key={optVal} value={optVal}>
