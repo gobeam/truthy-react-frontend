@@ -19,7 +19,7 @@ import App from 'containers/App';
 import LanguageProvider from 'containers/LanguageProvider';
 // Load the favicon and the .htaccess file
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./assets/images/icons/favicon.ico';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 // Import i18n messages

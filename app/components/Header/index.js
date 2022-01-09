@@ -9,8 +9,8 @@ import {
   makeIsLoggedSelector,
   makeLoggedInUserSelector,
 } from 'containers/App/selectors';
-import LongLogoSvg from 'assets/logo/long-logo.svg';
-import ShortLogoSvg from 'assets/logo/short-logo.svg';
+import LongLogoSvg from 'assets/images/logo/long-logo.svg';
+import ShortLogoSvg from 'assets/images/logo/short-logo.svg';
 import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
   MenuUnfoldOutlined,

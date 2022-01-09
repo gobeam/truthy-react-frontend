@@ -1,70 +1,155 @@
-# Getting Started with Create React App
+<h1 align="center">
+  Truthy CMS (ReactJS Starter)
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center"> This repository is frontend part of Truthy CMS written in ReactJS & Redux-Saga. [Ant design](https://ant.design/) is used as a UI library. This project includes User Management, Role Management, Permission Management, Email Module, Account Settings, OTP, RBAC support, Localization, and many more. </div>
+
+<br>
+<div align="center">
+  <sub>Created by <a href="https://www.linkedin.com/in/roshan-ranabhat/">Roshan Ranabhat (gobeam)</a> and maintained with ❤️ by an amazing <a href="https://github.com/gobeam/truthy-contributors">team of awesome developers</a>.</sub>
+</div>
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Prerequisites](#Prerequisites)
+- [Available Scripts](#available-scripts)
+- [Setup](#setup)
+- [File Structure](#file-structure)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgement](#acknowledgement)
+
+## Getting Started
+
+This project was created to help developers by bootstrapping basic modules that need to be present while creating a standard CMS. The main motto of this project was to save precious time while developing CMS and focus more on the core part. This project is trying to follow the best possible standard to make it optimized and production-ready. Hope you like it. If you love it don't forget to share your experience.
+
+## Prerequisites
+
+NodeJS
+https://nodejs.org/en/
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
+Hot reload is supported on the development environment page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm run build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
+The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run lint`
 
-### `yarn eject`
+Lints all the files inside `./src` and shows the result without fixing.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `lint:js:fix`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Lints all the files inside `./src`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Setup
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+First, you need to clone the project
+```bash
+git clone https://github.com/gobeam/truthy-react-frontend.git
+```
 
-## Learn More
+After cloning the project copy .env.sample and save it as .env
+```bash
+cp .env.sample .env
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In the .env file, you have to provide the following fields
+```env
+#environment type (development, production)
+NODE_ENV=development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#frontend application URI
+REACT_APP_URI=http://localhost:3000
 
-### Code Splitting
+#Backend API URI (setup from: https://github.com/gobeam/truthy)
+REACT_APP_API_BASE_URI=http://localhost:7777
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+If you want to run locally
+```bash
+yarn start
+```
 
-### Analyzing the Bundle Size
+If you want to use **Docker** to deploy it on production or development stage
+```bash
+docker build -t truthy-frontend .
+docker run truthy-frontend -p 3000:80
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## File Structure
 
-### Making a Progressive Web App
+This project follows the following file structure:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```text
+app
+├── app                  
+│   └── assets                              * Assets that are imported into your components(images, custom SVG, etc).
+│   └── common                              * Common helpers function, hooks, translation messages, and layouts
+│   └── component                           * Components of the projects that are not the main views.
+│       └── ...
+│   └── containers                          * Components that are connected to the redux-saga and receive updates.
+│       └── <domain container>
+│           └── index.js
+│           └── action.js
+│           └── constants.js
+│           └── Loadable.js
+│           └── messages.js
+│           └── reducer.js
+│           └── saga.js
+│           └── selector.js
+│   └── helpers                             * Common Helper functions.
+│   └── hooks                               * Feature to use state and other React functionalities without writing class.
+│   └── i18n                                * Translation files.
+│   └── reducers                            * Pure function that takes an action and the previous state of the application and returns the new state.
+│   └── routes                              * Routes list.
+│   └── scss                                * Scss files for the project.
+│   └── services                            * Common services file.
+│   └── store                               * The Redux action types in action-type.js, reducers, selectors, and main store in the sub-folders.
+│   └── utils                               * Common utils.
+│   └── app.js                              * Main app component.
+│   └── global-style.js                     * Global styles.
+├── build                                   * Build files when `yarn build` is run.
+├── internals
+│   └── scripts                             * Scripts.
+│   └── webpack                             * Webpack configuration.  
+├── server                                  * Node server to run the application. 
+```
 
-### Advanced Configuration
+**Some important root files**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```text
+.
+├── .editorconfig                           * Coding styles (also by programming language).
+├── .env                                    * Environment variables (env.production, env.local, env.uat, etc).
+├── .eslintrc.json                          * ESLint configuration and rules.
+├── .prettierrc                             * Formatting Prettier options.
+```
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate. - see `CONTRIBUTING.md` for details.
 
-### `yarn build` fails to minify
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Released under the MIT License - see `LICENSE.md` for details.
+
+## Acknowledgement
+
+- [React Boilerplate](https://github.com/react-boilerplate/react-boilerplate)

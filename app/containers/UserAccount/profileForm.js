@@ -150,7 +150,12 @@ export default function ProfileForm() {
           <FormattedMessage {...messages.avatarLabel} />
         </Title>
         <div className="user-image">
-          <img src={`${BASE_URL}/assets/profile/${user.avatar}`} alt="avatar" />
+          {user.avatar ? (
+            <img
+              src={`${BASE_URL}/assets/profile/${user.avatar}`}
+              alt="avatar"
+            />
+          ) : null}
         </div>
         <Upload showUploadList={false} {...uploadProps}>
           <div>
