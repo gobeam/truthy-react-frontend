@@ -32,9 +32,9 @@ const Contributors = ({ contributors, loading = true }) => {
                   }
                 >
                   <div className="card-inner">
-                    <div className="img-wrap">
+                    {/* <div className="img-wrap">
                       <h4 className="text-center">{item.author}</h4>
-                    </div>
+                    </div> */}
                     <h4>{item.author}</h4>
                     <p className="mb-3">{item.designation}</p>
 
