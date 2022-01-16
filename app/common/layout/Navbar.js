@@ -11,23 +11,21 @@ function Navbar() {
       <Header className="d-flex w-100 headers">
         <div className="container-fluid d-flex w-100">
           <div className="logos"> Truthy</div>
-          <div className="w-100">
-            <Menu
-              mode="horizontal"
-              defaultSelectedKeys={['1']}
-              className="ml-auto"
-            >
-              <Menu.Item key="1">
-                <Link className="login-form-forgot" to="/">
-                  <FormattedMessage {...messages.home} />
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Link className="login-form-forgot" to="/login">
-                  <FormattedMessage {...messages.login} />
-                </Link>
-              </Menu.Item>
-            </Menu>
+          <div className="header-main">
+            <div className="ml-auto">
+              <Menu mode="horizontal" defaultSelectedKeys={['1']}>
+                <Menu.Item key="1">
+                  <Link className="login-form-forgot" to="/">
+                    <FormattedMessage {...messages.home} />
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link className="login-form-forgot" to="/login">
+                    <FormattedMessage {...messages.login} />
+                  </Link>
+                </Menu.Item>
+              </Menu>
+            </div>
           </div>
         </div>
       </Header>

@@ -27,6 +27,19 @@
 .home-page {
   .navbar{
     width: 100%;
+    .logos{
+      width: 250px;
+      @include d-y-center;
+      flex-grow: 1;
+      font-weight: 900;
+      color: $primary;
+      font-size: 24px;
+      text-shadow: #e0e0e0 1px 1px 0;
+    }
+    .header-main{
+      width: calc(100% - 250px);
+      @include d-y-center;
+    }
   }
   .ant-layout-header {
     background: #ececec;

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300;400;500;60;7000&display=swap');
 .home-wrapper {
-  @include d-center;
+  @include d-x-center;
   flex-direction: column;
   background-color: $bg-color;
 }
@@ -185,7 +185,7 @@
 
 
 .layout-page-content > :nth-child(2){
-  flex: initial;
+  flex: initial !important;
 }
 
 .ant-card {
@@ -194,6 +194,9 @@
 
 .banner{
   background-color: #ececec;
+  min-height: calc(100vh - 230px);
+  display: flex;
+  align-items: center;
 }
 
 img{
@@ -265,14 +268,16 @@ img{
   background: url('assets/images/helps-bg.jpg') no-repeat center center fixed;
   background-size: cover;
   // height: 200px;
-  
+  padding: 60px 0;
+  h3{
+    margin-bottom: 50px;
+  }
   .card-inner{
     text-align: center;
     .img-wrap{
       svg{
         font-size: 50px;
-        color: #3875e3;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
       }
     }
     h4{
@@ -290,19 +295,23 @@ img{
   .ant-card{
     background-color: rgb(244, 246, 248);
     padding: 25px;
-  }
-  .card-one{
-    
-    margin-top: -40px;
-  }
-  .card-two{
-    background-color: rgb(255, 255, 255);
     box-shadow: rgba(145, 158, 171, 0.40) -6px 7px 20px 0px;
+    margin-bottom: 40px;
     .img-wrap{
       svg{
         color: $primary;
       }
     }
+    min-height: 350px;
+  }
+  .card-one{
+    
+    // margin-top: -40px;
+  }
+  .card-two{
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(145, 158, 171, 0.40) -6px 7px 20px 0px;
+    
   }
   .card-three{
     margin-top: 80px;
@@ -325,7 +334,7 @@ img{
   margin: 40px 0;
   width: 100%;
   .ant-card{
-    padding: 20px 40px;
+    padding: 20px 40px 60px;
     width: 100%;
     cursor: pointer;
     // background-color: transparent;
@@ -336,39 +345,39 @@ img{
     box-shadow: 0px 8px 45px rgba(210, 210, 215, 0.9);
     &:hover{
       .designation{
-        opacity: 1;
+        // opacity: 1;
       }
     }
+  }
+  .ant-card-body{
+    padding: 20px 0 5px;
   }
   .card-inner{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    .img-wrap{
-      height: 100px;
-      width: 100px;
-      background: #ffffff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    h4{
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
     }
     .designation{
       position: absolute;
       bottom: 0;
-      opacity: 0;
-      padding-bottom: 20px;
+      opacity: 1;
+      padding-bottom: 25px;
       transition: all ease .5s;
+      @include d-y-center;
       .icon{
         cursor: pointer;
         svg{
-          font-size: 20px;
+         margin-right: 10px;
+          font-size: 23px;
           color: #000000;
         }
       }
       .linked{
-        margin-left: 10px;
         svg{
           color: #0084be;
         }
