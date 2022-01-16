@@ -97,6 +97,14 @@ export function* handleAuthenticateOtp() {
       id: uuid(),
     });
   } catch (error) {
+    if (error.data?.message) {
+      yield showMessage({
+        type: 'error',
+        message: error.data?.message,
+        translate: false,
+        id: uuid(),
+      });
+    }
     yield put(otpCodeErrorAction());
     return yield put(asyncEndAction());
   }
