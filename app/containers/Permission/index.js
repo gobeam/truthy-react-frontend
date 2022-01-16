@@ -56,6 +56,12 @@ const CreateRoutePermission = {
   path: '/permissions',
 };
 
+const SyncPermission = {
+  resource: 'permission',
+  method: POST,
+  path: '/permissions/sync',
+};
+
 const Permission = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -119,22 +125,24 @@ const Permission = () => {
               </Button>
             ) : null}
 
-            <Button
-              type="primary"
-              // icon={<SyncOutlined />}
-              onClick={() => {
-                Modal.confirm({
-                  okText: intl.formatMessage(messages.syncOk),
-                  okType: 'danger',
-                  cancelText: intl.formatMessage(messages.cancelBtn),
-                  icon: <ExclamationCircleOutlined />,
-                  title: intl.formatMessage(messages.syncConfirmationMessage),
-                  onOk: (close) => onSync() && close(),
-                });
-              }}
-            >
-              <SyncOutlined /> <FormattedMessage {...messages.syncLabel} />
-            </Button>
+            {checkPermissionForComponent(user.role, SyncPermission) ? (
+              <Button
+                type="primary"
+                // icon={<SyncOutlined />}
+                onClick={() => {
+                  Modal.confirm({
+                    okText: intl.formatMessage(messages.syncOk),
+                    okType: 'danger',
+                    cancelText: intl.formatMessage(messages.cancelBtn),
+                    icon: <ExclamationCircleOutlined />,
+                    title: intl.formatMessage(messages.syncConfirmationMessage),
+                    onOk: (close) => onSync() && close(),
+                  });
+                }}
+              >
+                <SyncOutlined /> <FormattedMessage {...messages.syncLabel} />
+              </Button>
+            ) : null}
             <div></div>
           </div>
           <div className="d-flex ml-auto search-wrap">
