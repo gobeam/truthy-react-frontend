@@ -25,14 +25,20 @@ If you love it don't forget to share your experience. If you want to contribute 
 - [License](#license)
 - [Acknowledgement](#acknowledgement)
 
+---
+
 ## Getting Started
 
 This project was created to help developers by bootstrapping basic modules that need to be present while creating a standard CMS. The main motto of this project was to save precious time while developing CMS and focus more on the core part. This project is trying to follow the best possible standard to make it optimized and production-ready. Hope you like it. If you love it don't forget to share your experience.
+
+---
 
 ## Prerequisites
 
 NodeJS
 https://nodejs.org/en/
+
+---
 
 ## Available Scripts
 
@@ -61,6 +67,8 @@ Lints all the files inside `./src` and shows the result without fixing.
 ### `yarn lint:js:fix`
 
 Lints all the files inside `./src`.
+
+---
 
 ## Setup
 
@@ -96,6 +104,8 @@ If you want to use **Docker** to deploy it on production or development stage
 docker build -t truthy-frontend .
 docker run truthy-frontend -p 3000:80
 ```
+
+---
 
 ## File Structure
 
@@ -148,14 +158,20 @@ app
 ├── Dockerfile.dev                          * Docker file for dev environment.
 ```
 
+---
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate. - see `CONTRIBUTING.md` for details.
 
+---
+
 ## License
 
 Released under the MIT License - see `LICENSE.md` for details.
+
+---
 
 ## Acknowledgement
 
