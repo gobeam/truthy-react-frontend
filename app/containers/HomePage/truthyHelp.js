@@ -57,7 +57,7 @@ const TruthyHelps = () => {
           <Row gutter={20}>
             {functionalities.map((functionality) => (
               <Col lg={8} key={functionality.title}>
-                <Card className="card-one">
+                <Card>
                   <div className="card-inner">
                     <div className="img-wrap">{functionality.icon}</div>
                     <h4>{functionality.title}</h4>
