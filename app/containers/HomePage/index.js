@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import Navbar from 'common/layout/Navbar';
 import TruthyHelps from 'containers/HomePage/truthyHelp';
 import Contributors from 'containers/HomePage/contributors';
-import Footer from 'components/Footer';
+// import Footer from 'components/Footer';
 import reducer from 'containers/HomePage/reducer';
 import saga from 'containers/HomePage/saga';
 import Banner from 'containers/HomePage/banner';
@@ -50,7 +50,7 @@ export default function HomePage() {
         <Banner />
         <TruthyHelps />
         <Contributors contributors={contributors} loading={isLoading} />
-        <Footer />
+        {/* <Footer /> */}
         {/* <NavLink to="/login" className="btn-primary">
           Login
         </NavLink> */}
