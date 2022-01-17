@@ -53,6 +53,23 @@ color: $primary;
 
 .form-ant-items{
     .ant-input{
-        padding-left: 15px;
+        padding-left: 15px !important;
     }
+}
+.ant-input{
+    &:placeholder-shown{
+        text-transform: capitalize;
+    }
+}
+
+.ant-form-item-label{
+    text-transform: capitalize;
+}
+
+.ant-progress-steps-item-active{
+    background: $primary;
+}
+
+.ant-progress-steps-outer{
+    margin-bottom: 15px;
 }

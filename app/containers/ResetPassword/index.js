@@ -29,10 +29,11 @@ import messages from 'containers/ResetPassword/messages';
 import commonMessages from 'common/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
 import FormInputWrapper from 'components/FormInputWrapper';
-import { Form, Progress, Typography } from 'antd';
+import { Progress, Row, Form, Typography, Col } from 'antd';
 import { checkIfStrongPassword } from 'common/validator';
 import usePasswordStrengthCheckHook from 'common/hooks/passwordStrengthHook';
 import AlertMessage from 'containers/AlertMessage';
+import FormWrapper from 'components/FormWrapper';
 
 const key = 'resetPassword';
 
@@ -101,7 +102,7 @@ export default function ResetPassword() {
   }, [errors]);
 
   return (
-    <div className="content-page">
+    <div className="login-page mh-100">
       <FormattedMessage {...messages.helmetResetPasswordTitle}>
         {(title) => (
           <Helmet>
@@ -109,76 +110,82 @@ export default function ResetPassword() {
           </Helmet>
         )}
       </FormattedMessage>
+      <Row className="login-center">
+        <Col xl={8} className="m-auto">
+          <FormWrapper
+            {...formItemLayout}
+            form={form}
+            name="register"
+            onFinish={onFinish}
+            scrollToFirstError
+            classname="login-page-form form-ant-items"
+          >
+            <Title level={2}>
+              <FormattedMessage {...messages.resetPassword} />
+            </Title>
 
-      <Form
-        {...formItemLayout}
-        form={form}
-        name="register"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
-        <Title level={2}>
-          <FormattedMessage {...messages.resetPassword} />
-        </Title>
+            <AlertMessage />
 
-        <AlertMessage />
+            <FormInputWrapper
+              passwordInput
+              label={commonMessages.passwordPlaceHolder}
+              rules={[
+                {
+                  required: true,
+                  whitespace: true,
+                  message: (
+                    <FormattedMessage {...commonMessages.passwordRequired} />
+                  ),
+                },
+                {
+                  validator: checkIfStrongPassword,
+                },
+              ]}
+              name="password"
+              id="password"
+              type="password"
+              placeholder={commonMessages.passwordPlaceHolder}
+            >
+              <Progress
+                percent={
+                  ((lowerCheck + charCheck + upperCheck + numChecker) / 4) * 100
+                }
+                steps={4}
+              />
+            </FormInputWrapper>
 
-        <FormInputWrapper
-          passwordInput
-          label={commonMessages.passwordPlaceHolder}
-          rules={[
-            {
-              required: true,
-              whitespace: true,
-              message: (
-                <FormattedMessage {...commonMessages.passwordRequired} />
-              ),
-            },
-            {
-              validator: checkIfStrongPassword,
-            },
-          ]}
-          name="password"
-          id="password"
-          type="password"
-          placeholder={commonMessages.passwordPlaceHolder}
-        >
-          <Progress
-            percent={
-              ((lowerCheck + charCheck + upperCheck + numChecker) / 4) * 100
-            }
-            steps={4}
-          />
-        </FormInputWrapper>
+            <FormInputWrapper
+              passwordInput
+              label={commonMessages.confirmPasswordLabel}
+              rules={[
+                {
+                  required: true,
+                  whitespace: true,
+                  message: (
+                    <FormattedMessage
+                      {...commonMessages.confirmPasswordRequired}
+                    />
+                  ),
+                },
+                {
+                  validator: checkConfirm,
+                },
+              ]}
+              name="confirmPassword"
+              id="confirmPassword"
+              type="password"
+              placeholder={commonMessages.confirmPasswordLabel}
+            />
 
-        <FormInputWrapper
-          passwordInput
-          label={commonMessages.confirmPasswordLabel}
-          rules={[
-            {
-              required: true,
-              whitespace: true,
-              message: (
-                <FormattedMessage {...commonMessages.confirmPasswordRequired} />
-              ),
-            },
-            {
-              validator: checkConfirm,
-            },
-          ]}
-          name="confirmPassword"
-          id="confirmPassword"
-          type="password"
-          placeholder={commonMessages.confirmPasswordLabel}
-        />
-
-        <FormButtonWrapper
-          variant="primary"
-          disabled={isLoading}
-          form={form}
-          label={messages.resetPasswordBtn}
-        />
-      </Form>
+            <FormButtonWrapper
+              variant="primary"
+              disabled={isLoading}
+              form={form}
+              label={messages.resetPasswordBtn}
+            />
+          </FormWrapper>
+        </Col>
+      </Row>
     </div>
   );
 }
