@@ -5,7 +5,7 @@
   Truthy CMS (ReactJS Starter)
 </h1>
 
-<div align="center"> This repository is frontend part of Truthy CMS written in ReactJS & Redux-Saga. For Backend API please visit https://github.com/gobeam/truthy. Ant design (https://ant.design/) is used as a UI library. This project includes User Management, Role Management, Permission Management, Email Module, Account Settings, OTP, RBAC support, Localization, and many more. Hope you like it.<br>
+<div align="center"> This repository is frontend part of Truthy CMS written in ReactJS & Redux-Saga. For Backend API please visit https://github.com/gobeam/truthy. Ant design (https://ant.design/) is used as an UI library. This project includes User Management, Role Management, Permission Management, Email Module, Account Settings, OTP, RBAC support, Localization, and many more. Hope you like it.<br>
 If you love it don't forget to share your experience. If you want to contribute to the Truthy CMS in any way like API, Frontend, Design, Logo you're more than welcome to do so. Our plan is to make this no. 1 CMS maintained by opensource community.
  </div>
 
