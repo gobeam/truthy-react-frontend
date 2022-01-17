@@ -43,6 +43,10 @@ https://nodejs.org/en/
 
 ## Available Scripts
 
+### npx truthy-react-cms project_name
+
+This commands downloads the latest version of truthy-react-cms
+
 In the project directory, you can run:
 
 ### `yarn start`
