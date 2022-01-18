@@ -18,6 +18,7 @@ import { makeLoggedInUserSelector } from 'containers/App/selectors';
 import { hideHeaderAction } from 'containers/App/actions';
 import 'containers/RegisterPage/index.less';
 import { Row, Col } from 'antd';
+import Navbar from 'common/layout/Navbar';
 
 const key = 'register';
 
@@ -38,19 +39,22 @@ export default function RegisterPage() {
   }, [user]);
 
   return (
-    <div className="register-page">
-      <FormattedMessage {...messages.helmetRegisterTitle}>
-        {(title) => (
-          <Helmet>
-            <title>{title}</title>
-          </Helmet>
-        )}
-      </FormattedMessage>
-      <Row className="register-center">
-        <Col xl={24} lg={10} md={10} xs={16} className="m-auto">
-          <RegisterForm />
-        </Col>
-      </Row>
+    <div className="auth-wrappers">
+      <Navbar />
+      <div className="register-page">
+        <FormattedMessage {...messages.helmetRegisterTitle}>
+          {(title) => (
+            <Helmet>
+              <title>{title}</title>
+            </Helmet>
+          )}
+        </FormattedMessage>
+        <Row className="register-center">
+          <Col xl={24} lg={10} md={10} xs={16} className="m-auto">
+            <RegisterForm />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

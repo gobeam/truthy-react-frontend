@@ -23,18 +23,25 @@
 .ant-menu-submenu-title:active {
   background-color: #f1fffd;
 }
-
-.home-page {
+.logos{
+  @include d-y-center;
+  font-weight: 900;
+  color: #637381;
+  font-size: 24px;
+  text-shadow: #e0e0e0 1px 1px 0;
+  cursor: pointer;
+  a{
+   &:hover{
+     text-decoration: none
+   }
+  }
+}
   .navbar{
     width: 100%;
     .logos{
       width: 250px;
-      @include d-y-center;
-      flex-grow: 1;
-      font-weight: 900;
-      color: #637381;
-      font-size: 24px;
-      text-shadow: #e0e0e0 1px 1px 0;
+  flex-grow: 1;
+     
     }
     .header-main{
       @include d-y-center;
@@ -71,6 +78,10 @@
   .ant-menu{
     background: #ececec;
   }
+
+
+.auth-wrappers{
+  .ant-layout-header {
+    background: #eff2f5;
+  }
 }
-
-

@@ -1,0 +1,36 @@
+footer {
+  border-top: 1px solid #c3c3c3;
+  padding: 2.5rem 0;
+  margin-top: 60px;
+  .outer-home {
+    .ant-row {
+      align-items: center;
+    }
+  }
+  ul {
+      padding-left: 0;
+    li {
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
+  .footer-info {
+      p{
+          margin:10px 0 20px2;
+      }
+    .ant-btn-primary {
+        
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px;
+      padding: 0 34px;
+      width: 180px;
+      box-shadow: 2px 3px 6px rgba(57, 175, 159,  32%);
+    }
+  }
+  .pl-3{
+      padding-left: 15px;
+  }
+}

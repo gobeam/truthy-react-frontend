@@ -37,6 +37,10 @@ export default defineMessages({
     id: `${scope}.login`,
     defaultMessage: 'Login',
   },
+  register: {
+    id: `${scope}.register`,
+    defaultMessage: 'Register',
+  },
   popularTitle: {
     id: `${scope}.popularTitle`,
     defaultMessage: 'Popular Stack',

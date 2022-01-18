@@ -15,6 +15,7 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import messages from 'containers/LoginPage/messages';
 import { Row, Col } from 'antd';
+import Navbar from 'common/layout/Navbar';
 
 const key = 'login';
 
@@ -23,19 +24,23 @@ export default function LoginPage() {
   useInjectSaga({ key, saga });
 
   return (
-    <div className="login-page mh-100">
-      <FormattedMessage {...messages.helmetLoginTitle}>
-        {(title) => (
-          <Helmet>
-            <title>{title}</title>
-          </Helmet>
-        )}
-      </FormattedMessage>
-      <Row className="login-center">
-        <Col xl={6} lg={10} md={10} xs={16} className="m-auto">
-          <LoginForm />
-        </Col>
-      </Row>
+    <div className="auth-wrappers">
+      <Navbar />
+
+      <div className="login-page mh-100">
+        <FormattedMessage {...messages.helmetLoginTitle}>
+          {(title) => (
+            <Helmet>
+              <title>{title}</title>
+            </Helmet>
+          )}
+        </FormattedMessage>
+        <Row className="login-center">
+          <Col xl={6} lg={10} md={10} xs={16} className="m-auto">
+            <LoginForm />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

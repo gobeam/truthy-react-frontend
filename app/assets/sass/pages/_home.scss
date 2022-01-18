@@ -22,6 +22,7 @@
 .login-page {
   display: flex;
   align-items: center;
+  min-height: calc(100vh - 64px);
   .ant-row {
     width: 100%;
   }
@@ -49,7 +50,7 @@
   justify-content: center;
   align-items: center;
   background: #f0f2f5;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   &-form {
     padding: 30px;
     background-color: $white;
@@ -69,7 +70,7 @@
     }
   }
   .ant-form-item:last-child {
-    margin-bottom: 0 !important;
+    margin-bottom: 15px !important;
   }
   .ant-btn-primary {
     width: 100%;
@@ -331,7 +332,7 @@ img{
 }
 
 .contributors{
-  margin: 40px 0;
+  padding: 80px 0 50px;
   width: 100%;
   .ant-card{
     padding: 20px 40px 60px;

@@ -7,11 +7,18 @@
         box-shadow: 0 0 0 2px rgba($primary, 0.2);
         border-color: $primary;
     }
+    &:hover{
+        border-color: $primary !important;
+    }
+}
+.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{
+    box-shadow: 0 0 0 2px rgba($primary, 0.2);
+    border-color: $primary;
 }
 
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled){
     &:hover{
-        border-color: $primary;
+        border-color: $primary !important;
     }
 }
 
@@ -72,4 +79,8 @@ color: $primary;
 
 .ant-progress-steps-outer{
     margin-bottom: 15px;
+}
+
+.ant-input:hover{
+border-color: $primary;
 }

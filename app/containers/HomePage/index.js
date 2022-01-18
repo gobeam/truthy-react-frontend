@@ -21,6 +21,7 @@ import {
   makeIsLoadingSelector,
 } from 'containers/HomePage/selector';
 import { getContributorAction } from 'containers/HomePage/actions';
+import Footer from 'common/layout/Footer';
 
 const key = 'homePage';
 const stateSelector = createStructuredSelector({
@@ -50,7 +51,7 @@ export default function HomePage() {
         <Banner />
         <TruthyHelps />
         <Contributors contributors={contributors} loading={isLoading} />
-        {/* <Footer /> */}
+        <Footer />
         {/* <NavLink to="/login" className="btn-primary">
           Login
         </NavLink> */}
