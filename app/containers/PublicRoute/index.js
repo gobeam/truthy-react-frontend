@@ -1,6 +1,6 @@
 /**
  *
- * Private Route
+ * Public Route
  *
  */
 
