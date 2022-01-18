@@ -15,7 +15,7 @@ import PermissionDeniedPage from 'containers/PermissionDeniedPage';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { checkPermissionForComponent } from 'utils/permission';
 
@@ -26,8 +26,7 @@ const stateSelector = createStructuredSelector({
   otpVerified: makeOtpVerificationSelector(),
 });
 
-const PrivateRoute = (props) => {
-  const { path, resource, method, defaultPermission } = props;
+function PrivateRoute({ children, path, resource, method, defaultPermission }) {
   const { isLogged, user, otpVerified } = useSelector(stateSelector);
   const [permitted, setPermitted] = useState(true);
 
@@ -51,14 +50,15 @@ const PrivateRoute = (props) => {
   if (!permitted && otpVerified) {
     return <PermissionDeniedPage />;
   }
-  return isLogged ? <Route {...props} /> : <Navigate to="/login" />;
-};
+  return isLogged ? children : <Navigate to="/login" />;
+}
 
 PrivateRoute.propTypes = {
   defaultPermission: PropTypes.bool,
   path: PropTypes.string,
   resource: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
 
 export default PrivateRoute;

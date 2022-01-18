@@ -20,7 +20,7 @@ const stateSelector = createStructuredSelector({
   user: makeLoggedInUserSelector(),
 });
 
-const Profile = () => {
+function Profile() {
   const { user } = useSelector(stateSelector);
   const navigate = useNavigate();
   return (
@@ -36,9 +36,7 @@ const Profile = () => {
         <PageHeaderWrapper
           title={messages.pageHeader}
           avatar={
-            user.avatar
-              ? { src: `${BASE_URL}/assets/profile/${user.avatar}` }
-              : null
+            user.avatar ? { src: `${BASE_URL}/profile/${user.avatar}` } : null
           }
           extra={[
             <Button key="3" onClick={() => navigate('/account-setting')}>
@@ -65,6 +63,6 @@ const Profile = () => {
       </div>
     </>
   );
-};
+}
 
 export default Profile;

@@ -6,18 +6,19 @@
 
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeIsLoggedSelector } from 'containers/App/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 import Common from 'utils/common';
 import { SUCCESS_REDIRECT } from 'containers/LoginPage/constants';
+import PropTypes from 'prop-types';
 
 const stateSelector = createStructuredSelector({
   isLogged: makeIsLoggedSelector(),
 });
 
-const PublicRoute = ({ ...props }) => {
+function PublicRoute({ children }) {
   const navigate = useNavigate();
   const { isLogged } = useSelector(stateSelector);
 
@@ -31,11 +32,11 @@ const PublicRoute = ({ ...props }) => {
   if (isLogged === null) {
     return <LoadingIndicator />;
   }
-  return (
-    <>
-      <Route {...props} />
-    </>
-  );
+  return children;
+}
+
+PublicRoute.propTypes = {
+  children: PropTypes.node,
 };
 
 export default PublicRoute;

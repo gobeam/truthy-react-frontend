@@ -15,128 +15,161 @@ import Permission from 'containers/Permission/Loadable';
 import Layout from 'components/Layout';
 import PrivateRoute from 'containers/PrivateRoute';
 import PublicRoute from 'containers/PublicRoute';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { useRoutes } from 'react-router-dom';
 
 const routes = [
   {
     path: 'login',
-    element: <PublicRoute element={<LoginPage />} />,
+    element: (
+      <PublicRoute>
+        <LoginPage />
+      </PublicRoute>
+    ),
   },
   {
     path: 'register',
-    element: <PublicRoute element={<RegisterPage />} />,
+    element: (
+      <PublicRoute>
+        <RegisterPage />
+      </PublicRoute>
+    ),
   },
   {
     path: 'forgot-password',
-    element: <PublicRoute element={<ForgotPassword />} />,
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: 'reset/:code',
-    element: <PublicRoute element={<ResetPassword />} />,
+    element: (
+      <PublicRoute>
+        <ResetPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: 'verify/:code',
-    element: <PublicRoute element={<VerifyAccount />} />,
+    element: (
+      <PublicRoute>
+        <VerifyAccount />
+      </PublicRoute>
+    ),
   },
   {
     path: '/',
-    element: <PublicRoute element={<HomePage />} />,
+    element: (
+      <PublicRoute>
+        <HomePage />
+      </PublicRoute>
+    ),
   },
   {
     path: '',
     element: (
-      <PrivateRoute
-        element={<Layout />}
-        method="get"
-        resource="root"
-        defaultPermission
-      />
+      <PrivateRoute method="get" resource="root" defaultPermission>
+        <Layout />
+      </PrivateRoute>
     ),
     children: [
       {
         path: 'dashboard',
         element: (
-          <PrivateRoute
-            element={<Dashboard />}
-            method="get"
-            resource="dashboard"
-            defaultPermission
-          />
+          <PrivateRoute method="get" resource="dashboard" defaultPermission>
+            <Dashboard />
+          </PrivateRoute>
         ),
       },
       {
         path: 'users',
         element: (
           <PrivateRoute
-            element={<Users />}
             path="/users"
             method="get"
             resource="user"
             defaultPermission={false}
-          />
+          >
+            <Users />
+          </PrivateRoute>
         ),
       },
       {
         path: 'roles',
         element: (
           <PrivateRoute
-            element={<Role />}
             path="/roles"
             method="get"
             resource="role"
             defaultPermission={false}
-          />
+          >
+            <Role />
+          </PrivateRoute>
         ),
       },
       {
         path: 'permissions',
         element: (
           <PrivateRoute
-            element={<Permission />}
             path="/permissions"
             method="get"
             resource="permission"
             defaultPermission={false}
-          />
+          >
+            <Permission />
+          </PrivateRoute>
         ),
       },
       {
         path: 'email-templates',
         element: (
           <PrivateRoute
-            element={<EmailTemplate />}
             path="/email-templates"
             method="get"
             resource="emailTemplates"
             defaultPermission={false}
-          />
+          >
+            <EmailTemplate />
+          </PrivateRoute>
         ),
       },
       {
         path: 'account-setting',
         element: (
           <PrivateRoute
-            element={<UserAccount />}
             path="/account-setting"
             method="get"
             resource="user"
             defaultPermission
-          />
+          >
+            <UserAccount />
+          </PrivateRoute>
         ),
       },
       {
         path: 'profile',
         element: (
           <PrivateRoute
-            element={<Profile />}
             path="/profile"
             method="get"
             resource="user"
             defaultPermission
-          />
+          >
+            <Profile />
+          </PrivateRoute>
         ),
       },
     ],
+  },
+  {
+    path: '*',
+    element: (
+      <PublicRoute>
+        <NotFoundPage />
+      </PublicRoute>
+    ),
   },
 ];
 

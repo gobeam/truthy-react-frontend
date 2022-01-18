@@ -9,9 +9,8 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import RenderRouter from 'routes';
 import { getProfileAction } from 'containers/App/actions';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -43,7 +42,6 @@ export default function App() {
       <Layout>
         <BrowserRouter>
           <RenderRouter />
-          <Route path="*" component={NotFoundPage} />
         </BrowserRouter>
       </Layout>
     </>

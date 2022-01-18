@@ -35,7 +35,7 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
 });
 
-const HeaderComponent = () => {
+function HeaderComponent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -117,7 +117,7 @@ const HeaderComponent = () => {
             <Dropdown overlay={menu} trigger={['click']}>
               <span className="user-action">
                 {user.avatar ? (
-                  <Avatar src={`${BASE_URL}/assets/profile/${user.avatar}`} />
+                  <Avatar src={`${BASE_URL}/profile/${user.avatar}`} />
                 ) : (
                   <Avatar
                     style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
@@ -145,6 +145,6 @@ const HeaderComponent = () => {
       </div>
     </Header>
   );
-};
+}
 
 export default HeaderComponent;

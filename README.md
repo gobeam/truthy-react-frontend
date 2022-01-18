@@ -1,18 +1,38 @@
-<div align="center">
+<p align="center">
 <img src="./app/assets/images/logo/short-logo.svg" alt="Truthy Logo">
-</div><br>
+</p>
 <h1 align="center">
   Truthy CMS (ReactJS Starter)
 </h1>
 
-<div align="center"> This repository is frontend part of Truthy CMS written in ReactJS & Redux-Saga. For Backend API please visit https://github.com/gobeam/truthy. Ant design (https://ant.design/) is used as an UI library. This project includes User Management, Role Management, Permission Management, Email Module, Account Settings, OTP, RBAC support, Localization, and many more. Hope you like it.<br>
-If you love it don't forget to share your experience. If you want to contribute to the Truthy CMS in any way like API, Frontend, Design, Logo you're more than welcome to do so. Our plan is to make this no. 1 CMS maintained by opensource community.
- </div>
+<p align="center"> This repository is frontend part of Truthy CMS written in ReactJS & Redux-Saga. For Backend API please visit https://github.com/gobeam/truthy. Ant design (https://ant.design/) is used as an UI library. This project includes User Management, Role Management, Permission Management, Email Module, Account Settings, OTP, RBAC support, Localization, and many more. Hope you like it.<br>
+If you love it don't forget to share your experience. If you want to contribute to the Truthy CMS in any way like API, Frontend, Design, Logo you're more than welcome to do so. Our plan is to make this no. 1 CMS maintained by open-source community.
+ </p>
 
-<br>
-<div align="center">
+ <p align="center">
+ <img alt="truthy-react-frontend package.json version" src="https://img.shields.io/github/package-json/v/gobeam/truthy-react-frontend">
+<img alt="ruthy-react-frontend" src="https://img.shields.io/github/license/gobeam/truthy-react-frontend">
+<img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/gobeam/truthy-react-frontend">
+<img src='https://www.codetriage.com/gobeam/truthy-react-frontend/badges/users.svg' alt='Open Source Helpers' />
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/gobeam" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
+
+<p align="center">
   <sub>Created by <a href="https://www.linkedin.com/in/roshan-ranabhat/">Roshan Ranabhat (gobeam)</a> and maintained with ❤️ by an amazing <a href="https://github.com/gobeam/truthy-contributors">team of awesome developers</a>.</sub>
-</div>
+</p>
+
+<p align="center">
+  <sub>Check Live code deployed here:
+  Frontend: <a href="https://truthy-cms.herokuapp.com">Truthy CMS</a>
+  Backend API Docs: <a href="https://truthy-backend.herokuapp.com/api-docs/">Swagger Docs</a>
+  </sub>
+</p>
+
+<p align="center">
+<img src="https://gobeam.github.io/truthy-contributors/truthy.gif" alt="Truthy CMS" >
+</p>
 
 ## Table of Contents
 

@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
-import messages from 'containers/LoginPage/messages';
+// import messages from 'containers/LoginPage/messages';
 import { makeFormValuesSelector } from 'containers/LoginPage/selectors';
 import { LOGIN_PROCESS } from 'containers/LoginPage/constants';
 import { getProfileAction } from 'containers/App/actions';
@@ -10,7 +10,7 @@ import {
   asyncStartAction,
   enterValidationErrorAction,
 } from 'containers/LoginPage/actions';
-import { showAlert, showFormattedAlert } from 'common/saga';
+import { showAlert } from 'common/saga';
 import { POST } from 'utils/constants';
 import { clearSnackMessageAction } from 'containers/SnackMessage/actions';
 
@@ -27,8 +27,8 @@ export function* attemptLogin() {
     yield call(request, requestPayload);
     yield put(asyncEndAction());
     yield put(clearSnackMessageAction());
-    yield put(getProfileAction());
-    return yield showFormattedAlert('success', messages.loginSuccess);
+    return yield put(getProfileAction());
+    // return yield showFormattedAlert('success', messages.loginSuccess);
   } catch (error) {
     yield put(asyncEndAction());
     if (error.data && error.data.statusCode === 422) {

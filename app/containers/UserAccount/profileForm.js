@@ -151,10 +151,7 @@ export default function ProfileForm() {
         </Title>
         <div className="user-image">
           {user.avatar ? (
-            <img
-              src={`${BASE_URL}/assets/profile/${user.avatar}`}
-              alt="avatar"
-            />
+            <img src={`${BASE_URL}/profile/${user.avatar}`} alt="avatar" />
           ) : null}
         </div>
         <Upload showUploadList={false} {...uploadProps}>
