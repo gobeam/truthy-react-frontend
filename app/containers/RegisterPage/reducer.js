@@ -4,11 +4,13 @@
  *
  */
 import produce from 'immer';
-import { ASYNC_END, ASYNC_START } from 'containers/LoginPage/constants';
 import {
   ADD_VALIDATION_ERROR,
   REGISTER_SUCCESS,
   SET_FORM_VALUES,
+  ASYNC_END,
+  ASYNC_START,
+  CLEAR_FORM_VALUES,
 } from 'containers/RegisterPage/constants';
 
 const EmptyFields = {
@@ -26,6 +28,7 @@ export const initialState = {
   errors: [],
   error: '',
   isLoading: false,
+  clearFormValue: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,6 +46,9 @@ const loginPageReducer = produce((draft, action) => {
       break;
     case ASYNC_END:
       draft.isLoading = false;
+      break;
+    case CLEAR_FORM_VALUES:
+      draft.clearFormValue = action.clearFormValue;
       break;
     case REGISTER_SUCCESS:
       draft.isLoading = false;

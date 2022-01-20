@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import ApiEndpoint from 'utils/api';
 import request from 'utils/request';
 // import messages from 'containers/LoginPage/messages';
@@ -39,5 +39,5 @@ export function* attemptLogin() {
 }
 
 export default function* loginPageSaga() {
-  yield takeLatest(LOGIN_PROCESS, attemptLogin);
+  yield takeEvery(LOGIN_PROCESS, attemptLogin);
 }

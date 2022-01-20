@@ -11,12 +11,20 @@ import {
   REGISTER_PROCESS,
   REGISTER_SUCCESS,
   SET_FORM_VALUES,
+  CLEAR_FORM_VALUES,
 } from 'containers/RegisterPage/constants';
 
 export function setFormValuesAction(formValues) {
   return {
     type: SET_FORM_VALUES,
     formValues,
+  };
+}
+
+export function clearFormAction(clearFormValue) {
+  return {
+    type: CLEAR_FORM_VALUES,
+    clearFormValue,
   };
 }
 

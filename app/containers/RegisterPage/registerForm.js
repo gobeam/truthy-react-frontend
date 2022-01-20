@@ -10,11 +10,13 @@ import { createStructuredSelector } from 'reselect';
 import {
   enterRegisterAction,
   setFormValuesAction,
+  clearFormAction,
 } from 'containers/RegisterPage/actions';
 import {
   makeErrorSelector,
   makeInitialValuesSelector,
   makeIsLoadingSelector,
+  makeClearFormValueSelector,
 } from 'containers/RegisterPage/selectors';
 import messages from 'containers/RegisterPage/messages';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -35,7 +37,8 @@ const { Title } = Typography;
 const stateSelector = createStructuredSelector({
   initialValues: makeInitialValuesSelector(),
   errors: makeErrorSelector(),
-  isLoading: makeIsLoadingSelector(),
+  clearFormValue: makeIsLoadingSelector(),
+  isLoading: makeClearFormValueSelector(),
 });
 
 const formItemLayout = {
@@ -63,10 +66,11 @@ const selectLayout = {
   },
 };
 
-const RegisterForm = (props) => {
+function RegisterForm(props) {
   const { intl } = props;
   const dispatch = useDispatch();
-  const { errors, isLoading, initialValues } = useSelector(stateSelector);
+  const { errors, isLoading, initialValues, clearFormValue } =
+    useSelector(stateSelector);
   const [form] = Form.useForm();
   const [password, setPassword] = useState('');
 
@@ -88,6 +92,13 @@ const RegisterForm = (props) => {
     }
     return Promise.resolve();
   };
+
+  useEffect(() => {
+    if (clearFormValue) {
+      form.resetFields();
+      dispatch(clearFormAction(false));
+    }
+  }, [clearFormValue]);
 
   useEffect(() => {
     if (errors?.length) {
@@ -220,7 +231,7 @@ const RegisterForm = (props) => {
       </div>
     </FormWrapper>
   );
-};
+}
 
 RegisterForm.propTypes = {
   intl: PropTypes.object,

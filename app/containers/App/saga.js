@@ -20,7 +20,7 @@ import {
   REFRESH_TOKEN,
 } from 'containers/App/constants';
 import { makeOtpValueSelector } from 'containers/App/selectors';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest, takeEvery } from 'redux-saga/effects';
 import ApiEndpoint, { BASE_URL } from 'utils/api';
 import { GET, POST } from 'utils/constants';
 import request from 'utils/request';
@@ -111,8 +111,8 @@ export function* handleAuthenticateOtp() {
 }
 
 export default function* appPageSaga() {
-  yield takeLatest(LOGOUT, handleLogout);
+  yield takeEvery(LOGOUT, handleLogout);
   yield takeLatest(GET_PROFILE_REQUEST, handleProfile);
   yield takeLatest(REFRESH_TOKEN, handleRefreshToken);
-  yield takeLatest(AUTHENTICATE_OTP, handleAuthenticateOtp);
+  yield takeEvery(AUTHENTICATE_OTP, handleAuthenticateOtp);
 }
