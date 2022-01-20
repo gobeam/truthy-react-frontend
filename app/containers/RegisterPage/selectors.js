@@ -26,7 +26,14 @@ const makeErrorSelector = () =>
 const makeIsLoadingSelector = () =>
   createSelector(selectRegisterPageDomain, (substate) => substate.isLoading);
 
+const makeClearFormValueSelector = () =>
+  createSelector(
+    selectRegisterPageDomain,
+    (substate) => substate.clearFormValue,
+  );
+
 export {
+  makeClearFormValueSelector,
   makeFormValuesSelector,
   makeErrorSelector,
   makeIsLoadingSelector,
