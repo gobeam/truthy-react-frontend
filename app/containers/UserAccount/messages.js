@@ -130,4 +130,9 @@ export default defineMessages({
     id: `${scope}.toggleTwoFaSuccess`,
     defaultMessage: 'Two factor authentication setting updated successfully!',
   },
+  twoFaActivateCheck: {
+    id: `${scope}.twoFaActivateCheck`,
+    defaultMessage:
+      'Two factor authentication has been enabled, please check your mail for further process to set OTP!',
+  },
 });

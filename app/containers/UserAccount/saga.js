@@ -143,7 +143,9 @@ export function* handleUpdateTwoFactorStatus() {
     yield put(asyncEndAction());
     return yield showMessage({
       type: 'success',
-      message: messages.toggleTwoFaSuccess,
+      message: data.isTwoFAEnabled
+        ? messages.twoFaActivateCheck
+        : messages.toggleTwoFaSuccess,
       translate: true,
       id: uuid(),
     });
