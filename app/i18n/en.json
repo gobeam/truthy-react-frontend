@@ -286,6 +286,7 @@
   "containers.UserAccount.activateOtpConfirm": "Are you sure you want to activate Two Factor Authentication?",
   "containers.UserAccount.deactivateOtpConfirm": "Are you sure you want to deactivate Two Factor Authentication?",
   "containers.UserAccount.toggleTwoFaSuccess": "Two factor authentication setting updated successfully!",
+  "containers.UserAccount.twoFaActivateCheck": "Two factor authentication has been enabled, please check your mail for further process to set OTP!",
 
   "containers.Dashboard.totalUser": "Total User",
   "containers.Dashboard.activeUser": "Active User",

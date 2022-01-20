@@ -288,6 +288,7 @@
   "containers.UserAccount.activateOtpConfirm": "के तपाईं दुई कारक प्रमाणीकरण सक्रिय गर्न निश्चित हुनुहुन्छ?",
   "containers.UserAccount.deactivateOtpConfirm": "के तपाइँ निश्चित हुनुहुन्छ कि तपाइँ दुई कारक प्रमाणीकरण निष्क्रिय गर्न चाहनुहुन्छ?",
   "containers.UserAccount.toggleTwoFaSuccess": "दुई कारक प्रमाणीकरण सेटिङ सफलतापूर्वक अद्यावधिक गरियो!",
+  "containers.UserAccount.twoFaActivateCheck": "दुई कारक प्रमाणीकरण सक्षम गरिएको छ, OTP सेट गर्न थप प्रक्रियाको लागि कृपया आफ्नो मेल जाँच गर्नुहोस्!",
 
   "containers.Dashboard.totalUser": "कुल प्रयोगकर्ता",
   "containers.Dashboard.activeUser": "सक्रिय प्रयोगकर्ता",
