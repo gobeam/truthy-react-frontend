@@ -117,7 +117,7 @@ function HeaderComponent() {
             <Dropdown overlay={menu} trigger={['click']}>
               <span className="user-action">
                 {user.avatar ? (
-                  <Avatar src={`${BASE_URL}/profile/${user.avatar}`} />
+                  <Avatar src={`${BASE_URL}/images/profile/${user.avatar}`} />
                 ) : (
                   <Avatar
                     style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
