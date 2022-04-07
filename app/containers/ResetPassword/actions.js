@@ -11,6 +11,7 @@ import {
   RESET_PASSWORD,
   SET_FORM_VALUES,
   SET_RESET_CODE,
+  CLEAR_FORM_VALUES,
 } from 'containers/ResetPassword/constants';
 
 export function setFormValuesAction(formValues) {
@@ -49,5 +50,12 @@ export function enterValidationErrorAction(errors) {
   return {
     type: ADD_VALIDATION_ERROR,
     errors,
+  };
+}
+
+export function clearFormAction(clearFormValue) {
+  return {
+    type: CLEAR_FORM_VALUES,
+    clearFormValue,
   };
 }

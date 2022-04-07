@@ -7,13 +7,13 @@ const usePasswordStrengthCheckHook = (password) => {
   const [charCheck, setCharChecker] = useState(0);
 
   useEffect(() => {
-    if (new RegExp('^(?=.*[a-z]).+$').test(password)) {
+    if (/^(?=.*[a-z]).+$/.test(password)) {
       setLowerCheck(1);
     } else {
       setLowerCheck(0);
     }
 
-    if (new RegExp('^(?=.*[A-Z]).+$').test(password)) {
+    if (/^(?=.*[A-Z]).+$/.test(password)) {
       setUpperCheck(1);
     } else {
       setUpperCheck(0);
@@ -25,7 +25,7 @@ const usePasswordStrengthCheckHook = (password) => {
       setNumChecker(0);
     }
 
-    if (new RegExp('^(?=.*[-+_!@#$%^&*.,?]).+$').test(password)) {
+    if (/^(?=.*[-+_!@#$%^&*.,?]).+$/.test(password)) {
       setCharChecker(1);
     } else {
       setCharChecker(0);

@@ -186,7 +186,6 @@ function RegisterForm(props) {
         ]}
         name="confirmPassword"
         id="confirmPassword"
-        type="confirmPassword"
         placeholder={commonMessage.confirmPasswordLabel}
       />
 
