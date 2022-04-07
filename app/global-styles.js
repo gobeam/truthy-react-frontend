@@ -16,10 +16,6 @@ const GlobalStyle = createGlobalStyle`
     monospace;
   }
 
-  // .otpContainer {
-  //   margin: 5% auto;
-  // }
-
   .otpInput {
     width: 3rem !important;
     height: 3rem;

@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable import/no-import-module-exports */
 /**
  * app.js
  *
@@ -13,16 +15,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import 'antd/dist/antd.css';
 import 'assets/sass/main.scss';
-// Import root app
 import App from 'containers/App';
-// Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
-// Load the favicon and the .htaccess file
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import '!file-loader?name=[name].[ext]!./assets/images/icons/favicon.ico';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
-// Import i18n messages
+import 'file-loader?name=.htaccess!./.htaccess';
 import { saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import reportWebVitals from 'reportWebVitals';
@@ -62,21 +58,15 @@ if (module.hot) {
   });
 }
 
-async function polyfill(locale) {
-  if (shouldPolyfill()) {
-    await import('@formatjs/intl-numberformat/polyfill');
+const polyfill = async (locale) => {
+  const unsupportedLocale = shouldPolyfill(locale);
+  if (!unsupportedLocale) {
+    return;
   }
-  if (Intl.NumberFormat.polyfilled) {
-    switch (locale) {
-      default:
-        await import('@formatjs/intl-numberformat/locale-data/en');
-        break;
-      case 'ne':
-        await import('@formatjs/intl-numberformat/locale-data/ne');
-        break;
-    }
-  }
-}
+  // Load the polyfill 1st BEFORE loading data
+  await import('@formatjs/intl-numberformat/polyfill-force');
+  await import(`@formatjs/intl-numberformat/locale-data/${unsupportedLocale}`);
+};
 
 // Chunked polyfill for browsers without Intl support
 const lang =

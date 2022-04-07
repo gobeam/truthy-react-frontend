@@ -30,7 +30,14 @@ const makeInitialValuesSelector = () =>
     (substate) => substate.initialValues,
   );
 
+const makeClearFormValueSelector = () =>
+  createSelector(
+    selectResetPasswordDomain,
+    (substate) => substate.clearFormValue,
+  );
+
 export {
+  makeClearFormValueSelector,
   makeFormValuesSelector,
   makeInitialValuesSelector,
   makeIsLoadingSelector,

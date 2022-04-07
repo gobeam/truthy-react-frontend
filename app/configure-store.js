@@ -1,3 +1,5 @@
+/* eslint-disable import/no-import-module-exports */
+// @ts-nocheck
 /**
  * Create the store with dynamic reducers
  */
@@ -50,8 +52,6 @@ export default function configureStore(
   /* ignore next */
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      // const nextRootReducer = require('./reducers').default; // <-- I added .default here
-      // store.replaceReducer(nextRootReducer);
       store.replaceReducer(createReducer(store.injectedReducers));
     });
   }

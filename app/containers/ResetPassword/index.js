@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/ResetPassword/saga';
@@ -14,17 +14,20 @@ import {
   resetPasswordAction,
   setResetCodeAction,
   setFormValuesAction,
+  clearFormAction,
 } from 'containers/ResetPassword/actions';
 import { createStructuredSelector } from 'reselect';
 import {
+  makeClearFormValueSelector,
   makeConfirmPasswordSelector,
   makeErrorsSelector,
+  makeInitialValuesSelector,
   makeIsLoadingSelector,
   makePasswordSelector,
 } from 'containers/ResetPassword/selectors';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import messages from 'containers/ResetPassword/messages';
 import commonMessages from 'common/messages';
 import FormButtonWrapper from 'components/FormButtonWrapper';
@@ -44,6 +47,8 @@ const stateSelector = createStructuredSelector({
   isLoading: makeIsLoadingSelector(),
   confirmPassword: makeConfirmPasswordSelector(),
   errors: makeErrorsSelector(),
+  initialValues: makeInitialValuesSelector(),
+  clearFormValue: makeClearFormValueSelector(),
 });
 
 const formItemLayout = {
@@ -68,12 +73,17 @@ export default function ResetPassword() {
 
   const [form] = Form.useForm();
 
-  const { errors, isLoading } = useSelector(stateSelector);
+  const intl = useIntl();
+
+  const { errors, isLoading, initialValues, clearFormValue } =
+    useSelector(stateSelector);
 
   const { code } = useParams();
 
+  const [password, setPassword] = useState('');
+
   const [lowerCheck, upperCheck, numChecker, charCheck] =
-    usePasswordStrengthCheckHook(form.getFieldValue('password'));
+    usePasswordStrengthCheckHook(password);
 
   useEffect(() => {
     dispatch(setResetCodeAction(code));
@@ -84,16 +94,22 @@ export default function ResetPassword() {
     dispatch(resetPasswordAction());
   };
 
-  const checkConfirm = (rule, value, callback) => {
+  const checkConfirm = (rule, value) => {
     const newPassword = form.getFieldValue('password');
     if (newPassword !== value) {
-      callback(
-        <FormattedMessage {...commonMessages.confirmPasswordMatchError} />,
+      return Promise.reject(
+        new Error(intl.formatMessage(commonMessages.confirmPasswordMatchError)),
       );
-    } else {
-      callback();
     }
+    return Promise.resolve();
   };
+
+  useEffect(() => {
+    if (clearFormValue) {
+      form.resetFields();
+      dispatch(clearFormAction(false));
+    }
+  }, [clearFormValue]);
 
   useEffect(() => {
     if (errors?.length) {
@@ -114,7 +130,8 @@ export default function ResetPassword() {
         <Col xl={8} className="m-auto">
           <FormWrapper
             {...formItemLayout}
-            form={form}
+            values={initialValues}
+            formInstance={form}
             name="register"
             onFinish={onFinish}
             scrollToFirstError
@@ -145,6 +162,7 @@ export default function ResetPassword() {
               id="password"
               type="password"
               placeholder={commonMessages.passwordPlaceHolder}
+              changeHandler={(e) => setPassword(e.target.value)}
             >
               <Progress
                 percent={
@@ -173,7 +191,6 @@ export default function ResetPassword() {
               ]}
               name="confirmPassword"
               id="confirmPassword"
-              type="password"
               placeholder={commonMessages.confirmPasswordLabel}
             />
 

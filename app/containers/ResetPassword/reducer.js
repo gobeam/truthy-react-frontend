@@ -10,6 +10,7 @@ import {
   ASYNC_START,
   SET_FORM_VALUES,
   SET_RESET_CODE,
+  CLEAR_FORM_VALUES,
 } from 'containers/ResetPassword/constants';
 
 export const initialState = {
@@ -21,6 +22,7 @@ export const initialState = {
   formValues: {},
   isLoading: false,
   errors: {},
+  clearFormValue: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -40,6 +42,9 @@ const resetPasswordReducer = produce((draft, action) => {
       break;
     case ASYNC_END:
       draft.isLoading = false;
+      break;
+    case CLEAR_FORM_VALUES:
+      draft.clearFormValue = action.clearFormValue;
       break;
   }
 }, initialState);

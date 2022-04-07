@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * i18n.js
  *
