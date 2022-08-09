@@ -91,20 +91,20 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'Truthy CMS',
-      short_name: 'Truthy',
-      description: 'Truthy Frontend application!',
+      name: 'RSP CMS',
+      short_name: 'RSP',
+      description: 'RSP Frontend application!',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,
       ios: true,
       icons: [
         {
-          src: path.resolve('app/assets/images/icons/icon-512x512.png'),
+          src: path.resolve('app/assets/images/icons/icon.png'),
           sizes: [72, 96, 128, 144, 192, 384, 512],
         },
         {
-          src: path.resolve('app/assets/images/icons/icon-512x512.png'),
+          src: path.resolve('app/assets/images/icons/icon.png'),
           sizes: [120, 152, 167, 180],
           ios: true,
         },
