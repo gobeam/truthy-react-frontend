@@ -22,9 +22,8 @@ import 'file-loader?name=.htaccess!./.htaccess';
 import { saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import reportWebVitals from 'reportWebVitals';
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill';
 import { store } from './store';
-import { DEFAULT_LOCALE, translationMessages } from './i18n';
+import { translationMessages } from './i18n';
 
 const MOUNT_NODE = document.getElementById('app');
 
@@ -58,28 +57,7 @@ if (module.hot) {
   });
 }
 
-const polyfill = async (locale) => {
-  const unsupportedLocale = shouldPolyfill(locale);
-  if (!unsupportedLocale) {
-    return;
-  }
-  // Load the polyfill 1st BEFORE loading data
-  await import('@formatjs/intl-numberformat/polyfill-force');
-  await import(`@formatjs/intl-numberformat/locale-data/${unsupportedLocale}`);
-};
-
-// Chunked polyfill for browsers without Intl support
-const lang =
-  store.getState().language && store.getState().language.locale
-    ? store.getState().language.locale
-    : DEFAULT_LOCALE;
-polyfill(lang)
-  .then(() => {
-    render(translationMessages);
-  })
-  .catch((err) => {
-    throw err;
-  });
+render(translationMessages);
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line no-console

@@ -13,6 +13,14 @@ module.exports = {
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
     [
+      'import',
+      {
+        libraryName: '@ant-design/icons',
+        libraryDirectory: '', // defaults to 'lib'
+        camel2DashComponentName: false, // defaults to true
+      },
+    ],
+    [
       'formatjs',
       {
         idInterpolationPattern: '[sha512:contenthash:base64:6]',
